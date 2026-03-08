@@ -10,33 +10,19 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
+import { dashboardMapper } from "../helpers/DashboardMapper";
+import { PATHS } from "../routes/paths";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:8000/api/tickers";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [tickerData, setTickerData] = useState<TickerData[]>([]);
-
   const fetchData = async () => {
     const response = await fetch(API_URL);
     const data = await response.json();
-    const mapped: TickerData[] = data.map((item: any) => ({
-      stockName: item.ticker,
-      mentions: item.mentions,
-      averageSentiment: item.avg_sentiment,
-      finalScore: item.final_score,
-      topContexts: item.top_contexts,
-      price: item.price,
-      changePercent: item.change_percent,
-      marketCap: item.market_cap,
-      fiftyTwoWeekHigh: item.fifty_two_week_high,
-      fiftyTwoWeekLow: item.fifty_two_week_low,
-      volume: item.volume,
-      analystTarget: item.analyst_target,
-      recommendation: item.recommendation,
-      sector: item.sector,
-      description: item.description,
-    }));
-    setTickerData(mapped);
+    setTickerData(dashboardMapper(data));
   };
 
   useEffect(() => {
@@ -49,13 +35,14 @@ export default function Dashboard() {
         Welcome to ThreadRadar
       </h1>
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-        Top 10 stocks
+        Top 10 penny stocks
       </h2>
       <Table>
         <TableCaption>A list of all top stock picks</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Stock</TableHead>
+            <TableHead className="w-[300px]">Name</TableHead>
             <TableHead className="w-[100px]">Price ($)</TableHead>
             <TableHead className="w-[100px]">Mentions</TableHead>
             <TableHead className="w-[200px]">Average Sentiment</TableHead>
@@ -64,8 +51,13 @@ export default function Dashboard() {
         </TableHeader>
         <TableBody>
           {tickerData.map((item) => (
-            <TableRow key={item.stockName}>
+            <TableRow
+              key={item.stockName}
+              className="cursor-pointer"
+              onClick={() => navigate(PATHS.ticker(item.stockName))}
+            >
               <TableCell className="font-medium">{item.stockName}</TableCell>
+              <TableCell>{item.name}</TableCell>
               <TableCell>{item.price}</TableCell>
               <TableCell>{item.mentions}</TableCell>
               <TableCell>{item.averageSentiment}</TableCell>
