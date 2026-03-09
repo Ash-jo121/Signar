@@ -294,11 +294,11 @@ def analyze_ticker_sentiment(all_posts):
 if __name__ == "__main__":
     print("=== ThreadRadar ===\n")
 
-    # print("Step 1: Fetching posts...")
-    # posts = fetch_all()
+    print("Step 1: Fetching posts...")
+    posts = fetch_all()
 
-    # print("\nStep 2: Analyzing tickers and sentiment...")
-    # results = analyze_ticker_sentiment(posts)
+    print("\nStep 2: Analyzing tickers and sentiment...")
+    results = analyze_ticker_sentiment(posts)
 
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(old_results[:10])

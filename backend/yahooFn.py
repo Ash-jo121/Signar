@@ -1,11 +1,14 @@
 import yfinance as yf
 
+
 def enrich_with_price(results):
     for r in results:
         try:
             stock = yf.Ticker(r["ticker"])
             info = stock.info
-            r["price"] = round(info.get("currentPrice") or info.get("regularMarketPrice") or 0, 2)
+            r["price"] = round(
+                info.get("currentPrice") or info.get("regularMarketPrice") or 0, 2
+            )
             r["change_percent"] = round(info.get("regularMarketChangePercent", 0), 2)
             r["market_cap"] = info.get("marketCap", 0)
             r["fifty_two_week_high"] = info.get("fiftyTwoWeekHigh", 0)
@@ -20,7 +23,6 @@ def enrich_with_price(results):
             r["short_name"] = info.get("shortName", "")
             r["industry"] = info.get("industry", "Unknown")
             r["website"] = info.get("website", "")
-            r["logo_url"] = info.get("logo_url", "")
             r["exchange"] = info.get("exchange", "Unknown")
             r["currency"] = info.get("currency", "Unknown")
             r["country"] = info.get("country", "Unknown")
@@ -45,6 +47,28 @@ def enrich_with_price(results):
             r["stock_splits"] = info.get("stockSplits", {})
             r["stock_dividends"] = info.get("stockDividends", {})
             r["stock_splits"] = info.get("stockSplits", {})
+
+            if r["ticker"]:
+                r["logo_url"] = (
+                    f"https://financialmodelingprep.com/image-stock/{r['ticker']}.png"
+                )
+            else:
+                r["logo_url"] = ""
+
+            if r["website"]:
+                domain = (
+                    r["website"]
+                    .replace("https://", "")
+                    .replace("http://", "")
+                    .replace("www.", "")
+                    .split("/")[0]
+                )
+                r["logo_fallback"] = (
+                    f"https://www.google.com/s2/favicons?domain={domain}&sz=64"
+                )
+            else:
+                r["logo_fallback"] = ""
+
         except Exception as e:
             print(f"Could not fetch price for {r['ticker']}: {e}")
             r["price"] = 0

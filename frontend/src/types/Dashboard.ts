@@ -43,6 +43,7 @@ export interface TickerData {
   splits: any;
   stockSplits: any;
   stockDividends: any;
+  logoFallback: string;
 }
 
 export interface TopContext {

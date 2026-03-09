@@ -54,7 +54,8 @@ export default function Dashboard() {
             <TableRow
               key={item.stockName}
               className="cursor-pointer"
-              onClick={() => navigate(PATHS.ticker(item.stockName))}
+              onClick={
+                () => navigate(PATHS.ticker(item.stockName), { state: { ticker: item } })}
             >
               <TableCell className="font-medium">{item.stockName}</TableCell>
               <TableCell>{item.name}</TableCell>

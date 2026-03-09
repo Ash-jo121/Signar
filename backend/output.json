@@ -36,7 +36,6 @@
     "short_name": "Gain Therapeutics, Inc.",
     "industry": "Biotechnology",
     "website": "https://gaintherapeutics.com",
-    "logo_url": "",
     "exchange": "NGM",
     "currency": "USD",
     "country": "United States",
@@ -59,7 +58,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/GANX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=gaintherapeutics.com&sz=64"
   },
   {
     "ticker": "IBRX",
@@ -98,7 +99,6 @@
     "short_name": "ImmunityBio, Inc.",
     "industry": "Biotechnology",
     "website": "https://immunitybio.com",
-    "logo_url": "",
     "exchange": "NMS",
     "currency": "USD",
     "country": "United States",
@@ -121,7 +121,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/IBRX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=immunitybio.com&sz=64"
   },
   {
     "ticker": "MBAI",
@@ -160,7 +162,6 @@
     "short_name": "Check-Cap Ltd.",
     "industry": "Diagnostics & Research",
     "website": "https://check-cap.com",
-    "logo_url": "",
     "exchange": "NCM",
     "currency": "USD",
     "country": "Israel",
@@ -183,7 +184,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/MBAI.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=check-cap.com&sz=64"
   },
   {
     "ticker": "GBR",
@@ -222,7 +225,6 @@
     "short_name": "New Concept Energy, Inc",
     "industry": "Real Estate Services",
     "website": "https://www.newconceptenergy.com",
-    "logo_url": "",
     "exchange": "ASE",
     "currency": "USD",
     "country": "United States",
@@ -245,7 +247,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/GBR.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=newconceptenergy.com&sz=64"
   },
   {
     "ticker": "EONR",
@@ -284,7 +288,6 @@
     "short_name": "EON Resources Inc.",
     "industry": "Oil & Gas E&P",
     "website": "https://www.eon-r.com",
-    "logo_url": "",
     "exchange": "ASE",
     "currency": "USD",
     "country": "United States",
@@ -307,7 +310,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/EONR.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=eon-r.com&sz=64"
   },
   {
     "ticker": "CTM",
@@ -341,7 +346,6 @@
     "short_name": "Castellum, Inc.",
     "industry": "Information Technology Services",
     "website": "https://www.castellumus.com",
-    "logo_url": "",
     "exchange": "ASE",
     "currency": "USD",
     "country": "United States",
@@ -364,7 +368,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/CTM.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=castellumus.com&sz=64"
   },
   {
     "ticker": "LUNR",
@@ -398,7 +404,6 @@
     "short_name": "Intuitive Machines, Inc.",
     "industry": "Aerospace & Defense",
     "website": "https://www.intuitivemachines.com",
-    "logo_url": "",
     "exchange": "NGM",
     "currency": "USD",
     "country": "United States",
@@ -421,7 +426,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/LUNR.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=intuitivemachines.com&sz=64"
   },
   {
     "ticker": "BNAI",
@@ -460,7 +467,6 @@
     "short_name": "Brand Engagement Network Inc.",
     "industry": "Software - Infrastructure",
     "website": "https://beninc.ai",
-    "logo_url": "",
     "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
@@ -483,7 +489,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/BNAI.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=beninc.ai&sz=64"
   },
   {
     "ticker": "AIFF",
@@ -522,7 +530,6 @@
     "short_name": "Firefly Neuroscience, Inc.",
     "industry": "Software - Application",
     "website": "https://fireflyneuro.com",
-    "logo_url": "",
     "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
@@ -545,7 +552,9 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/AIFF.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=fireflyneuro.com&sz=64"
   },
   {
     "ticker": "SOC",
@@ -579,7 +588,6 @@
     "short_name": "Sable Offshore Corp.",
     "industry": "Oil & Gas Drilling",
     "website": "https://www.sableoffshore.com",
-    "logo_url": "",
     "exchange": "NYQ",
     "currency": "USD",
     "country": "United States",
@@ -602,6 +610,8 @@
     "dividends": {},
     "splits": {},
     "stock_splits": {},
-    "stock_dividends": {}
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/SOC.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=sableoffshore.com&sz=64"
   }
 ]
