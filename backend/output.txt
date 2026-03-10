@@ -1,40 +1,47 @@
 $GANX
-  Mentions: 5 | Sentiment: +0.314 | Score: +0.888
+  Mentions: 2 | Sentiment: +0.295 | Score: +0.603
   Context: Gain Therapeutics ($GANX) - The Parkinson's 'Unicorn' the biotech market is sleeping on. Clinical pr
 
-$IBRX
-  Mentions: 3 | Sentiment: +0.245 | Score: +0.406
-  Context: $AAOI and $IBRX are the only ones i'm tracking. I think each will 3 X by EOY
+$BGL
+  Mentions: 2 | Sentiment: +0.356 | Score: +0.468
+  Context: $bgl has the best risk/reward imo, possible 30x 
 
-$MBAI
-  Mentions: 3 | Sentiment: +0.257 | Score: +0.382
-  Context: $MBAI looking good for tomorrow and a swing into the merger
+$BYND
+  Mentions: 2 | Sentiment: +0.176 | Score: +0.386
+  Context: $BYND - .7670 support, need to get a close above .7921, key break is at .8065
 
-$GBR
-  Mentions: 4 | Sentiment: +0.182 | Score: +0.344
-  Context: WATCHLIST AND SET UPS FOR THIS COMING WEEK (HUGE LIST)
 
-$EONR
-  Mentions: 8 | Sentiment: +0.126 | Score: +0.291
-  Context: What rising oil prices means for $EONR
+$NUAI, $4.62 needs t
 
-$CTM
-  Mentions: 2 | Sentiment: +0.120 | Score: +0.284
-  Context: Castellum, Inc. ($CTM) releases 2025 Annual Report
+$OLOX
+  Mentions: 6 | Sentiment: +0.112 | Score: +0.229
+  Context: Nano cap oil, $OLOX
 
-$LUNR
-  Mentions: 2 | Sentiment: +0.166 | Score: +0.277
-  Context: WATCHLIST AND SET UPS FOR THIS COMING WEEK (HUGE LIST)
+$BURU
+  Mentions: 7 | Sentiment: +0.103 | Score: +0.219
+  Context: $BURU - UP almost 1% @$0.299 on 32.7M volume, HOD @$0.313 on today's News... Counter-drone technolog
 
-$BNAI
-  Mentions: 7 | Sentiment: +0.122 | Score: +0.267
-  Context: WATCHLIST AND SET UPS FOR THIS COMING WEEK (HUGE LIST)
+$MOBX
+  Mentions: 8 | Sentiment: +0.085 | Score: +0.204
+  Context: Stupidly expected a rocket ship send off this morning - someone tell me to hold $MOBX and $PRSO 
 
-$AIFF
-  Mentions: 3 | Sentiment: +0.191 | Score: +0.259
-  Context: $AIFF +64% — brain scan AI company announces 33x growth in scans + NVIDIA partnership
+$AMPX
+  Mentions: 2 | Sentiment: +0.064 | Score: +0.202
+  Context: Looks absolutely 🔥 
+Wish this was suggested today 
 
-$SOC
-  Mentions: 2 | Sentiment: +0.177 | Score: +0.258
-  Context: AH WATCHLIST AND SET UPS
+$AMPX
+$16.03 has to hold then this needs to brea
+
+$NXXT
+  Mentions: 4 | Sentiment: +0.142 | Score: +0.200
+  Context: Fuel shortages and rising demand - why $NXXT could shine
+
+$ANNA
+  Mentions: 4 | Sentiment: +0.076 | Score: +0.181
+  Context: Averaging UP-date $ANNA EU LNG
+
+$FTRK
+  Mentions: 7 | Sentiment: +0.103 | Score: +0.176
+  Context: $FTRK – Entertainment Industry Microcap
 
