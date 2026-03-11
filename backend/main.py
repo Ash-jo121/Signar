@@ -7,6 +7,8 @@ from sentiment import analyze_sentiment
 
 def analyze_ticker_sentiment(all_posts):
     master = {}
+    groq_calls = 0
+    finbert_calls = 0
 
     for post in all_posts:
         comment_count = len(post.get("comments", []))
@@ -29,6 +31,11 @@ def analyze_ticker_sentiment(all_posts):
 
             for context in data["contexts"]:
                 sentiment = analyze_sentiment(context)
+
+                if sentiment["source"] == "groq":
+                    groq_calls += 1
+                elif sentiment["source"] == "finbert":
+                    finbert_calls += 1
 
                 weighted_score = sentiment["score"] * engagement_weight
 
@@ -72,6 +79,12 @@ def analyze_ticker_sentiment(all_posts):
             }
         )
 
+    # maintain groq api calls limit to a maximum of 60%
+
+    print(f"\nSentiment sources: FinBERT={finbert_calls}, Groq={groq_calls}")
+    print(f"Groq API calls used: {groq_calls}/14400 daily limit")
+    print(f"Groq API calls efficiency: {groq_calls / 14400 * 100:.2f}%")
+
     results.sort(key=lambda x: x["final_score"], reverse=True)
     results = [r for r in results if r["mentions"] >= 2]
     return results
@@ -88,6 +101,10 @@ if __name__ == "__main__":
 
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(results)
+
+    results = [
+        r for r in results if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15
+    ]
 
     print("\n=== TOP STOCK PICKS ===\n")
 
