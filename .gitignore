@@ -1,2 +1,6 @@
 __pycache__
 .env
+credentials.json
+output.json
+output.txt
+valid_tickers.json

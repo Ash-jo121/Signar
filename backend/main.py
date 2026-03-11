@@ -1,8 +1,26 @@
 import json
+from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
 from scraper import fetch_all
 from extractor import aggregate_tickers, extract_from_post
 from sentiment import analyze_sentiment
+import random
+from tqdm import tqdm
+
+
+def sample_contexts(contexts, max_contexts=15):
+    if len(contexts) <= max_contexts:
+        return contexts
+
+    # Sort by length — longer comments usually have more signal
+    sorted_contexts = sorted(contexts, key=len, reverse=True)
+
+    # Take top 5 longest + 10 random from the rest
+    top_detailed = sorted_contexts[:5]
+    remaining = sorted_contexts[5:]
+    random_sample = random.sample(remaining, min(10, len(remaining)))
+
+    return top_detailed + random_sample
 
 
 def analyze_ticker_sentiment(all_posts):
@@ -10,11 +28,11 @@ def analyze_ticker_sentiment(all_posts):
     groq_calls = 0
     finbert_calls = 0
 
-    for post in all_posts:
+    # Progress bar for post collection pass
+    print("\nPass 1: Collecting contexts from posts...")
+    for post in tqdm(all_posts, desc="Collecting", unit="post"):
         comment_count = len(post.get("comments", []))
-
         engagement_weight = min(1.0, 0.3 + (comment_count / 50) * 0.7)
-
         found = extract_from_post(post)
 
         for ticker, data in found.items():
@@ -28,8 +46,38 @@ def analyze_ticker_sentiment(all_posts):
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
+            master[ticker]["contexts"].extend(data["contexts"])
 
-            for context in data["contexts"]:
+    # Count total contexts to analyze after sampling
+    total_contexts = sum(min(len(data["contexts"]), 15) for data in master.values())
+
+    print(f"\nPass 2: Analyzing sentiment for {len(master)} tickers...")
+    print(f"Total contexts to analyze: {total_contexts}")
+
+    results = []
+
+    # Progress bar for sentiment analysis pass
+    with tqdm(total=total_contexts, desc="Analyzing", unit="context") as pbar:
+        for ticker, data in master.items():
+            all_ctx_count = len(data["contexts"])
+            if data["mentions"] < 1:
+                continue
+
+            sampled_contexts = sample_contexts(data["contexts"], max_contexts=15)
+            print(
+                f"  {ticker}: {all_ctx_count} contexts → sampling {len(sampled_contexts)}"
+            )
+            avg_post_score = (
+                sum(data["post_scores"]) / len(data["post_scores"])
+                if data["post_scores"]
+                else 0
+            )
+            engagement_weight = min(1.0, 0.3 + (len(data["contexts"]) / 50) * 0.7)
+
+            sentiment_scores = []
+            top_contexts = []
+
+            for context in sampled_contexts:
                 sentiment = analyze_sentiment(context)
 
                 if sentiment["source"] == "groq":
@@ -38,9 +86,8 @@ def analyze_ticker_sentiment(all_posts):
                     finbert_calls += 1
 
                 weighted_score = sentiment["score"] * engagement_weight
-
-                master[ticker]["sentiment_scores"].append(weighted_score)
-                master[ticker]["contexts"].append(
+                sentiment_scores.append(weighted_score)
+                top_contexts.append(
                     {
                         "text": context[:150],
                         "sentiment": sentiment["label"],
@@ -48,38 +95,31 @@ def analyze_ticker_sentiment(all_posts):
                     }
                 )
 
-    results = []
-    for ticker, data in master.items():
-        if data["mentions"] < 1:
-            continue
+                # Update progress bar with current ticker info
+                pbar.set_postfix(
+                    {"ticker": ticker, "groq": groq_calls, "finbert": finbert_calls}
+                )
+                pbar.update(1)
 
-        avg_sentiment = (
-            sum(data["sentiment_scores"]) / len(data["sentiment_scores"])
-            if data["sentiment_scores"]
-            else 0
-        )
+            avg_sentiment = (
+                sum(sentiment_scores) / len(sentiment_scores) if sentiment_scores else 0
+            )
 
-        avg_post_score = (
-            sum(data["post_scores"]) / len(data["post_scores"])
-            if (data["post_scores"])
-            else 0
-        )
+            final_score = (
+                avg_sentiment
+                * (1 + data["mentions"] * 0.1)
+                * (1 + avg_post_score * 0.01)
+            )
 
-        final_score = (
-            avg_sentiment * (1 + data["mentions"] * 0.1) * (1 + avg_post_score * 0.01)
-        )
-
-        results.append(
-            {
-                "ticker": ticker,
-                "mentions": data["mentions"],
-                "avg_sentiment": round(avg_sentiment, 3),
-                "final_score": round(final_score, 3),
-                "top_contexts": data["contexts"][:3],
-            }
-        )
-
-    # maintain groq api calls limit to a maximum of 60%
+            results.append(
+                {
+                    "ticker": ticker,
+                    "mentions": data["mentions"],
+                    "avg_sentiment": round(avg_sentiment, 3),
+                    "final_score": round(final_score, 3),
+                    "top_contexts": top_contexts[:3],
+                }
+            )
 
     print(f"\nSentiment sources: FinBERT={finbert_calls}, Groq={groq_calls}")
     print(f"Groq API calls used: {groq_calls}/14400 daily limit")
@@ -106,7 +146,10 @@ if __name__ == "__main__":
         r for r in results if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15
     ]
 
-    print("\n=== TOP STOCK PICKS ===\n")
+    print("\nStep 4: Updating Google Sheet...")
+    update_spreadsheet(results)
+
+    print("\nWriting output to files...\n")
 
     with open("output.json", "w", encoding="utf-8") as file:
         json.dump(results[:10], file, indent=2, ensure_ascii=False)

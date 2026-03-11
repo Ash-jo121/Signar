@@ -4,6 +4,10 @@ import re
 from transformers import pipeline
 from dotenv import load_dotenv
 from groq import Groq
+import time
+
+_last_groq_call = 0
+_GROQ_MIN_INTERVAL = 4
 
 load_dotenv()
 
@@ -34,7 +38,14 @@ def finbert_analyze(text):
 
 
 def groq_analyze(text):
-    text = text[:300]  # keep prompt short to save tokens
+    global _last_groq_call
+
+    elapsed = time.time() - _last_groq_call
+    if elapsed < _GROQ_MIN_INTERVAL:
+        time.sleep(_GROQ_MIN_INTERVAL - elapsed)
+
+    _last_groq_call = time.time()
+
     try:
         response = groq_client.chat.completions.create(
             model="llama-3.1-8b-instant",  # fast and free
