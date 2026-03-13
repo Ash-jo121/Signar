@@ -4,3 +4,4 @@ credentials.json
 output.json
 output.txt
 valid_tickers.json
+backend/test.py

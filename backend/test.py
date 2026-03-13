@@ -1,30 +1,171 @@
-# save as test_tickers.py in backend folder
-import requests
-import json
+# run in python terminal
+from tickers import VALID_TICKERS
 
-headers = {"User-Agent": "Mozilla/5.0"}
-all_tickers = set()
+# Check which common words are valid tickers
+common_words = [
+    "POST",
+    "TALK",
+    "LUCK",
+    "MAN",
+    "GOOD",
+    "PLAY",
+    "REAL",
+    "WELL",
+    "NEXT",
+    "OVER",
+    "BACK",
+    "JUST",
+    "EVEN",
+    "ONLY",
+    "ALSO",
+    "VERY",
+    "MUCH",
+    "MANY",
+    "SOME",
+    "MOST",
+    "SUCH",
+    "SAME",
+    "LAST",
+    "LONG",
+    "COME",
+    "TAKE",
+    "MAKE",
+    "GIVE",
+    "KEEP",
+    "SEEM",
+    "FEEL",
+    "CALL",
+    "HARD",
+    "HIGH",
+    "HUGE",
+    "FAST",
+    "SAFE",
+    "EASY",
+    "NICE",
+    "LIVE",
+    "MOVE",
+    "HOLD",
+    "SELL",
+    "DUMP",
+    "PUMP",
+    "MOON",
+    "BULL",
+    "BEAR",
+    "GAIN",
+    "LOSS",
+    "RISK",
+    "NEWS",
+    "TIME",
+    "WEEK",
+    "YEAR",
+    "DAYS",
+    "WAIT",
+    "SURE",
+    "NEED",
+    "WANT",
+    "KNOW",
+    "LIKE",
+    "LOVE",
+    "HATE",
+    "BEST",
+    "HUGE",
+    "CASH",
+    "FREE",
+    "FUND",
+    "GOLD",
+    "GROW",
+    "HUNT",
+    "IDEA",
+    "INTO",
+    "JOBS",
+    "KIND",
+    "LAND",
+    "LATE",
+    "LEAD",
+    "LEFT",
+    "LESS",
+    "LIFE",
+    "LIKE",
+    "LINE",
+    "LIST",
+    "LOOK",
+    "LOST",
+    "LOUD",
+    "MAIN",
+    "MARK",
+    "MIND",
+    "MINE",
+    "MORE",
+    "NAME",
+    "NEAR",
+    "NOTE",
+    "ONCE",
+    "OPEN",
+    "PART",
+    "PAST",
+    "PATH",
+    "PLAN",
+    "PLUS",
+    "POOR",
+    "PUSH",
+    "PUTS",
+    "RATE",
+    "READ",
+    "REST",
+    "RIDE",
+    "RISE",
+    "ROAD",
+    "ROCK",
+    "ROLE",
+    "ROOM",
+    "RULE",
+    "RUSH",
+    "SAID",
+    "SEND",
+    "SHOW",
+    "SIDE",
+    "SIGN",
+    "SIZE",
+    "SLOW",
+    "SOON",
+    "SPOT",
+    "STAY",
+    "STEP",
+    "STOP",
+    "THEN",
+    "THEM",
+    "THEY",
+    "THINK",
+    "TOLD",
+    "TONE",
+    "TOOK",
+    "TOPS",
+    "TOWN",
+    "TRIM",
+    "TRUE",
+    "TURN",
+    "TYPE",
+    "VIEW",
+    "VOTE",
+    "WALK",
+    "WARN",
+    "WENT",
+    "WIDE",
+    "WILD",
+    "WILL",
+    "WINS",
+    "WISE",
+    "WISH",
+    "WITH",
+    "WORD",
+    "WORK",
+    "WORN",
+    "WRAP",
+    "YARD",
+    "ZONE",
+]
 
-for exchange in ["nasdaq", "nyse", "amex"]:
-    url = f"https://api.nasdaq.com/api/screener/stocks?tableonly=true&limit=10000&exchange={exchange}&download=true"
-    response = requests.get(url, headers=headers, timeout=30)
-
-    if response.status_code == 200:
-        rows = response.json().get("data", {}).get("rows", [])
-        for row in rows:
-            symbol = row.get("symbol", "").strip()
-            if symbol and symbol.isalpha() and 1 <= len(symbol) <= 5:
-                all_tickers.add(symbol.upper())
-        print(f"{exchange.upper()}: {len(all_tickers)} total tickers so far")
-    else:
-        print(f"{exchange.upper()}: failed {response.status_code}")
-
-print(f"\nTotal: {len(all_tickers)}")
-print(f"AND in tickers: {'AND' in all_tickers}")
-print(f"COULD in tickers: {'COULD' in all_tickers}")
-print(f"GANX in tickers: {'GANX' in all_tickers}")
-
-# Save to file
-with open("valid_tickers.json", "w") as f:
-    json.dump(list(all_tickers), f)
-print("Saved to valid_tickers.json")
+valid_common = [w for w in common_words if w in VALID_TICKERS]
+print(f"Common words that are valid tickers ({len(valid_common)}):")
+for w in sorted(valid_common):
+    print(f"  {w}")
