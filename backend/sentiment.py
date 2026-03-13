@@ -7,7 +7,8 @@ from groq import Groq
 import time
 
 _last_groq_call = 0
-_GROQ_MIN_INTERVAL = 4
+_GROQ_MIN_INTERVAL = 4.0
+_consecutive_429s = 0
 
 load_dotenv()
 
@@ -37,8 +38,8 @@ def finbert_analyze(text):
         return {"score": 0.0, "label": "neutral", "confident": False}
 
 
-def groq_analyze(text):
-    global _last_groq_call
+def groq_analyze(text, retry=False):
+    global _last_groq_call, _GROQ_MIN_INTERVAL, _consecutive_429s
 
     elapsed = time.time() - _last_groq_call
     if elapsed < _GROQ_MIN_INTERVAL:
@@ -46,29 +47,21 @@ def groq_analyze(text):
 
     _last_groq_call = time.time()
 
+    text = text[:200]
+
     try:
         response = groq_client.chat.completions.create(
             model="llama-3.1-8b-instant",  # fast and free
             messages=[
                 {
                     "role": "user",
-                    "content": f"""Analyze sentiment of this Reddit stock comment.
-Be conservative with scores — reserve extreme values for very strong signals.
+                    "content": f"""Analyze Reddit stock comment sentiment.
+Return ONLY JSON: {{"label":"positive/negative/neutral","score":0.0}}
 
-Scoring guide:
-- +0.8 to +1.0: Very strong bullish (FDA approval, massive earnings beat)
-- +0.4 to +0.8: Moderately bullish (positive outlook, buying interest)
-- +0.1 to +0.4: Slightly bullish (mild positive sentiment)
-- -0.1 to +0.1: Neutral (watching, unsure, holding)
-- -0.4 to -0.1: Slightly bearish (mild concern)
-- -0.4 to -0.8: Moderately bearish (negative outlook)
-- -0.8 to -1.0: Very strong bearish (scam, fraud, bankruptcy)
-
-Financial slang reference:
-- Bullish: moon, rocket, 🚀, squeeze, breakout, calls, accumulating
-- Bearish: dump, short, puts, scam, dilution, avoid, bankrupt
-
-Return ONLY JSON: {{"label": "positive/negative/neutral", "score": 0.0}}
+Scores: +0.8 to +1.0 very bullish, +0.4 to +0.8 bullish, 
+-0.4 to -0.8 bearish, -0.8 to -1.0 very bearish. Be conservative.
+Bullish slang: moon,rocket,🚀,squeeze,breakout,calls,accumulating
+Bearish slang: dump,short,scam,dilution,avoid,bankrupt,rekt
 
 Comment: "{text}"
 """,
@@ -76,6 +69,11 @@ Comment: "{text}"
             ],
             temperature=0.1,  # low temperature = more consistent outputs
         )
+
+        _consecutive_429s = 0
+        if _GROQ_MIN_INTERVAL > 4:
+            _GROQ_MIN_INTERVAL = max(4, _GROQ_MIN_INTERVAL - 0.5)
+            print(f"Reduced Groq interval to {_GROQ_MIN_INTERVAL} seconds")
 
         raw = response.choices[0].message.content.strip()
 
@@ -88,7 +86,23 @@ Comment: "{text}"
                 "label": result.get("label", "neutral"),
             }
     except Exception as e:
-        print(f"Groq error: {e}")
+        error_str = str(e)
+        if "429" in error_str or "rate_limit" in error_str.lower():
+            _consecutive_429s += 1
+
+            # Increase interval permanently to avoid future 429s
+            _GROQ_MIN_INTERVAL = min(10.0, _GROQ_MIN_INTERVAL + 1.0)
+
+            wait_time = _consecutive_429s * 15  # 15s, 30s, 45s...
+            print(
+                f"  429 hit #{_consecutive_429s} — interval now {_GROQ_MIN_INTERVAL}s, waiting {wait_time}s"
+            )
+            time.sleep(wait_time)
+
+            if not retry:
+                return groq_analyze(text, retry=True)
+        else:
+            print(f"Groq error: {e}")
 
     return {"score": 0.0, "label": "neutral"}
 
