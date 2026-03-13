@@ -46,7 +46,7 @@ The sentiment score reflects the **full conversation** — not just the original
 | ------------------ | -------------------------------------------------------------------------- |
 | Reddit Data        | Reddit Public JSON API (no auth required)                                  |
 | Ticker Extraction  | Regex + NASDAQ/NYSE ticker blacklist                                       |
-| Sentiment Analysis | [FinBERT](https://huggingface.co/ProsusAI/finbert) (financial domain BERT) |
+| Sentiment Analysis | [FinBERT](https://huggingface.co/ProsusAI/finbert) (financial domain BERT) + Groq API |
 | Backend            | Python — `requests`, `transformers`, `torch`                               |
 | Frontend           | React + Tailwind CSS                                                       |
 | Scheduling         | Runs every 24 hours (cron / task scheduler)                                |
@@ -101,7 +101,7 @@ pip install requests transformers torch yfinance
 python main.py
 ```
 
-The first run will download the FinBERT model (~500MB). Subsequent runs use the cached model and take 15–30 minutes depending on Reddit rate limits.
+The first run will download the FinBERT model (~500MB). Subsequent runs use the cached model and take 15–30 minutes depending on Reddit rate limits. 
 
 Output is written to `output.json` and `output.txt`.
 
@@ -176,8 +176,12 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 - [x] Ticker extraction with blacklist filtering
 - [x] FinBERT sentiment analysis
 - [x] Ranked output (JSON + TXT)
-- [ ] React dashboard UI
-- [ ] Yahoo Finance price integration
+- [x] React dashboard UI
+- [x] Yahoo Finance price integration
+- [ ] Groq API integration
+- [ ] React ticker page
+- [ ] Scheduler
+- [ ] Google Sheets API integration
 
 ### V2 (Planned)
 
