@@ -18,12 +18,12 @@ def extract_tickers_simple(text):
     """Simple ticker extraction using validated ticker list"""
     tickers = set()
 
-    dollar_tickers = re.findall(r"\$([A-Z]{1,5})\b", text.upper())
+    dollar_tickers = re.findall(r"\$([A-Za-z]{1,5})\b", text)
     for t in dollar_tickers:
         if t in VALID_TICKERS and t not in LARGE_CAP_EXCLUDE:
             tickers.add(t)
 
-    standalone = re.findall(r"\b([A-Z]{3,5})\b", text.upper())
+    standalone = re.findall(r"\b([A-Z]{3,5})\b", text)
     for t in standalone:
         if t in VALID_TICKERS and t not in LARGE_CAP_EXCLUDE:
             tickers.add(t)
