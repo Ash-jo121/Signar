@@ -60,7 +60,7 @@ def analyze_ticker_sentiment(all_posts):
     with tqdm(total=total_contexts, desc="Analyzing", unit="context") as pbar:
         for ticker, data in master.items():
             all_ctx_count = len(data["contexts"])
-            if data["mentions"] < 1:
+            if data["mentions"] < 2:
                 continue
 
             sampled_contexts = sample_contexts(data["contexts"], max_contexts=15)
@@ -146,10 +146,7 @@ if __name__ == "__main__":
         r for r in results if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15
     ]
 
-    print("\nStep 4: Updating Google Sheet...")
-    update_spreadsheet(results)
-
-    print("\nWriting output to files...\n")
+    print("\nStep 4: Writing output to files...\n")
 
     with open("output.json", "w", encoding="utf-8") as file:
         json.dump(results[:10], file, indent=2, ensure_ascii=False)
@@ -164,3 +161,10 @@ if __name__ == "__main__":
                 f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
             )
             file.write("\n")  # blank line between stocks
+
+    print("\nStep 5: Updating Google Sheet...")
+    try:
+        update_spreadsheet(results)
+    except Exception as e:
+        print(f"Google Sheets update failed: {e}")
+        print("output.json was already saved — data is not lost")
