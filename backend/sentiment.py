@@ -120,7 +120,7 @@ Comment: "{text}"
         error_str = str(e)
         if "429" in error_str or "rate_limit" in error_str.lower():
             print(
-                f"  429 hit #{_consecutive_429s} — interval now {_GROQ_MIN_INTERVAL}s, waiting {wait_time}s"
+                f"  429 hit #{_consecutive_429s} — interval now {_GROQ_MIN_INTERVAL}s, waiting 60s"
             )
             time.sleep(60)
 
