@@ -1,3 +1,5 @@
+import ast
+from collections import deque
 import os
 import json
 import re
@@ -10,6 +12,12 @@ _last_groq_call = 0
 _GROQ_MIN_INTERVAL = 4.0
 _consecutive_429s = 0
 
+# Track request timestamps in a sliding window
+_request_times = deque()
+_MAX_REQUESTS_PER_MINUTE = 20  # conservative, actual limit is 30
+_MAX_TOKENS_PER_MINUTE = 5000  # conservative, actual limit is 6000
+_ESTIMATED_TOKENS_PER_REQUEST = 120  # after prompt shortening
+
 load_dotenv()
 
 print("Loading FinBERT model...")
@@ -18,6 +26,35 @@ sentiment_pipeline = pipeline(
 )
 
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+
+def wait_for_rate_limit():
+    """Proactively wait before sending request"""
+    global _request_times
+
+    now = time.time()
+
+    # Remove requests older than 60 seconds
+    while _request_times and now - _request_times[0] > 60:
+        _request_times.popleft()
+
+    # If we're at the request limit, wait
+    if len(_request_times) >= _MAX_REQUESTS_PER_MINUTE:
+        # Wait until oldest request is 60s old
+        wait_time = 60 - (now - _request_times[0]) + 0.5
+        if wait_time > 0:
+            print(f"  Rate limit approaching — waiting {wait_time:.1f}s")
+            time.sleep(wait_time)
+
+    # If we're approaching token limit, wait
+    tokens_used = len(_request_times) * _ESTIMATED_TOKENS_PER_REQUEST
+    if tokens_used >= _MAX_TOKENS_PER_MINUTE:
+        wait_time = 60 - (now - _request_times[0]) + 0.5
+        if wait_time > 0:
+            print(f"  Token limit approaching — waiting {wait_time:.1f}s")
+            time.sleep(wait_time)
+
+    _request_times.append(time.time())
 
 
 def finbert_analyze(text):
@@ -39,15 +76,9 @@ def finbert_analyze(text):
 
 
 def groq_analyze(text, retry=False):
-    global _last_groq_call, _GROQ_MIN_INTERVAL, _consecutive_429s
-
-    elapsed = time.time() - _last_groq_call
-    if elapsed < _GROQ_MIN_INTERVAL:
-        time.sleep(_GROQ_MIN_INTERVAL - elapsed)
-
-    _last_groq_call = time.time()
-
     text = text[:200]
+
+    wait_for_rate_limit()
 
     try:
         response = groq_client.chat.completions.create(
@@ -70,17 +101,17 @@ Comment: "{text}"
             temperature=0.1,  # low temperature = more consistent outputs
         )
 
-        _consecutive_429s = 0
-        if _GROQ_MIN_INTERVAL > 4:
-            _GROQ_MIN_INTERVAL = max(4, _GROQ_MIN_INTERVAL - 0.5)
-            print(f"Reduced Groq interval to {_GROQ_MIN_INTERVAL} seconds")
-
         raw = response.choices[0].message.content.strip()
 
-        # Clean up response in case model adds extra text
         json_match = re.search(r"\{.*\}", raw, re.DOTALL)
         if json_match:
-            result = json.loads(json_match.group())
+            try:
+                result = json.loads(json_match.group())
+            except json.JSONDecodeError:
+                try:
+                    result = ast.literal_eval(json_match.group())
+                except:
+                    result = {"label": "neutral", "score": 0.0}
             return {
                 "score": round(float(result.get("score", 0)), 3),
                 "label": result.get("label", "neutral"),
@@ -88,16 +119,12 @@ Comment: "{text}"
     except Exception as e:
         error_str = str(e)
         if "429" in error_str or "rate_limit" in error_str.lower():
-            _consecutive_429s += 1
-
-            # Increase interval permanently to avoid future 429s
-            _GROQ_MIN_INTERVAL = min(10.0, _GROQ_MIN_INTERVAL + 1.0)
-
-            wait_time = _consecutive_429s * 15  # 15s, 30s, 45s...
             print(
                 f"  429 hit #{_consecutive_429s} — interval now {_GROQ_MIN_INTERVAL}s, waiting {wait_time}s"
             )
-            time.sleep(wait_time)
+            time.sleep(60)
+
+            _request_times.clear()
 
             if not retry:
                 return groq_analyze(text, retry=True)
