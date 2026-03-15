@@ -1,47 +1,44 @@
-$GANX
-  Mentions: 2 | Sentiment: +0.295 | Score: +0.603
-  Context: Gain Therapeutics ($GANX) - The Parkinson's 'Unicorn' the biotech market is sleeping on. Clinical pr
+$EONR
+  Mentions: 243.40000000000003 | Sentiment: +0.264 | Score: +9.071
+  Context: Retail sure loves to be reactive, not proactive. That’s how bagholders are made…
 
-$BGL
-  Mentions: 2 | Sentiment: +0.356 | Score: +0.468
-  Context: $bgl has the best risk/reward imo, possible 30x 
-
-$BYND
-  Mentions: 2 | Sentiment: +0.176 | Score: +0.386
-  Context: $BYND - .7670 support, need to get a close above .7921, key break is at .8065
-
-
-$NUAI, $4.62 needs t
-
-$OLOX
-  Mentions: 6 | Sentiment: +0.112 | Score: +0.229
-  Context: Nano cap oil, $OLOX
-
-$BURU
-  Mentions: 7 | Sentiment: +0.103 | Score: +0.219
-  Context: $BURU - UP almost 1% @$0.299 on 32.7M volume, HOD @$0.313 on today's News... Counter-drone technolog
+The idea is to buy
 
 $MOBX
-  Mentions: 8 | Sentiment: +0.085 | Score: +0.204
-  Context: Stupidly expected a rocket ship send off this morning - someone tell me to hold $MOBX and $PRSO 
+  Mentions: 37.199999999999996 | Sentiment: +0.215 | Score: +1.315
+  Context: MOBX what news will be next....
 
-$AMPX
-  Mentions: 2 | Sentiment: +0.064 | Score: +0.202
-  Context: Looks absolutely 🔥 
-Wish this was suggested today 
+https://preview.redd.it/2seierp2r5pg1.jpeg?width=1051&amp;format=pj
 
-$AMPX
-$16.03 has to hold then this needs to brea
+$TPET
+  Mentions: 58.2 | Sentiment: +0.134 | Score: +1.206
+  Context: I let the spam bots entice me to look at a ticker... if they have a real website and up to date fina
 
-$NXXT
-  Mentions: 4 | Sentiment: +0.142 | Score: +0.200
-  Context: Fuel shortages and rising demand - why $NXXT could shine
+$BIAF
+  Mentions: 27.6 | Sentiment: +0.250 | Score: +1.110
+  Context: $BIAF right now needs to hold above $1.96, a close below this, you could be looking at a reversal fr
+
+$SAFX
+  Mentions: 44.69999999999999 | Sentiment: +0.142 | Score: +0.995
+  Context: I’ve come to the conclusion with the help of other people that SAFX is in a good position. They just
 
 $ANNA
-  Mentions: 4 | Sentiment: +0.076 | Score: +0.181
-  Context: Averaging UP-date $ANNA EU LNG
+  Mentions: 25.4 | Sentiment: +0.174 | Score: +0.828
+  Context: That’s all I really know. Saw it mentioned the last few days and then saw earnings result today. It 
 
-$FTRK
-  Mentions: 7 | Sentiment: +0.103 | Score: +0.176
-  Context: $FTRK – Entertainment Industry Microcap
+$IPM
+  Mentions: 40.0 | Sentiment: +0.107 | Score: +0.611
+  Context: Low risk Cyber focused stock.  Cyber threats have significantly increased since 2016.  It’s not exac
+
+$TLYS
+  Mentions: 15.0 | Sentiment: +0.173 | Score: +0.598
+  Context: I was just about to post about TLYS - I think if it makes it past 3.20ish the next level is around 4
+
+$AIFF
+  Mentions: 12.6 | Sentiment: +0.191 | Score: +0.530
+  Context: Stop loss hit on AIFF yesterday and I missed out on 50% gains. Gotta love it 
+
+$NVA
+  Mentions: 5.0 | Sentiment: +0.089 | Score: +0.442
+  Context: Buy Rare Earth stocks, Tungsten, Antimony, Lithium my friends USAR ARR RML NVA ASN best potential US
 

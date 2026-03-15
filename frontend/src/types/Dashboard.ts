@@ -48,6 +48,6 @@ export interface TickerData {
 
 export interface TopContext {
   text: string;
-  sentiment: number;
+  sentiment: string;
   score: number;
 }
