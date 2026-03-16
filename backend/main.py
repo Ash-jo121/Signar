@@ -1,4 +1,5 @@
 import json
+import re
 from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
 from scraper import fetch_all
@@ -6,6 +7,23 @@ from extractor import aggregate_tickers, extract_from_post
 from sentiment import analyze_sentiment
 import random
 from tqdm import tqdm
+
+
+def is_valid_context(text: str) -> bool:
+    cleaned = re.sub(r"http\S+", "", text).strip()
+    return len(cleaned) > 20  # skip if almost nothing left after removing URL
+
+
+def clean_context(text: str) -> str:
+    # Remove URLs
+    text = re.sub(r"http\S+|www\S+", "", text)
+    # Remove Reddit image previews
+    text = re.sub(r"https://preview\.redd\.it\S+", "", text)
+    # Remove HTML entities
+    text = text.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+    # Clean up extra whitespace
+    text = re.sub(r"\n+", " ", text).strip()
+    return text
 
 
 def sample_contexts(contexts, max_contexts=15):
@@ -46,7 +64,9 @@ def analyze_ticker_sentiment(all_posts):
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
-            master[ticker]["contexts"].extend(data["contexts"])
+            for context in data["contexts"]:
+                if is_valid_context(context):
+                    master[ticker]["contexts"].append(clean_context(context)[:200])
 
     # Count total contexts to analyze after sampling
     total_contexts = sum(min(len(data["contexts"]), 15) for data in master.values())
@@ -117,7 +137,7 @@ def analyze_ticker_sentiment(all_posts):
                     "mentions": data["mentions"],
                     "avg_sentiment": round(avg_sentiment, 3),
                     "final_score": round(final_score, 3),
-                    "top_contexts": top_contexts[:3],
+                    "top_contexts": top_contexts[:7],
                 }
             )
 
