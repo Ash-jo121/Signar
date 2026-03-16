@@ -9,6 +9,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "../components/ui/tabs";
+import StatCard from "../components/StatCard";
 
 export default function TickerDetails() {
   const { symbol } = useParams();
@@ -41,27 +42,27 @@ export default function TickerDetails() {
             />
           </div>
           <div className="ticker-heading">
-            <h1 className="scroll-m-20 text-center text-2xl font-extrabold tracking-tight text-balance">
-              {ticker.stockName}
-            </h1>
-            <h2 className="scroll-m-20 text-center text-lg font-semibold tracking-tight">
-              {ticker.name}
-            </h2>
+            <h1 className="text-2xl font-bold">{ticker.stockName}</h1>
+            <p className="text-sm text-slate-500">{ticker.name}</p>
           </div>
           <div className="ticker-price">
-            <h1 className="scroll-m-20 text-center text-2xl font-extrabold tracking-tight text-balance">
-              {ticker.price}$
-            </h1>
+            <h1 className="text-2xl font-bold">${ticker.price}</h1>
             <h2 className="scroll-m-20 text-center text-lg font-semibold tracking-tight">
-              {ticker.changePercent} %{" "}
-              <span className="text-green-500">&#9652;</span>
+              <span
+                className={
+                  ticker.changePercent >= 0 ? "text-green-500" : "text-red-500"
+                }
+              >
+                {ticker.changePercent >= 0 ? "▲" : "▼"}{" "}
+                {Math.abs(ticker.changePercent)}%
+              </span>
             </h2>
           </div>
         </div>
         <div className="ticker-description">{ticker.description}</div>
         <Tabs
           defaultValue="sentiment"
-          className="w-full flex flex-col justify-center my-20"
+          className="w-full flex flex-col justify-center my-6"
         >
           <TabsList>
             <TabsTrigger value="sentiment">Sentiment</TabsTrigger>
@@ -90,14 +91,10 @@ export default function TickerDetails() {
 const SentimentTab = ({ ticker }: { ticker: TickerData }) => {
   return (
     <div className="ticker-sentiment-container-wrapper">
-      <div className="ticker-sentiment-container">Stock Sentiment</div>
       <div className="ticker-sentiment-details">
-        <div> Mentions: {ticker.mentions}</div>
-        <div> Average Sentiment: {ticker.averageSentiment}</div>
-        <div>
-          {" "}
-          Final Score: <SentimentScore score={ticker.finalScore} />
-        </div>
+        <StatCard label="Mentions" value={ticker.mentions} />
+        <StatCard label="Avg Sentiment" value={ticker.averageSentiment} />
+        <StatCard label="Final Score" value={ticker.finalScore} />
       </div>
       <div className="ticker-sentiment-contexts">
         <div className="comment-grid">
@@ -118,52 +115,71 @@ const SentimentTab = ({ ticker }: { ticker: TickerData }) => {
 const StockDetailsTab = ({ ticker }: { ticker: TickerData }) => {
   return (
     <div className="ticker-stock-details-container">
-      <div>Name: {ticker.name}</div>
-      <div>Symbol: {ticker.symbol}</div>
-      <div>Industry: {ticker.industry}</div>
-      <div>Sector: {ticker.sector}</div>
-      <div>Country: {ticker.country}</div>
-      <div>
-        Website:{" "}
-        <a href={ticker.website} target="_blank" rel="noopener noreferrer">
-          {ticker.website}
-        </a>
-      </div>
-      <div>City: {ticker.city}</div>
-      <div>State: {ticker.state}</div>
-      <div>Zip: {ticker.zip}</div>
-      <div>Phone: {ticker.phone}</div>
-      <div>Email: {ticker.email}</div>
-      <div>CEO: {ticker.ceo}</div>
-      <div>Founded: {ticker.founded}</div>
-      <div>Employees: {ticker.employees}</div>
+      <StatCard label="Name" value={ticker.name} />
+      <StatCard label="Symbol" value={ticker.symbol} />
+      <StatCard label="Industry" value={ticker.industry} />
+      <StatCard label="Sector" value={ticker.sector} />
+      <StatCard label="Country" value={ticker.country} />
+      <StatCard label="City" value={`${ticker.city}, ${ticker.state}`} />
+      <StatCard label="Exchange" value={ticker.exchange} />
+      {ticker.website && (
+        <StatCard
+          label="Website"
+          value={
+            <a
+              href={ticker.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline text-sm"
+            >
+              {ticker.website.replace("https://", "")}
+            </a>
+          }
+        />
+      )}
     </div>
   );
 };
 
 const FinancialsTab = ({ ticker }: { ticker: TickerData }) => {
+  const formatNumber = (num: number) => {
+    if (num >= 1_000_000_000) return `$${(num / 1_000_000_000).toFixed(2)}B`;
+    if (num >= 1_000_000) return `$${(num / 1_000_000).toFixed(2)}M`;
+    if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
+    return num.toString();
+  };
+
   return (
     <div className="ticker-financials-container">
-      <div>Price: {ticker.price}</div>
-      <div>Change Percent: {ticker.changePercent}</div>
-      <div>Market Cap: {ticker.marketCap}</div>
-      <div>52 Week High: {ticker.fiftyTwoWeekHigh}</div>
-      <div>52 Week Low: {ticker.fiftyTwoWeekLow}</div>
-      <div>Volume: {ticker.volume}</div>
-      <div>Analyst Target: {ticker.analystTarget}</div>
-      <div>Recommendation: {ticker.recommendation}</div>
-      <div>Exchange: {ticker.exchange}</div>
-      <div>Currency: {ticker.currency}</div>
+      <StatCard label="Price" value={`$${ticker.price}`} />
+      <StatCard
+        label="Change"
+        value={
+          <span
+            className={
+              ticker.changePercent >= 0 ? "text-green-500" : "text-red-500"
+            }
+          >
+            {ticker.changePercent >= 0 ? "▲" : "▼"}{" "}
+            {Math.abs(ticker.changePercent)}%
+          </span>
+        }
+      />
+      <StatCard label="Market Cap" value={formatNumber(ticker.marketCap)} />
+      <StatCard label="Volume" value={formatNumber(ticker.volume)} />
+      <StatCard label="52W High" value={`$${ticker.fiftyTwoWeekHigh}`} />
+      <StatCard label="52W Low" value={`$${ticker.fiftyTwoWeekLow}`} />
+      {ticker.analystTarget > 0 && (
+        <StatCard label="Analyst Target" value={`$${ticker.analystTarget}`} />
+      )}
+      {ticker.recommendation !== "none" && (
+        <StatCard
+          label="Recommendation"
+          value={ticker.recommendation.toUpperCase()}
+        />
+      )}
+      <StatCard label="Exchange" value={ticker.exchange} />
+      <StatCard label="Currency" value={ticker.currency} />
     </div>
-  );
-};
-
-const SentimentScore = ({ score }: { score: number }) => {
-  const color = score > 0.1 ? "#22c55e" : score < -0.1 ? "#ef4444" : "#94a3b8";
-  return (
-    <span style={{ color }}>
-      {score > 0 ? "+" : score < 0 ? "-" : ""}
-      {score}
-    </span>
   );
 };
