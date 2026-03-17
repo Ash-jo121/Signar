@@ -170,7 +170,7 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
 ## Roadmap
 
-### V1 (Current)
+### V1 (Completed)
 
 - [x] Reddit scraper with recursive comment fetching
 - [x] Ticker extraction with blacklist filtering
@@ -178,12 +178,11 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 - [x] Ranked output (JSON + TXT)
 - [x] React dashboard UI
 - [x] Yahoo Finance price integration
-- [ ] Groq API integration
-- [ ] React ticker page
-- [ ] Scheduler
-- [ ] Google Sheets API integration
+- [x] Groq API integration
+- [x] React ticker page
+- [x] Google Sheets API integration
 
-### V2 (Planned)
+### V2 (Current)
 
 - [ ] Historical data storage (PostgreSQL)
 - [ ] Search functionality for past picks
@@ -192,6 +191,7 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 - [ ] Pump-and-dump detection (sudden mention spikes)
 - [ ] Reddit OAuth for higher rate limits
 - [ ] Stock specific subreddit to be analyzed for more data
+- [ ] Scheduler
 
 ---
 
