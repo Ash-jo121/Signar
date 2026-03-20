@@ -7,3 +7,4 @@ valid_tickers.json
 backend/test.py
 backend/output.json
 backend/output.txt
+CLAUDE.md
