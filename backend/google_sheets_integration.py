@@ -43,7 +43,7 @@ def update_spreadsheet(results):
         for result in results:
             row = [
                 result["ticker"],
-                result.get("company_name", ""),
+                result.get("name", ""),
                 round(result["avg_sentiment"], 3),
                 result["mentions"],
                 round(result["final_score"], 3),
@@ -56,6 +56,14 @@ def update_spreadsheet(results):
 
     header_row = all_values[0]
 
+    #backfill algorithm
+    for i, row in enumerate(all_values[1:], start=1):
+        if row and row[0] and (len(row) < 2 or row[1] == ""):
+            ticker = row[0]
+            matching = next((r for r in results if r["ticker"] == ticker), None)
+            if matching:
+                sheet.update_cell(i + 1, 2, matching.get("name", ""))
+    
     # Check if today already exists
     if f"SS_{today}" in header_row:
         print(f"Data for {today} already exists, skipping...")
@@ -141,7 +149,7 @@ def update_spreadsheet(results):
             # New ticker — create new row with empty values
             new_row = [""] * len(new_header)
             new_row[0] = ticker
-            new_row[1] = result.get("company_name", "")
+            new_row[1] = result.get("name", "")
             new_row[new_ss_col_idx] = round(result["avg_sentiment"], 3)
             new_row[new_m_col_idx] = result["mentions"]
             new_row[new_fs_col_idx] = round(result["final_score"], 3)
