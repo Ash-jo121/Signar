@@ -130,11 +130,7 @@ def analyze_ticker_sentiment(all_posts):
                 print(
                     f"  {ticker}: {all_ctx_count} contexts → sampling {len(sampled_contexts)}"
                 )
-                avg_post_score = (
-                    sum(data["post_scores"]) / len(data["post_scores"])
-                    if data["post_scores"]
-                    else 0
-                )
+                
                 engagement_weight = min(1.0, 0.3 + (len(data["contexts"]) / 50) * 0.7)
 
                 sentiment_scores = []
