@@ -11,6 +11,11 @@ from tqdm import tqdm
 import traceback
 
 
+def has_diverse_contexts(contexts, min_unique_patterns=3):
+    patterns = set(c["text"][:30] for c in contexts)
+    return len(patterns) >= min_unique_patterns
+
+
 def is_valid_context(text: str) -> bool:
     cleaned = re.sub(r"http\S+", "", text).strip()
 
@@ -89,15 +94,18 @@ def analyze_ticker_sentiment(all_posts):
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
-            for context in data["contexts"]:
-                if is_valid_context(context["text"]):
-                    cleaned = clean_context(context["text"])
-                    master[ticker]["contexts"].append({
-                        "full": cleaned[:500],
-                        "short": cleaned[:200],
-                        "score": context["score"],
-                        "source": context["source"],
-                    })
+            if has_diverse_contexts(data["contexts"]):
+                for context in data["contexts"]:
+                    if is_valid_context(context["text"]):
+                        cleaned = clean_context(context["text"])
+                        master[ticker]["contexts"].append(
+                            {
+                                "full": cleaned[:500],
+                                "short": cleaned[:200],
+                                "score": context["score"],
+                                "source": context["source"],
+                            }
+                        )
             # Track highest-upvoted comment across all posts for this ticker
             tc = data.get("top_comment")
             if tc:
@@ -134,7 +142,7 @@ def analyze_ticker_sentiment(all_posts):
                 print(
                     f"  {ticker}: {all_ctx_count} contexts → sampling {len(sampled_contexts)}"
                 )
-                
+
                 top_contexts = []
 
                 short_to_full = {}
@@ -192,12 +200,16 @@ def analyze_ticker_sentiment(all_posts):
             # Improvement 1: post body = 1 voice, comments = community judgment
             # Give community more weight when there's high engagement (>=10 comment contexts)
             avg_post = sum(post_scores) / len(post_scores) if post_scores else 0
-            avg_community = sum(comment_scores) / len(comment_scores) if comment_scores else 0
+            avg_community = (
+                sum(comment_scores) / len(comment_scores) if comment_scores else 0
+            )
 
             if post_scores and comment_scores:
                 post_weight = 0.3 if len(comment_scores) >= 10 else 0.5
                 community_weight = 1.0 - post_weight
-                avg_sentiment = avg_post * post_weight + avg_community * community_weight
+                avg_sentiment = (
+                    avg_post * post_weight + avg_community * community_weight
+                )
             elif post_scores:
                 avg_sentiment = avg_post
             else:
@@ -210,7 +222,9 @@ def analyze_ticker_sentiment(all_posts):
                 groq_calls += 1 if tc_sentiment["source"] == "groq" else 0
                 finbert_calls += 1 if tc_sentiment["source"] == "finbert" else 0
                 if tc_sentiment["score"] < -0.3:
-                    print(f"  {ticker}: contrarian signal detected (top comment score={top_comment['score']}, sentiment={tc_sentiment['score']:.2f})")
+                    print(
+                        f"  {ticker}: contrarian signal detected (top comment score={top_comment['score']}, sentiment={tc_sentiment['score']:.2f})"
+                    )
                     avg_sentiment = max(-1.0, avg_sentiment - 0.5)
 
             final_score = avg_sentiment * (1 + math.log(1 + data["mentions"]) * 0.3)
@@ -249,6 +263,8 @@ if __name__ == "__main__":
     results = [
         r for r in results if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15
     ]
+
+    results = [r for r in results if r["mentions"] >= 5 and len(r["top_contexts"]) >= 3]
 
     print("\nStep 4: Writing output to files...\n")
 
