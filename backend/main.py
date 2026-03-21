@@ -76,30 +76,34 @@ def analyze_ticker_sentiment(all_posts):
     # Progress bar for post collection pass
     print("\nPass 1: Collecting contexts from posts...")
     for post in tqdm(all_posts, desc="Collecting", unit="post"):
-        comment_count = len(post.get("comments", []))
-        engagement_weight = min(1.0, 0.3 + (comment_count / 50) * 0.7)
         found = extract_from_post(post)
 
         for ticker, data in found.items():
             if ticker not in master:
                 master[ticker] = {
                     "mentions": 0,
-                    "sentiment_scores": [],
                     "contexts": [],
                     "post_scores": [],
+                    "top_comment": None,
                 }
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
             for context in data["contexts"]:
-                if is_valid_context(context):
-                    master[ticker]["contexts"].append(
-                        {
-                            "full": clean_context(context)[:500],
-                            "short": clean_context(context)[:200],
-                            "comment_score": max(0, context.get("comment_score", 0)),
-                        }
-                    )
+                if is_valid_context(context["text"]):
+                    cleaned = clean_context(context["text"])
+                    master[ticker]["contexts"].append({
+                        "full": cleaned[:500],
+                        "short": cleaned[:200],
+                        "score": context["score"],
+                        "source": context["source"],
+                    })
+            # Track highest-upvoted comment across all posts for this ticker
+            tc = data.get("top_comment")
+            if tc:
+                existing = master[ticker]["top_comment"]
+                if existing is None or tc["score"] > existing["score"]:
+                    master[ticker]["top_comment"] = tc
 
     # Count total contexts to analyze after sampling
     total_contexts = sum(
@@ -131,32 +135,42 @@ def analyze_ticker_sentiment(all_posts):
                     f"  {ticker}: {all_ctx_count} contexts → sampling {len(sampled_contexts)}"
                 )
                 
-                engagement_weight = min(1.0, 0.3 + (len(data["contexts"]) / 50) * 0.7)
-
-                sentiment_scores = []
                 top_contexts = []
 
-                short_to_full = {c["short"]: c["full"] for c in data["contexts"]}
-                short_to_comment_score = {
-                    c["short"]: c.get("comment_score", 0) for c in data["contexts"]
-                }
+                short_to_full = {}
+                short_to_score = {}
+                short_to_source = {}
+
+                for c in data["contexts"]:
+                    short_to_full[c["short"]] = c["full"]
+                    short_to_score[c["short"]] = c["score"]
+                    short_to_source[c["short"]] = c["source"]
+
+                post_scores = []
+                comment_scores = []
 
                 for context_short in sampled_contexts:
                     sentiment = analyze_sentiment(context_short)
-                    comment_score = short_to_comment_score.get(context_short, 0)
+                    ctx_score = short_to_score.get(context_short, 0)
+                    source = short_to_source.get(context_short, "comment")
 
                     if sentiment["source"] == "groq":
                         groq_calls += 1
                     elif sentiment["source"] == "finbert":
                         finbert_calls += 1
 
-                    comment_weight = min(2.0, max(0.5, 1.0 + (comment_score / 100)))
-                    weighted_score = (
-                        sentiment["score"] * engagement_weight * comment_weight
-                    )
-                    sentiment_scores.append(weighted_score)
-                    full_text = short_to_full.get(context_short, context_short)
+                    effective_score = sentiment["score"]
 
+                    if source == "comment":
+                        # Improvement 3: community downvoting a bullish comment is a bearish signal
+                        if effective_score > 0.3 and ctx_score < -2:
+                            effective_score = effective_score * -0.5
+                        comment_weight = min(2.0, max(0.5, 1.0 + (ctx_score / 100)))
+                        comment_scores.append(effective_score * comment_weight)
+                    else:
+                        post_scores.append(effective_score)
+
+                    full_text = short_to_full.get(context_short, context_short)
                     top_contexts.append(
                         {
                             "text": full_text[:300],
@@ -165,7 +179,6 @@ def analyze_ticker_sentiment(all_posts):
                         }
                     )
 
-                    # Update progress bar with current ticker info
                     pbar.set_postfix(
                         {"ticker": ticker, "groq": groq_calls, "finbert": finbert_calls}
                     )
@@ -176,9 +189,29 @@ def analyze_ticker_sentiment(all_posts):
                 traceback.print_exc()
                 continue
 
-            avg_sentiment = (
-                sum(sentiment_scores) / len(sentiment_scores) if sentiment_scores else 0
-            )
+            # Improvement 1: post body = 1 voice, comments = community judgment
+            # Give community more weight when there's high engagement (>=10 comment contexts)
+            avg_post = sum(post_scores) / len(post_scores) if post_scores else 0
+            avg_community = sum(comment_scores) / len(comment_scores) if comment_scores else 0
+
+            if post_scores and comment_scores:
+                post_weight = 0.3 if len(comment_scores) >= 10 else 0.5
+                community_weight = 1.0 - post_weight
+                avg_sentiment = avg_post * post_weight + avg_community * community_weight
+            elif post_scores:
+                avg_sentiment = avg_post
+            else:
+                avg_sentiment = avg_community
+
+            # Improvement 2: contrarian signal — top comment strongly contradicts post thesis
+            top_comment = data.get("top_comment")
+            if top_comment and avg_post > 0.3 and top_comment["score"] > 20:
+                tc_sentiment = analyze_sentiment(top_comment["text"][:200])
+                groq_calls += 1 if tc_sentiment["source"] == "groq" else 0
+                finbert_calls += 1 if tc_sentiment["source"] == "finbert" else 0
+                if tc_sentiment["score"] < -0.3:
+                    print(f"  {ticker}: contrarian signal detected (top comment score={top_comment['score']}, sentiment={tc_sentiment['score']:.2f})")
+                    avg_sentiment = max(-1.0, avg_sentiment - 0.5)
 
             final_score = avg_sentiment * (1 + math.log(1 + data["mentions"]) * 0.3)
 

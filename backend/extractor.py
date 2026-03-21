@@ -16,8 +16,9 @@ def extract_tickers(text):
     dollar_tickers = re.findall(r"\$([A-Za-z]{1,5})\b", text)
 
     for t in dollar_tickers:
-        if t in VALID_TICKERS and t not in LARGE_CAP_EXCLUDE:
-            tickers.add(t)
+        t_upper = t.upper()
+        if t_upper in VALID_TICKERS and t_upper not in LARGE_CAP_EXCLUDE:
+            tickers.add(t_upper)
 
     standalone = re.findall(r"\b([A-Z]{3,5})\b", text)
     for t in standalone:
@@ -35,9 +36,20 @@ def extract_from_post(post):
 
     for ticker in tickers:
         if ticker not in found:
-            found[ticker] = {"mentions": 0, "scores": [], "contexts": []}
+            found[ticker] = {
+                "mentions": 0,
+                "scores": [],
+                "contexts": [],
+                "top_comment": None,
+            }
         found[ticker]["mentions"] += 1
-        found[ticker]["contexts"].append(post["title"][:100])
+        found[ticker]["contexts"].append(
+            {
+                "text": text[:300],
+                "source": "post",
+                "score": post["score"],
+            }
+        )
 
     for comment in post.get("comments", []):
 
@@ -49,16 +61,31 @@ def extract_from_post(post):
 
         for ticker in comment_tickers:
             if ticker not in found:
-                found[ticker] = {"mentions": 0, "scores": [], "contexts": []}
+                found[ticker] = {
+                    "mentions": 0,
+                    "scores": [],
+                    "contexts": [],
+                    "top_comment": None,
+                }
             mention_weight = comment.get("mention_weight", 1.0)
             found[ticker]["mentions"] += mention_weight
             found[ticker]["scores"].append(comment["score"])
             found[ticker]["contexts"].append(
                 {
-                    "text": comment["body"][:200],
-                    "comment_score": max(0, comment.get("score", 0)),  # Reddit upvotes
+                    "text": comment["body"][:300],
+                    "source": "comment",
+                    "score": comment[
+                        "score"
+                    ],  # keep negatives for downvoted-bullish detection
                 }
             )
+            # Track highest-upvoted comment per ticker for contrarian signal detection
+            tc = found[ticker]["top_comment"]
+            if tc is None or comment["score"] > tc["score"]:
+                found[ticker]["top_comment"] = {
+                    "text": comment["body"][:300],
+                    "score": comment["score"],
+                }
 
     return found
 
