@@ -53,7 +53,12 @@ def extract_from_post(post):
             mention_weight = comment.get("mention_weight", 1.0)
             found[ticker]["mentions"] += mention_weight
             found[ticker]["scores"].append(comment["score"])
-            found[ticker]["contexts"].append(comment["body"][:100])
+            found[ticker]["contexts"].append(
+                {
+                    "text": comment["body"][:200],
+                    "comment_score": max(0, comment.get("score", 0)),  # Reddit upvotes
+                }
+            )
 
     return found
 

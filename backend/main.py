@@ -1,4 +1,5 @@
 import json
+import math
 import re
 from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
@@ -96,6 +97,7 @@ def analyze_ticker_sentiment(all_posts):
                         {
                             "full": clean_context(context)[:500],
                             "short": clean_context(context)[:200],
+                            "comment_score": max(0, context.get("comment_score", 0)),
                         }
                     )
 
@@ -139,16 +141,23 @@ def analyze_ticker_sentiment(all_posts):
                 top_contexts = []
 
                 short_to_full = {c["short"]: c["full"] for c in data["contexts"]}
+                short_to_comment_score = {
+                    c["short"]: c.get("comment_score", 0) for c in data["contexts"]
+                }
 
                 for context_short in sampled_contexts:
                     sentiment = analyze_sentiment(context_short)
+                    comment_score = short_to_comment_score.get(context_short, 0)
 
                     if sentiment["source"] == "groq":
                         groq_calls += 1
                     elif sentiment["source"] == "finbert":
                         finbert_calls += 1
 
-                    weighted_score = sentiment["score"] * engagement_weight
+                    comment_weight = min(2.0, max(0.5, 1.0 + (comment_score / 100)))
+                    weighted_score = (
+                        sentiment["score"] * engagement_weight * comment_weight
+                    )
                     sentiment_scores.append(weighted_score)
                     full_text = short_to_full.get(context_short, context_short)
 
@@ -175,11 +184,7 @@ def analyze_ticker_sentiment(all_posts):
                 sum(sentiment_scores) / len(sentiment_scores) if sentiment_scores else 0
             )
 
-            final_score = (
-                avg_sentiment
-                * (1 + data["mentions"] * 0.1)
-                * (1 + avg_post_score * 0.01)
-            )
+            final_score = avg_sentiment * (1 + math.log(1 + data["mentions"]) * 0.3)
 
             results.append(
                 {
