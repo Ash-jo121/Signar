@@ -1,7 +1,7 @@
 from multiprocessing import context
 import re
 import requests
-from exclusion import LARGE_CAP_EXCLUDE
+from exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
 from tickers import VALID_TICKERS
 
 from comparison import is_comparison_mention
@@ -17,12 +17,20 @@ def extract_tickers(text):
 
     for t in dollar_tickers:
         t_upper = t.upper()
-        if t_upper in VALID_TICKERS and t_upper not in LARGE_CAP_EXCLUDE:
+        if (
+            t_upper in VALID_TICKERS
+            and t_upper not in LARGE_CAP_EXCLUDE
+            and t_upper not in COMMON_ABBREVIATIONS
+        ):
             tickers.add(t_upper)
 
     standalone = re.findall(r"\b([A-Z]{3,5})\b", text)
     for t in standalone:
-        if t in VALID_TICKERS and t not in LARGE_CAP_EXCLUDE:
+        if (
+            t in VALID_TICKERS
+            and t not in LARGE_CAP_EXCLUDE
+            and t not in COMMON_ABBREVIATIONS
+        ):
             tickers.add(t)
 
     return list(tickers)

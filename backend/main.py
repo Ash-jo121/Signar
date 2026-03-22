@@ -1,6 +1,8 @@
 import json
 import math
 import re
+from database import init_db
+from database import save_daily_results
 from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
 from scraper import fetch_all
@@ -12,7 +14,7 @@ import traceback
 
 
 def has_diverse_contexts(contexts, min_unique_patterns=3):
-    patterns = set(c["text"][:30] for c in contexts)
+    patterns = set(c["full"][:30] for c in contexts)
     return len(patterns) >= min_unique_patterns
 
 
@@ -94,18 +96,17 @@ def analyze_ticker_sentiment(all_posts):
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
-            if has_diverse_contexts(data["contexts"]):
-                for context in data["contexts"]:
-                    if is_valid_context(context["text"]):
-                        cleaned = clean_context(context["text"])
-                        master[ticker]["contexts"].append(
-                            {
-                                "full": cleaned[:500],
-                                "short": cleaned[:200],
-                                "score": context["score"],
-                                "source": context["source"],
-                            }
-                        )
+            for context in data["contexts"]:
+                if is_valid_context(context["text"]):
+                    cleaned = clean_context(context["text"])
+                    master[ticker]["contexts"].append(
+                        {
+                            "full": cleaned[:500],
+                            "short": cleaned[:200],
+                            "score": context["score"],
+                            "source": context["source"],
+                        }
+                    )
             # Track highest-upvoted comment across all posts for this ticker
             tc = data.get("top_comment")
             if tc:
@@ -130,7 +131,7 @@ def analyze_ticker_sentiment(all_posts):
         for ticker, data in master.items():
             try:
                 all_ctx_count = len(data["contexts"])
-                if data["mentions"] < 5:
+                if not has_diverse_contexts(data["contexts"]):
                     continue
 
                 all_short_texts = [c["short"] for c in data["contexts"]]
@@ -244,12 +245,13 @@ def analyze_ticker_sentiment(all_posts):
     print(f"Groq API calls efficiency: {groq_calls / 14400 * 100:.2f}%")
 
     results.sort(key=lambda x: x["final_score"], reverse=True)
-    results = [r for r in results if r["mentions"] >= 2]
     return results
 
 
 if __name__ == "__main__":
     print("=== ThreadRadar ===\n")
+
+    init_db()
 
     print("Step 1: Fetching posts...")
     posts = fetch_all()
@@ -261,10 +263,14 @@ if __name__ == "__main__":
     results = enrich_with_price(results)
 
     results = [
-        r for r in results if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15
+        r
+        for r in results
+        if r.get("price", 0) > 0.01
+        and r.get("price", 0) <= 15
+        and 0 < r.get("market_cap", 0) <= 500000000
+        and r["mentions"] >= 5
+        and len(r["top_contexts"]) >= 3
     ]
-
-    results = [r for r in results if r["mentions"] >= 5 and len(r["top_contexts"]) >= 3]
 
     print("\nStep 4: Writing output to files...\n")
 
@@ -282,7 +288,10 @@ if __name__ == "__main__":
             )
             file.write("\n")  # blank line between stocks
 
-    print("\nStep 5: Updating Google Sheet...")
+    print("\nStep 5: Saving results to database...")
+    save_daily_results(results)
+
+    print("\nStep 6: Updating Google Sheet...")
     try:
         update_spreadsheet(results)
     except Exception as e:

@@ -256,3 +256,17 @@ LARGE_CAP_EXCLUDE = {
     "YAK",
     "YAM",
 }
+
+COMMON_ABBREVIATIONS = {
+    "REE",  # rare earth elements
+    "EMA",  # exponential moving average
+    "RSI",  # relative strength index
+    "ATR",  # average true range
+    "IMO",  # in my opinion
+    "EOD",  # end of day
+    "EPS",  # earnings per share
+    "IPO",  # initial public offering
+    "RSI",  # also a ticker but RSI is used as indicator far more
+    "CEO",  # title
+    "CFO",  # title
+}

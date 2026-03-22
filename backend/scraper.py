@@ -5,6 +5,7 @@ import time
 
 from exclusion import LARGE_CAP_EXCLUDE
 from tickers import VALID_TICKERS
+from database import save_post
 
 HEADERS = {"User-Agent": "ThreadRadar/1.0"}
 
@@ -40,6 +41,9 @@ def fetch_posts(subreddit, category="hot", limit=100):
         if response.status_code == 200:
             posts = response.json()["data"]["children"]
             print(f"Fetched a total of {len(posts)} posts from the subreddit")
+            for p in posts:
+                save_post(p["data"])
+
             return [
                 {
                     "id": p["data"]["id"],

@@ -8,3 +8,4 @@ backend/test.py
 backend/output.json
 backend/output.txt
 CLAUDE.md
+backend/threadradar.db
