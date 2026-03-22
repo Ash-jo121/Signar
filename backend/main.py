@@ -6,9 +6,8 @@ from database import save_daily_results
 from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
 from scraper import fetch_all
-from extractor import aggregate_tickers, extract_from_post
+from extractor import extract_from_post
 from sentiment import analyze_sentiment
-import random
 from tqdm import tqdm
 import traceback
 
@@ -118,7 +117,7 @@ def analyze_ticker_sentiment(all_posts):
     total_contexts = sum(
         min(len(data["contexts"]), 15)
         for data in master.values()
-        if data["mentions"] >= 5  # match your filter
+        if has_diverse_contexts(data["contexts"])
     )
 
     print(f"\nPass 2: Analyzing sentiment for {len(master)} tickers...")

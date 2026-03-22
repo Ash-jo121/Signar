@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import time
 from datetime import datetime
 
 DB_PATH = "threadradar.db"
@@ -75,7 +76,7 @@ if __name__ == "__main__":
 def save_daily_results(results, date=None):
     """Save today's top picks to database"""
     if date is None:
-        date = datetime.now().strftime("%d-%m-%Y")
+        date = datetime.now().strftime("%Y-%m-%d")
 
     conn = get_connection()
     saved = 0
@@ -150,12 +151,12 @@ def save_post(post):
                 post["id"],
                 post["subreddit"],
                 post["title"],
-                post.get("body", "")[:1000],
+                post.get("selftext", "")[:1000],
                 post.get("score", 0),
                 len(post.get("comments", [])),
                 "active",
                 post.get("created_utc", 0),
-                __import__("time").time(),
+                time.time(),
             ),
         )
         conn.commit()
@@ -185,7 +186,7 @@ def get_ticker_history(ticker, days=30):
 def get_daily_results(date=None):
     """Get all results for a specific date"""
     if date is None:
-        date = datetime.now().strftime("%d-%m-%Y")
+        date = datetime.now().strftime("%Y-%m-%d")
 
     conn = get_connection()
     rows = conn.execute(
@@ -227,7 +228,7 @@ def get_consistent_tickers(min_appearances=3, days_back=14):
 def ticker_exists_today(ticker, date=None):
     """Check if ticker already saved for today"""
     if date is None:
-        date = datetime.now().strftime("%d-%m-%Y")
+        date = datetime.now().strftime("%Y-%m-%d")
     conn = get_connection()
     result = conn.execute(
         """

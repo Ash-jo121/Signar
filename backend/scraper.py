@@ -3,7 +3,7 @@ import re
 import requests
 import time
 
-from exclusion import LARGE_CAP_EXCLUDE
+from exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
 from tickers import VALID_TICKERS
 from database import save_post
 
@@ -21,12 +21,21 @@ def extract_tickers_simple(text):
 
     dollar_tickers = re.findall(r"\$([A-Za-z]{1,5})\b", text)
     for t in dollar_tickers:
-        if t in VALID_TICKERS and t not in LARGE_CAP_EXCLUDE:
+        t = t.upper()
+        if (
+            t in VALID_TICKERS
+            and t not in LARGE_CAP_EXCLUDE
+            and t not in COMMON_ABBREVIATIONS
+        ):
             tickers.add(t)
 
     standalone = re.findall(r"\b([A-Z]{3,5})\b", text)
     for t in standalone:
-        if t in VALID_TICKERS and t not in LARGE_CAP_EXCLUDE:
+        if (
+            t in VALID_TICKERS
+            and t not in LARGE_CAP_EXCLUDE
+            and t not in COMMON_ABBREVIATIONS
+        ):
             tickers.add(t)
 
     return list(tickers)
