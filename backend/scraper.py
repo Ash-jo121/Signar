@@ -9,7 +9,13 @@ from database import save_post
 
 HEADERS = {"User-Agent": "ThreadRadar/1.0"}
 
-SUBREDDITS = ["pennystocks", "smallstreetbets", "Pennystock"]
+SUBREDDITS = [
+    "pennystocks",
+    "smallstreetbets",
+    "Pennystock",
+    "RobinHoodPennyStocks",
+    "10xPennyStocks",
+]
 
 
 print(f"✓ Scraper loaded VALID_TICKERS: {len(VALID_TICKERS)} tickers")
