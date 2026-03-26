@@ -12,7 +12,6 @@ import {
 import StatCard from "../components/StatCard";
 
 export default function TickerDetails() {
-  const { symbol } = useParams();
   const { state } = useLocation();
   const ticker: TickerData = state?.ticker;
   const navigate = useNavigate();
