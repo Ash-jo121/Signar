@@ -1,6 +1,5 @@
 from multiprocessing import context
 import re
-import requests
 from exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
 from tickers import VALID_TICKERS
 
