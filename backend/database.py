@@ -4,12 +4,17 @@ from datetime import datetime
 
 DB_PATH = "threadradar.db"
 
+# Wait for locks instead of failing immediately (SQLite default is short).
+_SQLITE_TIMEOUT_S = 30.0
+_BUSY_TIMEOUT_MS = 30_000
+
 
 def get_connection():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=_SQLITE_TIMEOUT_S)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     conn.execute("PRAGMA journal_mode = WAL")
+    conn.execute(f"PRAGMA busy_timeout = {_BUSY_TIMEOUT_MS}")
     return conn
 
 
@@ -61,7 +66,28 @@ def init_db():
             created_utc REAL,
             last_analyzed REAL,
             fetched_utc REAL
-        ); """
+        ); 
+        
+        -- Performance tracking table: track stock performance over time
+        CREATE TABLE IF NOT EXISTS performance_tracking (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticker TEXT NOT NULL,
+    flagged_date TEXT NOT NULL,
+    flagged_price REAL,
+    flagged_score REAL,
+    flagged_sentiment REAL,
+    flagged_mentions REAL,
+    price_1d REAL,
+    price_3d REAL,
+    price_7d REAL,
+    return_1d REAL,
+    return_3d REAL,
+    return_7d REAL,
+    updated_1d INTEGER DEFAULT 0,
+    updated_3d INTEGER DEFAULT 0,
+    updated_7d INTEGER DEFAULT 0,
+    UNIQUE(ticker, flagged_date)
+);"""
     )
     conn.commit()
     conn.close()
@@ -152,7 +178,7 @@ def save_post(post):
                 post["title"],
                 post.get("selftext", "")[:1000],
                 post.get("score", 0),
-                len(post.get("comments", [])),
+                post.get("num_comments", 0),
                 "active",
                 post.get("created_utc", 0),
                 time.time(),
@@ -238,3 +264,90 @@ def ticker_exists_today(ticker, date=None):
     ).fetchone()
     conn.close()
     return result is not None
+
+
+def get_active_posts():
+    """Return all posts with status='active' created within last 3 days"""
+    conn = get_connection()
+    rows = conn.execute(
+        """
+        SELECT id, subreddit, title, body, post_score, comment_count,
+               comment_count_at_analysis, created_utc, last_analyzed
+        FROM posts
+        WHERE status = 'active'
+          AND created_utc >= strftime('%s', 'now', '-3 days')
+        ORDER BY created_utc DESC
+        """
+    ).fetchall()
+    conn.close()
+    return [dict(row) for row in rows]
+
+
+def update_post_after_refresh(post_id, new_comment_count):
+    """Update comment count and last_analyzed timestamp after re-fetch"""
+    conn = get_connection()
+    conn.execute(
+        """
+        UPDATE posts
+        SET comment_count = ?,
+            comment_count_at_analysis = ?,
+            last_analyzed = ?
+        WHERE id = ?
+        """,
+        (new_comment_count, new_comment_count, time.time(), post_id),
+    )
+    conn.commit()
+    conn.close()
+
+
+def archive_old_posts():
+    """Mark posts older than 3 days as archived"""
+    conn = get_connection()
+    result = conn.execute(
+        """
+        UPDATE posts
+        SET status = 'archived'
+        WHERE status = 'active'
+          AND created_utc < strftime('%s', 'now', '-3 days')
+        """
+    )
+    count = result.rowcount
+    conn.commit()
+    conn.close()
+    if count:
+        print(f"  Archived {count} posts older than 3 days")
+
+
+def record_flagged_stocks(results, date=None):
+    """Record today's flagged stocks with their price at time of flagging"""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+
+    conn = get_connection()
+    saved = 0
+
+    for result in results:
+        try:
+            conn.execute(
+                """
+                INSERT OR IGNORE INTO performance_tracking
+                (ticker, flagged_date, flagged_price, flagged_score,
+                 flagged_sentiment, flagged_mentions)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    result["ticker"],
+                    date,
+                    result.get("price", 0),
+                    result.get("final_score", 0),
+                    result.get("avg_sentiment", 0),
+                    result.get("mentions", 0),
+                ),
+            )
+            saved += 1
+        except sqlite3.IntegrityError:
+            continue
+
+    conn.commit()
+    conn.close()
+    print(f"Performance tracking: recorded {saved} flagged stocks for {date}")
