@@ -1,7 +1,7 @@
 import json
 import math
 import re
-from database import init_db
+from database import init_db, record_flagged_stocks
 from database import save_daily_results
 from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
@@ -261,6 +261,18 @@ if __name__ == "__main__":
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(results)
 
+    trackable = [
+        r
+        for r in results
+        if r.get("price", 0) > 0.01
+        and r.get("price", 0) <= 15
+        and r["mentions"] >= 2  # lower bar — just needs basic signal
+    ]
+
+    print("\nStep 4: Saving results to database...")
+    save_daily_results(trackable)
+    record_flagged_stocks(trackable)
+
     results = [
         r
         for r in results
@@ -271,7 +283,7 @@ if __name__ == "__main__":
         and len(r["top_contexts"]) >= 3
     ]
 
-    print("\nStep 4: Writing output to files...\n")
+    print("\nStep 5: Writing output to files...\n")
 
     with open("output.json", "w", encoding="utf-8") as file:
         json.dump(results[:10], file, indent=2, ensure_ascii=False)
@@ -286,9 +298,6 @@ if __name__ == "__main__":
                 f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
             )
             file.write("\n")  # blank line between stocks
-
-    print("\nStep 5: Saving results to database...")
-    save_daily_results(results)
 
     print("\nStep 6: Updating Google Sheet...")
     try:
