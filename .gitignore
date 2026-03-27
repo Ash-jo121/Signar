@@ -11,3 +11,12 @@ CLAUDE.md
 backend/threadradar.db
 backend/threadradar.db-wal
 backend/threadradar.db-shm
+backend/.cache/
+backend/finbert_reddit/
+backend/finbert_reddit_finetuned/
+
+*.pyc
+*.pyo
+.Python
+venv/
+.venv/
