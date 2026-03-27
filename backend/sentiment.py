@@ -20,12 +20,18 @@ _ESTIMATED_TOKENS_PER_REQUEST = 120  # after prompt shortening
 
 load_dotenv()
 
-print("Loading FinBERT model...")
-sentiment_pipeline = pipeline(
-    "text-classification", model="ProsusAI/finbert", tokenizer="ProsusAI/finbert"
-)
-
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+def get_pipeline():
+    global sentiment_pipeline
+    if sentiment_pipeline is None:
+        print("Loading FinBERT model...")
+        sentiment_pipeline = pipeline(
+            "text-classification", 
+            model="ProsusAI/finbert", 
+            tokenizer="ProsusAI/finbert"
+        )
+    return sentiment_pipeline
 
 
 def wait_for_rate_limit():
@@ -60,7 +66,8 @@ def wait_for_rate_limit():
 def finbert_analyze(text):
     text = text[:512]
     try:
-        results = sentiment_pipeline(text, top_k=None)
+        pipe = get_pipeline()
+        results = pipe(text, top_k=None)
         scores = {r["label"]: r["score"] for r in results}
         positive = scores.get("positive", 0)
         negative = scores.get("negative", 0)
