@@ -20,6 +20,8 @@ SUBREDDITS = [
     "Pennystock",
     "RobinHoodPennyStocks",
     "10xPennyStocks",
+    "Shortsqueeze",
+    "SqueezePlays",
 ]
 
 LOOKBACK_SECONDS = 24 * 60 * 60  # 24 hours
@@ -369,7 +371,7 @@ def fetch_all():
         time.sleep(5)
 
         # Hot posts — catches older posts with active discussion
-        hot_posts = fetch_hot(subreddit, limit=25)
+        hot_posts = fetch_hot(subreddit, limit=50)
         for post in hot_posts:
             if post["score"] < -5 or post["id"] in seen_ids:
                 continue

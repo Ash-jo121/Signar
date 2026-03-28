@@ -269,4 +269,22 @@ COMMON_ABBREVIATIONS = {
     "RSI",  # also a ticker but RSI is used as indicator far more
     "CEO",  # title
     "CFO",  # title
+    "TBH",
+    "IMO",
+    "IIRC",
+    "AFAIK",
+    "FWIW",
+    "TLDR",
+    "YOLO",
+    "FOMO",
+    "HODL",
+    "MOASS",
+    "CAPS",
+    "IYKYK",
+    "NFA",
+    "DD",
+    "ATH",
+    "AH",
+    "PM",
+    "PTs",
 }
