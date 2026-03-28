@@ -69,44 +69,6 @@ def parse_post(p):
     }
 
 
-# def fetch_posts(subreddit, category="hot", limit=100):
-#     url = f"https://www.reddit.com/r/{subreddit}/{category}.json?limit={limit}"
-
-#     for attempt in range(3):
-#         response = requests.get(url, headers=HEADERS)
-
-#         if response.status_code == 200:
-#             posts = response.json()["data"]["children"]
-#             print(f"Fetched a total of {len(posts)} posts from the subreddit")
-#             for p in posts:
-#                 save_post(p["data"])
-
-#             return [
-#                 {
-#                     "id": p["data"]["id"],
-#                     "title": p["data"]["title"],
-#                     "body": p["data"].get("selftext", ""),
-#                     "score": p["data"]["score"],
-#                     "subreddit": subreddit,
-#                     "url": f"https://reddit.com{p['data']['permalink']}",
-#                 }
-#                 for p in posts
-#             ]
-
-#         elif response.status_code == 429:
-#             wait = (attempt + 1) * 30  # 30s, 60s, 90s
-#             print(f"  Rate limited. Waiting {wait}s before retry...")
-#             time.sleep(wait)
-
-#         else:
-#             print(
-#                 f"Failed to fetch posts from the subreddit: {subreddit} :: {response.status_code}"
-#             )
-#             return []
-
-#     return []
-
-
 def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
     comments = []
     for c in comments_list:
@@ -122,7 +84,7 @@ def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
             else:
                 effective_tickers = parent_tickers or []
                 inherited = True
-                mention_weight = max(0.3, 1.0 - (depth * 0.2))
+                mention_weight = max(0.1, 0.5 - (depth * 0.2))
 
             comments.append(
                 {
