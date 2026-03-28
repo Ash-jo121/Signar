@@ -233,9 +233,7 @@ def analyze_ticker_sentiment(all_posts):
                     )
                     avg_sentiment = max(-1.0, avg_sentiment - 0.5)
 
-            total_comments = sum(
-                c["score"] for c in data["contexts"] if c["source"] == "comment"
-            )
+
             post_count = sum(1 for c in data["contexts"] if c["source"] == "post")
             comment_count = sum(1 for c in data["contexts"] if c["source"] == "comment")
 

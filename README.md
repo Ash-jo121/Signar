@@ -23,7 +23,7 @@ Reddit JSON API
       ↓
   extractor.py        → Extracts ticker symbols using regex + blacklist filtering
       ↓
-  sentiment.py        → Scores each mention using FinBERT (financial BERT model)
+  sentiment.py        → Scores each mention using FinBERT (financial BERT model) and Groq
       ↓
   main.py             → Aggregates scores, weights by upvotes, ranks tickers
       ↓
@@ -42,14 +42,14 @@ The sentiment score reflects the **full conversation** — not just the original
 
 ## Tech Stack
 
-| Layer              | Technology                                                                 |
-| ------------------ | -------------------------------------------------------------------------- |
-| Reddit Data        | Reddit Public JSON API (no auth required)                                  |
-| Ticker Extraction  | Regex + NASDAQ/NYSE ticker blacklist                                       |
+| Layer              | Technology                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| Reddit Data        | Reddit Public JSON API (no auth required)                                             |
+| Ticker Extraction  | Regex + NASDAQ/NYSE ticker blacklist                                                  |
 | Sentiment Analysis | [FinBERT](https://huggingface.co/ProsusAI/finbert) (financial domain BERT) + Groq API |
-| Backend            | Python — `requests`, `transformers`, `torch`                               |
-| Frontend           | React + Tailwind CSS                                                       |
-| Scheduling         | Runs every 24 hours (cron / task scheduler)                                |
+| Backend            | Python — `requests`, `transformers`, `torch`                                          |
+| Frontend           | React + Tailwind CSS                                                                  |
+| Scheduling         | Runs every 24 hours (cron / task scheduler)                                           |
 
 **Why FinBERT over VADER?**
 General sentiment models don't understand financial language. VADER scores "this stock is going to the moon" as neutral. FinBERT was trained on financial news and analyst reports — it correctly understands terms like "bullish", "FDA approval", "short squeeze", and "dilution".
@@ -101,7 +101,7 @@ pip install requests transformers torch yfinance
 python main.py
 ```
 
-The first run will download the FinBERT model (~500MB). Subsequent runs use the cached model and take 15–30 minutes depending on Reddit rate limits. 
+The first run will download the FinBERT model (~500MB). Subsequent runs use the cached model and take 15–30 minutes depending on Reddit rate limits.
 
 Output is written to `output.json` and `output.txt`.
 
@@ -146,14 +146,14 @@ Create a basic task that runs `python main.py` from the backend directory daily.
 Each ticker's final score is calculated as:
 
 ```
-final_score = avg_sentiment × (1 + mentions × 0.1) × (1 + avg_post_score × 0.01) | This formula is development in progress |
+final_score = avg_sentiment × (1 + log(1 + mentions) * 0.3) × engagement_multiplier | This formula is development in progress |
 ```
 
 Where:
 
 - `avg_sentiment` — weighted average FinBERT score across all mentions (-1 to +1)
 - `mentions` — total number of times the ticker appeared across posts and comments
-- `avg_post_score` — average Reddit upvote score of posts containing the ticker
+- `engagement_multiplier` — indicator for engagement weighting
 
 Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
@@ -163,8 +163,8 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
 - **Pump-and-dump risk** — Reddit penny stock communities are susceptible to coordinated pumping. High sentiment scores do not guarantee legitimate picks. Always do your own research.
 - **OTC stock data gaps** — Some penny stocks trade OTC and may not have full price data available via Yahoo Finance.
-- **Rate limiting** — Reddit's unauthenticated API limits requests. The pipeline includes automatic retry logic but the `top` category is sometimes unavailable.
-- **FinBERT and Reddit slang** — FinBERT was trained on formal financial text. Reddit slang like "to the moon 🚀" scores as neutral rather than positive. This is intentional conservatism — we prefer false negatives over false positives.
+  <!-- - **Rate limiting** — Reddit's unauthenticated API limits requests. The pipeline includes automatic retry logic but the `top` category is sometimes unavailable. -->
+  <!-- - **FinBERT and Reddit slang** — FinBERT was trained on formal financial text. Reddit slang like "to the moon 🚀" scores as neutral rather than positive. This is intentional conservatism — we prefer false negatives over false positives. -->
 
 ---
 
@@ -184,14 +184,14 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
 ### V2 (Current)
 
-- [ ] Historical data storage (PostgreSQL)
+- [x] Historical data storage (sqlite)
+- [x] Scheduler
+- [x] Performance tracking — did the picks actually move?
 - [ ] Search functionality for past picks
-- [ ] Performance tracking — did the picks actually move?
 - [ ] Subreddit weighting (r/pennystocks > r/smallstreetbets)
 - [ ] Pump-and-dump detection (sudden mention spikes)
 - [ ] Reddit OAuth for higher rate limits
 - [ ] Stock specific subreddit to be analyzed for more data
-- [ ] Scheduler
 
 ---
 
