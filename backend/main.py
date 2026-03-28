@@ -38,6 +38,9 @@ def is_valid_context(text: str) -> bool:
         r"END OF DAY",
         r"AFTER HOURS",
         r"^[\s\W]+$",  # only whitespace/punctuation
+        r"!\[gif\]",  # ← add this — Reddit gif embeds
+        r"!\[img\]",  # ← add this — Reddit image embeds
+        r"https?://\S+$",
     ]
     for pattern in LOW_QUALITY_PATTERNS:
         if re.search(pattern, cleaned, re.IGNORECASE):
@@ -62,14 +65,17 @@ def sample_contexts(contexts, ticker, max_contexts=15):
     if len(contexts) <= max_contexts:
         return contexts
 
-    # Tier 1: contexts that explicitly mention the ticker
-    direct = [c for c in contexts if ticker.upper() in c.upper()]
+    seen = set()
+    deduped = []
+    for c in contexts:
+        key = c[:80].strip().lower()
+        if key not in seen:
+            seen.add(key)
+            deduped.append(c)
 
-    # Tier 2: longer contexts (more information dense)
-    others = [c for c in contexts if c not in direct]
+    direct = [c for c in deduped if ticker.upper() in c.upper()]
+    others = [c for c in deduped if c not in direct]
     sorted_others = sorted(others, key=len, reverse=True)
-
-    # Take all direct mentions first, fill rest with longest others
     selected = direct[:10] + sorted_others[: max(0, max_contexts - len(direct[:10]))]
     return selected[:max_contexts]
 
@@ -227,7 +233,24 @@ def analyze_ticker_sentiment(all_posts):
                     )
                     avg_sentiment = max(-1.0, avg_sentiment - 0.5)
 
-            final_score = avg_sentiment * (1 + math.log(1 + data["mentions"]) * 0.3)
+            total_comments = sum(
+                c["score"] for c in data["contexts"] if c["source"] == "comment"
+            )
+            post_count = sum(1 for c in data["contexts"] if c["source"] == "post")
+            comment_count = sum(1 for c in data["contexts"] if c["source"] == "comment")
+
+            if post_count + comment_count > 0:
+                engagement_ratio = comment_count / (post_count + comment_count)
+            else:
+                engagement_ratio = 0
+
+            engagement_multiplier = 0.4 + (0.6 * engagement_ratio)
+
+            final_score = (
+                avg_sentiment
+                * (1 + math.log(1 + data["mentions"]) * 0.3)
+                * engagement_multiplier
+            )
 
             results.append(
                 {
