@@ -41,6 +41,7 @@ def is_valid_context(text: str) -> bool:
         r"!\[gif\]",  # ← add this — Reddit gif embeds
         r"!\[img\]",  # ← add this — Reddit image embeds
         r"https?://\S+$",
+        r"please and thank you",
     ]
     for pattern in LOW_QUALITY_PATTERNS:
         if re.search(pattern, cleaned, re.IGNORECASE):
@@ -107,7 +108,7 @@ def analyze_ticker_sentiment(all_posts):
                     master[ticker]["contexts"].append(
                         {
                             "full": cleaned[:500],
-                            "short": cleaned[:200],
+                            "short": cleaned[:300],
                             "score": context["score"],
                             "source": context["source"],
                         }
@@ -224,7 +225,7 @@ def analyze_ticker_sentiment(all_posts):
             # Improvement 2: contrarian signal — top comment strongly contradicts post thesis
             top_comment = data.get("top_comment")
             if top_comment and avg_post > 0.3 and top_comment["score"] > 20:
-                tc_sentiment = analyze_sentiment(top_comment["text"][:200])
+                tc_sentiment = analyze_sentiment(top_comment["text"])
                 groq_calls += 1 if tc_sentiment["source"] == "groq" else 0
                 finbert_calls += 1 if tc_sentiment["source"] == "finbert" else 0
                 if tc_sentiment["score"] < -0.3:
@@ -232,7 +233,6 @@ def analyze_ticker_sentiment(all_posts):
                         f"  {ticker}: contrarian signal detected (top comment score={top_comment['score']}, sentiment={tc_sentiment['score']:.2f})"
                     )
                     avg_sentiment = max(-1.0, avg_sentiment - 0.5)
-
 
             post_count = sum(1 for c in data["contexts"] if c["source"] == "post")
             comment_count = sum(1 for c in data["contexts"] if c["source"] == "comment")

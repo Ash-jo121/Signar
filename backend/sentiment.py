@@ -22,14 +22,15 @@ load_dotenv()
 
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
+
 def get_pipeline():
     global sentiment_pipeline
     if sentiment_pipeline is None:
         print("Loading FinBERT model...")
         sentiment_pipeline = pipeline(
-            "text-classification", 
-            model="ProsusAI/finbert", 
-            tokenizer="ProsusAI/finbert"
+            "text-classification",
+            model="ProsusAI/finbert",
+            tokenizer="ProsusAI/finbert",
         )
     return sentiment_pipeline
 
@@ -83,7 +84,7 @@ def finbert_analyze(text):
 
 
 def groq_analyze(text, retry=False):
-    text = text[:200]
+    text = text[:500]
 
     wait_for_rate_limit()
 
@@ -100,6 +101,10 @@ Scores: +0.8 to +1.0 very bullish, +0.4 to +0.8 bullish,
 -0.4 to -0.8 bearish, -0.8 to -1.0 very bearish. Be conservative.
 Bullish slang: moon,rocket,🚀,squeeze,breakout,calls,accumulating
 Bearish slang: dump,short,scam,dilution,avoid,bankrupt,rekt
+
+IMPORTANT: score must be negative for bearish/negative labels, 
+positive for bullish/positive labels. Never return bearish with 
+positive score or bullish with negative score.
 
 Comment: "{text}"
 """,
