@@ -1,6 +1,7 @@
 import json
 import math
 import re
+from exclusion import LOW_QUALITY_PATTERNS
 from database import init_db, record_flagged_stocks
 from database import save_daily_results
 from google_sheets_integration import update_spreadsheet
@@ -20,29 +21,13 @@ def has_diverse_contexts(contexts, min_unique_patterns=3):
 def is_valid_context(text: str) -> bool:
     cleaned = re.sub(r"http\S+", "", text).strip()
 
-    # Too short after URL removal
     if len(cleaned) < 30:
         return False
 
-    # Just emojis and caps — watchlist spam
     alpha_chars = sum(1 for c in cleaned if c.isalpha())
     if alpha_chars < 20:
         return False
 
-    # Common low quality patterns
-    LOW_QUALITY_PATTERNS = [
-        r"WATCHLIST",
-        r"SET UPS",
-        r"MARKET OPEN",
-        r"GOOD MORNING",
-        r"END OF DAY",
-        r"AFTER HOURS",
-        r"^[\s\W]+$",  # only whitespace/punctuation
-        r"!\[gif\]",  # ← add this — Reddit gif embeds
-        r"!\[img\]",  # ← add this — Reddit image embeds
-        r"https?://\S+$",
-        r"please and thank you",
-    ]
     for pattern in LOW_QUALITY_PATTERNS:
         if re.search(pattern, cleaned, re.IGNORECASE):
             return False
@@ -51,13 +36,9 @@ def is_valid_context(text: str) -> bool:
 
 
 def clean_context(text: str) -> str:
-    # Remove URLs
     text = re.sub(r"http\S+|www\S+", "", text)
-    # Remove Reddit image previews
     text = re.sub(r"https://preview\.redd\.it\S+", "", text)
-    # Remove HTML entities
     text = text.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
-    # Clean up extra whitespace
     text = re.sub(r"\n+", " ", text).strip()
     return text
 
@@ -69,7 +50,8 @@ def sample_contexts(contexts, ticker, max_contexts=15):
     seen = set()
     deduped = []
     for c in contexts:
-        key = c[:80].strip().lower()
+        # Normalize — remove $, lowercase, strip whitespace
+        key = re.sub(r"[$\s]", "", c[:80]).lower()
         if key not in seen:
             seen.add(key)
             deduped.append(c)
@@ -86,7 +68,9 @@ def analyze_ticker_sentiment(all_posts):
     groq_calls = 0
     finbert_calls = 0
 
-    # Progress bar for post collection pass
+    # Global context dedup set — prevents same context appearing across days
+    seen_context_keys = set()
+
     print("\nPass 1: Collecting contexts from posts...")
     for post in tqdm(all_posts, desc="Collecting", unit="post"):
         found = extract_from_post(post)
@@ -102,9 +86,17 @@ def analyze_ticker_sentiment(all_posts):
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
+
             for context in data["contexts"]:
                 if is_valid_context(context["text"]):
                     cleaned = clean_context(context["text"])
+
+                    # Global dedup — skip if same context seen anywhere this run
+                    context_key = re.sub(r"[$\s]", "", cleaned[:80]).lower()
+                    if context_key in seen_context_keys:
+                        continue
+                    seen_context_keys.add(context_key)
+
                     master[ticker]["contexts"].append(
                         {
                             "full": cleaned[:500],
@@ -113,14 +105,13 @@ def analyze_ticker_sentiment(all_posts):
                             "source": context["source"],
                         }
                     )
-            # Track highest-upvoted comment across all posts for this ticker
+
             tc = data.get("top_comment")
             if tc:
                 existing = master[ticker]["top_comment"]
                 if existing is None or tc["score"] > existing["score"]:
                     master[ticker]["top_comment"] = tc
 
-    # Count total contexts to analyze after sampling
     total_contexts = sum(
         min(len(data["contexts"]), 15)
         for data in master.values()
@@ -132,7 +123,6 @@ def analyze_ticker_sentiment(all_posts):
 
     results = []
 
-    # Progress bar for sentiment analysis pass
     with tqdm(total=total_contexts, desc="Analyzing", unit="context") as pbar:
         for ticker, data in master.items():
             try:
@@ -141,7 +131,6 @@ def analyze_ticker_sentiment(all_posts):
                     continue
 
                 all_short_texts = [c["short"] for c in data["contexts"]]
-
                 unique_contexts = list({c[:50]: c for c in all_short_texts}.values())
                 sampled_contexts = sample_contexts(
                     unique_contexts, ticker, max_contexts=15
@@ -151,7 +140,6 @@ def analyze_ticker_sentiment(all_posts):
                 )
 
                 top_contexts = []
-
                 short_to_full = {}
                 short_to_score = {}
                 short_to_source = {}
@@ -177,7 +165,6 @@ def analyze_ticker_sentiment(all_posts):
                     effective_score = sentiment["score"]
 
                     if source == "comment":
-                        # Improvement 3: community downvoting a bullish comment is a bearish signal
                         if effective_score > 0.3 and ctx_score < -2:
                             effective_score = effective_score * -0.5
                         comment_weight = min(2.0, max(0.5, 1.0 + (ctx_score / 100)))
@@ -204,8 +191,6 @@ def analyze_ticker_sentiment(all_posts):
                 traceback.print_exc()
                 continue
 
-            # Improvement 1: post body = 1 voice, comments = community judgment
-            # Give community more weight when there's high engagement (>=10 comment contexts)
             avg_post = sum(post_scores) / len(post_scores) if post_scores else 0
             avg_community = (
                 sum(comment_scores) / len(comment_scores) if comment_scores else 0
@@ -222,7 +207,6 @@ def analyze_ticker_sentiment(all_posts):
             else:
                 avg_sentiment = avg_community
 
-            # Improvement 2: contrarian signal — top comment strongly contradicts post thesis
             top_comment = data.get("top_comment")
             if top_comment and avg_post > 0.3 and top_comment["score"] > 20:
                 tc_sentiment = analyze_sentiment(top_comment["text"])
@@ -285,9 +269,7 @@ if __name__ == "__main__":
     trackable = [
         r
         for r in results
-        if r.get("price", 0) > 0.01
-        and r.get("price", 0) <= 15
-        and r["mentions"] >= 2  # lower bar — just needs basic signal
+        if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15 and r["mentions"] >= 2
     ]
 
     print("\nStep 4: Saving results to database...")
@@ -300,6 +282,7 @@ if __name__ == "__main__":
         if r.get("price", 0) > 0.01
         and r.get("price", 0) <= 15
         and 0 < r.get("market_cap", 0) <= 500000000
+        and r.get("float_shares", 0) <= 50000000  # ← float filter
         and r["mentions"] >= 5
         and len(r["top_contexts"]) >= 3
     ]
@@ -318,7 +301,7 @@ if __name__ == "__main__":
             file.write(
                 f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
             )
-            file.write("\n")  # blank line between stocks
+            file.write("\n")
 
     print("\nStep 6: Updating Google Sheet...")
     try:
