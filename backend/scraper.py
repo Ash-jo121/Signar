@@ -224,11 +224,6 @@ def should_reanalyze(db_post, fresh_comment_count):
 
 
 def refresh_active_posts(seen_ids):
-    """
-    Re-fetch comments for all active posts in DB (created within 3 days).
-    This is the recycling mechanism — catches comment evolution on older posts.
-    Returns list of refreshed posts ready for sentiment analysis.
-    """
     active = get_active_posts()
 
     if not active:
@@ -241,11 +236,9 @@ def refresh_active_posts(seen_ids):
     for db_post in active:
         post_id = db_post["id"]
 
-        # Skip if already fetched fresh this run (was in new/hot)
         if post_id in seen_ids:
             continue
 
-        # Fetch fresh comment count from Reddit listing (lightweight)
         url = f"https://www.reddit.com/r/{db_post['subreddit']}/comments/{post_id}.json?limit=1"
         try:
             response = requests.get(url, headers=HEADERS)
@@ -261,7 +254,6 @@ def refresh_active_posts(seen_ids):
                 )
                 continue
 
-            # Re-fetch full comments
             comments = fetch_comments(post_id, db_post["subreddit"])
             update_post_after_refresh(post_id, fresh_comment_count)
 
@@ -275,6 +267,7 @@ def refresh_active_posts(seen_ids):
                     "subreddit": db_post["subreddit"],
                     "url": f"https://reddit.com/r/{db_post['subreddit']}/comments/{post_id}",
                     "comments": comments,
+                    "is_refresh": True,  # ← flag so extractor skips post body
                 }
             )
 

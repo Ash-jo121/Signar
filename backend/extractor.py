@@ -38,30 +38,31 @@ def extract_tickers(text):
 def extract_from_post(post):
     found = {}
 
-    text = post["title"] + " " + post["body"]
-    tickers = extract_tickers(text)
+    # Skip post body for refreshed posts — already analyzed on first fetch
+    if not post.get("is_refresh", False):
+        text = post["title"] + " " + post["body"]
+        tickers = extract_tickers(text)
 
-    for ticker in tickers:
-        if ticker not in found:
-            found[ticker] = {
-                "mentions": 0,
-                "scores": [],
-                "contexts": [],
-                "top_comment": None,
-            }
-        found[ticker]["mentions"] += 1
-        found[ticker]["contexts"].append(
-            {
-                "text": text[:300],
-                "source": "post",
-                "score": post["score"],
-            }
-        )
+        for ticker in tickers:
+            if ticker not in found:
+                found[ticker] = {
+                    "mentions": 0,
+                    "scores": [],
+                    "contexts": [],
+                    "top_comment": None,
+                }
+            found[ticker]["mentions"] += 1
+            found[ticker]["contexts"].append(
+                {
+                    "text": text[:300],
+                    "source": "post",
+                    "score": post["score"],
+                }
+            )
 
+    # Always process comments — these are new regardless
     for comment in post.get("comments", []):
-
         comment_tickers = comment.get("tickers", [])
-        is_inherited = comment.get("inherited", False)
 
         if not comment_tickers:
             continue
@@ -81,12 +82,9 @@ def extract_from_post(post):
                 {
                     "text": comment["body"][:300],
                     "source": "comment",
-                    "score": comment[
-                        "score"
-                    ],  # keep negatives for downvoted-bullish detection
+                    "score": comment["score"],
                 }
             )
-            # Track highest-upvoted comment per ticker for contrarian signal detection
             tc = found[ticker]["top_comment"]
             if tc is None or comment["score"] > tc["score"]:
                 found[ticker]["top_comment"] = {
