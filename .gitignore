@@ -20,5 +20,6 @@ backend/finbert_reddit_finetuned/
 .Python
 venv/
 .venv/
-backend/run.ps1
 backend/logs/
+backend/run_main.ps1
+backend/run_price_updater.ps1
