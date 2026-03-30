@@ -332,8 +332,8 @@ def record_flagged_stocks(results, date=None):
                 """
                 INSERT OR IGNORE INTO performance_tracking
                 (ticker, flagged_date, flagged_price, flagged_score,
-                 flagged_sentiment, flagged_mentions)
-                VALUES (?, ?, ?, ?, ?, ?)
+                 flagged_sentiment, flagged_mentions,float_shares)
+                VALUES (?, ?, ?, ?, ?, ?,?)
                 """,
                 (
                     result["ticker"],
@@ -342,6 +342,7 @@ def record_flagged_stocks(results, date=None):
                     result.get("final_score", 0),
                     result.get("avg_sentiment", 0),
                     result.get("mentions", 0),
+                    result.get("float_shares", 0),
                 ),
             )
             saved += 1
