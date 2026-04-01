@@ -1,8 +1,7 @@
-from multiprocessing import context
 import re
+from moderator import COMMUNITY_CALL_PATTERNS, MOD_ACTING_PATTERNS
 from exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
 from tickers import VALID_TICKERS
-
 from comparison import is_comparison_mention
 
 print(f"Extractor loaded, VALID_TICKERS size: {len(VALID_TICKERS)}")
@@ -13,7 +12,6 @@ def extract_tickers(text):
     tickers = set()
 
     dollar_tickers = re.findall(r"\$([A-Za-z]{1,5})\b", text)
-
     for t in dollar_tickers:
         t_upper = t.upper()
         if (
@@ -35,6 +33,32 @@ def extract_tickers(text):
     return list(tickers)
 
 
+def check_mod_intervention(comment_body, comment_score):
+    """
+    Check if a comment contains mod intervention or community pump warning.
+    Returns dict with flag details or None if no intervention detected.
+    """
+    text_lower = comment_body.lower()
+
+    for pattern in MOD_ACTING_PATTERNS:
+        if re.search(pattern, text_lower):
+            return {
+                "mod_flagged": True,
+                "mod_flag_type": "mod_acting",
+                "mod_flag_score": comment_score,
+            }
+
+    for pattern in COMMUNITY_CALL_PATTERNS:
+        if re.search(pattern, text_lower):
+            return {
+                "mod_flagged": True,
+                "mod_flag_type": "community_call",
+                "mod_flag_score": comment_score,
+            }
+
+    return None
+
+
 def extract_from_post(post):
     found = {}
 
@@ -50,6 +74,9 @@ def extract_from_post(post):
                     "scores": [],
                     "contexts": [],
                     "top_comment": None,
+                    "mod_flagged": False,
+                    "mod_flag_type": None,
+                    "mod_flag_score": 0,
                 }
             found[ticker]["mentions"] += 1
             found[ticker]["contexts"].append(
@@ -60,12 +87,15 @@ def extract_from_post(post):
                 }
             )
 
-    # Always process comments — these are new regardless
     for comment in post.get("comments", []):
         comment_tickers = comment.get("tickers", [])
-
         if not comment_tickers:
             continue
+
+        # Check mod intervention on every comment regardless of ticker
+        intervention = check_mod_intervention(
+            comment.get("body", ""), comment.get("score", 0)
+        )
 
         for ticker in comment_tickers:
             if ticker not in found:
@@ -74,7 +104,11 @@ def extract_from_post(post):
                     "scores": [],
                     "contexts": [],
                     "top_comment": None,
+                    "mod_flagged": False,
+                    "mod_flag_type": None,
+                    "mod_flag_score": 0,
                 }
+
             mention_weight = comment.get("mention_weight", 1.0)
             found[ticker]["mentions"] += mention_weight
             found[ticker]["scores"].append(comment["score"])
@@ -85,6 +119,25 @@ def extract_from_post(post):
                     "score": comment["score"],
                 }
             )
+
+            # Apply mod intervention — upgrade if stronger signal found
+            if intervention:
+                existing_type = found[ticker]["mod_flag_type"]
+                # mod_acting always wins over community_call
+                if (
+                    not found[ticker]["mod_flagged"]
+                    or (
+                        existing_type == "community_call"
+                        and intervention["mod_flag_type"] == "mod_acting"
+                    )
+                    or (
+                        intervention["mod_flag_score"] > found[ticker]["mod_flag_score"]
+                    )
+                ):
+                    found[ticker]["mod_flagged"] = True
+                    found[ticker]["mod_flag_type"] = intervention["mod_flag_type"]
+                    found[ticker]["mod_flag_score"] = intervention["mod_flag_score"]
+
             tc = found[ticker]["top_comment"]
             if tc is None or comment["score"] > tc["score"]:
                 found[ticker]["top_comment"] = {
