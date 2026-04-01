@@ -138,23 +138,17 @@ Comment: "{text}"
     return {"score": 0.0, "label": "neutral"}
 
 
-def assess_catalyst_quality(ticker, contexts):
-    """
-    Use Groq to assess whether Reddit discussion has a real verifiable
-    catalyst or is just hype. Called only on filtered top results.
-    """
+def assess_catalyst_quality(ticker, contexts, retry=False):
     if not contexts:
         return {
             "has_catalyst": False,
             "catalyst_type": "none",
             "confidence": 0.0,
+            "reasoning": "",
         }
 
-    # Take up to 5 contexts, max 200 chars each to keep tokens low
     contexts_text = "\n---\n".join([c[:200] for c in contexts[:5]])
-
     wait_for_rate_limit()
-
     try:
         response = groq_client.chat.completions.create(
             model="llama-3.1-8b-instant",
@@ -191,6 +185,8 @@ Comments about {ticker}:
         )
 
         raw = response.choices[0].message.content.strip()
+        print(f"  [{ticker}] raw: {raw[:80]}")  # debug log
+
         json_match = re.search(r"\{.*\}", raw, re.DOTALL)
         if json_match:
             try:
@@ -213,7 +209,15 @@ Comments about {ticker}:
             }
 
     except Exception as e:
-        print(f"  Catalyst assessment error for {ticker}: {e}")
+        error_str = str(e)
+        if "429" in error_str or "rate_limit" in error_str.lower():
+            print(f"  429 hit — waiting 60s")
+            time.sleep(60)
+            _request_times.clear()
+            if not retry:
+                return assess_catalyst_quality(ticker, contexts, retry=True)
+        else:
+            print(f"  Catalyst assessment error for {ticker}: {e}")
 
     return {
         "has_catalyst": False,

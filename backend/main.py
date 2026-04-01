@@ -1,6 +1,7 @@
 import json
 import math
 import re
+import time
 from exclusion import LOW_QUALITY_PATTERNS
 from database import init_db, record_flagged_stocks
 from database import save_daily_results
@@ -8,7 +9,7 @@ from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
 from scraper import fetch_all
 from extractor import extract_from_post
-from sentiment import analyze_sentiment, assess_catalyst_quality
+from sentiment import analyze_sentiment, assess_catalyst_quality, _request_times
 from tqdm import tqdm
 import traceback
 
@@ -350,6 +351,9 @@ if __name__ == "__main__":
     ]
 
     print("\nStep 5: Catalyst assessment for filtered results...")
+    _request_times.clear()
+    time.sleep(65)
+
     catalyst_calls = 0
     for result in results:
         context_texts = [ctx["text"] for ctx in result.get("top_contexts", [])]
