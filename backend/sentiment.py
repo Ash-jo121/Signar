@@ -8,13 +8,11 @@ from dotenv import load_dotenv
 from groq import Groq
 import time
 
-_last_groq_call = 0
-_GROQ_MIN_INTERVAL = 4.0
-_consecutive_429s = 0
+_GROQ_MIN_INTERVAL = 0.5
 
 _request_times = deque()
-_MAX_REQUESTS_PER_MINUTE = 20
-_MAX_TOKENS_PER_MINUTE = 5000
+_MAX_REQUESTS_PER_MINUTE = 100
+_MAX_TOKENS_PER_MINUTE = 10000
 _ESTIMATED_TOKENS_PER_REQUEST = 120
 
 load_dotenv()
@@ -39,6 +37,13 @@ def wait_for_rate_limit():
     global _request_times
 
     now = time.time()
+
+    if _request_times:
+        elapsed_since_last = now - _request_times[-1]
+        if elapsed_since_last < _GROQ_MIN_INTERVAL:
+            time.sleep(_GROQ_MIN_INTERVAL - elapsed_since_last)
+            now = time.time()
+
     while _request_times and now - _request_times[0] > 60:
         _request_times.popleft()
 
@@ -47,6 +52,7 @@ def wait_for_rate_limit():
         if wait_time > 0:
             print(f"  Rate limit approaching — waiting {wait_time:.1f}s")
             time.sleep(wait_time)
+            now = time.time()
 
     tokens_used = len(_request_times) * _ESTIMATED_TOKENS_PER_REQUEST
     if tokens_used >= _MAX_TOKENS_PER_MINUTE:
