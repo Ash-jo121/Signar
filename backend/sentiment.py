@@ -97,14 +97,18 @@ def groq_analyze(text, retry=False):
                     "content": f"""Analyze Reddit stock comment sentiment.
 Return ONLY JSON: {{"label":"positive/negative/neutral","score":0.0}}
 
-Scores: +0.8 to +1.0 very bullish, +0.4 to +0.8 bullish, 
--0.4 to -0.8 bearish, -0.8 to -1.0 very bearish. Be conservative.
-Bullish slang: moon,rocket,🚀,squeeze,breakout,calls,accumulating
-Bearish slang: dump,short,scam,dilution,avoid,bankrupt,rekt
+Score by conviction level:
+Positive: +0.2 mild interest/watching, +0.4 moderately bullish with reasoning,
+          +0.6 strongly bullish with catalyst, +0.8 to +1.0 very high conviction
+Negative: -0.2 mild concern, -0.4 moderately bearish,
+          -0.6 strongly bearish, -0.8 to -1.0 very bearish
+Neutral: 0.0 for questions, confusion, meta-commentary, price reporting
 
-IMPORTANT: score must be negative for bearish/negative labels, 
-positive for bullish/positive labels. Never return bearish with 
-positive score or bullish with negative score.
+Default to LOWER scores when unsure. Questions alone score 0.0.
+Bullish slang: moon,rocket,🚀,squeeze,breakout,calls,accumulating,sleeping on
+Bearish slang: dump,short,scam,dilution,avoid,bankrupt,rekt,trap
+
+IMPORTANT: score must match label sign. Never mismatch.
 
 Comment: "{text}"
 """,
