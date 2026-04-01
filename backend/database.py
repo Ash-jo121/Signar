@@ -36,6 +36,10 @@ def init_db():
             market_cap REAL,
             volume REAL,
             sector TEXT,
+            mod_flagged INTEGER DEFAULT 0,
+            mod_flag_type TEXT,
+            has_catalyst INTEGER DEFAULT 0,
+            catalyst_type TEXT,
             UNIQUE(date, ticker)
         );
 
@@ -68,26 +72,27 @@ def init_db():
             fetched_utc REAL
         ); 
         
-        -- Performance tracking table: track stock performance over time
+        -- Performance tracking table
         CREATE TABLE IF NOT EXISTS performance_tracking (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    ticker TEXT NOT NULL,
-    flagged_date TEXT NOT NULL,
-    flagged_price REAL,
-    flagged_score REAL,
-    flagged_sentiment REAL,
-    flagged_mentions REAL,
-    price_1d REAL,
-    price_3d REAL,
-    price_7d REAL,
-    return_1d REAL,
-    return_3d REAL,
-    return_7d REAL,
-    updated_1d INTEGER DEFAULT 0,
-    updated_3d INTEGER DEFAULT 0,
-    updated_7d INTEGER DEFAULT 0,
-    UNIQUE(ticker, flagged_date)
-);"""
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ticker TEXT NOT NULL,
+            flagged_date TEXT NOT NULL,
+            flagged_price REAL,
+            flagged_score REAL,
+            flagged_sentiment REAL,
+            flagged_mentions REAL,
+            float_shares REAL,
+            price_1d REAL,
+            price_3d REAL,
+            price_7d REAL,
+            return_1d REAL,
+            return_3d REAL,
+            return_7d REAL,
+            updated_1d INTEGER DEFAULT 0,
+            updated_3d INTEGER DEFAULT 0,
+            updated_7d INTEGER DEFAULT 0,
+            UNIQUE(ticker, flagged_date)
+        );"""
     )
     conn.commit()
     conn.close()
@@ -99,7 +104,6 @@ if __name__ == "__main__":
 
 
 def save_daily_results(results, date=None):
-    """Save today's top picks to database"""
     if date is None:
         date = datetime.now().strftime("%Y-%m-%d")
 
@@ -109,13 +113,13 @@ def save_daily_results(results, date=None):
 
     for result in results:
         try:
-            # Insert or ignore if already exists for this date
             conn.execute(
                 """
                 INSERT OR IGNORE INTO daily_sentiment 
                 (date, ticker, company_name, mentions, avg_sentiment, 
-                 final_score, price, change_percent, market_cap, volume, sector)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 final_score, price, change_percent, market_cap, volume, sector,
+                 mod_flagged, mod_flag_type, has_catalyst, catalyst_type)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
                 (
                     date,
@@ -129,10 +133,13 @@ def save_daily_results(results, date=None):
                     result.get("market_cap", 0),
                     result.get("volume", 0),
                     result.get("sector", ""),
+                    1 if result.get("mod_flagged") else 0,
+                    result.get("mod_flag_type"),
+                    1 if result.get("has_catalyst") else 0,
+                    result.get("catalyst_type"),
                 ),
             )
 
-            # Save top contexts for this ticker
             for ctx in result.get("top_contexts", []):
                 conn.execute(
                     """
