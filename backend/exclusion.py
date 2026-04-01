@@ -301,7 +301,9 @@ COMMON_ABBREVIATIONS = {
     "ATH",
     "AH",
     "PM",
-    "PTs",
+    "PTS",
+    "PSA",
+    "WTF",
 }
 
 LOW_QUALITY_PATTERNS = [
