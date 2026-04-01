@@ -12,15 +12,15 @@ _last_groq_call = 0
 _GROQ_MIN_INTERVAL = 4.0
 _consecutive_429s = 0
 
-# Track request timestamps in a sliding window
 _request_times = deque()
-_MAX_REQUESTS_PER_MINUTE = 20  # conservative, actual limit is 30
-_MAX_TOKENS_PER_MINUTE = 5000  # conservative, actual limit is 6000
-_ESTIMATED_TOKENS_PER_REQUEST = 120  # after prompt shortening
+_MAX_REQUESTS_PER_MINUTE = 20
+_MAX_TOKENS_PER_MINUTE = 5000
+_ESTIMATED_TOKENS_PER_REQUEST = 120
 
 load_dotenv()
 
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+sentiment_pipeline = None
 
 
 def get_pipeline():
@@ -36,24 +36,18 @@ def get_pipeline():
 
 
 def wait_for_rate_limit():
-    """Proactively wait before sending request"""
     global _request_times
 
     now = time.time()
-
-    # Remove requests older than 60 seconds
     while _request_times and now - _request_times[0] > 60:
         _request_times.popleft()
 
-    # If we're at the request limit, wait
     if len(_request_times) >= _MAX_REQUESTS_PER_MINUTE:
-        # Wait until oldest request is 60s old
         wait_time = 60 - (now - _request_times[0]) + 0.5
         if wait_time > 0:
             print(f"  Rate limit approaching — waiting {wait_time:.1f}s")
             time.sleep(wait_time)
 
-    # If we're approaching token limit, wait
     tokens_used = len(_request_times) * _ESTIMATED_TOKENS_PER_REQUEST
     if tokens_used >= _MAX_TOKENS_PER_MINUTE:
         wait_time = 60 - (now - _request_times[0]) + 0.5
@@ -85,12 +79,11 @@ def finbert_analyze(text):
 
 def groq_analyze(text, retry=False):
     text = text[:500]
-
     wait_for_rate_limit()
 
     try:
         response = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",  # fast and free
+            model="llama-3.1-8b-instant",
             messages=[
                 {
                     "role": "user",
@@ -114,11 +107,10 @@ Comment: "{text}"
 """,
                 }
             ],
-            temperature=0.1,  # low temperature = more consistent outputs
+            temperature=0.1,
         )
 
         raw = response.choices[0].message.content.strip()
-
         json_match = re.search(r"\{.*\}", raw, re.DOTALL)
         if json_match:
             try:
@@ -135,13 +127,9 @@ Comment: "{text}"
     except Exception as e:
         error_str = str(e)
         if "429" in error_str or "rate_limit" in error_str.lower():
-            print(
-                f"  429 hit #{_consecutive_429s} — interval now {_GROQ_MIN_INTERVAL}s, waiting 60s"
-            )
+            print(f"  429 hit — waiting 60s")
             time.sleep(60)
-
             _request_times.clear()
-
             if not retry:
                 return groq_analyze(text, retry=True)
         else:
@@ -150,11 +138,94 @@ Comment: "{text}"
     return {"score": 0.0, "label": "neutral"}
 
 
+def assess_catalyst_quality(ticker, contexts):
+    """
+    Use Groq to assess whether Reddit discussion has a real verifiable
+    catalyst or is just hype. Called only on filtered top results.
+    """
+    if not contexts:
+        return {
+            "has_catalyst": False,
+            "catalyst_type": "none",
+            "confidence": 0.0,
+        }
+
+    # Take up to 5 contexts, max 200 chars each to keep tokens low
+    contexts_text = "\n---\n".join([c[:200] for c in contexts[:5]])
+
+    wait_for_rate_limit()
+
+    try:
+        response = groq_client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"""Analyze these Reddit comments about stock {ticker}.
+
+Is there evidence of a REAL verifiable catalyst?
+
+REAL catalysts (return true):
+- FDA approval, trial results, PDUFA date
+- Government contract, DoD/DHS award
+- Revenue/earnings news with specific numbers
+- Named partnership or commercial agreement
+- SEC filing, 10-K, specific regulatory event
+- Clinical trial data or milestone
+
+NOT catalysts (return false):
+- Short squeeze setup, float/short interest discussion
+- Price targets without backing
+- General hype, moon/rocket language
+- Watchlist mentions without reasoning
+- Technical analysis only
+
+Return ONLY JSON:
+{{"has_catalyst": true/false, "catalyst_type": "FDA/contract/earnings/partnership/clinical/regulatory/none", "confidence": 0.0-1.0, "reasoning": "one sentence max"}}
+
+Comments about {ticker}:
+{contexts_text}""",
+                }
+            ],
+            temperature=0.1,
+        )
+
+        raw = response.choices[0].message.content.strip()
+        json_match = re.search(r"\{.*\}", raw, re.DOTALL)
+        if json_match:
+            try:
+                result = json.loads(json_match.group())
+            except json.JSONDecodeError:
+                try:
+                    result = ast.literal_eval(json_match.group())
+                except:
+                    result = {
+                        "has_catalyst": False,
+                        "catalyst_type": "none",
+                        "confidence": 0.0,
+                    }
+
+            return {
+                "has_catalyst": bool(result.get("has_catalyst", False)),
+                "catalyst_type": result.get("catalyst_type", "none"),
+                "confidence": round(float(result.get("confidence", 0.0)), 2),
+                "reasoning": result.get("reasoning", ""),
+            }
+
+    except Exception as e:
+        print(f"  Catalyst assessment error for {ticker}: {e}")
+
+    return {
+        "has_catalyst": False,
+        "catalyst_type": "none",
+        "confidence": 0.0,
+        "reasoning": "",
+    }
+
+
 def analyze_sentiment(text):
-    # Step 1 — try FinBERT first
     finbert_result = finbert_analyze(text)
 
-    # Step 2 — if FinBERT is confident, trust it
     if finbert_result["confident"]:
         return {
             "score": finbert_result["score"],
@@ -162,7 +233,6 @@ def analyze_sentiment(text):
             "source": "finbert",
         }
 
-    # Step 3 — FinBERT unsure, use Groq for better context understanding
     groq_result = groq_analyze(text)
     return {
         "score": groq_result["score"],

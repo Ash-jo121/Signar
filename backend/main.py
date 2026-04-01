@@ -8,7 +8,7 @@ from google_sheets_integration import update_spreadsheet
 from yahooFn import enrich_with_price
 from scraper import fetch_all
 from extractor import extract_from_post
-from sentiment import analyze_sentiment
+from sentiment import analyze_sentiment, assess_catalyst_quality
 from tqdm import tqdm
 import traceback
 
@@ -50,7 +50,6 @@ def sample_contexts(contexts, ticker, max_contexts=15):
     seen = set()
     deduped = []
     for c in contexts:
-        # Normalize — remove $, lowercase, strip whitespace
         key = re.sub(r"[$\s]", "", c[:80]).lower()
         if key not in seen:
             seen.add(key)
@@ -63,12 +62,45 @@ def sample_contexts(contexts, ticker, max_contexts=15):
     return selected[:max_contexts]
 
 
+def apply_mod_penalty(result):
+    """
+    Apply score penalty based on mod intervention type and upvote score.
+    Returns adjusted final_score and logs the intervention.
+    """
+    if not result.get("mod_flagged"):
+        return result["final_score"]
+
+    flag_type = result.get("mod_flag_type")
+    flag_score = result.get("mod_flag_score", 0)
+    ticker = result["ticker"]
+    original = result["final_score"]
+
+    if flag_type == "mod_acting":
+        multiplier = 0.2
+        print(f"  {ticker}: MOD INTERVENTION detected → score {original:.3f} × 0.2")
+    elif flag_type == "community_call":
+        # Higher upvotes on the warning = stronger penalty
+        if flag_score > 20:
+            multiplier = 0.3
+        elif flag_score > 10:
+            multiplier = 0.4
+        else:
+            multiplier = 0.5
+        print(
+            f"  {ticker}: community pump warning (upvotes={flag_score}) "
+            f"→ score {original:.3f} × {multiplier}"
+        )
+    else:
+        return original
+
+    return round(original * multiplier, 3)
+
+
 def analyze_ticker_sentiment(all_posts):
     master = {}
     groq_calls = 0
     finbert_calls = 0
 
-    # Global context dedup set — prevents same context appearing across days
     seen_context_keys = set()
 
     print("\nPass 1: Collecting contexts from posts...")
@@ -82,16 +114,36 @@ def analyze_ticker_sentiment(all_posts):
                     "contexts": [],
                     "post_scores": [],
                     "top_comment": None,
+                    "mod_flagged": False,
+                    "mod_flag_type": None,
+                    "mod_flag_score": 0,
                 }
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
 
+            # Propagate mod flags — upgrade if stronger signal
+            if data.get("mod_flagged"):
+                existing_type = master[ticker]["mod_flag_type"]
+                incoming_type = data["mod_flag_type"]
+                incoming_score = data["mod_flag_score"]
+
+                if (
+                    not master[ticker]["mod_flagged"]
+                    or (
+                        existing_type == "community_call"
+                        and incoming_type == "mod_acting"
+                    )
+                    or incoming_score > master[ticker]["mod_flag_score"]
+                ):
+                    master[ticker]["mod_flagged"] = True
+                    master[ticker]["mod_flag_type"] = incoming_type
+                    master[ticker]["mod_flag_score"] = incoming_score
+
             for context in data["contexts"]:
                 if is_valid_context(context["text"]):
                     cleaned = clean_context(context["text"])
 
-                    # Global dedup — skip if same context seen anywhere this run
                     context_key = re.sub(r"[$\s]", "", cleaned[:80]).lower()
                     if context_key in seen_context_keys:
                         continue
@@ -214,7 +266,9 @@ def analyze_ticker_sentiment(all_posts):
                 finbert_calls += 1 if tc_sentiment["source"] == "finbert" else 0
                 if tc_sentiment["score"] < -0.3:
                     print(
-                        f"  {ticker}: contrarian signal detected (top comment score={top_comment['score']}, sentiment={tc_sentiment['score']:.2f})"
+                        f"  {ticker}: contrarian signal detected "
+                        f"(top comment score={top_comment['score']}, "
+                        f"sentiment={tc_sentiment['score']:.2f})"
                     )
                     avg_sentiment = max(-1.0, avg_sentiment - 0.5)
 
@@ -234,15 +288,21 @@ def analyze_ticker_sentiment(all_posts):
                 * engagement_multiplier
             )
 
-            results.append(
-                {
-                    "ticker": ticker,
-                    "mentions": round(data["mentions"], 1),
-                    "avg_sentiment": round(avg_sentiment, 3),
-                    "final_score": round(final_score, 3),
-                    "top_contexts": top_contexts[:7],
-                }
-            )
+            result = {
+                "ticker": ticker,
+                "mentions": round(data["mentions"], 1),
+                "avg_sentiment": round(avg_sentiment, 3),
+                "final_score": round(final_score, 3),
+                "top_contexts": top_contexts[:7],
+                "mod_flagged": data["mod_flagged"],
+                "mod_flag_type": data["mod_flag_type"],
+                "mod_flag_score": data["mod_flag_score"],
+            }
+
+            # Apply mod penalty immediately after score computation
+            result["final_score"] = apply_mod_penalty(result)
+
+            results.append(result)
 
     print(f"\nSentiment sources: FinBERT={finbert_calls}, Groq={groq_calls}")
     print(f"Groq API calls used: {groq_calls}/14400 daily limit")
@@ -269,7 +329,9 @@ if __name__ == "__main__":
     trackable = [
         r
         for r in results
-        if r.get("price", 0) > 0.01 and r.get("price", 0) <= 15 and r["mentions"] >= 2
+        if r.get("price", 0) > 0.05  # raised from 0.01
+        and r.get("price", 0) <= 15
+        and r["mentions"] >= 2
     ]
 
     print("\nStep 4: Saving results to database...")
@@ -279,31 +341,60 @@ if __name__ == "__main__":
     results = [
         r
         for r in results
-        if r.get("price", 0) > 0.01
+        if r.get("price", 0) > 0.05  # raised from 0.01
         and r.get("price", 0) <= 15
         and 0 < r.get("market_cap", 0) <= 500000000
-        and r.get("float_shares", 0) <= 50000000  # ← float filter
+        and r.get("float_shares", 0) <= 50000000
         and r["mentions"] >= 5
         and len(r["top_contexts"]) >= 3
     ]
 
-    print("\nStep 5: Writing output to files...\n")
+    print("\nStep 5: Catalyst assessment for filtered results...")
+    catalyst_calls = 0
+    for result in results:
+        context_texts = [ctx["text"] for ctx in result.get("top_contexts", [])]
+        catalyst = assess_catalyst_quality(result["ticker"], context_texts)
+        result["has_catalyst"] = catalyst["has_catalyst"]
+        result["catalyst_type"] = catalyst["catalyst_type"]
+        result["catalyst_confidence"] = catalyst["confidence"]
+        catalyst_calls += 1
+        print(
+            f"  {result['ticker']}: has_catalyst={catalyst['has_catalyst']} "
+            f"type={catalyst['catalyst_type']} "
+            f"confidence={catalyst['confidence']} "
+            f"| {catalyst['reasoning']}"
+        )
+
+    print(f"  Catalyst assessment: {catalyst_calls} Groq calls used")
+
+    print("\nStep 6: Writing output to files...\n")
 
     with open("output.json", "w", encoding="utf-8") as file:
         json.dump(results[:10], file, indent=2, ensure_ascii=False)
 
     with open("output.txt", "w", encoding="utf-8") as file:
         for r in results[:10]:
-            file.write(f"${r['ticker']}\n")
+            catalyst_str = (
+                f"[CATALYST: {r.get('catalyst_type', 'none').upper()}]"
+                if r.get("has_catalyst")
+                else "[NO CATALYST]"
+            )
+            mod_str = (
+                f"[MOD FLAG: {r.get('mod_flag_type', '').upper()}]"
+                if r.get("mod_flagged")
+                else ""
+            )
+            file.write(f"${r['ticker']} {catalyst_str} {mod_str}\n")
             file.write(
-                f"  Mentions: {r['mentions']} | Sentiment: {r['avg_sentiment']:+.3f} | Score: {r['final_score']:+.3f}\n"
+                f"  Mentions: {r['mentions']} | Sentiment: {r['avg_sentiment']:+.3f} "
+                f"| Score: {r['final_score']:+.3f}\n"
             )
             file.write(
                 f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
             )
             file.write("\n")
 
-    print("\nStep 6: Updating Google Sheet...")
+    print("\nStep 7: Updating Google Sheet...")
     try:
         update_spreadsheet(results)
     except Exception as e:
