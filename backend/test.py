@@ -1,5 +1,5 @@
 # run in python terminal
-from tickers import VALID_TICKERS
+from helpers.tickers import VALID_TICKERS
 
 # Check which common words are valid tickers
 common_words = [

@@ -1,8 +1,7 @@
 import re
-from moderator import COMMUNITY_CALL_PATTERNS, MOD_ACTING_PATTERNS
-from exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
-from tickers import VALID_TICKERS
-from comparison import is_comparison_mention
+from constants.moderator import COMMUNITY_CALL_PATTERNS, MOD_ACTING_PATTERNS
+from constants.exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
+from helpers.tickers import VALID_TICKERS
 
 print(f"Extractor loaded, VALID_TICKERS size: {len(VALID_TICKERS)}")
 print(f"AND in VALID_TICKERS: {'AND' in VALID_TICKERS}")
