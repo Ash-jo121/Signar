@@ -5,7 +5,7 @@ import time
 from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
-from database import init_db, record_flagged_stocks
+from database import get_connection, init_db, record_flagged_stocks
 from database import save_daily_results
 from scraper import fetch_all
 from extractor import extract_from_post
@@ -326,6 +326,54 @@ if __name__ == "__main__":
 
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(results)
+
+    print("\nStep 3.5: Checking bearish stock flags...")
+    conn = get_connection()
+    try:
+        for result in results:
+            bearish = conn.execute(
+                """
+                SELECT flag_type, confidence 
+                FROM bearish_stocks
+                WHERE ticker = ?
+                AND flagged_date >= date('now', '-14 days')
+                ORDER BY confidence DESC
+                LIMIT 1
+            """,
+                (result["ticker"],),
+            ).fetchone()
+
+            if bearish:
+                flag_type = bearish["flag_type"]
+                confidence = bearish["confidence"]
+                original = result["final_score"]
+
+                if flag_type == "confirmed_dump":
+                    result["final_score"] = round(original * 0.1, 3)
+                elif flag_type == "scam_group":
+                    result["final_score"] = round(original * 0.15, 3)
+                elif flag_type == "pump_warning":
+                    result["final_score"] = round(original * 0.3, 3)
+                elif flag_type == "investigation":
+                    result["final_score"] = round(original * 0.7, 3)
+
+                result["vampire_flagged"] = True
+                result["vampire_flag_type"] = flag_type
+                result["vampire_confidence"] = confidence
+
+                print(
+                    f"  {result['ticker']}: VampireStocks {flag_type} "
+                    f"(confidence={confidence}) → score {original} × penalty"
+                )
+            else:
+                result["vampire_flagged"] = False
+                result["vampire_flag_type"] = None
+                result["vampire_confidence"] = 0.0
+    except Exception as e:
+        print(f"Error checking bearish stock flags: {e}")
+        traceback.print_exc()
+    finally:
+        conn.close()
 
     trackable = [
         r

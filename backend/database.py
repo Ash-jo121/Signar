@@ -92,7 +92,20 @@ def init_db():
             updated_3d INTEGER DEFAULT 0,
             updated_7d INTEGER DEFAULT 0,
             UNIQUE(ticker, flagged_date)
-        );"""
+        );
+        
+        CREATE TABLE IF NOT EXISTS bearish_stocks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ticker TEXT NOT NULL,
+            flagged_date TEXT NOT NULL,
+            source_subreddit TEXT DEFAULT 'VampireStocks',
+            flag_type TEXT,
+            confidence REAL,
+            post_title TEXT,
+            post_url TEXT,
+            UNIQUE(ticker, flagged_date)
+        );
+        """
     )
     conn.commit()
     conn.close()

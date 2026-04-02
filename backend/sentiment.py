@@ -251,6 +251,54 @@ def analyze_sentiment(text):
     }
 
 
+def classify_vampire_post(title, body):
+    """
+    Classify a VampireStocks post into flag type and confidence.
+    Called only for r/VampireStocks posts during scraping.
+    """
+    text = f"Title: {title}\nBody: {body[:300]}"
+
+    wait_for_rate_limit()
+
+    response = groq_client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {
+                "role": "user",
+                "content": f"""This is a post from r/VampireStocks, a subreddit that tracks pump and dump stocks.
+
+Classify this post:
+
+Types:
+- "confirmed_dump": Stock already dumped, people lost money, post-collapse discussion
+- "pump_warning": Active warning that this stock is being pumped right now
+- "scam_group": Evidence of coordinated pump group (WhatsApp/Telegram screenshots)
+- "investigation": Asking questions about suspicious price action, not confirmed yet
+- "neutral": General discussion, not clearly a warning
+
+Return ONLY JSON:
+{{"flag_type": "confirmed_dump/pump_warning/scam_group/investigation/neutral",
+  "confidence": 0.0-1.0,
+  "tickers_mentioned": ["TICK1", "TICK2"]}}
+
+Post:
+{text}""",
+            }
+        ],
+        temperature=0.1,
+    )
+
+    raw = response.choices[0].message.content.strip()
+    json_match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if json_match:
+        try:
+            return json.loads(json_match.group())
+        except Exception as e:
+            print(f"Error parsing JSON: {e}")
+
+    return {"flag_type": "neutral", "confidence": 0.0, "tickers_mentioned": []}
+
+
 if __name__ == "__main__":
     test_comments = [
         "RCKT is going to moon, expected FDA approval next week!",

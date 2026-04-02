@@ -3,26 +3,19 @@ import re
 import requests
 import time
 from datetime import timezone, datetime
+from sentiment import classify_vampire_post
+from constants.subreddits import BEARISH_SUBREDDITS, SUBREDDITS
 from constants.exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
 from helpers.tickers import VALID_TICKERS
 from database import (
     archive_old_posts,
     get_active_posts,
+    get_connection,
     save_post,
     update_post_after_refresh,
 )
 
 HEADERS = {"User-Agent": "ThreadRadar/1.0"}
-
-SUBREDDITS = [
-    "pennystocks",
-    "smallstreetbets",
-    "Pennystock",
-    "RobinHoodPennyStocks",
-    "10xPennyStocks",
-    "Shortsqueeze",
-    "SqueezePlays",
-]
 
 LOOKBACK_SECONDS = 24 * 60 * 60  # 24 hours
 
@@ -351,6 +344,13 @@ def fetch_all():
             print(f"  [hot] '{post['title'][:45]}' → {len(comments)} comments")
             time.sleep(2)
 
+        if subreddit in BEARISH_SUBREDDITS:
+            for post in new_posts + hot_posts:
+                process_vampire_post(post)
+            continue
+
+        all_data.extend(new_posts + hot_posts)
+
         time.sleep(10)
 
     # --- Step 3: Refresh active posts from DB (3-day recycling) ---
@@ -367,6 +367,64 @@ def fetch_all():
         f"  ({len(all_data) - len(refreshed)} fresh + {len(refreshed)} refreshed from DB)"
     )
     return all_data
+
+
+def process_vampire_post(post):
+    """
+    For VampireStocks posts, classify and store in bearish_stocks table.
+    Returns list of (ticker, flag_type, confidence) tuples.
+    """
+    title = post["title"]
+    body = post.get("body", "")
+    today = datetime.now().strftime("%Y-%m-%d")
+    conn = get_connection()
+
+    # Classify the post
+    classification = classify_vampire_post(title, body)
+    flag_type = classification.get("flag_type", "neutral")
+    confidence = classification.get("confidence", 0.0)
+
+    # Skip neutral posts — not actionable
+    if flag_type == "neutral" or confidence < 0.5:
+        return []
+
+    # Extract tickers from post text + Groq's suggestion
+    text_tickers = extract_tickers_simple(title + " " + body)
+    groq_tickers = classification.get("tickers_mentioned", [])
+
+    # Union both sources
+    all_tickers = set(text_tickers) | set(groq_tickers)
+
+    flagged = []
+    for ticker in all_tickers:
+        if ticker not in VALID_TICKERS:
+            continue
+        try:
+            conn.execute(
+                """
+                INSERT OR IGNORE INTO bearish_stocks
+                (ticker, flagged_date, source_subreddit, flag_type, 
+                 confidence, post_title, post_url)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+                (
+                    ticker,
+                    today,
+                    "VampireStocks",
+                    flag_type,
+                    confidence,
+                    title[:200],
+                    post.get("url", ""),
+                ),
+            )
+            flagged.append((ticker, flag_type, confidence))
+            print(f"  [VampireStocks] {ticker} → {flag_type} (confidence={confidence})")
+        except Exception as e:
+            print(f"  [VampireStocks] Error processing : {e}")
+
+    conn.commit()
+    conn.close()
+    return flagged
 
 
 if __name__ == "__main__":
