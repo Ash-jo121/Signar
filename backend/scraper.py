@@ -3,6 +3,7 @@ import re
 import requests
 import time
 from datetime import timezone, datetime
+from constants.config import LOOKBACK_SECONDS, VAMPIRE_LOOKBACK_SECONDS
 from sentiment import classify_vampire_post
 from constants.subreddits import BEARISH_SUBREDDITS, SUBREDDITS
 from constants.exclusion import COMMON_ABBREVIATIONS, LARGE_CAP_EXCLUDE
@@ -16,8 +17,6 @@ from database import (
 )
 
 HEADERS = {"User-Agent": "ThreadRadar/1.0"}
-
-LOOKBACK_SECONDS = 24 * 60 * 60  # 24 hours
 
 print(f"✓ Scraper loaded VALID_TICKERS: {len(VALID_TICKERS)} tickers")
 
@@ -113,12 +112,16 @@ def fetch_comments(post_id, subreddit):
         return []
 
 
-def fetch_new_24h(subreddit):
+def fetch_new_24h(subreddit, lookback=None):
     """
-    Paginate through /new until we hit posts older than 24h.
-    Since /new is newest-first, we stop as soon as cutoff is crossed.
+    Paginate through /new until we hit posts older than lookback window.
+    Uses LOOKBACK_SECONDS by default, but accepts custom lookback
+    for bearish subreddits like VampireStocks.
     """
-    cutoff = datetime.now(timezone.utc).timestamp() - LOOKBACK_SECONDS
+    if lookback is None:
+        lookback = LOOKBACK_SECONDS
+
+    cutoff = datetime.now(timezone.utc).timestamp() - lookback
     posts = []
     after = None
     page = 0
@@ -148,7 +151,7 @@ def fetch_new_24h(subreddit):
 
                 if reached_cutoff or not after:
                     print(
-                        f"    /new: {len(posts)} posts in last 24h ({page + 1} pages)"
+                        f"    /new: {len(posts)} posts in last {lookback // 3600}h ({page + 1} pages)"
                     )
                     return posts
 
@@ -205,11 +208,9 @@ def should_reanalyze(db_post, fresh_comment_count):
     """
     old_count = db_post.get("comment_count_at_analysis", 0)
 
-    # More than 20% new comments since last analysis
     if old_count == 0 or fresh_comment_count > old_count * 1.2:
         return True
 
-    # Absolute threshold — at least 10 new comments
     if fresh_comment_count - old_count >= 10:
         return True
 
@@ -242,9 +243,6 @@ def refresh_active_posts(seen_ids):
             fresh_comment_count = post_data.get("num_comments", 0)
 
             if not should_reanalyze(db_post, fresh_comment_count):
-                print(
-                    f"    Skipping '{db_post['title'][:40]}' — no significant new comments"
-                )
                 continue
 
             comments = fetch_comments(post_id, db_post["subreddit"])
@@ -260,7 +258,7 @@ def refresh_active_posts(seen_ids):
                     "subreddit": db_post["subreddit"],
                     "url": f"https://reddit.com/r/{db_post['subreddit']}/comments/{post_id}",
                     "comments": comments,
-                    "is_refresh": True,  # ← flag so extractor skips post body
+                    "is_refresh": True,
                 }
             )
 
@@ -276,21 +274,55 @@ def refresh_active_posts(seen_ids):
     return refreshed
 
 
+def fetch_vampire_posts():
+    """
+    Fetch VampireStocks posts using VAMPIRE_LOOKBACK_SECONDS window.
+    Posts are classified and stored in bearish_stocks table only —
+    they never enter the main sentiment pipeline.
+    """
+    print(f"\nFetching r/VampireStocks (bearish signal source)...")
+
+    new_posts = fetch_new_24h("VampireStocks", lookback=VAMPIRE_LOOKBACK_SECONDS)
+    hot_posts = fetch_hot("VampireStocks", limit=50)
+
+    # Deduplicate between new and hot
+    seen = set()
+    all_posts = []
+    for post in new_posts + hot_posts:
+        if post["id"] not in seen:
+            seen.add(post["id"])
+            all_posts.append(post)
+
+    print(f"  Processing {len(all_posts)} VampireStocks posts...")
+    total_flagged = 0
+
+    for post in all_posts:
+        flagged = process_vampire_post(post)
+        total_flagged += len(flagged)
+        time.sleep(1)  # gentle on rate limits between Groq calls
+
+    print(f"  VampireStocks: {total_flagged} bearish tickers flagged")
+
+
 def fetch_all():
     """
     Full fetch strategy:
-      1. /new with 24h pagination — captures all fresh posts
-      2. /hot top 25 — catches older posts still getting engagement
-      3. DB active post refresh — recycles posts from last 3 days
+      1. VampireStocks — bearish signal source, separate pipeline
+      2. /new with 24h pagination — captures all fresh posts
+      3. /hot top 50 — catches older posts still getting engagement
+      4. DB active post refresh — recycles posts from last 3 days
     """
     all_data = []
     seen_ids = set()
 
-    # --- Step 1 & 2: Fresh posts per subreddit ---
+    # --- Step 1: VampireStocks bearish pipeline ---
+    # Must run first so bearish flags are available for Step 3.5 in main.py
+    fetch_vampire_posts()
+
+    # --- Step 2 & 3: Fresh posts per subreddit ---
     for subreddit in SUBREDDITS:
         print(f"\nFetching r/{subreddit}...")
 
-        # 24h new posts
         new_posts = fetch_new_24h(subreddit)
         for post in new_posts:
             if post["score"] < -5 or post["id"] in seen_ids:
@@ -318,7 +350,6 @@ def fetch_all():
 
         time.sleep(5)
 
-        # Hot posts — catches older posts with active discussion
         hot_posts = fetch_hot(subreddit, limit=50)
         for post in hot_posts:
             if post["score"] < -5 or post["id"] in seen_ids:
@@ -344,21 +375,14 @@ def fetch_all():
             print(f"  [hot] '{post['title'][:45]}' → {len(comments)} comments")
             time.sleep(2)
 
-        if subreddit in BEARISH_SUBREDDITS:
-            for post in new_posts + hot_posts:
-                process_vampire_post(post)
-            continue
-
-        all_data.extend(new_posts + hot_posts)
-
         time.sleep(10)
 
-    # --- Step 3: Refresh active posts from DB (3-day recycling) ---
+    # --- Step 4: Refresh active posts from DB (3-day recycling) ---
     print(f"\nRefreshing active posts from database...")
     refreshed = refresh_active_posts(seen_ids)
     all_data.extend(refreshed)
 
-    # --- Step 4: Archive posts older than 3 days ---
+    # --- Step 5: Archive posts older than 3 days ---
     print(f"\nArchiving old posts...")
     archive_old_posts()
 
@@ -371,7 +395,8 @@ def fetch_all():
 
 def process_vampire_post(post):
     """
-    For VampireStocks posts, classify and store in bearish_stocks table.
+    Classify a VampireStocks post and store bearish tickers in bearish_stocks.
+    Never enters the main sentiment pipeline.
     Returns list of (ticker, flag_type, confidence) tuples.
     """
     title = post["title"]
@@ -379,20 +404,22 @@ def process_vampire_post(post):
     today = datetime.now().strftime("%Y-%m-%d")
     conn = get_connection()
 
-    # Classify the post
     classification = classify_vampire_post(title, body)
     flag_type = classification.get("flag_type", "neutral")
     confidence = classification.get("confidence", 0.0)
 
-    # Skip neutral posts — not actionable
+    # Skip neutral or low confidence posts
     if flag_type == "neutral" or confidence < 0.5:
+        conn.close()
         return []
 
-    # Extract tickers from post text + Groq's suggestion
+    # Union tickers from text extraction and Groq's suggestion
     text_tickers = extract_tickers_simple(title + " " + body)
-    groq_tickers = classification.get("tickers_mentioned", [])
-
-    # Union both sources
+    groq_tickers = [
+        t.upper()
+        for t in classification.get("tickers_mentioned", [])
+        if isinstance(t, str)
+    ]
     all_tickers = set(text_tickers) | set(groq_tickers)
 
     flagged = []
@@ -403,10 +430,10 @@ def process_vampire_post(post):
             conn.execute(
                 """
                 INSERT OR IGNORE INTO bearish_stocks
-                (ticker, flagged_date, source_subreddit, flag_type, 
+                (ticker, flagged_date, source_subreddit, flag_type,
                  confidence, post_title, post_url)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            """,
+                """,
                 (
                     ticker,
                     today,
@@ -418,9 +445,12 @@ def process_vampire_post(post):
                 ),
             )
             flagged.append((ticker, flag_type, confidence))
-            print(f"  [VampireStocks] {ticker} → {flag_type} (confidence={confidence})")
+            print(
+                f"  [VampireStocks] {ticker} → {flag_type} "
+                f"(confidence={confidence:.2f})"
+            )
         except Exception as e:
-            print(f"  [VampireStocks] Error processing : {e}")
+            print(f"  [VampireStocks] Error inserting {ticker}: {e}")
 
     conn.commit()
     conn.close()
