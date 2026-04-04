@@ -381,11 +381,18 @@ if __name__ == "__main__":
         if r.get("price", 0) > 0.05  # raised from 0.01
         and r.get("price", 0) <= 15
         and r["mentions"] >= 2
+        and (r.get("float_shares") is None or r.get("float_shares", 0) > 0)
     ]
 
     print("\nStep 4: Saving results to database...")
     save_daily_results(trackable)
     record_flagged_stocks(trackable)
+
+    for r in results:
+        if r.get("float_shares") is None:
+            print(
+                f"  Warning: {r['ticker']} has no float data — including with caution!"
+            )
 
     results = [
         r
@@ -393,7 +400,7 @@ if __name__ == "__main__":
         if r.get("price", 0) > 0.05  # raised from 0.01
         and r.get("price", 0) <= 15
         and 0 < r.get("market_cap", 0) <= 500000000
-        and r.get("float_shares", 0) <= 50000000
+        and (r.get("float_shares") is None or r.get("float_shares", 0) <= 50000000)
         and r["mentions"] >= 5
         and len(r["top_contexts"]) >= 3
     ]
