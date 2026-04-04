@@ -161,30 +161,15 @@ def assess_catalyst_quality(ticker, contexts, retry=False):
             messages=[
                 {
                     "role": "user",
-                    "content": f"""Analyze these Reddit comments about stock {ticker}.
+                    "content": f"""You are analyzing Reddit discussion about stock {ticker} to determine if there is evidence of a real verifiable catalyst.
 
-Is there evidence of a REAL verifiable catalyst?
+Contexts:
+{contexts_text}
 
-REAL catalysts (return true):
-- FDA approval, trial results, PDUFA date
-- Government contract, DoD/DHS award
-- Revenue/earnings news with specific numbers
-- Named partnership or commercial agreement
-- SEC filing, 10-K, specific regulatory event
-- Clinical trial data or milestone
+Based on ALL the above comments together, return a SINGLE JSON object (not an array):
+{{"has_catalyst": true/false, "catalyst_type": "FDA/contract/earnings/partnership/clinical/regulatory/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
 
-NOT catalysts (return false):
-- Short squeeze setup, float/short interest discussion
-- Price targets without backing
-- General hype, moon/rocket language
-- Watchlist mentions without reasoning
-- Technical analysis only
-
-Return ONLY JSON:
-{{"has_catalyst": true/false, "catalyst_type": "FDA/contract/earnings/partnership/clinical/regulatory/none", "confidence": 0.0-1.0, "reasoning": "one sentence max"}}
-
-Comments about {ticker}:
-{contexts_text}""",
+Return ONLY the JSON object. No explanation. No array. No markdown.""",
                 }
             ],
             temperature=0.1,
@@ -193,7 +178,10 @@ Comments about {ticker}:
         raw = response.choices[0].message.content.strip()
         print(f"  [{ticker}] raw: {raw[:80]}")  # debug log
 
-        json_match = re.search(r"\{.*\}", raw, re.DOTALL)
+
+        json_match = re.search(r'\{[^{]*"has_catalyst"[^}]*\}', raw, re.DOTALL)
+        if not json_match:
+            json_match = re.search(r"\{.*\}", raw, re.DOTALL)
         if json_match:
             try:
                 result = json.loads(json_match.group())
