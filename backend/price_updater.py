@@ -58,7 +58,9 @@ def had_split_since(ticker, since_date):
         if splits.empty:
             return False, 1.0
 
-        since_ts = pd.Timestamp(since_date)
+        since_ts = pd.Timestamp(since_date).tz_localize("America/New_York")
+        if splits.index.tz is not None:
+            since_ts = since_ts.tz_convert(splits.index.tz)
         recent_splits = splits[splits.index >= since_ts]
 
         if recent_splits.empty:
