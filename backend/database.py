@@ -72,7 +72,7 @@ def init_db():
             fetched_utc REAL
         ); 
         
-        -- Performance tracking table
+         -- Performance tracking table
         CREATE TABLE IF NOT EXISTS performance_tracking (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             ticker TEXT NOT NULL,
@@ -91,6 +91,11 @@ def init_db():
             updated_1d INTEGER DEFAULT 0,
             updated_3d INTEGER DEFAULT 0,
             updated_7d INTEGER DEFAULT 0,
+            has_catalyst INTEGER DEFAULT 0,
+            catalyst_type TEXT DEFAULT 'none',
+            mod_flagged INTEGER DEFAULT 0,
+            vampire_flagged INTEGER DEFAULT 0,
+            final_score REAL DEFAULT 0.0,
             UNIQUE(ticker, flagged_date)
         );
         
@@ -352,8 +357,10 @@ def record_flagged_stocks(results, date=None):
                 """
                 INSERT OR IGNORE INTO performance_tracking
                 (ticker, flagged_date, flagged_price, flagged_score,
-                 flagged_sentiment, flagged_mentions,float_shares)
-                VALUES (?, ?, ?, ?, ?, ?,?)
+                 flagged_sentiment, flagged_mentions, float_shares,
+                 has_catalyst, catalyst_type, mod_flagged, vampire_flagged,
+                 final_score)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     result["ticker"],
@@ -363,6 +370,11 @@ def record_flagged_stocks(results, date=None):
                     result.get("avg_sentiment", 0),
                     result.get("mentions", 0),
                     result.get("float_shares", 0),
+                    1 if result.get("has_catalyst") else 0,
+                    result.get("catalyst_type", "none"),
+                    1 if result.get("mod_flagged") else 0,
+                    1 if result.get("vampire_flagged") else 0,
+                    result.get("final_score", 0),
                 ),
             )
             saved += 1
