@@ -102,8 +102,8 @@ jobs:
           path: backend/threadradar.db
           key: threadradar-db-latest
 
-      # ── 9. Weekly DB backup to repo ───────────────────────────────
-      - name: Weekly database backup
+      # ── 9. Daily DB backup to repo ───────────────────────────────
+      - name: Daily database backup
         if: always()
         run: |
           mkdir -p db-backup
@@ -114,14 +114,18 @@ jobs:
           git commit -m "Weekly DB backup $(date +%Y-%m-%d) [skip ci]"
           git push
 
+      - name: Set today's date
+        run: echo "TODAY=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+
       # ── 10. Commit logs and output ────────────────────────────────
       - name: Commit logs and output files
         if: always()
         run: |
           git config --global user.email "threadradar-bot@github.com"
           git config --global user.name "ThreadRadar Bot"
-          git add logs/ || true
-          git add backend/output/ || true
+          git add logs/run_${TODAY}.log || true
+          git add backend/output.json || true
+          git add backend/output.txt || true
           git diff --staged --quiet && echo "No changes to commit" || \
             git commit -m "Run $(date +%Y-%m-%d) output and logs [skip ci]"
           git push || echo "Push failed — non-critical"
@@ -133,8 +137,9 @@ jobs:
         with:
           name: threadradar-${{ github.run_number }}
           path: |
-            logs/
-            backend/output/
+            logs/run_${TODAY}.log
+            backend/output.json
+            backend/output.txt
           retention-days: 30
 
       # ── 12. Email on success ──────────────────────────────────────
