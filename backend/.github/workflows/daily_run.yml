@@ -1,0 +1,181 @@
+name: ThreadRadar Daily Run
+
+on:
+  schedule:
+    - cron: "30 2 * * 1-5" # 8:00 AM IST, Monday-Friday
+  workflow_dispatch: # Manual trigger from GitHub UI
+
+jobs:
+  threadradar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      # ── 1. Checkout ───────────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # ── 2. Python setup ───────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: pip-
+
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
+      # ── 3. Restore DB from cache ──────────────────────────────────
+      - name: Restore database from cache
+        uses: actions/cache@v3
+        with:
+          path: backend/threadradar.db
+          key: threadradar-db-latest
+          restore-keys: threadradar-db-
+
+      - name: Verify database
+        run: |
+          if [ -f backend/threadradar.db ]; then
+            echo "✓ Database restored ($(ls -lh backend/threadradar.db | awk '{print $5}'))"
+          else
+            echo "⚠ No cached DB — will initialize fresh"
+          fi
+
+      # ── 4. Create logs directory ──────────────────────────────────
+      - name: Create logs directory
+        run: mkdir -p logs
+
+      # ── 5. Run main pipeline ──────────────────────────────────────
+      - name: Run ThreadRadar main pipeline
+        working-directory: backend
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          echo "=== ThreadRadar starting at $(date) ===" | tee ../logs/run_$(date +%Y-%m-%d).log
+          python -u main.py 2>&1 | tee -a ../logs/run_$(date +%Y-%m-%d).log
+          echo "=== Main pipeline done at $(date) ===" | tee -a ../logs/run_$(date +%Y-%m-%d).log
+
+      # ── 6. Run price updater ──────────────────────────────────────
+      - name: Run price updater
+        working-directory: backend
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          echo "=== Price updater starting at $(date) ===" | tee -a ../logs/run_$(date +%Y-%m-%d).log
+          python -u price_updater.py 2>&1 | tee -a ../logs/run_$(date +%Y-%m-%d).log
+          echo "=== Price updater done at $(date) ===" | tee -a ../logs/run_$(date +%Y-%m-%d).log
+
+      # ── 7. Upload DB to Railway ───────────────────────────────────
+      - name: Upload database to Railway
+        working-directory: backend
+        env:
+          RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
+          UPLOAD_API_KEY: ${{ secrets.UPLOAD_API_KEY }}
+        run: |
+          echo "Uploading database to Railway..."
+          response=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "x-api-key: $UPLOAD_API_KEY" \
+            -F "file=@threadradar.db" \
+            "$RAILWAY_URL/api/upload-db")
+
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -1)
+
+          echo "Response: $body"
+          if [ "$http_code" != "200" ]; then
+            echo "::error::DB upload failed with HTTP $http_code"
+            exit 1
+          fi
+          echo "✓ Database uploaded to Railway successfully"
+
+      # ── 8. Save DB back to cache ──────────────────────────────────
+      - name: Save database to cache
+        uses: actions/cache@v3
+        with:
+          path: backend/threadradar.db
+          key: threadradar-db-latest
+
+      # ── 9. Weekly DB backup to repo ───────────────────────────────
+      - name: Weekly database backup
+        if: github.event.schedule == '30 2 * * 1' # Mondays only
+        run: |
+          mkdir -p db-backup
+          cp backend/threadradar.db db-backup/threadradar_$(date +%Y-%m-%d).db
+          git config --global user.email "threadradar-bot@github.com"
+          git config --global user.name "ThreadRadar Bot"
+          git add db-backup/
+          git commit -m "Weekly DB backup $(date +%Y-%m-%d) [skip ci]"
+          git push
+
+      # ── 10. Commit logs and output ────────────────────────────────
+      - name: Commit logs and output files
+        if: always()
+        run: |
+          git config --global user.email "threadradar-bot@github.com"
+          git config --global user.name "ThreadRadar Bot"
+          git add logs/ || true
+          git add backend/output/ || true
+          git diff --staged --quiet && echo "No changes to commit" || \
+            git commit -m "Run $(date +%Y-%m-%d) output and logs [skip ci]"
+          git push || echo "Push failed — non-critical"
+
+      # ── 11. Upload artifacts ──────────────────────────────────────
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: threadradar-${{ github.run_number }}
+          path: |
+            logs/
+            backend/output/
+          retention-days: 30
+
+      # ── 12. Email on success ──────────────────────────────────────
+      - name: Email on success
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "ThreadRadar ✓ Run completed ${{ github.run_number }}"
+          to: ${{ secrets.GMAIL_USERNAME }}
+          from: ThreadRadar Bot
+          body: |
+            ThreadRadar daily run completed successfully.
+
+            Run: #${{ github.run_number }}
+            Date: $(date +%Y-%m-%d)
+
+            Logs and output files are committed to the repo.
+            Download full artifacts from GitHub Actions:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      # ── 13. Email on failure ──────────────────────────────────────
+      - name: Email on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "ThreadRadar ✗ Run FAILED ${{ github.run_number }}"
+          to: ${{ secrets.GMAIL_USERNAME }}
+          from: ThreadRadar Bot
+          body: |
+            ThreadRadar daily run FAILED.
+
+            Run: #${{ github.run_number }}
+            Date: $(date +%Y-%m-%d)
+
+            Check the error in GitHub Actions:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

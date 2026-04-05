@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+import datetime
+from fastapi import FastAPI, HTTPException, File, Header, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import json
+import shutil
 import os
 
 app = FastAPI()
@@ -39,3 +41,19 @@ def get_ticker(symbol: str):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.post("/api/upload-db")
+async def upload_database(file: UploadFile = File(...), x_api_key: str = Header(None)):
+    # Simple secret key auth so random people can't overwrite your DB
+    if x_api_key != os.getenv("UPLOAD_API_KEY"):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    db_path = "threadradar.db"
+
+    # Write the uploaded file to disk
+    with open(db_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    print(f"Database updated at {datetime.now()}")
+    return {"status": "ok", "message": "Database updated successfully"}
