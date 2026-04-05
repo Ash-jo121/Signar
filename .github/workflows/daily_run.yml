@@ -13,7 +13,7 @@ jobs:
     steps:
       # ── 1. Checkout ───────────────────────────────────────────────
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # ── 2. Python setup ───────────────────────────────────────────
       - name: Set up Python 3.11
@@ -22,7 +22,7 @@ jobs:
           python-version: "3.11"
 
       - name: Cache pip packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: pip-${{ hashFiles('backend/requirements.txt') }}
@@ -33,7 +33,7 @@ jobs:
 
       # ── 3. Restore DB from cache ──────────────────────────────────
       - name: Restore database from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: backend/threadradar.db
           key: threadradar-db-latest
@@ -97,7 +97,7 @@ jobs:
 
       # ── 8. Save DB back to cache ──────────────────────────────────
       - name: Save database to cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: backend/threadradar.db
           key: threadradar-db-latest
@@ -133,7 +133,7 @@ jobs:
       # ── 11. Upload artifacts ──────────────────────────────────────
       - name: Upload run artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: threadradar-${{ github.run_number }}
           path: |
@@ -145,7 +145,7 @@ jobs:
       # ── 12. Email on success ──────────────────────────────────────
       - name: Email on success
         if: success()
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v4
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -167,7 +167,7 @@ jobs:
       # ── 13. Email on failure ──────────────────────────────────────
       - name: Email on failure
         if: failure()
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v4
         with:
           server_address: smtp.gmail.com
           server_port: 465
