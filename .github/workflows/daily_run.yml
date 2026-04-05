@@ -2,8 +2,8 @@ name: ThreadRadar Daily Run
 
 on:
   schedule:
-    - cron: "30 2 * * 1-5" # 8:00 AM IST, Monday-Friday
-  workflow_dispatch: # Manual trigger from GitHub UI
+    - cron: "30 8 * * 1-5"
+  workflow_dispatch:
 
 jobs:
   threadradar:
@@ -104,7 +104,7 @@ jobs:
 
       # ── 9. Weekly DB backup to repo ───────────────────────────────
       - name: Weekly database backup
-        if: github.event.schedule == '30 2 * * 1' # Mondays only
+        if: always()
         run: |
           mkdir -p db-backup
           cp backend/threadradar.db db-backup/threadradar_$(date +%Y-%m-%d).db
