@@ -4,6 +4,10 @@ from datetime import datetime
 import pandas as pd
 from database import get_connection
 import yfinance as yf
+import holidays
+
+US_HOLIDAYS = holidays.US()
+today_dt = datetime.now()
 
 # Tickers to skip in performance tracking
 # These are exclusions that were added after some records were already created
@@ -264,4 +268,8 @@ def update_performance_prices():
 
 
 if __name__ == "__main__":
+    if today_dt.weekday() in [5, 6] or today_dt.strftime("%Y-%m-%d") in US_HOLIDAYS:
+        print(f"  Today is a weekend or holiday — skipping price updater")
+        exit(0)
+
     update_performance_prices()

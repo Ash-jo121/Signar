@@ -169,6 +169,25 @@ Contexts:
 Based on ALL the above comments together, return a SINGLE JSON object (not an array):
 {{"has_catalyst": true/false, "catalyst_type": "FDA/contract/earnings/partnership/clinical/regulatory/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
 
+REAL catalysts (has_catalyst = true):
+- FDA approval, trial results, PDUFA date
+- Government contract, DoD/DHS award
+- Revenue/earnings news with specific numbers
+- Named partnership or commercial agreement
+- SEC filing, specific regulatory event
+- Clinical trial data or milestone
+- Court ruling or patent decision
+
+NOT catalysts (has_catalyst = false):
+- Short squeeze setup, float/short interest discussion
+- Cost to borrow (CTB) spikes
+- Price targets without backing
+- General hype, moon/rocket language
+- Watchlist mentions without reasoning
+- Technical analysis only
+- War/geopolitical speculation without direct company contract
+- "Waiting for catalyst" with no catalyst named
+
 Return ONLY the JSON object. No explanation. No array. No markdown.""",
                 }
             ],
@@ -177,7 +196,6 @@ Return ONLY the JSON object. No explanation. No array. No markdown.""",
 
         raw = response.choices[0].message.content.strip()
         print(f"  [{ticker}] raw: {raw[:80]}")  # debug log
-
 
         json_match = re.search(r'\{[^{]*"has_catalyst"[^}]*\}', raw, re.DOTALL)
         if not json_match:
@@ -195,12 +213,17 @@ Return ONLY the JSON object. No explanation. No array. No markdown.""",
                         "confidence": 0.0,
                     }
 
-            return {
+            result_dict = {
                 "has_catalyst": bool(result.get("has_catalyst", False)),
                 "catalyst_type": result.get("catalyst_type", "none"),
                 "confidence": round(float(result.get("confidence", 0.0)), 2),
                 "reasoning": result.get("reasoning", ""),
             }
+
+            if result_dict["has_catalyst"] == "none":
+                result_dict["has_catalyst"] = False
+
+            return result_dict
 
     except Exception as e:
         error_str = str(e)
