@@ -52,6 +52,7 @@ def init_db():
             sentiment TEXT,
             score REAL,
             source TEXT,
+            UNIQUE(date, ticker, comment_text),
             FOREIGN KEY (date, ticker)
                 REFERENCES daily_sentiment(date, ticker)
                 ON DELETE CASCADE
@@ -161,7 +162,7 @@ def save_daily_results(results, date=None):
             for ctx in result.get("top_contexts", []):
                 conn.execute(
                     """
-                    INSERT INTO daily_contexts
+                    INSERT OR IGNORE INTO daily_contexts
                     (date, ticker, comment_text, sentiment, score, source)
                     VALUES (?, ?, ?, ?, ?, ?)
                 """,
