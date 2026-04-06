@@ -1,0 +1,467 @@
+=== ThreadRadar starting at Mon Apr  6 20:31:44 UTC 2026 ===
+Fetching NASDAQ tickers...
+  NASDAQ: added 4071 tickers (total: 4071)
+Fetching NYSE tickers...
+  NYSE: added 2323 tickers (total: 6394)
+Fetching AMEX tickers...
+  AMEX: added 277 tickers (total: 6671)
+
+Cached 6671 valid tickers to valid_tickers.json
+✓ Scraper loaded VALID_TICKERS: 6671 tickers
+✓ Proxy enabled: gate.decodo.com:10000
+Extractor loaded, VALID_TICKERS size: 6671
+AND in VALID_TICKERS: False
+=== ThreadRadar ===
+
+Database initialized successfully
+Step 1: Fetching posts...
+
+Fetching r/VampireStocks (bearish signal source)...
+    /new: 3 posts in last 24h (1 pages)
+    /hot: 50 posts fetched
+  Processing 50 VampireStocks posts...
+  [VampireStocks] MGRT → investigation (confidence=0.50)
+  [VampireStocks] HTCO → confirmed_dump (confidence=1.00)
+  [VampireStocks] HTCO → scam_group (confidence=0.90)
+  [VampireStocks] NCI → scam_group (confidence=0.90)
+  [VampireStocks] ONDS → scam_group (confidence=0.90)
+  [VampireStocks] PCLA → pump_warning (confidence=0.80)
+  [VampireStocks] WCT → pump_warning (confidence=0.80)
+  [VampireStocks] SFHG → pump_warning (confidence=0.80)
+  [VampireStocks] CLIK → pump_warning (confidence=0.80)
+  [VampireStocks] EDHL → pump_warning (confidence=0.80)
+  [VampireStocks] MSGY → confirmed_dump (confidence=0.80)
+  [VampireStocks] RCON → pump_warning (confidence=0.80)
+  [VampireStocks] HTCO → pump_warning (confidence=0.80)
+  [VampireStocks] NPT → confirmed_dump (confidence=0.80)
+  [VampireStocks] NCI → confirmed_dump (confidence=1.00)
+  [VampireStocks] MGN → confirmed_dump (confidence=1.00)
+  [VampireStocks] UGRO → confirmed_dump (confidence=0.80)
+  [VampireStocks] EEIQ → confirmed_dump (confidence=0.80)
+  [VampireStocks] FCHL → pump_warning (confidence=0.80)
+  [VampireStocks] MGN → pump_warning (confidence=0.80)
+  [VampireStocks] LICN → investigation (confidence=0.80)
+  [VampireStocks] AHMA → pump_warning (confidence=0.80)
+  [VampireStocks] POM → pump_warning (confidence=0.80)
+  [VampireStocks] MSGY → confirmed_dump (confidence=1.00)
+  [VampireStocks] EJH → scam_group (confidence=0.80)
+  [VampireStocks] NCI → confirmed_dump (confidence=1.00)
+  [VampireStocks] APLD → pump_warning (confidence=1.00)
+  [VampireStocks] SERV → pump_warning (confidence=1.00)
+  [VampireStocks] NPT → pump_warning (confidence=0.80)
+  [VampireStocks] NCI → pump_warning (confidence=0.80)
+  [VampireStocks] MGN → pump_warning (confidence=0.80)
+  [VampireStocks] FIGR → confirmed_dump (confidence=0.80)
+  [VampireStocks] ASTS → confirmed_dump (confidence=0.80)
+  [VampireStocks] INUV → pump_warning (confidence=0.80)
+  [VampireStocks] SEDG → pump_warning (confidence=0.80)
+  [VampireStocks] NCI → investigation (confidence=0.60)
+  VampireStocks: 36 bearish tickers flagged
+
+Fetching r/pennystocks...
+    /new: 16 posts in last 24h (1 pages)
+  [new] 'Is this the Recovery or just a bait?' → 1 comments
+  [new] 'Military Metals (CSE: MILI | OTCQB: MILIF) – ' → 4 comments
+  [new] 'INDO (Indonesia Energy Corp) from $3-$40 on 2' → 4 comments
+  [new] 'INDO (Indonesia Energy Corp) from $3-$40 on 2' → 1 comments
+  [new] 'A market can look modern and still run on cop' → 2 comments
+  [new] 'Found GPOX while filing digging. Direct store' → 2 comments
+  [new] 'Today is the deadline to submit your claim if' → 2 comments
+  [new] 'MDCX breakout isn’t random: Teverelix just tu' → 8 comments
+  [new] '06 APRIL 2026 , WHAT ARE THE BIGGEST LOSERS T' → 1 comments
+  [new] '06 APRIL 2026 , WHAT ARE THE BIGGEST WINNERS ' → 2 comments
+  [new] '$OTH News Out! Off The Hook Yachts Expands No' → 0 comments
+  [new] '$THRC Roasters Website After decades of resea' → 1 comments
+  [new] 'How I'm playing the SpaceX IPO for a possible' → 10 comments
+  [new] 'The Lounge' → 195 comments
+  [new] '$NFE - Shannon LNG gas plant gets green light' → 2 comments
+  [new] 'Stock Pulse Weekly Recap — Mar 31 – Apr 4, 20' → 1 comments
+    /hot: 50 posts fetched
+  [hot] 'Anyone ever consider trying to win a director' → 12 comments
+  [hot] '3-4x upside, decision next Tuesday, cheap cal' → 6 comments
+  [hot] 'Wes Edens buys 100$M of debt out of $NFE!! Sk' → 18 comments
+  [hot] '🚨 $AIXI – The $3M Company That Just Beat Appl' → 39 comments
+  [hot] 'All AI is Physical AI - YouTube' → 1 comments
+  [hot] 'The Lounge' → 165 comments
+  [hot] '$BTBD Update For Technical Analysis, Complete' → 21 comments
+  [hot] 'Jones Soda Reports 450% Increase in Q4 2025 R' → 21 comments
+  [hot] 'AIXI win on APPL' → 9 comments
+  [hot] '[ Removed by Reddit ]' → 2 comments
+  [hot] 'The Lounge' → 36 comments
+  [hot] 'Top Gainers (March 30th to April 2nd)' → 3 comments
+  [hot] '$AIXI’s Massive Win' → 18 comments
+  [hot] 'Nobody talks about the gap between the TSX an' → 1 comments
+  [hot] 'Undervalued Stocks Under $5' → 52 comments
+  [hot] 'Quantum Powering the Future of Medicine' → 3 comments
+  [hot] 'The Lounge' → 57 comments
+  [hot] 'IF YOU NO TIME OR HATE DOING HOMEWORK , DONT ' → 4 comments
+  [hot] '$ORGN: From the "Tesla of Materials" to a man' → 1 comments
+  [hot] '$BTBD Small Cap With Exposure to Drone/Defens' → 16 comments
+  [hot] '$GV +66% — $20M anti-aging deal with a partne' → 4 comments
+  [hot] 'HGRAF AND NASDAQ LISTING TIMELINE' → 13 comments
+  [hot] '3 MONTHS LATER WHAT ARE THE BIGGEST WINNERS F' → 5 comments
+  [hot] 'AIXI vs Apple - a major win just dropped.' → 13 comments
+  [hot] 'WHAT ARE THE BIGGEST WINNERS TODAY PRE-MARKET' → 8 comments
+  [hot] '$RENX – Biomass Recycling Microcap Pivot with' → 3 comments
+  [hot] '[ Removed by Reddit ]' → 1 comments
+  [hot] '$INDO looks like the untapped oil stock' → 10 comments
+  [hot] 'The Lounge' → 197 comments
+  [hot] 'Final Call: $740M Didi Settlement Claims expi' → 1 comments
+  [hot] 'IQST - IQSTEL Inc. Announces Investor Confere' → 1 comments
+  [hot] '$CRI.V +950% from its 52-week low, Canada's a' → 2 comments
+  [hot] 'Plus Therapeutics Secures Highmark Coverage f' → 3 comments
+  [hot] '02 APRIL 2026 ,  WHAT ARE THE BIGGEST LOSERS ' → 3 comments
+
+Fetching r/smallstreetbets...
+    /new: 27 posts in last 24h (1 pages)
+  [new] 'The S&amp;P 500 just closed the day highger f' → 2 comments
+  [new] 'Stock Market Recap for Monday, April 6, 2026' → 1 comments
+  [new] 'I didn’t expect this result' → 0 comments
+  [new] 'OIL BUBBLE. ( you know what to do )' → 26 comments
+  [new] 'I bought it today and will check it again in ' → 2 comments
+  [new] 'Nikola Corp: The $30B "Hill" Just Hit Bottom' → 0 comments
+  [new] 'GPOX dropped their 10-Q. $4.07M revenue, 26% ' → 1 comments
+  [new] 'DVLT lining up London and Zurich right after ' → 0 comments
+  [new] 'A token is only as reliable as the valuation ' → 3 comments
+  [new] '⚡MORNING WATCHLIST⚡' → 0 comments
+  [new] 'Half of the data centers planned for 2026 are' → 53 comments
+  [new] 'You learn the most when investors try to leav' → 0 comments
+  [new] 'Understanding the mechanics of asset tokeniza' → 0 comments
+  [new] 'Looking at today’s heatmap and it honestly fe' → 36 comments
+  [new] 'Bottom out!' → 1 comments
+  [new] 'I’m losing my marbles.' → 7 comments
+  [new] 'Yeahhhh I’m not touching this pump' → 10 comments
+  [new] 'This is what an infrastructure play actually ' → 0 comments
+  [new] 'Stock info and Technical Analysis Update for ' → 1 comments
+  [new] 'RDW I like space stuff' → 6 comments
+  [new] 'NOKIA' → 2 comments
+  [new] 'What if valuation is actually the business… n' → 1 comments
+  [new] 'Yolo’d nvidia and Netflix options' → 1 comments
+  [new] 'Civilization IV: New Era, Diplomacy Update pa' → 8 comments
+  [new] 'Imagine if Apple changed the logo for their s' → 17 comments
+  [new] 'This is what the 🇺🇸 stock market looked like ' → 18 comments
+  [new] 'Stock Pulse Weekly Recap — Mar 31 – Apr 4, 20' → 0 comments
+    /hot: 50 posts fetched
+  [hot] 'SUBREDDIT UPDATE 5/14/2025 | Clarifications a' → 8 comments
+  [hot] 'Israeli stock market just hit a new all times' → 178 comments
+  [hot] 'Monday Big Buy!!' → 3 comments
+  [hot] 'too poor for options but I don’t wanna just h' → 61 comments
+  [hot] 'Just started again after losing 10K three yea' → 10 comments
+  [hot] 'Here are the top 10 worst days in S&amp;P 500' → 102 comments
+  [hot] 'Here has been the best trading day each year ' → 15 comments
+  [hot] '2nd Quarter earnings is just a week away! I h' → 0 comments
+  [hot] 'My portfolio now vs. a month ago' → 18 comments
+  [hot] 'BTBD Tightening Under Resistance With Drone/M' → 1 comments
+  [hot] 'Just a screenshot.' → 18 comments
+  [hot] 'Hedge Funds Dump Global Stocks at Fastest Pac' → 26 comments
+  [hot] 'USO' → 4 comments
+  [hot] 'Trump’s deadline is coming Monday. Will he tr' → 73 comments
+  [hot] 'My top play for next week. Easy 100%er' → 19 comments
+  [hot] 'Stopped gambling on breakouts when I started ' → 3 comments
+  [hot] 'Feel like my Robinhood history fits the sub w' → 0 comments
+  [hot] '$AMC #AMC summary for THURS 02APR26' → 1 comments
+  [hot] 'This play could easily double or tripe next w' → 7 comments
+  [hot] 'I started with one tiny tokenization stock, t' → 25 comments
+  [hot] 'Happy Thursday.' → 87 comments
+  [hot] 'Big wins, small number' → 8 comments
+  [hot] 'The blond  haired boy has once again blown up' → 10 comments
+
+Fetching r/Pennystock...
+    /new: 43 posts in last 24h (1 pages)
+  [new] 'DVLT ✅ Jp Morgan News' → 0 comments
+  [new] '$iobt bankruptcy play in move now.' → 0 comments
+  [new] 'SoFi removed the one feature that actually ma' → 0 comments
+  [new] '$iobt bankruptcy play in move now.' → 0 comments
+  [new] 'AFTER HOUR WATCHLIST WITH CURRENT SET UPS 👇🏻' → 14 comments
+  [new] 'A $39.1M revenue company is pitching Tokyo, L' → 2 comments
+  [new] 'OK who is jumping on the SMX train today? Mor' → 1 comments
+  [new] 'NRx Pharmaceuticals (Nasdaq:NRXP) Announces F' → 0 comments
+  [new] 'May 13 is still the real test for DVLT. Every' → 6 comments
+  [new] 'Japan may be the first place where DVLT adds ' → 1 comments
+  [new] 'GPOX numbers: Revenue up 12%, gross margin 26' → 0 comments
+  [new] 'DVLT may make more sense once you stop callin' → 15 comments
+  [new] 'DVLT 💎 News !' → 1 comments
+  [new] '⚡MORNING WATCHLIST⚡' → 0 comments
+  [new] 'stock $aixi breaking new highs' → 0 comments
+  [new] 'Explosive Stock Gains Exposed: The Trader Wal' → 1 comments
+  [new] '$JTAI 0.04 🔥🔥🔥🔥💹' → 4 comments
+  [new] 'News out on DWAY now current reporting in 40 ' → 1 comments
+  [new] 'International exposure building – next stop J' → 1 comments
+  [new] '$SVC Big move coming' → 1 comments
+  [new] '$SMX $2000+ LFG!!!' → 5 comments
+  [new] 'DVLT is stacking global keynotes back-to-back' → 0 comments
+  [new] '$buru $jtai $aimd' → 2 comments
+  [new] 'War Profits Are Back: How the Israel-Iran Con' → 3 comments
+  [new] 'MOBX' → 0 comments
+  [new] '$AIXI $1+' → 0 comments
+  [new] 'BURN Shorty: Mobix Labs Secures $3.2M Order f' → 0 comments
+  [new] 'What makes UCL unlike its peers?' → 0 comments
+  [new] 'What’s everyone buying today?!' → 16 comments
+  [new] 'What u think about TURB stock' → 0 comments
+  [new] 'What if pricing the asset ends up being worth' → 0 comments
+  [new] '💚MARKET OPEN WATCHLIST WITH CURRENT SET UPS 👇' → 19 comments
+  [new] 'ADM Endeavors (ADMQ) Announces Operational Co' → 0 comments
+  [new] '$JTAI' → 4 comments
+  [new] 'The Best War Stock to Buy Right Now as Israel' → 0 comments
+  [new] 'DVLT 💎' → 1 comments
+  [new] 'Cxai, Best opportunity in 2026?' → 0 comments
+  [new] 'What’s the best penny stocks if the Iran war ' → 11 comments
+  [new] '$jtai up!!!!' → 15 comments
+  [new] 'Could we prepare the next MemStock' → 1 comments
+  [new] 'EONR 2$ this week ? 🧐💰' → 11 comments
+  [new] 'Stock Pulse Weekly Recap — Mar 31 – Apr 4, 20' → 0 comments
+  [new] 'The more I map this tokenization theme, the m' → 1 comments
+    /hot: 50 posts fetched
+  [hot] '[ Removed by Reddit ]' → 0 comments
+  [hot] 'DVLT did $39.1M in FY2025, but $33.8M came in' → 19 comments
+  [hot] '💚WEEKLY WATCHLIST (HUGE LIST) WITH SET UPS IN' → 31 comments
+  [hot] 'REPL' → 1 comments
+  [hot] 'ASKE Monday' → 2 comments
+  [hot] 'THE DISTILLED 3: Top Catalyst Plays for the W' → 0 comments
+  [hot] 'DVLT -💎Forbes' → 7 comments
+
+Fetching r/RobinHoodPennyStocks...
+    /new: 7 posts in last 24h (1 pages)
+  [new] '$AEHL ✅ Potential for a mega Move .. like $AI' → 0 comments
+  [new] 'Watching a few penny names right now – this o' → 0 comments
+  [new] 'The Reality of Real-World Asset Valuation' → 0 comments
+  [new] 'The recurring revenue layer in tokenization m' → 0 comments
+  [new] 'Ha! I tricked some Apes to sell thier bags😂' → 0 comments
+  [new] 'What’s everyone buying today?!' → 0 comments
+  [new] 'What’s everyone buying today in this crazy ma' → 5 comments
+    /hot: 50 posts fetched
+  [hot] 'Call for volunteers - help us moderate' → 9 comments
+  [hot] '$BTBD Drone/Merger Reclaiming Trend And Pushi' → 0 comments
+  [hot] 'Vanguard, blackrock, state street all increas' → 0 comments
+  [hot] 'I found this theme through one small cap, but' → 0 comments
+  [hot] 'Strong Growth Potential in AI Data Revolution' → 0 comments
+  [hot] 'Your fear of missing the next cycle is justif' → 0 comments
+  [hot] 'ASKE Friday' → 0 comments
+  [hot] 'Is the market going to explode Monday because' → 5 comments
+  [hot] '$BTBD Update On Merger Play With Breakout Cha' → 0 comments
+  [hot] 'DVLT feels like one of those “too early or ju' → 5 comments
+  [hot] 'BTBD drone merger name ww' → 0 comments
+  [hot] '$GV +66% — $20M anti-aging deal with Chinese ' → 0 comments
+  [hot] 'BTBD keep eyes on this one for next week, Dro' → 0 comments
+  [hot] 'Recent financial updates and 2026 revenue gui' → 0 comments
+  [hot] 'AbCellera Biologics ( $ABCL ) — Deep Dive On ' → 0 comments
+  [hot] 'Stop waiting for the masses to tell you what ' → 0 comments
+  [hot] 'Small-Cap Low Float On My Radar' → 0 comments
+  [hot] '$GRLF Chilco River Holdings Announces LOI and' → 0 comments
+  [hot] 'What’s everyone buying today in this crazy do' → 3 comments
+  [hot] 'They want you to fail!' → 1 comments
+  [hot] '$CYCN +183% — Korsana merger and $380M financ' → 0 comments
+  [hot] 'Analyzing the disconnect between valuation an' → 0 comments
+  [hot] 'Another huge update!' → 35 comments
+  [hot] '$TRAW ready to blow!' → 0 comments
+  [hot] '$IQST - "Our focus now is transitioning from ' → 0 comments
+  [hot] 'Awesome day yesterday, what’s everyone buying' → 3 comments
+  [hot] 'Yeah, I stole the meme from “them.” Tell them' → 0 comments
+  [hot] '$KALA Kala Bio Engages Dr. Saeid Babaei as Se' → 0 comments
+  [hot] 'It’s actually possible!' → 3 comments
+  [hot] 'If tokenization moves into a $149T market… ar' → 1 comments
+  [hot] 'Or / Antimoine Action - Nova Minerals NVA en ' → 0 comments
+  [hot] 'ASKE - aimusicdistribution.com' → 0 comments
+  [hot] 'Huge news! How’s the market gonna react to th' → 4 comments
+  [hot] 'News: AUID 129% YoY revenue increase, but rea' → 0 comments
+  [hot] '$MASK +34% — dead-cat bounce on trading resum' → 0 comments
+  [hot] 'Stock Analysis + Question: Who Captures Value' → 5 comments
+  [hot] 'ASKE profile' → 0 comments
+  [hot] '$KULR - Under the agreement, KULR is expected' → 0 comments
+  [hot] 'Stop Following the Herd While This Setup Expl' → 1 comments
+  [hot] 'What’s everyone buying today?' → 0 comments
+  [hot] '$MGNC Mag Magna Corp. Announces Voluntary Loc' → 0 comments
+  [hot] 'ASKE Tuesday' → 0 comments
+  [hot] 'Remember when Robinhood took away the buy but' → 19 comments
+
+Fetching r/10xPennyStocks...
+    /new: 6 posts in last 24h (1 pages)
+  [new] '$JANX 🔥🚀 Meanwhile, Truist Securities lowered' → 0 comments
+  [new] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [new] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [new] 'How I'm playing the SpaceX IPO for a possible' → 2 comments
+  [new] 'Será deslistada VMAR del Nasdaq?' → 0 comments
+  [new] 'My #1 small-cap watch tomorrow' → 0 comments
+    /hot: 50 posts fetched
+  [hot] 'UPDATE ON THE 10XPenny × FOCKETS DISCORD COLL' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 3 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] 'More market manipulation is coming ..' → 3 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] '$VWAV bought another 4milion $ worth of $SVRE' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 2 comments
+  [hot] 'One week, three lanes: antimony, copper, and ' → 0 comments
+  [hot] 'Markets Closed. Perfect Time for Something to' → 9 comments
+  [hot] '$BTBD Huge Merger Potential. Next Weeks Runne' → 1 comments
+  [hot] 'Defi technologies from zero to record' → 2 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [hot] 'Final Call: $740M Didi Settlement Claims expi' → 0 comments
+  [hot] 'PAVS, WNW- What can we do with those types of' → 4 comments
+  [hot] 'BTBD small cap drone merger name' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] 'Small-Cap Low Float On My Radar' → 1 comments
+  [hot] '$INDO is my play for today. I feel good about' → 3 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] '160 Year Old Family Business and I am Long' → 14 comments
+  [hot] 'DGXX - The Next Big AI Data Center Stock' → 10 comments
+  [hot] 'FEMY quietly growing fast — 40% sales increas' → 5 comments
+  [hot] 'Stop following the herd while the smart money' → 2 comments
+  [hot] '$RZLV Making Higher Lows! Management targetin' → 1 comments
+  [hot] '$ADIA NEWS. Adia Nutrition, Inc. Reports Stro' → 0 comments
+  [hot] '$ADHC News. American Diversified Holdings Ope' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] '[ Removed by Reddit ]' → 3 comments
+  [hot] 'A Hidden Microcap Pivot the Market May Be Ove' → 1 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 6 comments
+  [hot] 'If you invested $10,000 in Peloton in 2021, t' → 6 comments
+  [hot] 'Could Lithium be the play coming out of this ' → 0 comments
+  [hot] 'Military Metals CEO Interview: Developing Eur' → 0 comments
+  [hot] 'DeFi Technologies Announces Preliminary Unaud' → 10 comments
+  [hot] 'Thanks to the guy who made a post to buy JAGU' → 0 comments
+  [hot] 'GNIS possible swing play* high risk' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 4 comments
+  [hot] 'Ffai rags to riches if blackrock can do it so' → 0 comments
+  [hot] 'Three Reasons the Market May Be Undervaluing ' → 3 comments
+  [hot] '$IMTE 2 million MC + Micro Float + Bottomed C' → 0 comments
+  [hot] 'IQST watching for a bounce off 52 week lows' → 1 comments
+  [hot] '$CBDW NEWS. 1606 Corp. Files Annual Report on' → 0 comments
+  [hot] 'Data Infrastructure and the 2026 Tokenization' → 0 comments
+
+Fetching r/Shortsqueeze...
+    /new: 4 posts in last 24h (1 pages)
+  [new] '$AEHL ✅ Potential for a mega Move .. like $AI' → 8 comments
+  [new] 'Indo (Indonesia Energy Corp) squeezed to $3-$' → 2 comments
+  [new] '$AIXI , Was right again ... looking for the n' → 8 comments
+  [new] 'SqueezeFinder - April 6th 2026' → 5 comments
+    /hot: 50 posts fetched
+  [hot] 'Stop using ChatGPT to do your market research' → 155 comments
+  [hot] 'PSA: X-Posts are no longer allowed' → 1 comments
+  [hot] '$BTBD Base-On-Base Breakout Push #2 In Progre' → 7 comments
+  [hot] '$TNXP NEW data Shortsqueeze is coming 🚀🚀' → 6 comments
+  [hot] '$BTBD Update On Merger Play With Breakout Cha' → 4 comments
+  [hot] '$WEAT - Wheat could squeeze higher from overs' → 8 comments
+  [hot] 'Most shorted Fintech: UPST! Once again!' → 4 comments
+  [hot] 'DERM seems to be a strong candidate for a squ' → 2 comments
+  [hot] '$SNBR low float high short interest' → 1 comments
+  [hot] 'Poet Technologies- And The Bet On Optical In.' → 1 comments
+  [hot] 'GRML is about to squeeze and nobody is talkin' → 19 comments
+  [hot] '$BTOC - Chinese pump and dump in the making' → 15 comments
+  [hot] 'Coreweave got a $8.5 billion and it’s squeezi' → 8 comments
+  [hot] '$POLA Update: AH through PM Chart Read' → 8 comments
+  [hot] 'BIAF - is the float locked? CTB is ridiculous' → 9 comments
+  [hot] 'Momo Traders Check Out $POLA Price Action, Co' → 1 comments
+  [hot] 'ANNA is a seriously good short squeeze candid' → 31 comments
+  [hot] '🚀 $RONND Quiet Accumulation Before the Move?' → 1 comments
+  [hot] 'SqueezeFinder - March 30th 2026' → 2 comments
+  [hot] '$ASTC Technical Analysis: On Watch for Monday' → 17 comments
+  [hot] '$car Avis Budget Group why do I not see any p' → 10 comments
+  [hot] '$ARTL What do you think of my post below $4 ?' → 18 comments
+  [hot] '$$ASTC Breakout Chart: Contracts, Momentum, a' → 7 comments
+  [hot] 'CYCU - Reaching another 52 Week Low' → 1 comments
+  [hot] '$EOSE looking prime for a for a squeezing' → 9 comments
+  [hot] '$RONND quietly setting up low-key one to watc' → 2 comments
+  [hot] 'RH - Fly me to the moon - macro story' → 2 comments
+  [hot] '$SHPH to watch .. Good news and shorts went a' → 4 comments
+  [hot] 'VITL: An Eggcellent opportunity' → 1 comments
+  [hot] '✅ $VTIX ✅ Recent IPO to watch: Shake out seem' → 9 comments
+  [hot] '$TBHC a clean penny microcap low float with i' → 2 comments
+  [hot] 'I brought you guys ANNA and now….' → 95 comments
+  [hot] 'AMZE quietly stacking PRs 👀 – feels like some' → 2 comments
+  [hot] '$IBRX: Rising CTB, short interest over 30%' → 24 comments
+  [hot] '$USEG Due diligence post and possibly catalys' → 18 comments
+  [hot] '$IMTE - Beyond a "Warning." They Got the Dete' → 3 comments
+  [hot] 'Groupon ($GRPN) cost to borrow is low but DTC' → 5 comments
+  [hot] '$WEAT - an oversold commodity in a war enviro' → 3 comments
+  [hot] '$ARTL ✅ on reversal watch today .' → 12 comments
+  [hot] 'ONDS 600% Revenue Growth. Still 35% Short Int' → 39 comments
+  [hot] 'SqueezeFinder - March 24th 2026' → 13 comments
+  [hot] '$HLRTF showing strength after $500K raise at ' → 3 comments
+  [hot] '$HLRTF This kind of setup usually doesn’t sta' → 3 comments
+  [hot] '$TNXP NEW DATA Tonmya 🚀🚀+13.12% last week; ma' → 16 comments
+  [hot] 'Webull Stock Restrictions Legal Action $GPUS ' → 6 comments
+  [hot] 'SqueezeFinder - March 20th 2026' → 10 comments
+
+Fetching r/SqueezePlays...
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 903, in _error_catcher
+    yield
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1028, in _raw_read
+    data = self._fp_read(amt, read1=read1) if not fp_closed else b""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1011, in _fp_read
+    return self._fp.read(amt) if amt is not None else self._fp.read()
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 478, in read
+    s = self.fp.read(amt)
+        ^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/ssl.py", line 1314, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/ssl.py", line 1166, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 820, in generate
+    yield from self.raw.stream(chunk_size, decode_content=True)
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1257, in stream
+    data = self.read(amt=amt, decode_content=decode_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1112, in read
+    data = self._raw_read(amt)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1027, in _raw_read
+    with self._error_catcher():
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 908, in _error_catcher
+    raise ReadTimeoutError(self._pool, None, "Read timed out.") from e  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='www.reddit.com', port=443): Read timed out.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/ThreadRadar/ThreadRadar/backend/main.py", line 322, in <module>
+    posts = fetch_all()
+            ^^^^^^^^^^^
+  File "/home/runner/work/ThreadRadar/ThreadRadar/backend/scraper.py", line 382, in fetch_all
+    new_posts = fetch_new_24h(subreddit)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ThreadRadar/ThreadRadar/backend/scraper.py", line 187, in fetch_new_24h
+    response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 746, in send
+    r.content
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 902, in content
+    self._content = b"".join(self.iter_content(CONTENT_CHUNK_SIZE)) or b""
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 826, in generate
+    raise ConnectionError(e)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='www.reddit.com', port=443): Read timed out.
+=== Main pipeline done at Mon Apr  6 20:53:32 UTC 2026 ===
+=== Price updater starting at Mon Apr  6 20:53:32 UTC 2026 ===
+=== Price Updater — 2026-04-06 ===
+
+No T+1 updates needed
+No T+3 updates needed
+No T+7 updates needed
+
+✓ Price updater complete — 0 records updated
+=== Price updater done at Mon Apr  6 20:53:32 UTC 2026 ===
