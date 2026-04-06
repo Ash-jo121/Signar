@@ -126,7 +126,7 @@ def fetch_comments(post_id, subreddit):
 
     for attempt in range(3):
         try:
-            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
+            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=60)
 
             if response.status_code == 200:
                 comment_list = response.json()[1]["data"]["children"]
@@ -165,11 +165,6 @@ def fetch_comments(post_id, subreddit):
 
 
 def fetch_new_24h(subreddit, lookback=None):
-    """
-    Paginate through /new until we hit posts older than lookback window.
-    Uses LOOKBACK_SECONDS by default, but accepts custom lookback
-    for bearish subreddits like VampireStocks.
-    """
     if lookback is None:
         lookback = LOOKBACK_SECONDS
 
@@ -184,32 +179,79 @@ def fetch_new_24h(subreddit, lookback=None):
             url += f"&after={after}"
 
         for attempt in range(3):
-            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
+            try:
+                response = requests.get(
+                    url, headers=HEADERS, proxies=PROXIES, timeout=60
+                )
 
-            if response.status_code == 200:
-                data = response.json()["data"]
-                children = data["children"]
-                after = data.get("after")
+                if response.status_code == 200:
+                    data = response.json()["data"]
+                    children = data["children"]
+                    after = data.get("after")
 
-                if not children:
-                    return posts
+                    if not children:
+                        return posts
 
-                reached_cutoff = False
-                for p in children:
-                    if p["data"]["created_utc"] < cutoff:
-                        reached_cutoff = True
-                        break
-                    posts.append(parse_post(p))
+                    reached_cutoff = False
+                    for p in children:
+                        if p["data"]["created_utc"] < cutoff:
+                            reached_cutoff = True
+                            break
+                        posts.append(parse_post(p))
 
-                if reached_cutoff or not after:
+                    if reached_cutoff or not after:
+                        print(
+                            f"    /new: {len(posts)} posts in last "
+                            f"{lookback // 3600}h ({page + 1} pages)"
+                        )
+                        return posts
+
+                    page += 1
+                    time.sleep(2)
+                    break
+
+                elif response.status_code == 429:
+                    wait = (attempt + 1) * 30
+                    print(f"    Rate limited. Waiting {wait}s...")
+                    time.sleep(wait)
+
+                else:
                     print(
-                        f"    /new: {len(posts)} posts in last {lookback // 3600}h ({page + 1} pages)"
+                        f"    Failed r/{subreddit}/new page {page}: "
+                        f"{response.status_code}"
                     )
                     return posts
 
-                page += 1
-                time.sleep(2)
-                break
+            except (
+                requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout,
+                requests.exceptions.ProxyError,
+            ) as e:
+                print(
+                    f"    Connection error on attempt {attempt+1} "
+                    f"for r/{subreddit}/new: {str(e)[:60]}"
+                )
+                if attempt < 2:
+                    time.sleep(10)
+                    continue
+                print(f"    Giving up on r/{subreddit}/new after 3 attempts")
+                return posts
+
+    return posts
+
+
+def fetch_hot(subreddit, limit=50):
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit={limit}"
+
+    for attempt in range(3):
+        try:
+            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=60)
+
+            if response.status_code == 200:
+                children = response.json()["data"]["children"]
+                posts = [parse_post(p) for p in children]
+                print(f"    /hot: {len(posts)} posts fetched")
+                return posts
 
             elif response.status_code == 429:
                 wait = (attempt + 1) * 30
@@ -217,37 +259,21 @@ def fetch_new_24h(subreddit, lookback=None):
                 time.sleep(wait)
 
             else:
-                print(
-                    f"    Failed r/{subreddit}/new page {page}: {response.status_code}"
-                )
-                return posts
+                print(f"    Failed r/{subreddit}/hot: {response.status_code}")
+                return []
 
-    return posts
-
-
-def fetch_hot(subreddit, limit=50):
-    """
-    Fetch top hot posts. These catch active discussions on posts
-    older than 24h that are still getting engagement.
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit={limit}"
-
-    for attempt in range(3):
-        response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
-
-        if response.status_code == 200:
-            children = response.json()["data"]["children"]
-            posts = [parse_post(p) for p in children]
-            print(f"    /hot: {len(posts)} posts fetched")
-            return posts
-
-        elif response.status_code == 429:
-            wait = (attempt + 1) * 30
-            print(f"    Rate limited. Waiting {wait}s...")
-            time.sleep(wait)
-
-        else:
-            print(f"    Failed r/{subreddit}/hot: {response.status_code}")
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout,
+            requests.exceptions.ProxyError,
+        ) as e:
+            print(
+                f"    Connection error on attempt {attempt+1} "
+                f"for r/{subreddit}/hot: {str(e)[:60]}"
+            )
+            if attempt < 2:
+                time.sleep(10)
+                continue
             return []
 
     return []
@@ -287,7 +313,7 @@ def refresh_active_posts(seen_ids):
 
         url = f"https://www.reddit.com/r/{db_post['subreddit']}/comments/{post_id}.json?limit=1"
         try:
-            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
+            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=60)
             if response.status_code != 200:
                 continue
 

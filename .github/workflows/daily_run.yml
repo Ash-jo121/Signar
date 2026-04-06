@@ -42,9 +42,16 @@ jobs:
       - name: Verify database
         run: |
           if [ -f backend/threadradar.db ]; then
-            echo "✓ Database restored ($(ls -lh backend/threadradar.db | awk '{print $5}'))"
+            echo "✓ Database restored from cache ($(ls -lh backend/threadradar.db | awk '{print $5}'))"
           else
-            echo "⚠ No cached DB — will initialize fresh"
+            echo "⚠ No cached DB — checking for backup seed..."
+            LATEST=$(ls backend/db-backup/threadradar_*.db 2>/dev/null | sort | tail -1)
+            if [ -n "$LATEST" ]; then
+              cp "$LATEST" backend/threadradar.db
+              echo "✓ Seeded from: $LATEST ($(ls -lh backend/threadradar.db | awk '{print $5}'))"
+            else
+              echo "⚠ No backup found — initializing fresh DB"
+            fi
           fi
 
       # ── 4. Create logs directory + set date ───────────────────────
@@ -119,7 +126,7 @@ jobs:
         run: |
           mkdir -p db-backup
           if [ -f backend/threadradar.db ]; then
-            cp backend/threadradar.db db-backup/threadradar_${{ env.TODAY }}.db
+            cp backend/threadradar.db backend/db-backup/threadradar_${{ env.TODAY }}.db
             git config --global user.email "threadradar-bot@github.com"
             git config --global user.name "ThreadRadar Bot"
             git add db-backup/
