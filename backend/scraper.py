@@ -30,7 +30,7 @@ def get_proxies():
     user = os.getenv("PROXY_USER")
     passwd = os.getenv("PROXY_PASS")
     host = os.getenv("PROXY_HOST", "gate.decodo.com")
-    port = os.getenv("PROXY_PORT", "10001")
+    port = os.getenv("PROXY_PORT", "10000")
 
     if user and passwd:
         proxy_url = f"http://{user}:{passwd}@{host}:{port}"
@@ -123,16 +123,45 @@ def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
 
 def fetch_comments(post_id, subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/comments/{post_id}.json"
-    response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
 
-    if response.status_code != 200:
-        return []
+    for attempt in range(3):
+        try:
+            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
 
-    try:
-        comment_list = response.json()[1]["data"]["children"]
-        return parse_comments_recursive(comment_list, parent_tickers=None)
-    except:
-        return []
+            if response.status_code == 200:
+                comment_list = response.json()[1]["data"]["children"]
+                return parse_comments_recursive(comment_list, parent_tickers=None)
+
+            elif response.status_code == 429:
+                wait = (attempt + 1) * 30
+                print(f"    Rate limited on comments. Waiting {wait}s...")
+                time.sleep(wait)
+
+            else:
+                print(f"    Comment fetch failed for {post_id}: {response.status_code}")
+                return []
+
+        except requests.exceptions.ProxyError as e:
+            print(
+                f"    Proxy error on attempt {attempt+1} for {post_id}: {str(e)[:60]}"
+            )
+            if attempt < 2:
+                time.sleep(5)
+                continue
+            return []
+
+        except requests.exceptions.Timeout:
+            print(f"    Timeout on attempt {attempt+1} for {post_id}")
+            if attempt < 2:
+                time.sleep(5)
+                continue
+            return []
+
+        except Exception as e:
+            print(f"    Comment fetch error for {post_id}: {str(e)[:60]}")
+            return []
+
+    return []
 
 
 def fetch_new_24h(subreddit, lookback=None):
@@ -288,6 +317,10 @@ def refresh_active_posts(seen_ids):
             seen_ids.add(post_id)
             print(f"    Refreshed '{db_post['title'][:40]}' → {len(comments)} comments")
             time.sleep(2)
+
+        except (requests.exceptions.ProxyError, requests.exceptions.Timeout) as e:
+            print(f"    Proxy/timeout error refreshing {post_id}: {str(e)[:60]}")
+            continue
 
         except Exception as e:
             print(f"    Error refreshing {post_id}: {e}")
