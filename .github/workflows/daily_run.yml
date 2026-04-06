@@ -56,6 +56,10 @@ jobs:
         working-directory: backend
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          PROXY_USER: ${{ secrets.PROXY_USER }}
+          PROXY_PASS: ${{ secrets.PROXY_PASS }}
+          PROXY_HOST: ${{ secrets.PROXY_HOST }}
+          PROXY_PORT: ${{ secrets.PROXY_PORT }}
         run: |
           echo "=== ThreadRadar starting at $(date) ===" | tee ../logs/run_$(date +%Y-%m-%d).log
           python -u main.py 2>&1 | tee -a ../logs/run_$(date +%Y-%m-%d).log
@@ -66,6 +70,10 @@ jobs:
         working-directory: backend
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          PROXY_USER: ${{ secrets.PROXY_USER }}
+          PROXY_PASS: ${{ secrets.PROXY_PASS }}
+          PROXY_HOST: ${{ secrets.PROXY_HOST }}
+          PROXY_PORT: ${{ secrets.PROXY_PORT }}
         run: |
           echo "=== Price updater starting at $(date) ===" | tee -a ../logs/run_$(date +%Y-%m-%d).log
           python -u price_updater.py 2>&1 | tee -a ../logs/run_$(date +%Y-%m-%d).log

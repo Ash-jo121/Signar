@@ -1,4 +1,5 @@
 import datetime
+import os
 import re
 import requests
 import time
@@ -19,6 +20,28 @@ from database import (
 HEADERS = {"User-Agent": "ThreadRadar/1.0"}
 
 print(f"✓ Scraper loaded VALID_TICKERS: {len(VALID_TICKERS)} tickers")
+
+
+def get_proxies():
+    """
+    Returns proxy dict if credentials available,
+    None otherwise (falls back to direct connection)
+    """
+    user = os.getenv("PROXY_USER")
+    passwd = os.getenv("PROXY_PASS")
+    host = os.getenv("PROXY_HOST", "gate.decodo.com")
+    port = os.getenv("PROXY_PORT", "10001")
+
+    if user and passwd:
+        proxy_url = f"http://{user}:{passwd}@{host}:{port}"
+        print(f"✓ Proxy enabled: {host}:{port}")
+        return {"http": proxy_url, "https": proxy_url}
+
+    print("✓ Proxy disabled — direct connection")
+    return None
+
+
+PROXIES = get_proxies()
 
 
 def extract_tickers_simple(text):
@@ -100,7 +123,7 @@ def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
 
 def fetch_comments(post_id, subreddit):
     url = f"https://www.reddit.com/r/{subreddit}/comments/{post_id}.json"
-    response = requests.get(url, headers=HEADERS)
+    response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
 
     if response.status_code != 200:
         return []
@@ -132,7 +155,7 @@ def fetch_new_24h(subreddit, lookback=None):
             url += f"&after={after}"
 
         for attempt in range(3):
-            response = requests.get(url, headers=HEADERS)
+            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
 
             if response.status_code == 200:
                 data = response.json()["data"]
@@ -173,7 +196,7 @@ def fetch_new_24h(subreddit, lookback=None):
     return posts
 
 
-def fetch_hot(subreddit, limit=25):
+def fetch_hot(subreddit, limit=50):
     """
     Fetch top hot posts. These catch active discussions on posts
     older than 24h that are still getting engagement.
@@ -181,7 +204,7 @@ def fetch_hot(subreddit, limit=25):
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit={limit}"
 
     for attempt in range(3):
-        response = requests.get(url, headers=HEADERS)
+        response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
 
         if response.status_code == 200:
             children = response.json()["data"]["children"]
@@ -235,7 +258,7 @@ def refresh_active_posts(seen_ids):
 
         url = f"https://www.reddit.com/r/{db_post['subreddit']}/comments/{post_id}.json?limit=1"
         try:
-            response = requests.get(url, headers=HEADERS)
+            response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=30)
             if response.status_code != 200:
                 continue
 
