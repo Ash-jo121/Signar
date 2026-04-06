@@ -47,9 +47,12 @@ jobs:
             echo "⚠ No cached DB — will initialize fresh"
           fi
 
-      # ── 4. Create logs directory ──────────────────────────────────
+      # ── 4. Create logs directory + set date ───────────────────────
       - name: Create logs directory
         run: mkdir -p logs
+
+      - name: Set today's date
+        run: echo "TODAY=$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
       # ── 5. Run main pipeline ──────────────────────────────────────
       - name: Run ThreadRadar main pipeline
@@ -110,20 +113,22 @@ jobs:
           path: backend/threadradar.db
           key: threadradar-db-latest
 
-      # ── 9. Daily DB backup to repo ───────────────────────────────
+      # ── 9. Daily DB backup to repo ────────────────────────────────
       - name: Daily database backup
         if: always()
         run: |
           mkdir -p db-backup
-          cp backend/threadradar.db db-backup/threadradar_$(date +%Y-%m-%d).db
-          git config --global user.email "threadradar-bot@github.com"
-          git config --global user.name "ThreadRadar Bot"
-          git add db-backup/
-          git commit -m "Weekly DB backup $(date +%Y-%m-%d) [skip ci]"
-          git push
-
-      - name: Set today's date
-        run: echo "TODAY=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+          if [ -f backend/threadradar.db ]; then
+            cp backend/threadradar.db db-backup/threadradar_${{ env.TODAY }}.db
+            git config --global user.email "threadradar-bot@github.com"
+            git config --global user.name "ThreadRadar Bot"
+            git add db-backup/
+            git diff --staged --quiet && echo "No DB changes" || \
+              git commit -m "Daily DB backup ${{ env.TODAY }} [skip ci]"
+            git push || echo "Push failed"
+          else
+            echo "No DB file to backup"
+          fi
 
       # ── 10. Commit logs and output ────────────────────────────────
       - name: Commit logs and output files
@@ -131,11 +136,11 @@ jobs:
         run: |
           git config --global user.email "threadradar-bot@github.com"
           git config --global user.name "ThreadRadar Bot"
-          git add logs/run_${TODAY}.log || true
-          git add backend/output.json || true
-          git add backend/output.txt || true
+          git add logs/run_${{ env.TODAY }}.log || true
+          git add backend/output.json -f || true
+          git add backend/output.txt -f || true
           git diff --staged --quiet && echo "No changes to commit" || \
-            git commit -m "Run $(date +%Y-%m-%d) output and logs [skip ci]"
+            git commit -m "Run ${{ env.TODAY }} output and logs [skip ci]"
           git push || echo "Push failed — non-critical"
 
       # ── 11. Upload artifacts ──────────────────────────────────────
@@ -145,7 +150,7 @@ jobs:
         with:
           name: threadradar-${{ github.run_number }}
           path: |
-            logs/run_${TODAY}.log
+            logs/run_${{ env.TODAY }}.log
             backend/output.json
             backend/output.txt
           retention-days: 30
@@ -153,7 +158,7 @@ jobs:
       # ── 12. Email on success ──────────────────────────────────────
       - name: Email on success
         if: success()
-        uses: dawidd6/action-send-mail@v4
+        uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -166,7 +171,7 @@ jobs:
             ThreadRadar daily run completed successfully.
 
             Run: #${{ github.run_number }}
-            Date: $(date +%Y-%m-%d)
+            Date: ${{ env.TODAY }}
 
             Logs and output files are committed to the repo.
             Download full artifacts from GitHub Actions:
@@ -175,7 +180,7 @@ jobs:
       # ── 13. Email on failure ──────────────────────────────────────
       - name: Email on failure
         if: failure()
-        uses: dawidd6/action-send-mail@v4
+        uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
@@ -188,7 +193,7 @@ jobs:
             ThreadRadar daily run FAILED.
 
             Run: #${{ github.run_number }}
-            Date: $(date +%Y-%m-%d)
+            Date: ${{ env.TODAY }}
 
             Check the error in GitHub Actions:
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
