@@ -121,6 +121,7 @@ jobs:
 
       # ── 11. Upload DB to Railway ──────────────────────────────────
       - name: Upload database to Railway
+        if: always()
         working-directory: backend
         env:
           RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
@@ -145,6 +146,7 @@ jobs:
 
       # ── 12. Save DB back to cache ─────────────────────────────────
       - name: Save database to cache
+        if: always()
         uses: actions/cache@v4
         with:
           path: backend/threadradar.db
