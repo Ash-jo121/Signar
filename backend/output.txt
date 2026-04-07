@@ -1,40 +1,40 @@
-$SPCE [NO CATALYST] 
-  Mentions: 5.7 | Sentiment: +1.136 | Score: +1.427
-  Context: How I'm playing the SpaceX IPO for a possible 400 bagger I think everyone can agree the biggest thin
-
-$DRMA [CATALYST: PRODUCT LAUNCH] 
-  Mentions: 7.0 | Sentiment: +0.735 | Score: +1.193
-  Context: $DRMA: accumulation phase before $2+.($2-$5+pt) Building momo on a technical uptrend forming due to 
+$SPCE [CATALYST: PARTNERSHIP] 
+  Mentions: 12.0 | Sentiment: +0.814 | Score: +1.440
+  Context: You guys need to check out SPCE. Short term squeeze coming soon 🚀
 
 $DEFT [CATALYST: EARNINGS] 
-  Mentions: 17.8 | Sentiment: +0.571 | Score: +1.020
-  Context: DEFT up 20%. How the fuck am I going to sleep
+  Mentions: 16.6 | Sentiment: +0.687 | Score: +1.193
+  Context: DEFT shareholder meeting soon. Im watching closely
 
-$INDO [NO CATALYST] 
-  Mentions: 9.2 | Sentiment: +0.542 | Score: +0.713
-  Context: INDO (Indonesia Energy Corp) from $3-$40 on 2022. The reason? Read this and it will be familliar. Sa
+$POLA [CATALYST: PRODUCT RELEASE] 
+  Mentions: 10.4 | Sentiment: +0.753 | Score: +1.147
+  Context: $DRMA: Low float, low volume. technical break out forming at 1.40 break. Building a swing on known u
+
+$LNAI [NO CATALYST] 
+  Mentions: 7.0 | Sentiment: +0.640 | Score: +1.039
+  Context: LNAI she’s coming Let her come She wants more
+
+$CALC [CATALYST: CLINICAL] 
+  Mentions: 16.8 | Sentiment: +0.414 | Score: +0.772
+  Context: Usually, big pharma waits for Phase 3 readiness to de risk the deal. Right now, everyone is waiting 
 
 $BTBD [NO CATALYST] 
-  Mentions: 64.4 | Sentiment: +0.342 | Score: +0.703
-  Context: BTBD great buy here merger should come this week
+  Mentions: 46.9 | Sentiment: +0.386 | Score: +0.761
+  Context: I swear if you guys pump $CAPS when they release their 10-K. $BTBD looks like child’s play at a glan
 
-$ANNA [CATALYST: REGULATORY] 
-  Mentions: 22.5 | Sentiment: +0.328 | Score: +0.614
-  Context: $ANNA War Keeps pushing highs, initially went up on news, has not been brought down since despite ma
+$MIGI [NO CATALYST] 
+  Mentions: 15.8 | Sentiment: +0.364 | Score: +0.673
+  Context: MIGI is sooo the play this week
 
-$III [CATALYST: PARTNERSHIP] 
-  Mentions: 5.3 | Sentiment: +0.400 | Score: +0.435
-  Context: 160 Year Old Family Business and I am Long 160 year old family business. 160 years. the schmid famil
+$CYCN [CATALYST: PARTNERSHIP] 
+  Mentions: 8.3 | Sentiment: +0.501 | Score: +0.669
+  Context: I made profit on ELAB, BFRG, and CYCN last week. What about you guys? And what are you gonna be look
 
-$MOBX [CATALYST: PARTNERSHIP] 
-  Mentions: 8.3 | Sentiment: +0.254 | Score: +0.396
-  Context: Okay, here's what's on my radar for next week, based on filtering and this time, volume: MOBX is def
+$INDO [CATALYST: GEOPOLITICAL] 
+  Mentions: 8.2 | Sentiment: +0.437 | Score: +0.618
+  Context: INDO (Indonesia Energy Corp) from $3-$40 on 2022. The reason? Read this and it will be familliar. Sa
 
-$LNKS [NO CATALYST] 
-  Mentions: 6.4 | Sentiment: +0.242 | Score: +0.387
-  Context: LNKS just opened today after a 250-1 and it's up.
-
-$CYCN [CATALYST: SHORT SQUEEZE] 
-  Mentions: 15.7 | Sentiment: +0.338 | Score: +0.374
-  Context: Top Gainers (March 30th to April 2nd) Here are a few top gainers from this week. Please let me know 
+$ATCH [CATALYST: EARNINGS] 
+  Mentions: 7.5 | Sentiment: +0.360 | Score: +0.591
+  Context: ATCH, I recommended this morning & gained 13% just today!! New Client onboarding & blowout Q2 number
 
