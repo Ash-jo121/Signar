@@ -65,18 +65,7 @@ jobs:
           # Show DB contents before run
           if [ -f backend/threadradar.db ]; then
             echo "--- DB contents before run ---"
-            python3 << 'EOF'
-              import sqlite3
-              conn = sqlite3.connect('backend/threadradar.db')
-              tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
-              for t in tables:
-                  try:
-                      count = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
-                      print(f'  {t}: {count} rows')
-                  except Exception as e:
-                      print(f'  {t}: ERROR - {e}')
-              conn.close()
-            EOF
+            python3 backend/check_db.py
           fi
 
       # ── 6. Create logs directory ──────────────────────────────────
@@ -105,31 +94,7 @@ jobs:
         run: |
           echo "--- DB contents after main pipeline ---"
           echo "DB size: $(ls -lh backend/threadradar.db 2>/dev/null | awk '{print $5}' || echo 'NOT FOUND')"
-          python3 << 'EOF'
-            import sqlite3
-            conn = sqlite3.connect('backend/threadradar.db')
-            tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
-            for t in tables:
-                try:
-                    count = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
-                    print(f'  {t}: {count} rows')
-                except Exception as e:
-                    print(f'  {t}: ERROR - {e}')
-
-            import os
-            today = os.environ.get('TODAY', '')
-            if today:
-                for t in ['daily_sentiment', 'daily_contexts', 'performance_tracking']:
-                    try:
-                        col = 'date' if t != 'performance_tracking' else 'flagged_date'
-                        count = conn.execute(
-                            f'SELECT COUNT(*) FROM {t} WHERE {col} = ?', (today,)
-                        ).fetchone()[0]
-                        print(f'  {t} today ({today}): {count} rows')
-                    except Exception as e:
-                        print(f'  {t} today: ERROR - {e}')
-            conn.close()
-          EOF
+          python3 backend/check_db.py
         env:
           TODAY: ${{ env.TODAY }}
 
@@ -152,17 +117,7 @@ jobs:
         run: |
           echo "--- DB contents after price updater ---"
           echo "DB size: $(ls -lh backend/threadradar.db | awk '{print $5}')"
-          python3 << 'EOF'
-            import sqlite3
-            conn = sqlite3.connect('backend/threadradar.db')
-            tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
-            for t in tables:
-                try:
-                    count = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
-                    print(f'  {t}: {count} rows')
-                except Exception as e:
-                    print(f'  {t}: ERROR - {e}')
-            conn.close()
+          python3 backend/check_db.py
           EOF
 
       # ── 11. Upload DB to Railway ──────────────────────────────────
