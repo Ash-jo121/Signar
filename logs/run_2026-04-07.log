@@ -1,0 +1,1211 @@
+=== ThreadRadar starting at Tue Apr  7 12:06:47 UTC 2026 ===
+Fetching NASDAQ tickers...
+  NASDAQ: added 3961 tickers (total: 3961)
+Fetching NYSE tickers...
+  NYSE: added 2322 tickers (total: 6283)
+Fetching AMEX tickers...
+  AMEX: added 276 tickers (total: 6559)
+
+Cached 6559 valid tickers to valid_tickers.json
+✓ Scraper loaded VALID_TICKERS: 6559 tickers
+✓ Proxy enabled: gate.decodo.com:10000
+Extractor loaded, VALID_TICKERS size: 6559
+AND in VALID_TICKERS: False
+=== ThreadRadar ===
+
+Database initialized successfully
+Step 1: Fetching posts...
+
+Fetching r/VampireStocks (bearish signal source)...
+    /new: 4 posts in last 48h (1 pages)
+    /hot: 50 posts fetched
+  Processing 50 VampireStocks posts...
+  [VampireStocks] MGRT → investigation (confidence=0.60)
+  [VampireStocks] HTCO → confirmed_dump (confidence=1.00)
+  [VampireStocks] HTCO → scam_group (confidence=0.90)
+  [VampireStocks] NCI → scam_group (confidence=0.90)
+  [VampireStocks] ONDS → scam_group (confidence=0.90)
+  [VampireStocks] EDHL → pump_warning (confidence=0.80)
+  [VampireStocks] SFHG → pump_warning (confidence=0.80)
+  [VampireStocks] PCLA → pump_warning (confidence=0.80)
+  [VampireStocks] CLIK → pump_warning (confidence=0.80)
+  [VampireStocks] WCT → pump_warning (confidence=0.80)
+  [VampireStocks] RCON → pump_warning (confidence=0.80)
+  [VampireStocks] HTCO → pump_warning (confidence=0.80)
+  [VampireStocks] NPT → confirmed_dump (confidence=0.80)
+  [VampireStocks] NCI → confirmed_dump (confidence=1.00)
+  [VampireStocks] MGN → confirmed_dump (confidence=1.00)
+  [VampireStocks] UGRO → confirmed_dump (confidence=1.00)
+  [VampireStocks] EEIQ → confirmed_dump (confidence=1.00)
+  [VampireStocks] FCHL → pump_warning (confidence=0.80)
+  [VampireStocks] MGN → pump_warning (confidence=0.80)
+  [VampireStocks] LICN → investigation (confidence=0.80)
+  [VampireStocks] AHMA → pump_warning (confidence=0.80)
+  [VampireStocks] POM → pump_warning (confidence=0.80)
+  [VampireStocks] MSGY → confirmed_dump (confidence=1.00)
+  [VampireStocks] EJH → scam_group (confidence=0.80)
+  [VampireStocks] NCI → confirmed_dump (confidence=1.00)
+  [VampireStocks] APLD → pump_warning (confidence=0.80)
+  [VampireStocks] SERV → pump_warning (confidence=0.80)
+  [VampireStocks] NCI → investigation (confidence=0.80)
+  [VampireStocks] NPT → investigation (confidence=0.80)
+  [VampireStocks] MGN → investigation (confidence=0.80)
+  [VampireStocks] FIGR → confirmed_dump (confidence=0.90)
+  [VampireStocks] ASTS → confirmed_dump (confidence=0.80)
+  [VampireStocks] INUV → pump_warning (confidence=0.80)
+  [VampireStocks] SEDG → pump_warning (confidence=0.80)
+  VampireStocks: 34 bearish tickers flagged
+
+Fetching r/pennystocks...
+    /new: 29 posts in last 48h (1 pages)
+  [new] 'DVLT Technical Analysis: Clean Uptrend Holdin' → 1 comments
+  [new] 'DVLT Technical Analysis: Clean Uptrend Holdin' → 1 comments
+  [new] '07 APRIL 2026 , WHAT ARE THE BIGGEST LOSERS S' → 1 comments
+  [new] '07 APRIL 2026 , WHAT ARE THE BIGGEST WINNERS ' → 1 comments
+  [new] 'The Lounge' → 127 comments
+  [new] '🚨 $SVRE – The RF Tech Sleeper About to Break ' → 4 comments
+  [new] '$PFSA +42% -- $30M PanOmics acquisition LOI s' → 2 comments
+  [new] '$FCUV +44% -- post-reverse-split micro-cap sq' → 1 comments
+  [new] '$AIXI +294% — China Supreme Court upholds AI ' → 32 comments
+  [new] 'Why Tungsten Is the Most Overlooked Trade in ' → 5 comments
+  [new] 'Military Metals (CSE: MILI | OTCQB: MILIF) – ' → 6 comments
+  [new] 'INDO (Indonesia Energy Corp) from $3-$40 on 2' → 4 comments
+  [new] 'INDO (Indonesia Energy Corp) from $3-$40 on 2' → 1 comments
+  [new] 'A market can look modern and still run on cop' → 2 comments
+  [new] 'Found GPOX while filing digging. Direct store' → 3 comments
+  [new] 'Today is the deadline to submit your claim if' → 2 comments
+  [new] 'MDCX breakout isn’t random: Teverelix just tu' → 9 comments
+  [new] '06 APRIL 2026 , WHAT ARE THE BIGGEST LOSERS T' → 1 comments
+  [new] '06 APRIL 2026 , WHAT ARE THE BIGGEST WINNERS ' → 5 comments
+  [new] '$OTH News Out! Off The Hook Yachts Expands No' → 0 comments
+  [new] '$THRC Roasters Website After decades of resea' → 1 comments
+  [new] 'How I'm playing the SpaceX IPO for a possible' → 17 comments
+  [new] 'The Lounge' → 189 comments
+  [new] '$NFE - Shannon LNG gas plant gets green light' → 2 comments
+  [new] 'Stock Pulse Weekly Recap — Mar 31 – Apr 4, 20' → 1 comments
+  [new] 'Anyone ever consider trying to win a director' → 13 comments
+  [new] '3-4x upside, decision next Tuesday, cheap cal' → 10 comments
+  [new] 'All AI is Physical AI - YouTube' → 1 comments
+  [new] '🚨 $AIXI – The $3M Company That Just Beat Appl' → 48 comments
+    /hot: 0 posts fetched
+
+Fetching r/smallstreetbets...
+    /new: 39 posts in last 48h (1 pages)
+  [new] 'Stupid question about options' → 3 comments
+  [new] 'Rate my portfolio' → 6 comments
+  [new] 'Don’t think I’ll ever make any money consiste' → 25 comments
+  [new] '⚡WATCHLIST RECAP⚡' → 1 comments
+  [new] 'Do I sell b4 or after 8pm tomorrow?' → 7 comments
+  [new] 'Helium as a critical supply crunch - Pulsar H' → 15 comments
+  [new] 'Decided this last week.' → 0 comments
+  [new] 'Ignoring company and price, only looking at c' → 8 comments
+  [new] '$PFSA +42% -- $30M PanOmics acquisition LOI s' → 0 comments
+  [new] '$FCUV +44% -- post-reverse-split micro-cap sq' → 0 comments
+  [new] '$AIXI +294% — China Supreme Court upholds AI ' → 0 comments
+  [new] 'The S&amp;P 500 just closed the day highger f' → 18 comments
+  [new] 'Stock Market Recap for Monday, April 6, 2026' → 3 comments
+  [new] 'OIL BUBBLE. ( you know what to do )' → 100 comments
+  [new] 'Nikola Corp: The $30B "Hill" Just Hit Bottom' → 0 comments
+  [new] 'GPOX dropped their 10-Q. $4.07M revenue, 26% ' → 1 comments
+  [new] 'DVLT lining up London and Zurich right after ' → 0 comments
+  [new] 'A token is only as reliable as the valuation ' → 3 comments
+  [new] '⚡MORNING WATCHLIST⚡' → 0 comments
+  [new] 'Half of the data centers planned for 2026 are' → 81 comments
+  [new] 'You learn the most when investors try to leav' → 0 comments
+  [new] 'Understanding the mechanics of asset tokeniza' → 0 comments
+  [new] 'Looking at today’s heatmap and it honestly fe' → 42 comments
+  [new] 'Bottom out!' → 5 comments
+  [new] 'I’m losing my marbles.' → 8 comments
+  [new] 'Yeahhhh I’m not touching this pump' → 12 comments
+  [new] 'This is what an infrastructure play actually ' → 0 comments
+  [new] 'Stock info and Technical Analysis Update for ' → 1 comments
+  [new] 'RDW I like space stuff' → 6 comments
+  [new] 'NOKIA' → 2 comments
+  [new] 'What if valuation is actually the business… n' → 1 comments
+  [new] 'Yolo’d nvidia and Netflix options' → 1 comments
+  [new] 'Civilization IV: New Era, Diplomacy Update pa' → 13 comments
+  [new] 'Imagine if Apple changed the logo for their s' → 19 comments
+  [new] 'This is what the 🇺🇸 stock market looked like ' → 19 comments
+  [new] 'Stock Pulse Weekly Recap — Mar 31 – Apr 4, 20' → 0 comments
+  [new] 'Monday Big Buy!!' → 3 comments
+  [new] 'Just started again after losing 10K three yea' → 10 comments
+  [new] '2nd Quarter earnings is just a week away! I h' → 0 comments
+    /hot: 50 posts fetched
+  [hot] 'SUBREDDIT UPDATE 5/14/2025 | Clarifications a' → 8 comments
+  [hot] 'Israeli stock market just hit a new all times' → 178 comments
+  [hot] 'DVLT Deep Dive: Explosive Growth &amp; Real M' → 0 comments
+  [hot] 'too poor for options but I don’t wanna just h' → 61 comments
+  [hot] 'Here are the top 10 worst days in S&amp;P 500' → 103 comments
+  [hot] 'Here has been the best trading day each year ' → 15 comments
+  [hot] 'My portfolio now vs. a month ago' → 18 comments
+  [hot] 'BTBD Tightening Under Resistance With Drone/M' → 1 comments
+  [hot] 'Just a screenshot.' → 18 comments
+  [hot] 'Hedge Funds Dump Global Stocks at Fastest Pac' → 26 comments
+  [hot] 'USO' → 4 comments
+
+Fetching r/Pennystock...
+    /new: 58 posts in last 48h (1 pages)
+  [new] 'VLMGF: Viscount Mining Engages SLR to Re-Anal' → 0 comments
+  [new] 'The Trader Behind the RGC Move Is Gaining Ser' → 1 comments
+  [new] 'Has anybody ever invested in the unlisted mar' → 0 comments
+  [new] '$ DVLT- SCLX v/s BNY Mellon Bank' → 5 comments
+  [new] '$JTAI 👊🔥💹' → 1 comments
+  [new] 'PRE MARKET WATCHLISTS WITH CURRENT SET UPS 👇🏻' → 13 comments
+  [new] 'Former WallStreetBets Mod Calls 200%–600% Sto' → 4 comments
+  [new] 'Mawson Infrastructure MIGI After Hours News B' → 0 comments
+  [new] 'MRVL is an incredible company and with immens' → 2 comments
+  [new] 'MOBX HALTED' → 17 comments
+  [new] 'What stock to buy tomorow?' → 62 comments
+  [new] 'SMX = Legend' → 1 comments
+  [new] 'Let’s make ASKE move!' → 1 comments
+  [new] '$PFSA +42% -- $30M PanOmics acquisition LOI s' → 1 comments
+  [new] '$FCUV +44% -- post-reverse-split micro-cap sq' → 0 comments
+  [new] '$AIXI +294% — China Supreme Court upholds AI ' → 2 comments
+  [new] 'DVLT ✅ Jp Morgan News' → 18 comments
+  [new] '$iobt bankruptcy play in move now.' → 1 comments
+  [new] 'SoFi removed the one feature that actually ma' → 0 comments
+  [new] '$iobt bankruptcy play in move now.' → 0 comments
+  [new] 'AFTER HOUR WATCHLIST WITH CURRENT SET UPS 👇🏻' → 32 comments
+  [new] 'A $39.1M revenue company is pitching Tokyo, L' → 4 comments
+  [new] 'OK who is jumping on the SMX train today? Mor' → 1 comments
+  [new] 'May 13 is still the real test for DVLT. Every' → 8 comments
+  [new] 'Japan may be the first place where DVLT adds ' → 3 comments
+  [new] 'GPOX numbers: Revenue up 12%, gross margin 26' → 0 comments
+  [new] 'DVLT may make more sense once you stop callin' → 26 comments
+  [new] 'DVLT 💎 News !' → 4 comments
+  [new] '⚡MORNING WATCHLIST⚡' → 1 comments
+  [new] 'stock $aixi breaking new highs' → 1 comments
+  [new] 'Explosive Stock Gains Exposed: The Trader Wal' → 3 comments
+  [new] '$JTAI 0.04 🔥🔥🔥🔥💹' → 7 comments
+  [new] 'News out on DWAY now current reporting in 40 ' → 0 comments
+  [new] 'International exposure building – next stop J' → 1 comments
+  [new] '$SVC Big move coming' → 1 comments
+  [new] '$SMX $2000+ LFG!!!' → 7 comments
+  [new] 'DVLT is stacking global keynotes back-to-back' → 1 comments
+  [new] 'War Profits Are Back: How the Israel-Iran Con' → 3 comments
+  [new] 'MOBX' → 0 comments
+  [new] '$AIXI $1+' → 0 comments
+  [new] 'BURN Shorty: Mobix Labs Secures $3.2M Order f' → 0 comments
+  [new] 'What makes UCL unlike its peers?' → 0 comments
+  [new] 'What’s everyone buying today?!' → 18 comments
+  [new] 'What u think about TURB stock' → 0 comments
+  [new] 'What if pricing the asset ends up being worth' → 0 comments
+  [new] '💚MARKET OPEN WATCHLIST WITH CURRENT SET UPS 👇' → 20 comments
+  [new] 'ADM Endeavors (ADMQ) Announces Operational Co' → 0 comments
+  [new] 'The Best War Stock to Buy Right Now as Israel' → 0 comments
+  [new] 'DVLT 💎' → 2 comments
+  [new] 'What’s the best penny stocks if the Iran war ' → 13 comments
+  [new] 'Could we prepare the next MemStock' → 1 comments
+  [new] 'EONR 2$ this week ? 🧐💰' → 12 comments
+  [new] 'Stock Pulse Weekly Recap — Mar 31 – Apr 4, 20' → 0 comments
+  [new] 'The more I map this tokenization theme, the m' → 1 comments
+  [new] 'REPL' → 1 comments
+  [new] 'DVLT did $39.1M in FY2025, but $33.8M came in' → 22 comments
+    Comment fetch error for 1sd5rfq: HTTPSConnectionPool(host='www.reddit.com', port=443): Max re
+  [new] 'THE DISTILLED 3: Top Catalyst Plays for the W' → 0 comments
+  [new] 'MOBX - Get Ready for the Mother of All Short ' → 11 comments
+    /hot: 50 posts fetched
+  [hot] '[ Removed by Reddit ]' → 0 comments
+
+Fetching r/RobinHoodPennyStocks...
+    /new: 13 posts in last 48h (1 pages)
+  [new] 'Is the market cooked today because of Trumps ' → 0 comments
+  [new] 'Is the market cooked today because of Trumps ' → 1 comments
+  [new] 'Ape Strong Together 🤣' → 1 comments
+  [new] 'Mawson Infrastructure MIGI After Hours News B' → 0 comments
+  [new] 'We are all Apes just with different timing. W' → 0 comments
+  [new] '$PFSA +42% -- $30M PanOmics acquisition LOI s' → 0 comments
+  [new] '$AEHL ✅ Potential for a mega Move .. like $AI' → 0 comments
+  [new] 'Watching a few penny names right now – this o' → 1 comments
+  [new] 'The Reality of Real-World Asset Valuation' → 0 comments
+  [new] 'The recurring revenue layer in tokenization m' → 0 comments
+  [new] 'Ha! I tricked some Apes to sell thier bags😂' → 0 comments
+  [new] 'What’s everyone buying today?!' → 1 comments
+  [new] 'What’s everyone buying today in this crazy ma' → 5 comments
+    /hot: 50 posts fetched
+  [hot] 'Call for volunteers - help us moderate' → 9 comments
+  [hot] '$BTBD Drone/Merger Reclaiming Trend And Pushi' → 0 comments
+  [hot] 'Vanguard, blackrock, state street all increas' → 0 comments
+  [hot] 'Your fear of missing the next cycle is justif' → 0 comments
+  [hot] 'I found this theme through one small cap, but' → 0 comments
+  [hot] 'Strong Growth Potential in AI Data Revolution' → 0 comments
+  [hot] 'ASKE Friday' → 0 comments
+  [hot] 'Is the market going to explode Monday because' → 5 comments
+  [hot] '$BTBD Update On Merger Play With Breakout Cha' → 0 comments
+  [hot] 'DVLT feels like one of those “too early or ju' → 5 comments
+  [hot] 'BTBD drone merger name ww' → 0 comments
+  [hot] '$GV +66% — $20M anti-aging deal with Chinese ' → 0 comments
+  [hot] 'BTBD keep eyes on this one for next week, Dro' → 0 comments
+  [hot] 'Recent financial updates and 2026 revenue gui' → 0 comments
+  [hot] 'Stop waiting for the masses to tell you what ' → 0 comments
+  [hot] 'AbCellera Biologics ( $ABCL ) — Deep Dive On ' → 0 comments
+  [hot] 'Small-Cap Low Float On My Radar' → 0 comments
+  [hot] '$GRLF Chilco River Holdings Announces LOI and' → 0 comments
+  [hot] 'What’s everyone buying today in this crazy do' → 3 comments
+  [hot] 'They want you to fail!' → 1 comments
+  [hot] '$CYCN +183% — Korsana merger and $380M financ' → 0 comments
+  [hot] 'Analyzing the disconnect between valuation an' → 0 comments
+  [hot] 'Another huge update!' → 35 comments
+  [hot] '$TRAW ready to blow!' → 0 comments
+  [hot] '$IQST - "Our focus now is transitioning from ' → 0 comments
+  [hot] 'Awesome day yesterday, what’s everyone buying' → 3 comments
+  [hot] 'Yeah, I stole the meme from “them.” Tell them' → 0 comments
+  [hot] '$KALA Kala Bio Engages Dr. Saeid Babaei as Se' → 0 comments
+  [hot] 'It’s actually possible!' → 3 comments
+  [hot] 'If tokenization moves into a $149T market… ar' → 2 comments
+  [hot] 'Or / Antimoine Action - Nova Minerals NVA en ' → 0 comments
+  [hot] 'ASKE - aimusicdistribution.com' → 0 comments
+  [hot] 'Huge news! How’s the market gonna react to th' → 4 comments
+  [hot] 'News: AUID 129% YoY revenue increase, but rea' → 0 comments
+  [hot] '$MASK +34% — dead-cat bounce on trading resum' → 0 comments
+    Comment fetch failed for 1s8nac1: 403
+  [hot] 'Stock Analysis + Question: Who Captures Value' → 0 comments
+  [hot] 'ASKE profile' → 0 comments
+
+Fetching r/10xPennyStocks...
+    /new: 9 posts in last 48h (1 pages)
+  [new] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [new] '🚨 $SVRE – The RF Tech Sleeper About to Break ' → 1 comments
+  [new] '$JANX 🔥🚀 Meanwhile, Truist Securities lowered' → 0 comments
+  [new] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [new] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [new] 'How I'm playing the SpaceX IPO for a possible' → 3 comments
+  [new] 'Será deslistada VMAR del Nasdaq?' → 0 comments
+  [new] 'My #1 small-cap watch tomorrow' → 0 comments
+  [new] 'Daily Penny Stock Discussion | Watchlist, New' → 3 comments
+    /hot: 50 posts fetched
+  [hot] 'UPDATE ON THE 10XPenny × FOCKETS DISCORD COLL' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] 'More market manipulation is coming ..' → 3 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 2 comments
+  [hot] '$VWAV bought another 4milion $ worth of $SVRE' → 0 comments
+  [hot] 'One week, three lanes: antimony, copper, and ' → 0 comments
+  [hot] 'Markets Closed. Perfect Time for Something to' → 10 comments
+  [hot] '$BTBD Huge Merger Potential. Next Weeks Runne' → 1 comments
+  [hot] 'Defi technologies from zero to record' → 2 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 1 comments
+  [hot] 'Final Call: $740M Didi Settlement Claims expi' → 0 comments
+  [hot] 'PAVS, WNW- What can we do with those types of' → 4 comments
+  [hot] 'BTBD small cap drone merger name' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] 'Small-Cap Low Float On My Radar' → 1 comments
+  [hot] '$INDO is my play for today. I feel good about' → 3 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] '160 Year Old Family Business and I am Long' → 14 comments
+  [hot] 'DGXX - The Next Big AI Data Center Stock' → 10 comments
+  [hot] 'FEMY quietly growing fast — 40% sales increas' → 5 comments
+  [hot] 'Stop following the herd while the smart money' → 2 comments
+  [hot] '$RZLV Making Higher Lows! Management targetin' → 1 comments
+  [hot] '$ADIA NEWS. Adia Nutrition, Inc. Reports Stro' → 0 comments
+  [hot] '$ADHC News. American Diversified Holdings Ope' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 0 comments
+  [hot] '[ Removed by Reddit ]' → 3 comments
+  [hot] 'A Hidden Microcap Pivot the Market May Be Ove' → 1 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 6 comments
+  [hot] 'If you invested $10,000 in Peloton in 2021, t' → 6 comments
+  [hot] 'Could Lithium be the play coming out of this ' → 0 comments
+  [hot] 'Military Metals CEO Interview: Developing Eur' → 0 comments
+  [hot] 'DeFi Technologies Announces Preliminary Unaud' → 10 comments
+  [hot] 'Thanks to the guy who made a post to buy JAGU' → 0 comments
+  [hot] 'GNIS possible swing play* high risk' → 0 comments
+  [hot] 'Daily Penny Stock Discussion | Watchlist, New' → 4 comments
+  [hot] 'Ffai rags to riches if blackrock can do it so' → 0 comments
+  [hot] 'Three Reasons the Market May Be Undervaluing ' → 3 comments
+  [hot] '$IMTE 2 million MC + Micro Float + Bottomed C' → 0 comments
+  [hot] 'IQST watching for a bounce off 52 week lows' → 1 comments
+
+Fetching r/Shortsqueeze...
+    /new: 4 posts in last 48h (1 pages)
+  [new] '$AEHL ✅ Potential for a mega Move .. like $AI' → 10 comments
+  [new] 'Indo (Indonesia Energy Corp) squeezed to $3-$' → 4 comments
+  [new] '$AIXI , Was right again ... looking for the n' → 16 comments
+  [new] 'SqueezeFinder - April 6th 2026' → 5 comments
+    /hot: 50 posts fetched
+  [hot] 'Stop using ChatGPT to do your market research' → 155 comments
+  [hot] 'PSA: X-Posts are no longer allowed' → 1 comments
+  [hot] '$BTBD Base-On-Base Breakout Push #2 In Progre' → 7 comments
+  [hot] '$TNXP NEW data Shortsqueeze is coming 🚀🚀' → 6 comments
+  [hot] '$BTBD Update On Merger Play With Breakout Cha' → 4 comments
+  [hot] '$WEAT - Wheat could squeeze higher from overs' → 8 comments
+  [hot] 'Most shorted Fintech: UPST! Once again!' → 4 comments
+  [hot] 'DERM seems to be a strong candidate for a squ' → 2 comments
+  [hot] '$SNBR low float high short interest' → 1 comments
+  [hot] 'Poet Technologies- And The Bet On Optical In.' → 1 comments
+  [hot] 'GRML is about to squeeze and nobody is talkin' → 19 comments
+  [hot] '$BTOC - Chinese pump and dump in the making' → 15 comments
+  [hot] 'Coreweave got a $8.5 billion and it’s squeezi' → 8 comments
+  [hot] '$POLA Update: AH through PM Chart Read' → 8 comments
+  [hot] 'BIAF - is the float locked? CTB is ridiculous' → 9 comments
+  [hot] 'Momo Traders Check Out $POLA Price Action, Co' → 1 comments
+  [hot] 'ANNA is a seriously good short squeeze candid' → 31 comments
+  [hot] '🚀 $RONND Quiet Accumulation Before the Move?' → 1 comments
+  [hot] 'SqueezeFinder - March 30th 2026' → 2 comments
+  [hot] '$ASTC Technical Analysis: On Watch for Monday' → 17 comments
+  [hot] '$car Avis Budget Group why do I not see any p' → 12 comments
+    Timeout on attempt 1 for 1s5bq5m
+  [hot] '$ARTL What do you think of my post below $4 ?' → 18 comments
+  [hot] '$$ASTC Breakout Chart: Contracts, Momentum, a' → 7 comments
+  [hot] 'CYCU - Reaching another 52 Week Low' → 1 comments
+  [hot] '$EOSE looking prime for a for a squeezing' → 9 comments
+  [hot] '$RONND quietly setting up low-key one to watc' → 2 comments
+  [hot] 'RH - Fly me to the moon - macro story' → 2 comments
+  [hot] '$SHPH to watch .. Good news and shorts went a' → 4 comments
+  [hot] 'VITL: An Eggcellent opportunity' → 1 comments
+  [hot] '✅ $VTIX ✅ Recent IPO to watch: Shake out seem' → 9 comments
+  [hot] '$TBHC a clean penny microcap low float with i' → 2 comments
+  [hot] 'I brought you guys ANNA and now….' → 95 comments
+  [hot] 'AMZE quietly stacking PRs 👀 – feels like some' → 2 comments
+  [hot] '$IBRX: Rising CTB, short interest over 30%' → 24 comments
+  [hot] '$USEG Due diligence post and possibly catalys' → 18 comments
+  [hot] '$IMTE - Beyond a "Warning." They Got the Dete' → 3 comments
+  [hot] 'Groupon ($GRPN) cost to borrow is low but DTC' → 5 comments
+  [hot] '$WEAT - an oversold commodity in a war enviro' → 3 comments
+  [hot] '$ARTL ✅ on reversal watch today .' → 12 comments
+  [hot] 'ONDS 600% Revenue Growth. Still 35% Short Int' → 39 comments
+  [hot] 'SqueezeFinder - March 24th 2026' → 13 comments
+  [hot] '$HLRTF showing strength after $500K raise at ' → 3 comments
+  [hot] '$HLRTF This kind of setup usually doesn’t sta' → 3 comments
+  [hot] '$TNXP NEW DATA Tonmya 🚀🚀+13.12% last week; ma' → 16 comments
+  [hot] 'Webull Stock Restrictions Legal Action $GPUS ' → 6 comments
+  [hot] 'SqueezeFinder - March 20th 2026' → 10 comments
+
+Fetching r/SqueezePlays...
+    /new: 2 posts in last 48h (1 pages)
+  [new] 'DVLT Update: Early Growth and Volatility at $' → 2 comments
+  [new] 'SqueezeFinder - April 6th 2026' → 1 comments
+    /hot: 50 posts fetched
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 4 comments
+  [hot] 'Poet Technologies- And The Bet On Optical In.' → 0 comments
+  [hot] 'SqueezeFinder - March 30th 2026' → 0 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 5 comments
+  [hot] 'VITL: An Eggcellent Opportunity' → 0 comments
+  [hot] '$TBHC a clean penny microcap low float with i' → 0 comments
+  [hot] 'SqueezeFinder - March 24th 2026' → 2 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 0 comments
+  [hot] '$EVGN this tiny microcap low float bio penny ' → 0 comments
+  [hot] 'SqueezeFinder - March 20th 2026' → 0 comments
+  [hot] 'OFC 2026 Just Confirmed the Optical Supercyc.' → 0 comments
+  [hot] 'SqueezeFinder - March 19th 2026' → 0 comments
+  [hot] 'SqueezeFinder - March 16th 2026' → 0 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 0 comments
+  [hot] 'SqueezeFinder - March 13th 2026' → 0 comments
+  [hot] '$EVGN AG fertilization theme names are going ' → 1 comments
+  [hot] 'SqueezeFinder - March 11th 2026' → 0 comments
+  [hot] 'SqueezeFinder - March 9th 2026' → 0 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 2 comments
+  [hot] '$OLOX the next oil play' → 0 comments
+  [hot] 'Has this graduated to a "Meme Stock" yet? Ear' → 1 comments
+  [hot] 'SqueezeFinder - March 5th 2026' → 1 comments
+  [hot] 'SqueezeFinder - March 4th 2026' → 2 comments
+  [hot] 'SqueezeFinder -  March 3rd 2026' → 0 comments
+  [hot] 'SqueezeFinder - March 2nd 2026' → 0 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 1 comments
+  [hot] 'SqueezeFinder - Feb 27th 2026' → 0 comments
+  [hot] '✨ $SPY just hit a 1,000% milestone and the FS' → 0 comments
+  [hot] 'Mullen Automotive Is Paying a $7.25M Settleme' → 2 comments
+  [hot] 'SqueezeFinder - Feb 25th 2026' → 0 comments
+  [hot] 'SqueezeFinder -  Feb 24th 2026' → 0 comments
+  [hot] 'SqueezeFinder - Feb 23rd 2026' → 0 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 0 comments
+  [hot] 'SqueezeFinder - Feb 20th 2026' → 0 comments
+  [hot] 'BNKD etf RS24th' → 0 comments
+  [hot] '$GXAI: They got greedy, now they’re trapped. ' → 0 comments
+  [hot] 'SqueezeFinder - Feb 18th 2026' → 1 comments
+  [hot] 'Is this a squeezer? $OLB' → 14 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 0 comments
+  [hot] '$HIHO Highway Holdings this microcap tiny flo' → 0 comments
+  [hot] 'SMCI....' → 0 comments
+  [hot] '$GXAI - The Perfect Storm? 51% SI, 322% CTB, ' → 1 comments
+  [hot] 'SqueezeFinder - Feb 9th 2026' → 0 comments
+  [hot] '✨ 🚨 V4 Elite Signal: Is $MNDY the most overso' → 0 comments
+  [hot] '$VEEE: 935% borrow fee, 30%+ short float, and' → 3 comments
+  [hot] 'What Are Your Moves? Weekend Discussion Threa' → 0 comments
+  [hot] 'SqueezeFinder - Feb 6th 2026' → 0 comments
+  [hot] 'BYND - DAMN! Can't believe we aren't talking ' → 11 comments
+
+Fetching r/wallstreetbets...
+    /new: 30 posts in last 48h (1 pages)
+  [new] 'Red Light Tuesday?' → 15 comments
+  [new] 'Daily Discussion Thread for April 07, 2026' → 177 comments
+  [new] 'Blockbuster SpaceX listing could suck the oxy' → 55 comments
+  [new] 'Ackman's Pershing Square offers to buy Univer' → 42 comments
+  [new] 'Options saved my portfolio' → 56 comments
+  [new] 'Which end of the machine do I feed the money ' → 14 comments
+  [new] 'BROADCOM INC AND GOOGLE ENTER LONG-TERM TPU A' → 54 comments
+  [new] 'Been talking about this for weeks' → 178 comments
+  [new] '-$25K Lost all my gains from chart analysis t' → 121 comments
+  [new] 'What Are Your Moves Tomorrow, April 07, 2026' → 183 comments
+  [new] 'I literally work in finance and don’t invest ' → 194 comments
+  [new] 'TSLA poots are the way' → 28 comments
+  [new] '$ELF 1 of 1' → 13 comments
+  [new] 'AGI got me to even after 9 years' → 34 comments
+  [new] 'How to guarantee world peace - buy Puts on th' → 103 comments
+  [new] 'WHICH SECTORS ARE CRUSHING AN WHICH ARE CRYIN' → 21 comments
+  [new] 'JPMorgan warns Tesla stock could sink 60% in ' → 199 comments
+  [new] 'citrini’s huge balled analyst undercover trip' → 132 comments
+  [new] 'Daily Discussion Thread for April 06, 2026' → 186 comments
+  [new] 'US allies are pressing for a last minute deal' → 185 comments
+  [new] 'LLY just dropped a $149/month weight loss pil' → 176 comments
+  [new] '$COIN max bet' → 81 comments
+  [new] '300k loss on April 2nd - margin' → 119 comments
+  [new] 'Futures Trade - Long Brent (BNO / BZ) Short W' → 67 comments
+  [new] 'Nearly half of planned US data centers have b' → 197 comments
+  [new] 'Overnight U.S Equites Futures' → 192 comments
+  [new] 'What Are Your Moves Tomorrow, April 06, 2026' → 171 comments
+  [new] 'Can an issuer vacuum up its own preferred at ' → 22 comments
+  [new] 'OPEC+ can save our portfolio???' → 193 comments
+  [new] 'Oil chads absolutely railed nat gas virgins Y' → 98 comments
+    /hot: 50 posts fetched
+  [hot] 'How I'm playing the SpaceX IPO for a possible' → 200 comments
+  [hot] 'i spent my weekend reading 98 s&amp;p 500 10-' → 199 comments
+  [hot] 'SaaSpocalypse story is a boomer fantasy' → 129 comments
+  [hot] 'I sold my MU for a loss. Would’ve been worth ' → 192 comments
+  [hot] 'Lost hundreds of thousands in SPY options' → 199 comments
+  [hot] 'Musk asks SpaceX IPO banks to buy Grok AI sub' → 189 comments
+  [hot] 'U.S. jobs growth surges past expectations in ' → 199 comments
+  [hot] 'Lost everything' → 191 comments
+  [hot] 'When shrek cums to town (this is my swamp)' → 22 comments
+  [hot] 'Played it right' → 48 comments
+  [hot] 'Weekend Discussion Thread for the Weekend of ' → 177 comments
+  [hot] 'Bears watching the market close green despite' → 196 comments
+  [hot] 'Playing with oil. (Or how I learned to love T' → 36 comments
+  [hot] 'Regarded week part 3: +$63K' → 38 comments
+  [hot] 'I’m a Regarded 🤡' → 164 comments
+  [hot] 'SpaceX targets more than $2 trillion valuatio' → 198 comments
+  [hot] 'Daily Discussion Thread for April 03, 2026' → 184 comments
+  [hot] 'Full Port into Centrus Energy (NYSE:LEU)' → 34 comments
+  [hot] 'Iran and Oman drafting protocol to 'monitor' ' → 193 comments
+  [hot] 'Trump administration prepares up to 100% phar' → 179 comments
+
+Refreshing active posts from database...
+  Refreshing 219 active posts from DB...
+    Refreshed 'I didn’t expect this result' → 1 comments
+    Refreshed 'NRx Pharmaceuticals (Nasdaq:NRXP) Announ' → 0 comments
+    Refreshed 'Cxai, Best opportunity in 2026?' → 0 comments
+  Refreshed 3 posts with new engagement
+
+Archiving old posts...
+  Archived 228 posts older than 3 days
+
+✓ Total: 391 posts ready for analysis
+  (388 fresh + 3 refreshed from DB)
+
+Step 2: Analyzing tickers and sentiment...
+
+Pass 1: Collecting contexts from posts...
+Collecting:   0%|          | 0/391 [00:00<?, ?post/s]Collecting:  92%|█████████▏| 359/391 [00:00<00:00, 3489.84post/s]Collecting: 100%|██████████| 391/391 [00:00<00:00, 3163.09post/s]
+
+Pass 2: Analyzing sentiment for 423 tickers...
+Total contexts to analyze: 468
+Analyzing:   0%|          | 0/468 [00:00<?, ?context/s]  DVLT: 54 contexts → sampling 15
+Loading FinBERT model...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s][A
+Loading weights:   0%|          | 1/201 [00:00<00:00, 13797.05it/s, Materializing param=bert.embeddings.LayerNorm.bias][A
+Loading weights:   0%|          | 1/201 [00:00<00:00, 2880.70it/s, Materializing param=bert.embeddings.LayerNorm.bias] [A
+Loading weights:   1%|          | 2/201 [00:00<00:00, 3278.08it/s, Materializing param=bert.embeddings.LayerNorm.weight][A
+Loading weights:   1%|          | 2/201 [00:00<00:00, 2250.77it/s, Materializing param=bert.embeddings.LayerNorm.weight][A
+Loading weights:   1%|▏         | 3/201 [00:00<00:00, 2470.14it/s, Materializing param=bert.embeddings.position_embeddings.weight][A
+Loading weights:   1%|▏         | 3/201 [00:00<00:00, 2075.70it/s, Materializing param=bert.embeddings.position_embeddings.weight][A
+Loading weights:   2%|▏         | 4/201 [00:00<00:00, 1689.21it/s, Materializing param=bert.embeddings.token_type_embeddings.weight][A
+Loading weights:   2%|▏         | 4/201 [00:00<00:00, 1611.03it/s, Materializing param=bert.embeddings.token_type_embeddings.weight][A
+Loading weights:   2%|▏         | 5/201 [00:00<00:00, 1841.55it/s, Materializing param=bert.embeddings.word_embeddings.weight]      [A
+Loading weights:   2%|▏         | 5/201 [00:00<00:00, 1771.39it/s, Materializing param=bert.embeddings.word_embeddings.weight][A
+Loading weights:   3%|▎         | 6/201 [00:00<00:00, 1996.02it/s, Materializing param=bert.encoder.layer.0.attention.output.LayerNorm.bias][A
+Loading weights:   3%|▎         | 6/201 [00:00<00:00, 1932.41it/s, Materializing param=bert.encoder.layer.0.attention.output.LayerNorm.bias][A
+Loading weights:   3%|▎         | 7/201 [00:00<00:00, 2126.62it/s, Materializing param=bert.encoder.layer.0.attention.output.LayerNorm.weight][A
+Loading weights:   3%|▎         | 7/201 [00:00<00:00, 2062.53it/s, Materializing param=bert.encoder.layer.0.attention.output.LayerNorm.weight][A
+Loading weights:   4%|▍         | 8/201 [00:00<00:00, 2241.15it/s, Materializing param=bert.encoder.layer.0.attention.output.dense.bias]      [A
+Loading weights:   4%|▍         | 8/201 [00:00<00:00, 2185.24it/s, Materializing param=bert.encoder.layer.0.attention.output.dense.bias][A
+Loading weights:   4%|▍         | 9/201 [00:00<00:00, 2316.44it/s, Materializing param=bert.encoder.layer.0.attention.output.dense.weight][A
+Loading weights:   4%|▍         | 9/201 [00:00<00:00, 2269.92it/s, Materializing param=bert.encoder.layer.0.attention.output.dense.weight][A
+Loading weights:   5%|▍         | 10/201 [00:00<00:00, 2450.37it/s, Materializing param=bert.encoder.layer.0.attention.self.key.bias]     [A
+Loading weights:   5%|▍         | 10/201 [00:00<00:00, 2419.42it/s, Materializing param=bert.encoder.layer.0.attention.self.key.bias][A
+Loading weights:   5%|▌         | 11/201 [00:00<00:00, 2597.24it/s, Materializing param=bert.encoder.layer.0.attention.self.key.weight][A
+Loading weights:   5%|▌         | 11/201 [00:00<00:00, 2567.46it/s, Materializing param=bert.encoder.layer.0.attention.self.key.weight][A
+Loading weights:   6%|▌         | 12/201 [00:00<00:00, 2738.84it/s, Materializing param=bert.encoder.layer.0.attention.self.query.bias][A
+Loading weights:   6%|▌         | 12/201 [00:00<00:00, 2708.48it/s, Materializing param=bert.encoder.layer.0.attention.self.query.bias][A
+Loading weights:   6%|▋         | 13/201 [00:00<00:00, 2872.21it/s, Materializing param=bert.encoder.layer.0.attention.self.query.weight][A
+Loading weights:   6%|▋         | 13/201 [00:00<00:00, 2842.26it/s, Materializing param=bert.encoder.layer.0.attention.self.query.weight][A
+Loading weights:   7%|▋         | 14/201 [00:00<00:00, 2997.77it/s, Materializing param=bert.encoder.layer.0.attention.self.value.bias]  [A
+Loading weights:   7%|▋         | 14/201 [00:00<00:00, 2909.97it/s, Materializing param=bert.encoder.layer.0.attention.self.value.bias][A
+Loading weights:   7%|▋         | 15/201 [00:00<00:00, 3011.27it/s, Materializing param=bert.encoder.layer.0.attention.self.value.weight][A
+Loading weights:   7%|▋         | 15/201 [00:00<00:00, 2958.88it/s, Materializing param=bert.encoder.layer.0.attention.self.value.weight][A
+Loading weights:   8%|▊         | 16/201 [00:00<00:00, 3058.61it/s, Materializing param=bert.encoder.layer.0.intermediate.dense.bias]    [A
+Loading weights:   8%|▊         | 16/201 [00:00<00:00, 3009.23it/s, Materializing param=bert.encoder.layer.0.intermediate.dense.bias][A
+Loading weights:   8%|▊         | 17/201 [00:00<00:00, 3105.54it/s, Materializing param=bert.encoder.layer.0.intermediate.dense.weight][A
+Loading weights:   8%|▊         | 17/201 [00:00<00:00, 3058.38it/s, Materializing param=bert.encoder.layer.0.intermediate.dense.weight][A
+Loading weights:   9%|▉         | 18/201 [00:00<00:00, 3140.36it/s, Materializing param=bert.encoder.layer.0.output.LayerNorm.bias]    [A
+Loading weights:   9%|▉         | 18/201 [00:00<00:00, 3093.02it/s, Materializing param=bert.encoder.layer.0.output.LayerNorm.bias][A
+Loading weights:   9%|▉         | 19/201 [00:00<00:00, 3180.04it/s, Materializing param=bert.encoder.layer.0.output.LayerNorm.weight][A
+Loading weights:   9%|▉         | 19/201 [00:00<00:00, 3136.11it/s, Materializing param=bert.encoder.layer.0.output.LayerNorm.weight][A
+Loading weights:  10%|▉         | 20/201 [00:00<00:00, 3219.82it/s, Materializing param=bert.encoder.layer.0.output.dense.bias]      [A
+Loading weights:  10%|▉         | 20/201 [00:00<00:00, 3176.30it/s, Materializing param=bert.encoder.layer.0.output.dense.bias][A
+Loading weights:  10%|█         | 21/201 [00:00<00:00, 3255.48it/s, Materializing param=bert.encoder.layer.0.output.dense.weight][A
+Loading weights:  10%|█         | 21/201 [00:00<00:00, 3213.67it/s, Materializing param=bert.encoder.layer.0.output.dense.weight][A
+Loading weights:  11%|█         | 22/201 [00:00<00:00, 3290.35it/s, Materializing param=bert.encoder.layer.1.attention.output.LayerNorm.bias][A
+Loading weights:  11%|█         | 22/201 [00:00<00:00, 3232.49it/s, Materializing param=bert.encoder.layer.1.attention.output.LayerNorm.bias][A
+Loading weights:  11%|█▏        | 23/201 [00:00<00:00, 3310.65it/s, Materializing param=bert.encoder.layer.1.attention.output.LayerNorm.weight][A
+Loading weights:  11%|█▏        | 23/201 [00:00<00:00, 3285.17it/s, Materializing param=bert.encoder.layer.1.attention.output.LayerNorm.weight][A
+Loading weights:  12%|█▏        | 24/201 [00:00<00:00, 3380.23it/s, Materializing param=bert.encoder.layer.1.attention.output.dense.bias]      [A
+Loading weights:  12%|█▏        | 24/201 [00:00<00:00, 3356.90it/s, Materializing param=bert.encoder.layer.1.attention.output.dense.bias][A
+Loading weights:  12%|█▏        | 25/201 [00:00<00:00, 3450.51it/s, Materializing param=bert.encoder.layer.1.attention.output.dense.weight][A
+Loading weights:  12%|█▏        | 25/201 [00:00<00:00, 3427.95it/s, Materializing param=bert.encoder.layer.1.attention.output.dense.weight][A
+Loading weights:  13%|█▎        | 26/201 [00:00<00:00, 3518.03it/s, Materializing param=bert.encoder.layer.1.attention.self.key.bias]      [A
+Loading weights:  13%|█▎        | 26/201 [00:00<00:00, 3492.01it/s, Materializing param=bert.encoder.layer.1.attention.self.key.bias][A
+Loading weights:  13%|█▎        | 27/201 [00:00<00:00, 3580.00it/s, Materializing param=bert.encoder.layer.1.attention.self.key.weight][A
+Loading weights:  13%|█▎        | 27/201 [00:00<00:00, 3557.17it/s, Materializing param=bert.encoder.layer.1.attention.self.key.weight][A
+Loading weights:  14%|█▍        | 28/201 [00:00<00:00, 3641.57it/s, Materializing param=bert.encoder.layer.1.attention.self.query.bias][A
+Loading weights:  14%|█▍        | 28/201 [00:00<00:00, 3572.77it/s, Materializing param=bert.encoder.layer.1.attention.self.query.bias][A
+Loading weights:  14%|█▍        | 29/201 [00:00<00:00, 3615.03it/s, Materializing param=bert.encoder.layer.1.attention.self.query.weight][A
+Loading weights:  14%|█▍        | 29/201 [00:00<00:00, 3573.71it/s, Materializing param=bert.encoder.layer.1.attention.self.query.weight][A
+Loading weights:  15%|█▍        | 30/201 [00:00<00:00, 3636.26it/s, Materializing param=bert.encoder.layer.1.attention.self.value.bias]  [A
+Loading weights:  15%|█▍        | 30/201 [00:00<00:00, 3613.39it/s, Materializing param=bert.encoder.layer.1.attention.self.value.bias][A
+Loading weights:  15%|█▌        | 31/201 [00:00<00:00, 3689.55it/s, Materializing param=bert.encoder.layer.1.attention.self.value.weight][A
+Loading weights:  15%|█▌        | 31/201 [00:00<00:00, 3667.90it/s, Materializing param=bert.encoder.layer.1.attention.self.value.weight][A
+Loading weights:  16%|█▌        | 32/201 [00:00<00:00, 3745.02it/s, Materializing param=bert.encoder.layer.1.intermediate.dense.bias]    [A
+Loading weights:  16%|█▌        | 32/201 [00:00<00:00, 3724.55it/s, Materializing param=bert.encoder.layer.1.intermediate.dense.bias][A
+Loading weights:  16%|█▋        | 33/201 [00:00<00:00, 3800.96it/s, Materializing param=bert.encoder.layer.1.intermediate.dense.weight][A
+Loading weights:  16%|█▋        | 33/201 [00:00<00:00, 3759.46it/s, Materializing param=bert.encoder.layer.1.intermediate.dense.weight][A
+Loading weights:  17%|█▋        | 34/201 [00:00<00:00, 3801.52it/s, Materializing param=bert.encoder.layer.1.output.LayerNorm.bias]    [A
+Loading weights:  17%|█▋        | 34/201 [00:00<00:00, 3777.95it/s, Materializing param=bert.encoder.layer.1.output.LayerNorm.bias][A
+Loading weights:  17%|█▋        | 35/201 [00:00<00:00, 3847.78it/s, Materializing param=bert.encoder.layer.1.output.LayerNorm.weight][A
+Loading weights:  17%|█▋        | 35/201 [00:00<00:00, 3827.62it/s, Materializing param=bert.encoder.layer.1.output.LayerNorm.weight][A
+Loading weights:  18%|█▊        | 36/201 [00:00<00:00, 3897.85it/s, Materializing param=bert.encoder.layer.1.output.dense.bias]      [A
+Loading weights:  18%|█▊        | 36/201 [00:00<00:00, 3878.03it/s, Materializing param=bert.encoder.layer.1.output.dense.bias][A
+Loading weights:  18%|█▊        | 37/201 [00:00<00:00, 3947.23it/s, Materializing param=bert.encoder.layer.1.output.dense.weight][A
+Loading weights:  18%|█▊        | 37/201 [00:00<00:00, 3927.25it/s, Materializing param=bert.encoder.layer.1.output.dense.weight][A
+Loading weights:  19%|█▉        | 38/201 [00:00<00:00, 3995.58it/s, Materializing param=bert.encoder.layer.2.attention.output.LayerNorm.bias][A
+Loading weights:  19%|█▉        | 38/201 [00:00<00:00, 3975.35it/s, Materializing param=bert.encoder.layer.2.attention.output.LayerNorm.bias][A
+Loading weights:  19%|█▉        | 39/201 [00:00<00:00, 4040.56it/s, Materializing param=bert.encoder.layer.2.attention.output.LayerNorm.weight][A
+Loading weights:  19%|█▉        | 39/201 [00:00<00:00, 4011.13it/s, Materializing param=bert.encoder.layer.2.attention.output.LayerNorm.weight][A
+Loading weights:  20%|█▉        | 40/201 [00:00<00:00, 4070.16it/s, Materializing param=bert.encoder.layer.2.attention.output.dense.bias]      [A
+Loading weights:  20%|█▉        | 40/201 [00:00<00:00, 4050.12it/s, Materializing param=bert.encoder.layer.2.attention.output.dense.bias][A
+Loading weights:  20%|██        | 41/201 [00:00<00:00, 4112.26it/s, Materializing param=bert.encoder.layer.2.attention.output.dense.weight][A
+Loading weights:  20%|██        | 41/201 [00:00<00:00, 4092.59it/s, Materializing param=bert.encoder.layer.2.attention.output.dense.weight][A
+Loading weights:  21%|██        | 42/201 [00:00<00:00, 4153.76it/s, Materializing param=bert.encoder.layer.2.attention.self.key.bias]      [A
+Loading weights:  21%|██        | 42/201 [00:00<00:00, 4134.45it/s, Materializing param=bert.encoder.layer.2.attention.self.key.bias][A
+Loading weights:  21%|██▏       | 43/201 [00:00<00:00, 4194.69it/s, Materializing param=bert.encoder.layer.2.attention.self.key.weight][A
+Loading weights:  21%|██▏       | 43/201 [00:00<00:00, 4175.56it/s, Materializing param=bert.encoder.layer.2.attention.self.key.weight][A
+Loading weights:  22%|██▏       | 44/201 [00:00<00:00, 4232.69it/s, Materializing param=bert.encoder.layer.2.attention.self.query.bias][A
+Loading weights:  22%|██▏       | 44/201 [00:00<00:00, 4212.98it/s, Materializing param=bert.encoder.layer.2.attention.self.query.bias][A
+Loading weights:  22%|██▏       | 45/201 [00:00<00:00, 4270.80it/s, Materializing param=bert.encoder.layer.2.attention.self.query.weight][A
+Loading weights:  22%|██▏       | 45/201 [00:00<00:00, 4251.65it/s, Materializing param=bert.encoder.layer.2.attention.self.query.weight][A
+Loading weights:  23%|██▎       | 46/201 [00:00<00:00, 4307.90it/s, Materializing param=bert.encoder.layer.2.attention.self.value.bias]  [A
+Loading weights:  23%|██▎       | 46/201 [00:00<00:00, 4240.30it/s, Materializing param=bert.encoder.layer.2.attention.self.value.bias][A
+Loading weights:  23%|██▎       | 47/201 [00:00<00:00, 4247.72it/s, Materializing param=bert.encoder.layer.2.attention.self.value.weight][A
+Loading weights:  23%|██▎       | 47/201 [00:00<00:00, 4211.87it/s, Materializing param=bert.encoder.layer.2.attention.self.value.weight][A
+Loading weights:  24%|██▍       | 48/201 [00:00<00:00, 4249.28it/s, Materializing param=bert.encoder.layer.2.intermediate.dense.bias]    [A
+Loading weights:  24%|██▍       | 48/201 [00:00<00:00, 4229.73it/s, Materializing param=bert.encoder.layer.2.intermediate.dense.bias][A
+Loading weights:  24%|██▍       | 49/201 [00:00<00:00, 4281.86it/s, Materializing param=bert.encoder.layer.2.intermediate.dense.weight][A
+Loading weights:  24%|██▍       | 49/201 [00:00<00:00, 4264.10it/s, Materializing param=bert.encoder.layer.2.intermediate.dense.weight][A
+Loading weights:  25%|██▍       | 50/201 [00:00<00:00, 4316.55it/s, Materializing param=bert.encoder.layer.2.output.LayerNorm.bias]    [A
+Loading weights:  25%|██▍       | 50/201 [00:00<00:00, 4299.03it/s, Materializing param=bert.encoder.layer.2.output.LayerNorm.bias][A
+Loading weights:  25%|██▌       | 51/201 [00:00<00:00, 4341.40it/s, Materializing param=bert.encoder.layer.2.output.LayerNorm.weight][A
+Loading weights:  25%|██▌       | 51/201 [00:00<00:00, 4322.98it/s, Materializing param=bert.encoder.layer.2.output.LayerNorm.weight][A
+Loading weights:  26%|██▌       | 52/201 [00:00<00:00, 4373.71it/s, Materializing param=bert.encoder.layer.2.output.dense.bias]      [A
+Loading weights:  26%|██▌       | 52/201 [00:00<00:00, 4356.24it/s, Materializing param=bert.encoder.layer.2.output.dense.bias][A
+Loading weights:  26%|██▋       | 53/201 [00:00<00:00, 4405.87it/s, Materializing param=bert.encoder.layer.2.output.dense.weight][A
+Loading weights:  26%|██▋       | 53/201 [00:00<00:00, 4388.56it/s, Materializing param=bert.encoder.layer.2.output.dense.weight][A
+Loading weights:  27%|██▋       | 54/201 [00:00<00:00, 4439.03it/s, Materializing param=bert.encoder.layer.3.attention.output.LayerNorm.bias][A
+Loading weights:  27%|██▋       | 54/201 [00:00<00:00, 4421.78it/s, Materializing param=bert.encoder.layer.3.attention.output.LayerNorm.bias][A
+Loading weights:  27%|██▋       | 55/201 [00:00<00:00, 4469.20it/s, Materializing param=bert.encoder.layer.3.attention.output.LayerNorm.weight][A
+Loading weights:  27%|██▋       | 55/201 [00:00<00:00, 4451.86it/s, Materializing param=bert.encoder.layer.3.attention.output.LayerNorm.weight][A
+Loading weights:  28%|██▊       | 56/201 [00:00<00:00, 4499.21it/s, Materializing param=bert.encoder.layer.3.attention.output.dense.bias]      [A
+Loading weights:  28%|██▊       | 56/201 [00:00<00:00, 4482.03it/s, Materializing param=bert.encoder.layer.3.attention.output.dense.bias][A
+Loading weights:  28%|██▊       | 57/201 [00:00<00:00, 4528.03it/s, Materializing param=bert.encoder.layer.3.attention.output.dense.weight][A
+Loading weights:  28%|██▊       | 57/201 [00:00<00:00, 4511.20it/s, Materializing param=bert.encoder.layer.3.attention.output.dense.weight][A
+Loading weights:  29%|██▉       | 58/201 [00:00<00:00, 4548.37it/s, Materializing param=bert.encoder.layer.3.attention.self.key.bias]      [A
+Loading weights:  29%|██▉       | 58/201 [00:00<00:00, 4530.33it/s, Materializing param=bert.encoder.layer.3.attention.self.key.bias][A
+Loading weights:  29%|██▉       | 59/201 [00:00<00:00, 4572.50it/s, Materializing param=bert.encoder.layer.3.attention.self.key.weight][A
+Loading weights:  29%|██▉       | 59/201 [00:00<00:00, 4555.42it/s, Materializing param=bert.encoder.layer.3.attention.self.key.weight][A
+Loading weights:  30%|██▉       | 60/201 [00:00<00:00, 4599.69it/s, Materializing param=bert.encoder.layer.3.attention.self.query.bias][A
+Loading weights:  30%|██▉       | 60/201 [00:00<00:00, 4583.02it/s, Materializing param=bert.encoder.layer.3.attention.self.query.bias][A
+Loading weights:  30%|███       | 61/201 [00:00<00:00, 4626.13it/s, Materializing param=bert.encoder.layer.3.attention.self.query.weight][A
+Loading weights:  30%|███       | 61/201 [00:00<00:00, 4609.37it/s, Materializing param=bert.encoder.layer.3.attention.self.query.weight][A
+Loading weights:  31%|███       | 62/201 [00:00<00:00, 4652.00it/s, Materializing param=bert.encoder.layer.3.attention.self.value.bias]  [A
+Loading weights:  31%|███       | 62/201 [00:00<00:00, 4634.51it/s, Materializing param=bert.encoder.layer.3.attention.self.value.bias][A
+Loading weights:  31%|███▏      | 63/201 [00:00<00:00, 4676.42it/s, Materializing param=bert.encoder.layer.3.attention.self.value.weight][A
+Loading weights:  31%|███▏      | 63/201 [00:00<00:00, 4660.26it/s, Materializing param=bert.encoder.layer.3.attention.self.value.weight][A
+Loading weights:  32%|███▏      | 64/201 [00:00<00:00, 4702.38it/s, Materializing param=bert.encoder.layer.3.intermediate.dense.bias]    [A
+Loading weights:  32%|███▏      | 64/201 [00:00<00:00, 4686.05it/s, Materializing param=bert.encoder.layer.3.intermediate.dense.bias][A
+Loading weights:  32%|███▏      | 65/201 [00:00<00:00, 4687.02it/s, Materializing param=bert.encoder.layer.3.intermediate.dense.weight][A
+Loading weights:  32%|███▏      | 65/201 [00:00<00:00, 4655.40it/s, Materializing param=bert.encoder.layer.3.intermediate.dense.weight][A
+Loading weights:  33%|███▎      | 66/201 [00:00<00:00, 4668.43it/s, Materializing param=bert.encoder.layer.3.output.LayerNorm.bias]    [A
+Loading weights:  33%|███▎      | 66/201 [00:00<00:00, 4635.91it/s, Materializing param=bert.encoder.layer.3.output.LayerNorm.bias][A
+Loading weights:  33%|███▎      | 67/201 [00:00<00:00, 4661.19it/s, Materializing param=bert.encoder.layer.3.output.LayerNorm.weight][A
+Loading weights:  33%|███▎      | 67/201 [00:00<00:00, 4644.09it/s, Materializing param=bert.encoder.layer.3.output.LayerNorm.weight][A
+Loading weights:  34%|███▍      | 68/201 [00:00<00:00, 4683.30it/s, Materializing param=bert.encoder.layer.3.output.dense.bias]      [A
+Loading weights:  34%|███▍      | 68/201 [00:00<00:00, 4667.74it/s, Materializing param=bert.encoder.layer.3.output.dense.bias][A
+Loading weights:  34%|███▍      | 69/201 [00:00<00:00, 4706.57it/s, Materializing param=bert.encoder.layer.3.output.dense.weight][A
+Loading weights:  34%|███▍      | 69/201 [00:00<00:00, 4684.25it/s, Materializing param=bert.encoder.layer.3.output.dense.weight][A
+Loading weights:  35%|███▍      | 70/201 [00:00<00:00, 4720.05it/s, Materializing param=bert.encoder.layer.4.attention.output.LayerNorm.bias][A
+Loading weights:  35%|███▍      | 70/201 [00:00<00:00, 4704.62it/s, Materializing param=bert.encoder.layer.4.attention.output.LayerNorm.bias][A
+Loading weights:  35%|███▌      | 71/201 [00:00<00:00, 4741.74it/s, Materializing param=bert.encoder.layer.4.attention.output.LayerNorm.weight][A
+Loading weights:  35%|███▌      | 71/201 [00:00<00:00, 4726.46it/s, Materializing param=bert.encoder.layer.4.attention.output.LayerNorm.weight][A
+Loading weights:  36%|███▌      | 72/201 [00:00<00:00, 4763.47it/s, Materializing param=bert.encoder.layer.4.attention.output.dense.bias]      [A
+Loading weights:  36%|███▌      | 72/201 [00:00<00:00, 4748.42it/s, Materializing param=bert.encoder.layer.4.attention.output.dense.bias][A
+Loading weights:  36%|███▋      | 73/201 [00:00<00:00, 4784.95it/s, Materializing param=bert.encoder.layer.4.attention.output.dense.weight][A
+Loading weights:  36%|███▋      | 73/201 [00:00<00:00, 4770.12it/s, Materializing param=bert.encoder.layer.4.attention.output.dense.weight][A
+Loading weights:  37%|███▋      | 74/201 [00:00<00:00, 4806.33it/s, Materializing param=bert.encoder.layer.4.attention.self.key.bias]      [A
+Loading weights:  37%|███▋      | 74/201 [00:00<00:00, 4791.86it/s, Materializing param=bert.encoder.layer.4.attention.self.key.bias][A
+Loading weights:  37%|███▋      | 75/201 [00:00<00:00, 4825.25it/s, Materializing param=bert.encoder.layer.4.attention.self.key.weight][A
+Loading weights:  37%|███▋      | 75/201 [00:00<00:00, 4810.20it/s, Materializing param=bert.encoder.layer.4.attention.self.key.weight][A
+Loading weights:  38%|███▊      | 76/201 [00:00<00:00, 4844.63it/s, Materializing param=bert.encoder.layer.4.attention.self.query.bias][A
+Loading weights:  38%|███▊      | 76/201 [00:00<00:00, 4821.99it/s, Materializing param=bert.encoder.layer.4.attention.self.query.bias][A
+Loading weights:  38%|███▊      | 77/201 [00:00<00:00, 4844.83it/s, Materializing param=bert.encoder.layer.4.attention.self.query.weight][A
+Loading weights:  38%|███▊      | 77/201 [00:00<00:00, 4828.54it/s, Materializing param=bert.encoder.layer.4.attention.self.query.weight][A
+Loading weights:  39%|███▉      | 78/201 [00:00<00:00, 4862.60it/s, Materializing param=bert.encoder.layer.4.attention.self.value.bias]  [A
+Loading weights:  39%|███▉      | 78/201 [00:00<00:00, 4848.40it/s, Materializing param=bert.encoder.layer.4.attention.self.value.bias][A
+Loading weights:  39%|███▉      | 79/201 [00:00<00:00, 4882.49it/s, Materializing param=bert.encoder.layer.4.attention.self.value.weight][A
+Loading weights:  39%|███▉      | 79/201 [00:00<00:00, 4868.50it/s, Materializing param=bert.encoder.layer.4.attention.self.value.weight][A
+Loading weights:  40%|███▉      | 80/201 [00:00<00:00, 4902.47it/s, Materializing param=bert.encoder.layer.4.intermediate.dense.bias]    [A
+Loading weights:  40%|███▉      | 80/201 [00:00<00:00, 4888.39it/s, Materializing param=bert.encoder.layer.4.intermediate.dense.bias][A
+Loading weights:  40%|████      | 81/201 [00:00<00:00, 4922.68it/s, Materializing param=bert.encoder.layer.4.intermediate.dense.weight][A
+Loading weights:  40%|████      | 81/201 [00:00<00:00, 4908.81it/s, Materializing param=bert.encoder.layer.4.intermediate.dense.weight][A
+Loading weights:  41%|████      | 82/201 [00:00<00:00, 4942.56it/s, Materializing param=bert.encoder.layer.4.output.LayerNorm.bias]    [A
+Loading weights:  41%|████      | 82/201 [00:00<00:00, 4928.82it/s, Materializing param=bert.encoder.layer.4.output.LayerNorm.bias][A
+Loading weights:  41%|████▏     | 83/201 [00:00<00:00, 4930.98it/s, Materializing param=bert.encoder.layer.4.output.LayerNorm.weight][A
+Loading weights:  41%|████▏     | 83/201 [00:00<00:00, 4894.31it/s, Materializing param=bert.encoder.layer.4.output.LayerNorm.weight][A
+Loading weights:  42%|████▏     | 84/201 [00:00<00:00, 4899.34it/s, Materializing param=bert.encoder.layer.4.output.dense.bias]      [A
+Loading weights:  42%|████▏     | 84/201 [00:00<00:00, 4878.52it/s, Materializing param=bert.encoder.layer.4.output.dense.bias][A
+Loading weights:  42%|████▏     | 85/201 [00:00<00:00, 4906.90it/s, Materializing param=bert.encoder.layer.4.output.dense.weight][A
+Loading weights:  42%|████▏     | 85/201 [00:00<00:00, 4893.23it/s, Materializing param=bert.encoder.layer.4.output.dense.weight][A
+Loading weights:  43%|████▎     | 86/201 [00:00<00:00, 4922.96it/s, Materializing param=bert.encoder.layer.5.attention.output.LayerNorm.bias][A
+Loading weights:  43%|████▎     | 86/201 [00:00<00:00, 4908.82it/s, Materializing param=bert.encoder.layer.5.attention.output.LayerNorm.bias][A
+Loading weights:  43%|████▎     | 87/201 [00:00<00:00, 4938.75it/s, Materializing param=bert.encoder.layer.5.attention.output.LayerNorm.weight][A
+Loading weights:  43%|████▎     | 87/201 [00:00<00:00, 4925.02it/s, Materializing param=bert.encoder.layer.5.attention.output.LayerNorm.weight][A
+Loading weights:  44%|████▍     | 88/201 [00:00<00:00, 4947.44it/s, Materializing param=bert.encoder.layer.5.attention.output.dense.bias]      [A
+Loading weights:  44%|████▍     | 88/201 [00:00<00:00, 4933.29it/s, Materializing param=bert.encoder.layer.5.attention.output.dense.bias][A
+Loading weights:  44%|████▍     | 89/201 [00:00<00:00, 4961.63it/s, Materializing param=bert.encoder.layer.5.attention.output.dense.weight][A
+Loading weights:  44%|████▍     | 89/201 [00:00<00:00, 4946.31it/s, Materializing param=bert.encoder.layer.5.attention.output.dense.weight][A
+Loading weights:  45%|████▍     | 90/201 [00:00<00:00, 4966.02it/s, Materializing param=bert.encoder.layer.5.attention.self.key.bias]      [A
+Loading weights:  45%|████▍     | 90/201 [00:00<00:00, 4952.15it/s, Materializing param=bert.encoder.layer.5.attention.self.key.bias][A
+Loading weights:  45%|████▌     | 91/201 [00:00<00:00, 4972.14it/s, Materializing param=bert.encoder.layer.5.attention.self.key.weight][A
+Loading weights:  45%|████▌     | 91/201 [00:00<00:00, 4953.95it/s, Materializing param=bert.encoder.layer.5.attention.self.key.weight][A
+Loading weights:  46%|████▌     | 92/201 [00:00<00:00, 4980.14it/s, Materializing param=bert.encoder.layer.5.attention.self.query.bias][A
+Loading weights:  46%|████▌     | 92/201 [00:00<00:00, 4967.00it/s, Materializing param=bert.encoder.layer.5.attention.self.query.bias][A
+Loading weights:  46%|████▋     | 93/201 [00:00<00:00, 4995.39it/s, Materializing param=bert.encoder.layer.5.attention.self.query.weight][A
+Loading weights:  46%|████▋     | 93/201 [00:00<00:00, 4982.57it/s, Materializing param=bert.encoder.layer.5.attention.self.query.weight][A
+Loading weights:  47%|████▋     | 94/201 [00:00<00:00, 5003.29it/s, Materializing param=bert.encoder.layer.5.attention.self.value.bias]  [A
+Loading weights:  47%|████▋     | 94/201 [00:00<00:00, 4990.12it/s, Materializing param=bert.encoder.layer.5.attention.self.value.bias][A
+Loading weights:  47%|████▋     | 95/201 [00:00<00:00, 5018.25it/s, Materializing param=bert.encoder.layer.5.attention.self.value.weight][A
+Loading weights:  47%|████▋     | 95/201 [00:00<00:00, 5005.89it/s, Materializing param=bert.encoder.layer.5.attention.self.value.weight][A
+Loading weights:  48%|████▊     | 96/201 [00:00<00:00, 5033.79it/s, Materializing param=bert.encoder.layer.5.intermediate.dense.bias]    [A
+Loading weights:  48%|████▊     | 96/201 [00:00<00:00, 5021.36it/s, Materializing param=bert.encoder.layer.5.intermediate.dense.bias][A
+Loading weights:  48%|████▊     | 97/201 [00:00<00:00, 5049.93it/s, Materializing param=bert.encoder.layer.5.intermediate.dense.weight][A
+Loading weights:  48%|████▊     | 97/201 [00:00<00:00, 5037.55it/s, Materializing param=bert.encoder.layer.5.intermediate.dense.weight][A
+Loading weights:  49%|████▉     | 98/201 [00:00<00:00, 5065.96it/s, Materializing param=bert.encoder.layer.5.output.LayerNorm.bias]    [A
+Loading weights:  49%|████▉     | 98/201 [00:00<00:00, 5053.56it/s, Materializing param=bert.encoder.layer.5.output.LayerNorm.bias][A
+Loading weights:  49%|████▉     | 99/201 [00:00<00:00, 5081.64it/s, Materializing param=bert.encoder.layer.5.output.LayerNorm.weight][A
+Loading weights:  49%|████▉     | 99/201 [00:00<00:00, 5069.60it/s, Materializing param=bert.encoder.layer.5.output.LayerNorm.weight][A
+Loading weights:  50%|████▉     | 100/201 [00:00<00:00, 5097.60it/s, Materializing param=bert.encoder.layer.5.output.dense.bias]     [A
+Loading weights:  50%|████▉     | 100/201 [00:00<00:00, 5085.30it/s, Materializing param=bert.encoder.layer.5.output.dense.bias][A
+Loading weights:  50%|█████     | 101/201 [00:00<00:00, 5076.63it/s, Materializing param=bert.encoder.layer.5.output.dense.weight][A
+Loading weights:  50%|█████     | 101/201 [00:00<00:00, 5054.16it/s, Materializing param=bert.encoder.layer.5.output.dense.weight][A
+Loading weights:  51%|█████     | 102/201 [00:00<00:00, 5064.69it/s, Materializing param=bert.encoder.layer.6.attention.output.LayerNorm.bias][A
+Loading weights:  51%|█████     | 102/201 [00:00<00:00, 5043.25it/s, Materializing param=bert.encoder.layer.6.attention.output.LayerNorm.bias][A
+Loading weights:  51%|█████     | 103/201 [00:00<00:00, 5053.26it/s, Materializing param=bert.encoder.layer.6.attention.output.LayerNorm.weight][A
+Loading weights:  51%|█████     | 103/201 [00:00<00:00, 5032.07it/s, Materializing param=bert.encoder.layer.6.attention.output.LayerNorm.weight][A
+Loading weights:  52%|█████▏    | 104/201 [00:00<00:00, 5040.94it/s, Materializing param=bert.encoder.layer.6.attention.output.dense.bias]      [A
+Loading weights:  52%|█████▏    | 104/201 [00:00<00:00, 5014.98it/s, Materializing param=bert.encoder.layer.6.attention.output.dense.bias][A
+Loading weights:  52%|█████▏    | 105/201 [00:00<00:00, 5026.39it/s, Materializing param=bert.encoder.layer.6.attention.output.dense.weight][A
+Loading weights:  52%|█████▏    | 105/201 [00:00<00:00, 5006.96it/s, Materializing param=bert.encoder.layer.6.attention.output.dense.weight][A
+Loading weights:  53%|█████▎    | 106/201 [00:00<00:00, 5020.17it/s, Materializing param=bert.encoder.layer.6.attention.self.key.bias]      [A
+Loading weights:  53%|█████▎    | 106/201 [00:00<00:00, 5001.31it/s, Materializing param=bert.encoder.layer.6.attention.self.key.bias][A
+Loading weights:  53%|█████▎    | 107/201 [00:00<00:00, 5013.41it/s, Materializing param=bert.encoder.layer.6.attention.self.key.weight][A
+Loading weights:  53%|█████▎    | 107/201 [00:00<00:00, 4994.61it/s, Materializing param=bert.encoder.layer.6.attention.self.key.weight][A
+Loading weights:  54%|█████▎    | 108/201 [00:00<00:00, 4999.23it/s, Materializing param=bert.encoder.layer.6.attention.self.query.bias][A
+Loading weights:  54%|█████▎    | 108/201 [00:00<00:00, 4984.10it/s, Materializing param=bert.encoder.layer.6.attention.self.query.bias][A
+Loading weights:  54%|█████▍    | 109/201 [00:00<00:00, 4987.06it/s, Materializing param=bert.encoder.layer.6.attention.self.query.weight][A
+Loading weights:  54%|█████▍    | 109/201 [00:00<00:00, 4964.16it/s, Materializing param=bert.encoder.layer.6.attention.self.query.weight][A
+Loading weights:  55%|█████▍    | 110/201 [00:00<00:00, 4969.18it/s, Materializing param=bert.encoder.layer.6.attention.self.value.bias]  [A
+Loading weights:  55%|█████▍    | 110/201 [00:00<00:00, 4948.29it/s, Materializing param=bert.encoder.layer.6.attention.self.value.bias][A
+Loading weights:  55%|█████▌    | 111/201 [00:00<00:00, 4953.96it/s, Materializing param=bert.encoder.layer.6.attention.self.value.weight][A
+Loading weights:  55%|█████▌    | 111/201 [00:00<00:00, 4933.53it/s, Materializing param=bert.encoder.layer.6.attention.self.value.weight][A
+Loading weights:  56%|█████▌    | 112/201 [00:00<00:00, 4939.51it/s, Materializing param=bert.encoder.layer.6.intermediate.dense.bias]    [A
+Loading weights:  56%|█████▌    | 112/201 [00:00<00:00, 4915.27it/s, Materializing param=bert.encoder.layer.6.intermediate.dense.bias][A
+Loading weights:  56%|█████▌    | 113/201 [00:00<00:00, 4921.51it/s, Materializing param=bert.encoder.layer.6.intermediate.dense.weight][A
+Loading weights:  56%|█████▌    | 113/201 [00:00<00:00, 4901.36it/s, Materializing param=bert.encoder.layer.6.intermediate.dense.weight][A
+Loading weights:  57%|█████▋    | 114/201 [00:00<00:00, 4908.49it/s, Materializing param=bert.encoder.layer.6.output.LayerNorm.bias]    [A
+Loading weights:  57%|█████▋    | 114/201 [00:00<00:00, 4888.82it/s, Materializing param=bert.encoder.layer.6.output.LayerNorm.bias][A
+Loading weights:  57%|█████▋    | 115/201 [00:00<00:00, 4896.26it/s, Materializing param=bert.encoder.layer.6.output.LayerNorm.weight][A
+Loading weights:  57%|█████▋    | 115/201 [00:00<00:00, 4877.05it/s, Materializing param=bert.encoder.layer.6.output.LayerNorm.weight][A
+Loading weights:  58%|█████▊    | 116/201 [00:00<00:00, 4878.71it/s, Materializing param=bert.encoder.layer.6.output.dense.bias]      [A
+Loading weights:  58%|█████▊    | 116/201 [00:00<00:00, 4859.17it/s, Materializing param=bert.encoder.layer.6.output.dense.bias][A
+Loading weights:  58%|█████▊    | 117/201 [00:00<00:00, 4867.33it/s, Materializing param=bert.encoder.layer.6.output.dense.weight][A
+Loading weights:  58%|█████▊    | 117/201 [00:00<00:00, 4848.57it/s, Materializing param=bert.encoder.layer.6.output.dense.weight][A
+Loading weights:  59%|█████▊    | 118/201 [00:00<00:00, 4856.81it/s, Materializing param=bert.encoder.layer.7.attention.output.LayerNorm.bias][A
+Loading weights:  59%|█████▊    | 118/201 [00:00<00:00, 4838.19it/s, Materializing param=bert.encoder.layer.7.attention.output.LayerNorm.bias][A
+Loading weights:  59%|█████▉    | 119/201 [00:00<00:00, 4842.98it/s, Materializing param=bert.encoder.layer.7.attention.output.LayerNorm.weight][A
+Loading weights:  59%|█████▉    | 119/201 [00:00<00:00, 4824.44it/s, Materializing param=bert.encoder.layer.7.attention.output.LayerNorm.weight][A
+Loading weights:  60%|█████▉    | 120/201 [00:00<00:00, 4827.00it/s, Materializing param=bert.encoder.layer.7.attention.output.dense.bias]      [A
+Loading weights:  60%|█████▉    | 120/201 [00:00<00:00, 4808.83it/s, Materializing param=bert.encoder.layer.7.attention.output.dense.bias][A
+Loading weights:  60%|██████    | 121/201 [00:00<00:00, 4815.09it/s, Materializing param=bert.encoder.layer.7.attention.output.dense.weight][A
+Loading weights:  60%|██████    | 121/201 [00:00<00:00, 4797.07it/s, Materializing param=bert.encoder.layer.7.attention.output.dense.weight][A
+Loading weights:  61%|██████    | 122/201 [00:00<00:00, 4803.52it/s, Materializing param=bert.encoder.layer.7.attention.self.key.bias]      [A
+Loading weights:  61%|██████    | 122/201 [00:00<00:00, 4785.60it/s, Materializing param=bert.encoder.layer.7.attention.self.key.bias][A
+Loading weights:  61%|██████    | 123/201 [00:00<00:00, 4791.44it/s, Materializing param=bert.encoder.layer.7.attention.self.key.weight][A
+Loading weights:  61%|██████    | 123/201 [00:00<00:00, 4770.84it/s, Materializing param=bert.encoder.layer.7.attention.self.key.weight][A
+Loading weights:  62%|██████▏   | 124/201 [00:00<00:00, 4777.11it/s, Materializing param=bert.encoder.layer.7.attention.self.query.bias][A
+Loading weights:  62%|██████▏   | 124/201 [00:00<00:00, 4759.97it/s, Materializing param=bert.encoder.layer.7.attention.self.query.bias][A
+Loading weights:  62%|██████▏   | 125/201 [00:00<00:00, 4766.56it/s, Materializing param=bert.encoder.layer.7.attention.self.query.weight][A
+Loading weights:  62%|██████▏   | 125/201 [00:00<00:00, 4749.67it/s, Materializing param=bert.encoder.layer.7.attention.self.query.weight][A
+Loading weights:  63%|██████▎   | 126/201 [00:00<00:00, 4756.09it/s, Materializing param=bert.encoder.layer.7.attention.self.value.bias]  [A
+Loading weights:  63%|██████▎   | 126/201 [00:00<00:00, 4739.45it/s, Materializing param=bert.encoder.layer.7.attention.self.value.bias][A
+Loading weights:  63%|██████▎   | 127/201 [00:00<00:00, 4742.70it/s, Materializing param=bert.encoder.layer.7.attention.self.value.weight][A
+Loading weights:  63%|██████▎   | 127/201 [00:00<00:00, 4725.87it/s, Materializing param=bert.encoder.layer.7.attention.self.value.weight][A
+Loading weights:  64%|██████▎   | 128/201 [00:00<00:00, 4732.48it/s, Materializing param=bert.encoder.layer.7.intermediate.dense.bias]    [A
+Loading weights:  64%|██████▎   | 128/201 [00:00<00:00, 4716.05it/s, Materializing param=bert.encoder.layer.7.intermediate.dense.bias][A
+Loading weights:  64%|██████▍   | 129/201 [00:00<00:00, 4722.57it/s, Materializing param=bert.encoder.layer.7.intermediate.dense.weight][A
+Loading weights:  64%|██████▍   | 129/201 [00:00<00:00, 4706.39it/s, Materializing param=bert.encoder.layer.7.intermediate.dense.weight][A
+Loading weights:  65%|██████▍   | 130/201 [00:00<00:00, 4713.19it/s, Materializing param=bert.encoder.layer.7.output.LayerNorm.bias]    [A
+Loading weights:  65%|██████▍   | 130/201 [00:00<00:00, 4697.35it/s, Materializing param=bert.encoder.layer.7.output.LayerNorm.bias][A
+Loading weights:  65%|██████▌   | 131/201 [00:00<00:00, 4699.72it/s, Materializing param=bert.encoder.layer.7.output.LayerNorm.weight][A
+Loading weights:  65%|██████▌   | 131/201 [00:00<00:00, 4683.82it/s, Materializing param=bert.encoder.layer.7.output.LayerNorm.weight][A
+Loading weights:  66%|██████▌   | 132/201 [00:00<00:00, 4691.06it/s, Materializing param=bert.encoder.layer.7.output.dense.bias]      [A
+Loading weights:  66%|██████▌   | 132/201 [00:00<00:00, 4675.65it/s, Materializing param=bert.encoder.layer.7.output.dense.bias][A
+Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 4683.58it/s, Materializing param=bert.encoder.layer.7.output.dense.weight][A
+Loading weights:  66%|██████▌   | 133/201 [00:00<00:00, 4668.53it/s, Materializing param=bert.encoder.layer.7.output.dense.weight][A
+Loading weights:  67%|██████▋   | 134/201 [00:00<00:00, 4675.54it/s, Materializing param=bert.encoder.layer.8.attention.output.LayerNorm.bias][A
+Loading weights:  67%|██████▋   | 134/201 [00:00<00:00, 4658.06it/s, Materializing param=bert.encoder.layer.8.attention.output.LayerNorm.bias][A
+Loading weights:  67%|██████▋   | 135/201 [00:00<00:00, 4664.29it/s, Materializing param=bert.encoder.layer.8.attention.output.LayerNorm.weight][A
+Loading weights:  67%|██████▋   | 135/201 [00:00<00:00, 4650.35it/s, Materializing param=bert.encoder.layer.8.attention.output.LayerNorm.weight][A
+Loading weights:  68%|██████▊   | 136/201 [00:00<00:00, 4660.26it/s, Materializing param=bert.encoder.layer.8.attention.output.dense.bias]      [A
+Loading weights:  68%|██████▊   | 136/201 [00:00<00:00, 4646.60it/s, Materializing param=bert.encoder.layer.8.attention.output.dense.bias][A
+Loading weights:  68%|██████▊   | 137/201 [00:00<00:00, 4656.60it/s, Materializing param=bert.encoder.layer.8.attention.output.dense.weight][A
+Loading weights:  68%|██████▊   | 137/201 [00:00<00:00, 4643.20it/s, Materializing param=bert.encoder.layer.8.attention.output.dense.weight][A
+Loading weights:  69%|██████▊   | 138/201 [00:00<00:00, 4653.07it/s, Materializing param=bert.encoder.layer.8.attention.self.key.bias]      [A
+Loading weights:  69%|██████▊   | 138/201 [00:00<00:00, 4634.89it/s, Materializing param=bert.encoder.layer.8.attention.self.key.bias][A
+Loading weights:  69%|██████▉   | 139/201 [00:00<00:00, 4640.68it/s, Materializing param=bert.encoder.layer.8.attention.self.key.weight][A
+Loading weights:  69%|██████▉   | 139/201 [00:00<00:00, 4626.28it/s, Materializing param=bert.encoder.layer.8.attention.self.key.weight][A
+Loading weights:  70%|██████▉   | 140/201 [00:00<00:00, 4632.36it/s, Materializing param=bert.encoder.layer.8.attention.self.query.bias][A
+Loading weights:  70%|██████▉   | 140/201 [00:00<00:00, 4617.86it/s, Materializing param=bert.encoder.layer.8.attention.self.query.bias][A
+Loading weights:  70%|███████   | 141/201 [00:00<00:00, 4624.12it/s, Materializing param=bert.encoder.layer.8.attention.self.query.weight][A
+Loading weights:  70%|███████   | 141/201 [00:00<00:00, 4610.13it/s, Materializing param=bert.encoder.layer.8.attention.self.query.weight][A
+Loading weights:  71%|███████   | 142/201 [00:00<00:00, 4613.87it/s, Materializing param=bert.encoder.layer.8.attention.self.value.bias]  [A
+Loading weights:  71%|███████   | 142/201 [00:00<00:00, 4598.95it/s, Materializing param=bert.encoder.layer.8.attention.self.value.bias][A
+Loading weights:  71%|███████   | 143/201 [00:00<00:00, 4605.37it/s, Materializing param=bert.encoder.layer.8.attention.self.value.weight][A
+Loading weights:  71%|███████   | 143/201 [00:00<00:00, 4591.45it/s, Materializing param=bert.encoder.layer.8.attention.self.value.weight][A
+Loading weights:  72%|███████▏  | 144/201 [00:00<00:00, 4597.55it/s, Materializing param=bert.encoder.layer.8.intermediate.dense.bias]    [A
+Loading weights:  72%|███████▏  | 144/201 [00:00<00:00, 4583.70it/s, Materializing param=bert.encoder.layer.8.intermediate.dense.bias][A
+Loading weights:  72%|███████▏  | 145/201 [00:00<00:00, 4590.30it/s, Materializing param=bert.encoder.layer.8.intermediate.dense.weight][A
+Loading weights:  72%|███████▏  | 145/201 [00:00<00:00, 4576.73it/s, Materializing param=bert.encoder.layer.8.intermediate.dense.weight][A
+Loading weights:  73%|███████▎  | 146/201 [00:00<00:00, 4580.96it/s, Materializing param=bert.encoder.layer.8.output.LayerNorm.bias]    [A
+Loading weights:  73%|███████▎  | 146/201 [00:00<00:00, 4567.56it/s, Materializing param=bert.encoder.layer.8.output.LayerNorm.bias][A
+Loading weights:  73%|███████▎  | 147/201 [00:00<00:00, 4574.21it/s, Materializing param=bert.encoder.layer.8.output.LayerNorm.weight][A
+Loading weights:  73%|███████▎  | 147/201 [00:00<00:00, 4560.91it/s, Materializing param=bert.encoder.layer.8.output.LayerNorm.weight][A
+Loading weights:  74%|███████▎  | 148/201 [00:00<00:00, 4567.98it/s, Materializing param=bert.encoder.layer.8.output.dense.bias]      [A
+Loading weights:  74%|███████▎  | 148/201 [00:00<00:00, 4554.98it/s, Materializing param=bert.encoder.layer.8.output.dense.bias][A
+Loading weights:  74%|███████▍  | 149/201 [00:00<00:00, 4561.49it/s, Materializing param=bert.encoder.layer.8.output.dense.weight][A
+Loading weights:  74%|███████▍  | 149/201 [00:00<00:00, 4546.06it/s, Materializing param=bert.encoder.layer.8.output.dense.weight][A
+Loading weights:  75%|███████▍  | 150/201 [00:00<00:00, 4552.82it/s, Materializing param=bert.encoder.layer.9.attention.output.LayerNorm.bias][A
+Loading weights:  75%|███████▍  | 150/201 [00:00<00:00, 4540.08it/s, Materializing param=bert.encoder.layer.9.attention.output.LayerNorm.bias][A
+Loading weights:  75%|███████▌  | 151/201 [00:00<00:00, 4546.10it/s, Materializing param=bert.encoder.layer.9.attention.output.LayerNorm.weight][A
+Loading weights:  75%|███████▌  | 151/201 [00:00<00:00, 4533.44it/s, Materializing param=bert.encoder.layer.9.attention.output.LayerNorm.weight][A
+Loading weights:  76%|███████▌  | 152/201 [00:00<00:00, 4540.45it/s, Materializing param=bert.encoder.layer.9.attention.output.dense.bias]      [A
+Loading weights:  76%|███████▌  | 152/201 [00:00<00:00, 4527.94it/s, Materializing param=bert.encoder.layer.9.attention.output.dense.bias][A
+Loading weights:  76%|███████▌  | 153/201 [00:00<00:00, 4531.44it/s, Materializing param=bert.encoder.layer.9.attention.output.dense.weight][A
+Loading weights:  76%|███████▌  | 153/201 [00:00<00:00, 4518.42it/s, Materializing param=bert.encoder.layer.9.attention.output.dense.weight][A
+Loading weights:  77%|███████▋  | 154/201 [00:00<00:00, 4524.63it/s, Materializing param=bert.encoder.layer.9.attention.self.key.bias]      [A
+Loading weights:  77%|███████▋  | 154/201 [00:00<00:00, 4512.21it/s, Materializing param=bert.encoder.layer.9.attention.self.key.bias][A
+Loading weights:  77%|███████▋  | 155/201 [00:00<00:00, 4518.44it/s, Materializing param=bert.encoder.layer.9.attention.self.key.weight][A
+Loading weights:  77%|███████▋  | 155/201 [00:00<00:00, 4506.32it/s, Materializing param=bert.encoder.layer.9.attention.self.key.weight][A
+Loading weights:  78%|███████▊  | 156/201 [00:00<00:00, 4513.24it/s, Materializing param=bert.encoder.layer.9.attention.self.query.bias][A
+Loading weights:  78%|███████▊  | 156/201 [00:00<00:00, 4501.32it/s, Materializing param=bert.encoder.layer.9.attention.self.query.bias][A
+Loading weights:  78%|███████▊  | 157/201 [00:00<00:00, 4504.42it/s, Materializing param=bert.encoder.layer.9.attention.self.query.weight][A
+Loading weights:  78%|███████▊  | 157/201 [00:00<00:00, 4492.41it/s, Materializing param=bert.encoder.layer.9.attention.self.query.weight][A
+Loading weights:  79%|███████▊  | 158/201 [00:00<00:00, 4499.38it/s, Materializing param=bert.encoder.layer.9.attention.self.value.bias]  [A
+Loading weights:  79%|███████▊  | 158/201 [00:00<00:00, 4487.44it/s, Materializing param=bert.encoder.layer.9.attention.self.value.bias][A
+Loading weights:  79%|███████▉  | 159/201 [00:00<00:00, 4493.75it/s, Materializing param=bert.encoder.layer.9.attention.self.value.weight][A
+Loading weights:  79%|███████▉  | 159/201 [00:00<00:00, 4481.94it/s, Materializing param=bert.encoder.layer.9.attention.self.value.weight][A
+Loading weights:  80%|███████▉  | 160/201 [00:00<00:00, 4488.05it/s, Materializing param=bert.encoder.layer.9.intermediate.dense.bias]    [A
+Loading weights:  80%|███████▉  | 160/201 [00:00<00:00, 4474.22it/s, Materializing param=bert.encoder.layer.9.intermediate.dense.bias][A
+Loading weights:  80%|████████  | 161/201 [00:00<00:00, 4480.95it/s, Materializing param=bert.encoder.layer.9.intermediate.dense.weight][A
+Loading weights:  80%|████████  | 161/201 [00:00<00:00, 4469.62it/s, Materializing param=bert.encoder.layer.9.intermediate.dense.weight][A
+Loading weights:  81%|████████  | 162/201 [00:00<00:00, 4476.90it/s, Materializing param=bert.encoder.layer.9.output.LayerNorm.bias]    [A
+Loading weights:  81%|████████  | 162/201 [00:00<00:00, 4465.54it/s, Materializing param=bert.encoder.layer.9.output.LayerNorm.bias][A
+Loading weights:  81%|████████  | 163/201 [00:00<00:00, 4472.71it/s, Materializing param=bert.encoder.layer.9.output.LayerNorm.weight][A
+Loading weights:  81%|████████  | 163/201 [00:00<00:00, 4461.47it/s, Materializing param=bert.encoder.layer.9.output.LayerNorm.weight][A
+Loading weights:  82%|████████▏ | 164/201 [00:00<00:00, 4466.78it/s, Materializing param=bert.encoder.layer.9.output.dense.bias]      [A
+Loading weights:  82%|████████▏ | 164/201 [00:00<00:00, 4455.78it/s, Materializing param=bert.encoder.layer.9.output.dense.bias][A
+Loading weights:  82%|████████▏ | 165/201 [00:00<00:00, 4462.72it/s, Materializing param=bert.encoder.layer.9.output.dense.weight][A
+Loading weights:  82%|████████▏ | 165/201 [00:00<00:00, 4451.61it/s, Materializing param=bert.encoder.layer.9.output.dense.weight][A
+Loading weights:  83%|████████▎ | 166/201 [00:00<00:00, 4458.80it/s, Materializing param=bert.encoder.layer.10.attention.output.LayerNorm.bias][A
+Loading weights:  83%|████████▎ | 166/201 [00:00<00:00, 4447.69it/s, Materializing param=bert.encoder.layer.10.attention.output.LayerNorm.bias][A
+Loading weights:  83%|████████▎ | 167/201 [00:00<00:00, 4453.32it/s, Materializing param=bert.encoder.layer.10.attention.output.LayerNorm.weight][A
+Loading weights:  83%|████████▎ | 167/201 [00:00<00:00, 4442.19it/s, Materializing param=bert.encoder.layer.10.attention.output.LayerNorm.weight][A
+Loading weights:  84%|████████▎ | 168/201 [00:00<00:00, 4446.34it/s, Materializing param=bert.encoder.layer.10.attention.output.dense.bias]      [A
+Loading weights:  84%|████████▎ | 168/201 [00:00<00:00, 4435.23it/s, Materializing param=bert.encoder.layer.10.attention.output.dense.bias][A
+Loading weights:  84%|████████▍ | 169/201 [00:00<00:00, 4441.31it/s, Materializing param=bert.encoder.layer.10.attention.output.dense.weight][A
+Loading weights:  84%|████████▍ | 169/201 [00:00<00:00, 4430.37it/s, Materializing param=bert.encoder.layer.10.attention.output.dense.weight][A
+Loading weights:  85%|████████▍ | 170/201 [00:00<00:00, 4436.93it/s, Materializing param=bert.encoder.layer.10.attention.self.key.bias]      [A
+Loading weights:  85%|████████▍ | 170/201 [00:00<00:00, 4426.18it/s, Materializing param=bert.encoder.layer.10.attention.self.key.bias][A
+Loading weights:  85%|████████▌ | 171/201 [00:00<00:00, 4432.03it/s, Materializing param=bert.encoder.layer.10.attention.self.key.weight][A
+Loading weights:  85%|████████▌ | 171/201 [00:00<00:00, 4421.34it/s, Materializing param=bert.encoder.layer.10.attention.self.key.weight][A
+Loading weights:  86%|████████▌ | 172/201 [00:00<00:00, 4424.91it/s, Materializing param=bert.encoder.layer.10.attention.self.query.bias][A
+Loading weights:  86%|████████▌ | 172/201 [00:00<00:00, 4414.27it/s, Materializing param=bert.encoder.layer.10.attention.self.query.bias][A
+Loading weights:  86%|████████▌ | 173/201 [00:00<00:00, 4420.25it/s, Materializing param=bert.encoder.layer.10.attention.self.query.weight][A
+Loading weights:  86%|████████▌ | 173/201 [00:00<00:00, 4409.72it/s, Materializing param=bert.encoder.layer.10.attention.self.query.weight][A
+Loading weights:  87%|████████▋ | 174/201 [00:00<00:00, 4416.18it/s, Materializing param=bert.encoder.layer.10.attention.self.value.bias]  [A
+Loading weights:  87%|████████▋ | 174/201 [00:00<00:00, 4405.78it/s, Materializing param=bert.encoder.layer.10.attention.self.value.bias][A
+Loading weights:  87%|████████▋ | 175/201 [00:00<00:00, 4411.93it/s, Materializing param=bert.encoder.layer.10.attention.self.value.weight][A
+Loading weights:  87%|████████▋ | 175/201 [00:00<00:00, 4399.65it/s, Materializing param=bert.encoder.layer.10.attention.self.value.weight][A
+Loading weights:  88%|████████▊ | 176/201 [00:00<00:00, 4405.47it/s, Materializing param=bert.encoder.layer.10.intermediate.dense.bias]    [A
+Loading weights:  88%|████████▊ | 176/201 [00:00<00:00, 4395.16it/s, Materializing param=bert.encoder.layer.10.intermediate.dense.bias][A
+Loading weights:  88%|████████▊ | 177/201 [00:00<00:00, 4401.26it/s, Materializing param=bert.encoder.layer.10.intermediate.dense.weight][A
+Loading weights:  88%|████████▊ | 177/201 [00:00<00:00, 4391.21it/s, Materializing param=bert.encoder.layer.10.intermediate.dense.weight][A
+Loading weights:  89%|████████▊ | 178/201 [00:00<00:00, 4397.63it/s, Materializing param=bert.encoder.layer.10.output.LayerNorm.bias]    [A
+Loading weights:  89%|████████▊ | 178/201 [00:00<00:00, 4387.55it/s, Materializing param=bert.encoder.layer.10.output.LayerNorm.bias][A
+Loading weights:  89%|████████▉ | 179/201 [00:00<00:00, 4391.56it/s, Materializing param=bert.encoder.layer.10.output.LayerNorm.weight][A
+Loading weights:  89%|████████▉ | 179/201 [00:00<00:00, 4381.20it/s, Materializing param=bert.encoder.layer.10.output.LayerNorm.weight][A
+Loading weights:  90%|████████▉ | 180/201 [00:00<00:00, 4387.30it/s, Materializing param=bert.encoder.layer.10.output.dense.bias]      [A
+Loading weights:  90%|████████▉ | 180/201 [00:00<00:00, 4377.30it/s, Materializing param=bert.encoder.layer.10.output.dense.bias][A
+Loading weights:  90%|█████████ | 181/201 [00:00<00:00, 4383.85it/s, Materializing param=bert.encoder.layer.10.output.dense.weight][A
+Loading weights:  90%|█████████ | 181/201 [00:00<00:00, 4373.92it/s, Materializing param=bert.encoder.layer.10.output.dense.weight][A
+Loading weights:  91%|█████████ | 182/201 [00:00<00:00, 4380.55it/s, Materializing param=bert.encoder.layer.11.attention.output.LayerNorm.bias][A
+Loading weights:  91%|█████████ | 182/201 [00:00<00:00, 4370.72it/s, Materializing param=bert.encoder.layer.11.attention.output.LayerNorm.bias][A
+Loading weights:  91%|█████████ | 183/201 [00:00<00:00, 4373.12it/s, Materializing param=bert.encoder.layer.11.attention.output.LayerNorm.weight][A
+Loading weights:  91%|█████████ | 183/201 [00:00<00:00, 4363.33it/s, Materializing param=bert.encoder.layer.11.attention.output.LayerNorm.weight][A
+Loading weights:  92%|█████████▏| 184/201 [00:00<00:00, 4368.97it/s, Materializing param=bert.encoder.layer.11.attention.output.dense.bias]      [A
+Loading weights:  92%|█████████▏| 184/201 [00:00<00:00, 4359.29it/s, Materializing param=bert.encoder.layer.11.attention.output.dense.bias][A
+Loading weights:  92%|█████████▏| 185/201 [00:00<00:00, 4365.11it/s, Materializing param=bert.encoder.layer.11.attention.output.dense.weight][A
+Loading weights:  92%|█████████▏| 185/201 [00:00<00:00, 4355.41it/s, Materializing param=bert.encoder.layer.11.attention.output.dense.weight][A
+Loading weights:  93%|█████████▎| 186/201 [00:00<00:00, 4361.10it/s, Materializing param=bert.encoder.layer.11.attention.self.key.bias]      [A
+Loading weights:  93%|█████████▎| 186/201 [00:00<00:00, 4349.92it/s, Materializing param=bert.encoder.layer.11.attention.self.key.bias][A
+Loading weights:  93%|█████████▎| 187/201 [00:00<00:00, 4355.53it/s, Materializing param=bert.encoder.layer.11.attention.self.key.weight][A
+Loading weights:  93%|█████████▎| 187/201 [00:00<00:00, 4346.19it/s, Materializing param=bert.encoder.layer.11.attention.self.key.weight][A
+Loading weights:  94%|█████████▎| 188/201 [00:00<00:00, 4352.57it/s, Materializing param=bert.encoder.layer.11.attention.self.query.bias][A
+Loading weights:  94%|█████████▎| 188/201 [00:00<00:00, 4343.24it/s, Materializing param=bert.encoder.layer.11.attention.self.query.bias][A
+Loading weights:  94%|█████████▍| 189/201 [00:00<00:00, 4349.05it/s, Materializing param=bert.encoder.layer.11.attention.self.query.weight][A
+Loading weights:  94%|█████████▍| 189/201 [00:00<00:00, 4339.74it/s, Materializing param=bert.encoder.layer.11.attention.self.query.weight][A
+Loading weights:  95%|█████████▍| 190/201 [00:00<00:00, 4343.59it/s, Materializing param=bert.encoder.layer.11.attention.self.value.bias]  [A
+Loading weights:  95%|█████████▍| 190/201 [00:00<00:00, 4334.11it/s, Materializing param=bert.encoder.layer.11.attention.self.value.bias][A
+Loading weights:  95%|█████████▌| 191/201 [00:00<00:00, 4339.41it/s, Materializing param=bert.encoder.layer.11.attention.self.value.weight][A
+Loading weights:  95%|█████████▌| 191/201 [00:00<00:00, 4330.31it/s, Materializing param=bert.encoder.layer.11.attention.self.value.weight][A
+Loading weights:  96%|█████████▌| 192/201 [00:00<00:00, 4336.11it/s, Materializing param=bert.encoder.layer.11.intermediate.dense.bias]    [A
+Loading weights:  96%|█████████▌| 192/201 [00:00<00:00, 4327.07it/s, Materializing param=bert.encoder.layer.11.intermediate.dense.bias][A
+Loading weights:  96%|█████████▌| 193/201 [00:00<00:00, 4332.75it/s, Materializing param=bert.encoder.layer.11.intermediate.dense.weight][A
+Loading weights:  96%|█████████▌| 193/201 [00:00<00:00, 4323.68it/s, Materializing param=bert.encoder.layer.11.intermediate.dense.weight][A
+Loading weights:  97%|█████████▋| 194/201 [00:00<00:00, 4327.61it/s, Materializing param=bert.encoder.layer.11.output.LayerNorm.bias]    [A
+Loading weights:  97%|█████████▋| 194/201 [00:00<00:00, 4318.52it/s, Materializing param=bert.encoder.layer.11.output.LayerNorm.bias][A
+Loading weights:  97%|█████████▋| 195/201 [00:00<00:00, 4324.18it/s, Materializing param=bert.encoder.layer.11.output.LayerNorm.weight][A
+Loading weights:  97%|█████████▋| 195/201 [00:00<00:00, 4314.81it/s, Materializing param=bert.encoder.layer.11.output.LayerNorm.weight][A
+Loading weights:  98%|█████████▊| 196/201 [00:00<00:00, 4320.53it/s, Materializing param=bert.encoder.layer.11.output.dense.bias]      [A
+Loading weights:  98%|█████████▊| 196/201 [00:00<00:00, 4311.78it/s, Materializing param=bert.encoder.layer.11.output.dense.bias][A
+Loading weights:  98%|█████████▊| 197/201 [00:00<00:00, 4317.90it/s, Materializing param=bert.encoder.layer.11.output.dense.weight][A
+Loading weights:  98%|█████████▊| 197/201 [00:00<00:00, 4307.50it/s, Materializing param=bert.encoder.layer.11.output.dense.weight][A
+Loading weights:  99%|█████████▊| 198/201 [00:00<00:00, 4312.39it/s, Materializing param=bert.pooler.dense.bias]                   [A
+Loading weights:  99%|█████████▊| 198/201 [00:00<00:00, 4303.61it/s, Materializing param=bert.pooler.dense.bias][A
+Loading weights:  99%|█████████▉| 199/201 [00:00<00:00, 4310.23it/s, Materializing param=bert.pooler.dense.weight][A
+Loading weights:  99%|█████████▉| 199/201 [00:00<00:00, 4301.74it/s, Materializing param=bert.pooler.dense.weight][A
+Loading weights: 100%|█████████▉| 200/201 [00:00<00:00, 4308.63it/s, Materializing param=classifier.bias]         [A
+Loading weights: 100%|█████████▉| 200/201 [00:00<00:00, 4300.20it/s, Materializing param=classifier.bias][A
+Loading weights: 100%|██████████| 201/201 [00:00<00:00, 4307.76it/s, Materializing param=classifier.weight][A
+Loading weights: 100%|██████████| 201/201 [00:00<00:00, 4298.01it/s, Materializing param=classifier.weight][ALoading weights: 100%|██████████| 201/201 [00:00<00:00, 4282.97it/s, Materializing param=classifier.weight]
+[1mBertForSequenceClassification LOAD REPORT[0m from: ProsusAI/finbert
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+Analyzing:   0%|          | 0/468 [00:04<?, ?context/s, ticker=DVLT, groq=1, finbert=0]Analyzing:   0%|          | 1/468 [00:04<34:26,  4.42s/context, ticker=DVLT, groq=1, finbert=0]Analyzing:   0%|          | 1/468 [00:04<34:26,  4.42s/context, ticker=DVLT, groq=2, finbert=0]Analyzing:   0%|          | 2/468 [00:04<15:45,  2.03s/context, ticker=DVLT, groq=2, finbert=0]Analyzing:   0%|          | 2/468 [00:05<15:45,  2.03s/context, ticker=DVLT, groq=3, finbert=0]Analyzing:   1%|          | 3/468 [00:05<10:29,  1.35s/context, ticker=DVLT, groq=3, finbert=0]Analyzing:   1%|          | 3/468 [00:06<10:29,  1.35s/context, ticker=DVLT, groq=4, finbert=0]Analyzing:   1%|          | 4/468 [00:06<08:39,  1.12s/context, ticker=DVLT, groq=4, finbert=0]Analyzing:   1%|          | 4/468 [00:06<08:39,  1.12s/context, ticker=DVLT, groq=4, finbert=1]Analyzing:   1%|          | 5/468 [00:06<05:49,  1.33context/s, ticker=DVLT, groq=4, finbert=1]Analyzing:   1%|          | 5/468 [00:06<05:49,  1.33context/s, ticker=DVLT, groq=5, finbert=1]Analyzing:   1%|▏         | 6/468 [00:06<04:34,  1.69context/s, ticker=DVLT, groq=5, finbert=1]Analyzing:   1%|▏         | 6/468 [00:06<04:34,  1.69context/s, ticker=DVLT, groq=5, finbert=2]Analyzing:   1%|▏         | 7/468 [00:07<04:33,  1.69context/s, ticker=DVLT, groq=6, finbert=2]Analyzing:   2%|▏         | 8/468 [00:07<03:26,  2.23context/s, ticker=DVLT, groq=6, finbert=2]Analyzing:   2%|▏         | 8/468 [00:07<03:26,  2.23context/s, ticker=DVLT, groq=7, finbert=2]Analyzing:   2%|▏         | 9/468 [00:07<03:24,  2.24context/s, ticker=DVLT, groq=7, finbert=2]Analyzing:   2%|▏         | 9/468 [00:08<03:24,  2.24context/s, ticker=DVLT, groq=8, finbert=2]Analyzing:   2%|▏         | 10/468 [00:08<03:39,  2.09context/s, ticker=DVLT, groq=8, finbert=2]Analyzing:   2%|▏         | 10/468 [00:08<03:39,  2.09context/s, ticker=DVLT, groq=9, finbert=2]Analyzing:   2%|▏         | 11/468 [00:08<03:54,  1.95context/s, ticker=DVLT, groq=9, finbert=2]Analyzing:   2%|▏         | 11/468 [00:09<03:54,  1.95context/s, ticker=DVLT, groq=10, finbert=2]Analyzing:   3%|▎         | 12/468 [00:09<03:34,  2.12context/s, ticker=DVLT, groq=10, finbert=2]Analyzing:   3%|▎         | 12/468 [00:09<03:34,  2.12context/s, ticker=DVLT, groq=11, finbert=2]Analyzing:   3%|▎         | 13/468 [00:09<03:28,  2.18context/s, ticker=DVLT, groq=11, finbert=2]Analyzing:   3%|▎         | 13/468 [00:10<03:28,  2.18context/s, ticker=DVLT, groq=12, finbert=2]Analyzing:   3%|▎         | 14/468 [00:10<03:39,  2.07context/s, ticker=DVLT, groq=12, finbert=2]Analyzing:   3%|▎         | 14/468 [00:10<03:39,  2.07context/s, ticker=DVLT, groq=13, finbert=2]Analyzing:   3%|▎         | 15/468 [00:10<03:37,  2.09context/s, ticker=DVLT, groq=13, finbert=2]  AIXI: 68 contexts → sampling 15
+Analyzing:   3%|▎         | 15/468 [00:11<03:37,  2.09context/s, ticker=AIXI, groq=14, finbert=2]Analyzing:   3%|▎         | 16/468 [00:11<03:57,  1.90context/s, ticker=AIXI, groq=14, finbert=2]Analyzing:   3%|▎         | 16/468 [00:11<03:57,  1.90context/s, ticker=AIXI, groq=15, finbert=2]Analyzing:   4%|▎         | 17/468 [00:11<04:06,  1.83context/s, ticker=AIXI, groq=15, finbert=2]Analyzing:   4%|▎         | 17/468 [00:12<04:06,  1.83context/s, ticker=AIXI, groq=16, finbert=2]Analyzing:   4%|▍         | 18/468 [00:12<03:35,  2.09context/s, ticker=AIXI, groq=16, finbert=2]Analyzing:   4%|▍         | 18/468 [00:12<03:35,  2.09context/s, ticker=AIXI, groq=17, finbert=2]Analyzing:   4%|▍         | 19/468 [00:12<03:58,  1.88context/s, ticker=AIXI, groq=17, finbert=2]Analyzing:   4%|▍         | 19/468 [00:12<03:58,  1.88context/s, ticker=AIXI, groq=17, finbert=3]Analyzing:   4%|▍         | 20/468 [00:12<03:01,  2.47context/s, ticker=AIXI, groq=17, finbert=3]Analyzing:   4%|▍         | 20/468 [00:13<03:01,  2.47context/s, ticker=AIXI, groq=18, finbert=3]Analyzing:   4%|▍         | 21/468 [00:13<03:06,  2.39context/s, ticker=AIXI, groq=18, finbert=3]Analyzing:   4%|▍         | 21/468 [00:13<03:06,  2.39context/s, ticker=AIXI, groq=19, finbert=3]Analyzing:   5%|▍         | 22/468 [00:13<02:51,  2.60context/s, ticker=AIXI, groq=19, finbert=3]Analyzing:   5%|▍         | 22/468 [00:14<02:51,  2.60context/s, ticker=AIXI, groq=20, finbert=3]Analyzing:   5%|▍         | 23/468 [00:14<03:37,  2.05context/s, ticker=AIXI, groq=20, finbert=3]Analyzing:   5%|▍         | 23/468 [00:18<03:37,  2.05context/s, ticker=AIXI, groq=21, finbert=3]Analyzing:   5%|▌         | 24/468 [00:18<12:15,  1.66s/context, ticker=AIXI, groq=21, finbert=3]Analyzing:   5%|▌         | 24/468 [00:21<12:15,  1.66s/context, ticker=AIXI, groq=22, finbert=3]Analyzing:   5%|▌         | 25/468 [00:21<15:52,  2.15s/context, ticker=AIXI, groq=22, finbert=3]Analyzing:   5%|▌         | 25/468 [00:24<15:52,  2.15s/context, ticker=AIXI, groq=23, finbert=3]Analyzing:   6%|▌         | 26/468 [00:24<16:26,  2.23s/context, ticker=AIXI, groq=23, finbert=3]Analyzing:   6%|▌         | 26/468 [00:27<16:26,  2.23s/context, ticker=AIXI, groq=24, finbert=3]Analyzing:   6%|▌         | 27/468 [00:27<18:50,  2.56s/context, ticker=AIXI, groq=24, finbert=3]Analyzing:   6%|▌         | 27/468 [00:31<18:50,  2.56s/context, ticker=AIXI, groq=25, finbert=3]Analyzing:   6%|▌         | 28/468 [00:31<21:05,  2.88s/context, ticker=AIXI, groq=25, finbert=3]Analyzing:   6%|▌         | 28/468 [00:35<21:05,  2.88s/context, ticker=AIXI, groq=26, finbert=3]Analyzing:   6%|▌         | 29/468 [00:35<24:47,  3.39s/context, ticker=AIXI, groq=26, finbert=3]Analyzing:   6%|▌         | 29/468 [00:36<24:47,  3.39s/context, ticker=AIXI, groq=26, finbert=4]Analyzing:   6%|▋         | 30/468 [00:36<17:34,  2.41s/context, ticker=AIXI, groq=26, finbert=4]  SMX: 4 contexts → sampling 4
+Analyzing:   6%|▋         | 30/468 [00:40<17:34,  2.41s/context, ticker=SMX, groq=27, finbert=4] Analyzing:   7%|▋         | 31/468 [00:40<22:16,  3.06s/context, ticker=SMX, groq=27, finbert=4]Analyzing:   7%|▋         | 31/468 [00:45<22:16,  3.06s/context, ticker=SMX, groq=28, finbert=4]Analyzing:   7%|▋         | 32/468 [00:45<25:54,  3.57s/context, ticker=SMX, groq=28, finbert=4]Analyzing:   7%|▋         | 32/468 [00:48<25:54,  3.57s/context, ticker=SMX, groq=29, finbert=4]Analyzing:   7%|▋         | 33/468 [00:48<25:45,  3.55s/context, ticker=SMX, groq=29, finbert=4]Analyzing:   7%|▋         | 33/468 [00:53<25:45,  3.55s/context, ticker=SMX, groq=30, finbert=4]Analyzing:   7%|▋         | 34/468 [00:53<28:30,  3.94s/context, ticker=SMX, groq=30, finbert=4]  ANNA: 22 contexts → sampling 15
+Analyzing:   7%|▋         | 34/468 [00:53<28:30,  3.94s/context, ticker=ANNA, groq=30, finbert=5]Analyzing:   7%|▋         | 35/468 [00:57<28:26,  3.94s/context, ticker=ANNA, groq=31, finbert=5]Analyzing:   8%|▊         | 36/468 [00:57<21:22,  2.97s/context, ticker=ANNA, groq=31, finbert=5]Analyzing:   8%|▊         | 36/468 [01:01<21:22,  2.97s/context, ticker=ANNA, groq=32, finbert=5]Analyzing:   8%|▊         | 37/468 [01:01<23:45,  3.31s/context, ticker=ANNA, groq=32, finbert=5]Analyzing:   8%|▊         | 37/468 [01:05<23:45,  3.31s/context, ticker=ANNA, groq=33, finbert=5]Analyzing:   8%|▊         | 38/468 [01:05<23:46,  3.32s/context, ticker=ANNA, groq=33, finbert=5]Analyzing:   8%|▊         | 38/468 [01:07<23:46,  3.32s/context, ticker=ANNA, groq=34, finbert=5]Analyzing:   8%|▊         | 39/468 [01:07<21:42,  3.04s/context, ticker=ANNA, groq=34, finbert=5]Analyzing:   8%|▊         | 39/468 [01:10<21:42,  3.04s/context, ticker=ANNA, groq=35, finbert=5]Analyzing:   9%|▊         | 40/468 [01:10<22:07,  3.10s/context, ticker=ANNA, groq=35, finbert=5]Analyzing:   9%|▊         | 40/468 [01:13<22:07,  3.10s/context, ticker=ANNA, groq=36, finbert=5]Analyzing:   9%|▉         | 41/468 [01:13<22:32,  3.17s/context, ticker=ANNA, groq=36, finbert=5]Analyzing:   9%|▉         | 41/468 [01:16<22:32,  3.17s/context, ticker=ANNA, groq=37, finbert=5]Analyzing:   9%|▉         | 42/468 [01:16<21:10,  2.98s/context, ticker=ANNA, groq=37, finbert=5]Analyzing:   9%|▉         | 42/468 [01:20<21:10,  2.98s/context, ticker=ANNA, groq=38, finbert=5]Analyzing:   9%|▉         | 43/468 [01:20<23:49,  3.36s/context, ticker=ANNA, groq=38, finbert=5]Analyzing:   9%|▉         | 43/468 [01:24<23:49,  3.36s/context, ticker=ANNA, groq=39, finbert=5]Analyzing:   9%|▉         | 44/468 [01:24<23:50,  3.37s/context, ticker=ANNA, groq=39, finbert=5]Analyzing:   9%|▉         | 44/468 [01:24<23:50,  3.37s/context, ticker=ANNA, groq=39, finbert=6]Analyzing:  10%|▉         | 45/468 [01:24<17:00,  2.41s/context, ticker=ANNA, groq=39, finbert=6]Analyzing:  10%|▉         | 45/468 [01:27<17:00,  2.41s/context, ticker=ANNA, groq=40, finbert=6]Analyzing:  10%|▉         | 46/468 [01:27<19:09,  2.72s/context, ticker=ANNA, groq=40, finbert=6]Analyzing:  10%|▉         | 46/468 [01:30<19:09,  2.72s/context, ticker=ANNA, groq=41, finbert=6]Analyzing:  10%|█         | 47/468 [01:30<18:16,  2.60s/context, ticker=ANNA, groq=41, finbert=6]Analyzing:  10%|█         | 47/468 [01:33<18:16,  2.60s/context, ticker=ANNA, groq=42, finbert=6]Analyzing:  10%|█         | 48/468 [01:33<19:46,  2.82s/context, ticker=ANNA, groq=42, finbert=6]Analyzing:  10%|█         | 48/468 [01:36<19:46,  2.82s/context, ticker=ANNA, groq=43, finbert=6]Analyzing:  10%|█         | 49/468 [01:36<20:41,  2.96s/context, ticker=ANNA, groq=43, finbert=6]  RBNE: 7 contexts → sampling 7
+Analyzing:  10%|█         | 49/468 [01:39<20:41,  2.96s/context, ticker=RBNE, groq=44, finbert=6]Analyzing:  11%|█         | 50/468 [01:39<19:35,  2.81s/context, ticker=RBNE, groq=44, finbert=6]Analyzing:  11%|█         | 50/468 [01:42<19:35,  2.81s/context, ticker=RBNE, groq=45, finbert=6]Analyzing:  11%|█         | 51/468 [01:42<20:47,  2.99s/context, ticker=RBNE, groq=45, finbert=6]Analyzing:  11%|█         | 51/468 [01:46<20:47,  2.99s/context, ticker=RBNE, groq=46, finbert=6]Analyzing:  11%|█         | 52/468 [01:46<23:24,  3.38s/context, ticker=RBNE, groq=46, finbert=6]Analyzing:  11%|█         | 52/468 [01:49<23:24,  3.38s/context, ticker=RBNE, groq=47, finbert=6]Analyzing:  11%|█▏        | 53/468 [01:49<21:03,  3.05s/context, ticker=RBNE, groq=47, finbert=6]Analyzing:  11%|█▏        | 53/468 [01:52<21:03,  3.05s/context, ticker=RBNE, groq=48, finbert=6]Analyzing:  12%|█▏        | 54/468 [01:52<22:00,  3.19s/context, ticker=RBNE, groq=48, finbert=6]Analyzing:  12%|█▏        | 54/468 [01:57<22:00,  3.19s/context, ticker=RBNE, groq=49, finbert=6]Analyzing:  12%|█▏        | 55/468 [01:57<24:49,  3.61s/context, ticker=RBNE, groq=49, finbert=6]Analyzing:  12%|█▏        | 55/468 [02:01<24:49,  3.61s/context, ticker=RBNE, groq=50, finbert=6]Analyzing:  12%|█▏        | 56/468 [02:01<26:18,  3.83s/context, ticker=RBNE, groq=50, finbert=6]  ITP: 12 contexts → sampling 12
+Analyzing:  12%|█▏        | 56/468 [02:04<26:18,  3.83s/context, ticker=ITP, groq=51, finbert=6] Analyzing:  12%|█▏        | 57/468 [02:04<25:13,  3.68s/context, ticker=ITP, groq=51, finbert=6]Analyzing:  12%|█▏        | 57/468 [02:07<25:13,  3.68s/context, ticker=ITP, groq=52, finbert=6]Analyzing:  12%|█▏        | 58/468 [02:07<22:18,  3.26s/context, ticker=ITP, groq=52, finbert=6]Analyzing:  12%|█▏        | 58/468 [02:10<22:18,  3.26s/context, ticker=ITP, groq=53, finbert=6]Analyzing:  13%|█▎        | 59/468 [02:10<23:01,  3.38s/context, ticker=ITP, groq=53, finbert=6]Analyzing:  13%|█▎        | 59/468 [02:15<23:01,  3.38s/context, ticker=ITP, groq=54, finbert=6]Analyzing:  13%|█▎        | 60/468 [02:15<25:12,  3.71s/context, ticker=ITP, groq=54, finbert=6]Analyzing:  13%|█▎        | 60/468 [02:19<25:12,  3.71s/context, ticker=ITP, groq=55, finbert=6]Analyzing:  13%|█▎        | 61/468 [02:19<26:25,  3.89s/context, ticker=ITP, groq=55, finbert=6]Analyzing:  13%|█▎        | 61/468 [02:23<26:25,  3.89s/context, ticker=ITP, groq=56, finbert=6]Analyzing:  13%|█▎        | 62/468 [02:23<25:11,  3.72s/context, ticker=ITP, groq=56, finbert=6]Analyzing:  13%|█▎        | 62/468 [02:26<25:11,  3.72s/context, ticker=ITP, groq=57, finbert=6]Analyzing:  13%|█▎        | 63/468 [02:26<24:32,  3.63s/context, ticker=ITP, groq=57, finbert=6]Analyzing:  13%|█▎        | 63/468 [02:28<24:32,  3.63s/context, ticker=ITP, groq=58, finbert=6]Analyzing:  14%|█▎        | 64/468 [02:28<21:44,  3.23s/context, ticker=ITP, groq=58, finbert=6]Analyzing:  14%|█▎        | 64/468 [02:32<21:44,  3.23s/context, ticker=ITP, groq=59, finbert=6]Analyzing:  14%|█▍        | 65/468 [02:32<21:58,  3.27s/context, ticker=ITP, groq=59, finbert=6]Analyzing:  14%|█▍        | 65/468 [02:34<21:58,  3.27s/context, ticker=ITP, groq=60, finbert=6]Analyzing:  14%|█▍        | 66/468 [02:34<20:21,  3.04s/context, ticker=ITP, groq=60, finbert=6]Analyzing:  14%|█▍        | 66/468 [02:38<20:21,  3.04s/context, ticker=ITP, groq=61, finbert=6]Analyzing:  14%|█▍        | 67/468 [02:38<22:47,  3.41s/context, ticker=ITP, groq=61, finbert=6]Analyzing:  14%|█▍        | 67/468 [02:42<22:47,  3.41s/context, ticker=ITP, groq=62, finbert=6]Analyzing:  15%|█▍        | 68/468 [02:42<23:16,  3.49s/context, ticker=ITP, groq=62, finbert=6]  SPCE: 4 contexts → sampling 4
+Analyzing:  15%|█▍        | 68/468 [02:46<23:16,  3.49s/context, ticker=SPCE, groq=63, finbert=6]Analyzing:  15%|█▍        | 69/468 [02:46<25:04,  3.77s/context, ticker=SPCE, groq=63, finbert=6]Analyzing:  15%|█▍        | 69/468 [02:50<25:04,  3.77s/context, ticker=SPCE, groq=64, finbert=6]Analyzing:  15%|█▍        | 70/468 [02:50<24:16,  3.66s/context, ticker=SPCE, groq=64, finbert=6]Analyzing:  15%|█▍        | 70/468 [02:54<24:16,  3.66s/context, ticker=SPCE, groq=65, finbert=6]Analyzing:  15%|█▌        | 71/468 [02:54<25:35,  3.87s/context, ticker=SPCE, groq=65, finbert=6]Analyzing:  15%|█▌        | 71/468 [02:57<25:35,  3.87s/context, ticker=SPCE, groq=66, finbert=6]Analyzing:  15%|█▌        | 72/468 [02:57<22:24,  3.39s/context, ticker=SPCE, groq=66, finbert=6]  MIGI: 8 contexts → sampling 8
+Analyzing:  15%|█▌        | 72/468 [03:00<22:24,  3.39s/context, ticker=MIGI, groq=67, finbert=6]Analyzing:  16%|█▌        | 73/468 [03:00<22:08,  3.36s/context, ticker=MIGI, groq=67, finbert=6]Analyzing:  16%|█▌        | 73/468 [03:02<22:08,  3.36s/context, ticker=MIGI, groq=68, finbert=6]Analyzing:  16%|█▌        | 74/468 [03:02<19:55,  3.04s/context, ticker=MIGI, groq=68, finbert=6]Analyzing:  16%|█▌        | 74/468 [03:06<19:55,  3.04s/context, ticker=MIGI, groq=69, finbert=6]Analyzing:  16%|█▌        | 75/468 [03:06<20:46,  3.17s/context, ticker=MIGI, groq=69, finbert=6]Analyzing:  16%|█▌        | 75/468 [03:09<20:46,  3.17s/context, ticker=MIGI, groq=70, finbert=6]Analyzing:  16%|█▌        | 76/468 [03:09<20:54,  3.20s/context, ticker=MIGI, groq=70, finbert=6]Analyzing:  16%|█▌        | 76/468 [03:11<20:54,  3.20s/context, ticker=MIGI, groq=71, finbert=6]Analyzing:  16%|█▋        | 77/468 [03:11<19:05,  2.93s/context, ticker=MIGI, groq=71, finbert=6]Analyzing:  16%|█▋        | 77/468 [03:16<19:05,  2.93s/context, ticker=MIGI, groq=72, finbert=6]Analyzing:  17%|█▋        | 78/468 [03:16<22:09,  3.41s/context, ticker=MIGI, groq=72, finbert=6]Analyzing:  17%|█▋        | 78/468 [03:19<22:09,  3.41s/context, ticker=MIGI, groq=73, finbert=6]Analyzing:  17%|█▋        | 79/468 [03:19<21:52,  3.37s/context, ticker=MIGI, groq=73, finbert=6]Analyzing:  17%|█▋        | 79/468 [03:22<21:52,  3.37s/context, ticker=MIGI, groq=74, finbert=6]Analyzing:  17%|█▋        | 80/468 [03:22<21:53,  3.39s/context, ticker=MIGI, groq=74, finbert=6]  IBKR: 6 contexts → sampling 6
+Analyzing:  17%|█▋        | 80/468 [03:26<21:53,  3.39s/context, ticker=IBKR, groq=75, finbert=6]Analyzing:  17%|█▋        | 81/468 [03:26<21:39,  3.36s/context, ticker=IBKR, groq=75, finbert=6]Analyzing:  17%|█▋        | 81/468 [03:26<21:39,  3.36s/context, ticker=IBKR, groq=75, finbert=7]Analyzing:  18%|█▊        | 82/468 [03:28<21:35,  3.36s/context, ticker=IBKR, groq=76, finbert=7]Analyzing:  18%|█▊        | 83/468 [03:28<15:26,  2.41s/context, ticker=IBKR, groq=76, finbert=7]Analyzing:  18%|█▊        | 83/468 [03:33<15:26,  2.41s/context, ticker=IBKR, groq=77, finbert=7]Analyzing:  18%|█▊        | 84/468 [03:33<18:50,  2.94s/context, ticker=IBKR, groq=77, finbert=7]Analyzing:  18%|█▊        | 84/468 [03:37<18:50,  2.94s/context, ticker=IBKR, groq=78, finbert=7]Analyzing:  18%|█▊        | 85/468 [03:37<21:00,  3.29s/context, ticker=IBKR, groq=78, finbert=7]Analyzing:  18%|█▊        | 85/468 [03:37<21:00,  3.29s/context, ticker=IBKR, groq=78, finbert=8]  OWL: 4 contexts → sampling 4
+Analyzing:  18%|█▊        | 86/468 [03:37<20:57,  3.29s/context, ticker=OWL, groq=78, finbert=9] Analyzing:  19%|█▊        | 87/468 [03:37<12:06,  1.91s/context, ticker=OWL, groq=78, finbert=9]Analyzing:  19%|█▊        | 87/468 [03:41<12:06,  1.91s/context, ticker=OWL, groq=79, finbert=9]Analyzing:  19%|█▉        | 88/468 [03:41<15:02,  2.37s/context, ticker=OWL, groq=79, finbert=9]Analyzing:  19%|█▉        | 88/468 [03:45<15:02,  2.37s/context, ticker=OWL, groq=80, finbert=9]Analyzing:  19%|█▉        | 89/468 [03:45<16:37,  2.63s/context, ticker=OWL, groq=80, finbert=9]Analyzing:  19%|█▉        | 89/468 [03:49<16:37,  2.63s/context, ticker=OWL, groq=81, finbert=9]Analyzing:  19%|█▉        | 90/468 [03:49<19:40,  3.12s/context, ticker=OWL, groq=81, finbert=9]  TPET: 4 contexts → sampling 4
+Analyzing:  19%|█▉        | 90/468 [03:49<19:40,  3.12s/context, ticker=TPET, groq=81, finbert=10]Analyzing:  19%|█▉        | 91/468 [03:49<14:27,  2.30s/context, ticker=TPET, groq=81, finbert=10]Analyzing:  19%|█▉        | 91/468 [03:53<14:27,  2.30s/context, ticker=TPET, groq=82, finbert=10]Analyzing:  20%|█▉        | 92/468 [03:53<16:22,  2.61s/context, ticker=TPET, groq=82, finbert=10]Analyzing:  20%|█▉        | 92/468 [03:57<16:22,  2.61s/context, ticker=TPET, groq=83, finbert=10]Analyzing:  20%|█▉        | 93/468 [03:57<19:43,  3.16s/context, ticker=TPET, groq=83, finbert=10]Analyzing:  20%|█▉        | 93/468 [04:00<19:43,  3.16s/context, ticker=TPET, groq=84, finbert=10]Analyzing:  20%|██        | 94/468 [04:00<20:02,  3.22s/context, ticker=TPET, groq=84, finbert=10]  SRXH: 9 contexts → sampling 9
+Analyzing:  20%|██        | 94/468 [04:04<20:02,  3.22s/context, ticker=SRXH, groq=85, finbert=10]Analyzing:  20%|██        | 95/468 [04:04<20:09,  3.24s/context, ticker=SRXH, groq=85, finbert=10]Analyzing:  20%|██        | 95/468 [04:06<20:09,  3.24s/context, ticker=SRXH, groq=86, finbert=10]Analyzing:  21%|██        | 96/468 [04:06<18:21,  2.96s/context, ticker=SRXH, groq=86, finbert=10]Analyzing:  21%|██        | 96/468 [04:09<18:21,  2.96s/context, ticker=SRXH, groq=87, finbert=10]Analyzing:  21%|██        | 97/468 [04:09<18:51,  3.05s/context, ticker=SRXH, groq=87, finbert=10]Analyzing:  21%|██        | 97/468 [04:12<18:51,  3.05s/context, ticker=SRXH, groq=88, finbert=10]Analyzing:  21%|██        | 98/468 [04:12<17:22,  2.82s/context, ticker=SRXH, groq=88, finbert=10]Analyzing:  21%|██        | 98/468 [04:12<17:22,  2.82s/context, ticker=SRXH, groq=88, finbert=11]Analyzing:  21%|██        | 99/468 [04:15<17:20,  2.82s/context, ticker=SRXH, groq=89, finbert=11]Analyzing:  21%|██▏       | 100/468 [04:15<14:01,  2.29s/context, ticker=SRXH, groq=89, finbert=11]Analyzing:  21%|██▏       | 100/468 [04:17<14:01,  2.29s/context, ticker=SRXH, groq=90, finbert=11]Analyzing:  22%|██▏       | 101/468 [04:17<13:59,  2.29s/context, ticker=SRXH, groq=90, finbert=11]Analyzing:  22%|██▏       | 101/468 [04:19<13:59,  2.29s/context, ticker=SRXH, groq=91, finbert=11]Analyzing:  22%|██▏       | 102/468 [04:19<13:57,  2.29s/context, ticker=SRXH, groq=91, finbert=11]Analyzing:  22%|██▏       | 102/468 [04:23<13:57,  2.29s/context, ticker=SRXH, groq=92, finbert=11]Analyzing:  22%|██▏       | 103/468 [04:23<15:38,  2.57s/context, ticker=SRXH, groq=92, finbert=11]  IBRX: 6 contexts → sampling 6
+Analyzing:  22%|██▏       | 103/468 [04:25<15:38,  2.57s/context, ticker=IBRX, groq=93, finbert=11]Analyzing:  22%|██▏       | 104/468 [04:25<15:07,  2.49s/context, ticker=IBRX, groq=93, finbert=11]Analyzing:  22%|██▏       | 104/468 [04:29<15:07,  2.49s/context, ticker=IBRX, groq=94, finbert=11]Analyzing:  22%|██▏       | 105/468 [04:29<16:50,  2.78s/context, ticker=IBRX, groq=94, finbert=11]Analyzing:  22%|██▏       | 105/468 [04:33<16:50,  2.78s/context, ticker=IBRX, groq=95, finbert=11]Analyzing:  23%|██▎       | 106/468 [04:33<20:01,  3.32s/context, ticker=IBRX, groq=95, finbert=11]Analyzing:  23%|██▎       | 106/468 [04:38<20:01,  3.32s/context, ticker=IBRX, groq=96, finbert=11]Analyzing:  23%|██▎       | 107/468 [04:38<21:44,  3.61s/context, ticker=IBRX, groq=96, finbert=11]Analyzing:  23%|██▎       | 107/468 [04:41<21:44,  3.61s/context, ticker=IBRX, groq=97, finbert=11]Analyzing:  23%|██▎       | 108/468 [04:41<21:40,  3.61s/context, ticker=IBRX, groq=97, finbert=11]Analyzing:  23%|██▎       | 108/468 [04:45<21:40,  3.61s/context, ticker=IBRX, groq=98, finbert=11]Analyzing:  23%|██▎       | 109/468 [04:45<21:28,  3.59s/context, ticker=IBRX, groq=98, finbert=11]  INDO: 4 contexts → sampling 4
+Analyzing:  23%|██▎       | 109/468 [04:48<21:28,  3.59s/context, ticker=INDO, groq=99, finbert=11]Analyzing:  24%|██▎       | 110/468 [04:48<20:58,  3.52s/context, ticker=INDO, groq=99, finbert=11]Analyzing:  24%|██▎       | 110/468 [04:52<20:58,  3.52s/context, ticker=INDO, groq=100, finbert=11]Analyzing:  24%|██▎       | 111/468 [04:52<22:04,  3.71s/context, ticker=INDO, groq=100, finbert=11]Analyzing:  24%|██▎       | 111/468 [04:56<22:04,  3.71s/context, ticker=INDO, groq=101, finbert=11]Analyzing:  24%|██▍       | 112/468 [04:56<22:08,  3.73s/context, ticker=INDO, groq=101, finbert=11]Analyzing:  24%|██▍       | 112/468 [05:01<22:08,  3.73s/context, ticker=INDO, groq=102, finbert=11]Analyzing:  24%|██▍       | 113/468 [05:01<23:45,  4.02s/context, ticker=INDO, groq=102, finbert=11]  NVNI: 6 contexts → sampling 6
+Analyzing:  24%|██▍       | 113/468 [05:05<23:45,  4.02s/context, ticker=NVNI, groq=103, finbert=11]Analyzing:  24%|██▍       | 114/468 [05:05<24:22,  4.13s/context, ticker=NVNI, groq=103, finbert=11]Analyzing:  24%|██▍       | 114/468 [05:05<24:22,  4.13s/context, ticker=NVNI, groq=103, finbert=12]Analyzing:  25%|██▍       | 115/468 [05:08<24:17,  4.13s/context, ticker=NVNI, groq=104, finbert=12]Analyzing:  25%|██▍       | 116/468 [05:08<17:37,  3.00s/context, ticker=NVNI, groq=104, finbert=12]Analyzing:  25%|██▍       | 116/468 [05:11<17:37,  3.00s/context, ticker=NVNI, groq=105, finbert=12]Analyzing:  25%|██▌       | 117/468 [05:11<17:01,  2.91s/context, ticker=NVNI, groq=105, finbert=12]Analyzing:  25%|██▌       | 117/468 [05:14<17:01,  2.91s/context, ticker=NVNI, groq=106, finbert=12]Analyzing:  25%|██▌       | 118/468 [05:14<17:37,  3.02s/context, ticker=NVNI, groq=106, finbert=12]Analyzing:  25%|██▌       | 118/468 [05:18<17:37,  3.02s/context, ticker=NVNI, groq=107, finbert=12]Analyzing:  25%|██▌       | 119/468 [05:18<17:59,  3.09s/context, ticker=NVNI, groq=107, finbert=12]  LUNR: 7 contexts → sampling 7
+Analyzing:  25%|██▌       | 119/468 [05:20<17:59,  3.09s/context, ticker=LUNR, groq=108, finbert=12]Analyzing:  26%|██▌       | 120/468 [05:20<16:55,  2.92s/context, ticker=LUNR, groq=108, finbert=12]Analyzing:  26%|██▌       | 120/468 [05:20<16:55,  2.92s/context, ticker=LUNR, groq=108, finbert=13]Analyzing:  26%|██▌       | 121/468 [05:25<16:52,  2.92s/context, ticker=LUNR, groq=109, finbert=13]Analyzing:  26%|██▌       | 122/468 [05:25<15:13,  2.64s/context, ticker=LUNR, groq=109, finbert=13]Analyzing:  26%|██▌       | 122/468 [05:28<15:13,  2.64s/context, ticker=LUNR, groq=110, finbert=13]Analyzing:  26%|██▋       | 123/468 [05:28<16:21,  2.85s/context, ticker=LUNR, groq=110, finbert=13]Analyzing:  26%|██▋       | 123/468 [05:32<16:21,  2.85s/context, ticker=LUNR, groq=111, finbert=13]Analyzing:  26%|██▋       | 124/468 [05:32<16:58,  2.96s/context, ticker=LUNR, groq=111, finbert=13]Analyzing:  26%|██▋       | 124/468 [05:35<16:58,  2.96s/context, ticker=LUNR, groq=112, finbert=13]Analyzing:  27%|██▋       | 125/468 [05:35<17:26,  3.05s/context, ticker=LUNR, groq=112, finbert=13]Analyzing:  27%|██▋       | 125/468 [05:37<17:26,  3.05s/context, ticker=LUNR, groq=113, finbert=13]Analyzing:  27%|██▋       | 126/468 [05:37<16:16,  2.86s/context, ticker=LUNR, groq=113, finbert=13]  MOBX: 10 contexts → sampling 10
+Analyzing:  27%|██▋       | 126/468 [05:37<16:16,  2.86s/context, ticker=MOBX, groq=113, finbert=14]Analyzing:  27%|██▋       | 127/468 [05:40<16:13,  2.86s/context, ticker=MOBX, groq=114, finbert=14]Analyzing:  27%|██▋       | 128/468 [05:40<12:15,  2.16s/context, ticker=MOBX, groq=114, finbert=14]Analyzing:  27%|██▋       | 128/468 [05:44<12:15,  2.16s/context, ticker=MOBX, groq=115, finbert=14]Analyzing:  28%|██▊       | 129/468 [05:44<15:32,  2.75s/context, ticker=MOBX, groq=115, finbert=14]Analyzing:  28%|██▊       | 129/468 [05:49<15:32,  2.75s/context, ticker=MOBX, groq=116, finbert=14]Analyzing:  28%|██▊       | 130/468 [05:49<17:57,  3.19s/context, ticker=MOBX, groq=116, finbert=14]Analyzing:  28%|██▊       | 130/468 [05:52<17:57,  3.19s/context, ticker=MOBX, groq=117, finbert=14]Analyzing:  28%|██▊       | 131/468 [05:52<18:12,  3.24s/context, ticker=MOBX, groq=117, finbert=14]Analyzing:  28%|██▊       | 131/468 [05:56<18:12,  3.24s/context, ticker=MOBX, groq=118, finbert=14]Analyzing:  28%|██▊       | 132/468 [05:56<18:33,  3.31s/context, ticker=MOBX, groq=118, finbert=14]Analyzing:  28%|██▊       | 132/468 [06:00<18:33,  3.31s/context, ticker=MOBX, groq=119, finbert=14]Analyzing:  28%|██▊       | 133/468 [06:00<20:26,  3.66s/context, ticker=MOBX, groq=119, finbert=14]Analyzing:  28%|██▊       | 133/468 [06:05<20:26,  3.66s/context, ticker=MOBX, groq=120, finbert=14]Analyzing:  29%|██▊       | 134/468 [06:05<21:52,  3.93s/context, ticker=MOBX, groq=120, finbert=14]Analyzing:  29%|██▊       | 134/468 [06:05<21:52,  3.93s/context, ticker=MOBX, groq=120, finbert=15]Analyzing:  29%|██▉       | 135/468 [06:08<21:48,  3.93s/context, ticker=MOBX, groq=121, finbert=15]Analyzing:  29%|██▉       | 136/468 [06:08<16:14,  2.94s/context, ticker=MOBX, groq=121, finbert=15]  CUPR: 5 contexts → sampling 5
+Analyzing:  29%|██▉       | 136/468 [06:11<16:14,  2.94s/context, ticker=CUPR, groq=122, finbert=15]Analyzing:  29%|██▉       | 137/468 [06:11<15:20,  2.78s/context, ticker=CUPR, groq=122, finbert=15]Analyzing:  29%|██▉       | 137/468 [06:14<15:20,  2.78s/context, ticker=CUPR, groq=123, finbert=15]Analyzing:  29%|██▉       | 138/468 [06:14<16:22,  2.98s/context, ticker=CUPR, groq=123, finbert=15]Analyzing:  29%|██▉       | 138/468 [06:18<16:22,  2.98s/context, ticker=CUPR, groq=124, finbert=15]Analyzing:  30%|██▉       | 139/468 [06:18<16:56,  3.09s/context, ticker=CUPR, groq=124, finbert=15]Analyzing:  30%|██▉       | 139/468 [06:21<16:56,  3.09s/context, ticker=CUPR, groq=125, finbert=15]Analyzing:  30%|██▉       | 140/468 [06:21<17:24,  3.18s/context, ticker=CUPR, groq=125, finbert=15]Analyzing:  30%|██▉       | 140/468 [06:23<17:24,  3.18s/context, ticker=CUPR, groq=126, finbert=15]Analyzing:  30%|███       | 141/468 [06:23<16:01,  2.94s/context, ticker=CUPR, groq=126, finbert=15]  CARE: 3 contexts → sampling 3
+Analyzing:  30%|███       | 141/468 [06:27<16:01,  2.94s/context, ticker=CARE, groq=127, finbert=15]Analyzing:  30%|███       | 142/468 [06:27<16:50,  3.10s/context, ticker=CARE, groq=127, finbert=15]Analyzing:  30%|███       | 142/468 [06:31<16:50,  3.10s/context, ticker=CARE, groq=128, finbert=15]Analyzing:  31%|███       | 143/468 [06:31<18:44,  3.46s/context, ticker=CARE, groq=128, finbert=15]Analyzing:  31%|███       | 143/468 [06:34<18:44,  3.46s/context, ticker=CARE, groq=129, finbert=15]Analyzing:  31%|███       | 144/468 [06:34<18:25,  3.41s/context, ticker=CARE, groq=129, finbert=15]  IXHL: 7 contexts → sampling 7
+Analyzing:  31%|███       | 144/468 [06:35<18:25,  3.41s/context, ticker=IXHL, groq=129, finbert=16]Analyzing:  31%|███       | 145/468 [06:35<13:06,  2.43s/context, ticker=IXHL, groq=129, finbert=16]Analyzing:  31%|███       | 145/468 [06:37<13:06,  2.43s/context, ticker=IXHL, groq=130, finbert=16]Analyzing:  31%|███       | 146/468 [06:37<12:52,  2.40s/context, ticker=IXHL, groq=130, finbert=16]Analyzing:  31%|███       | 146/468 [06:40<12:52,  2.40s/context, ticker=IXHL, groq=131, finbert=16]Analyzing:  31%|███▏      | 147/468 [06:40<14:31,  2.71s/context, ticker=IXHL, groq=131, finbert=16]Analyzing:  31%|███▏      | 147/468 [06:44<14:31,  2.71s/context, ticker=IXHL, groq=132, finbert=16]Analyzing:  32%|███▏      | 148/468 [06:44<16:03,  3.01s/context, ticker=IXHL, groq=132, finbert=16]Analyzing:  32%|███▏      | 148/468 [06:47<16:03,  3.01s/context, ticker=IXHL, groq=133, finbert=16]Analyzing:  32%|███▏      | 149/468 [06:47<16:30,  3.11s/context, ticker=IXHL, groq=133, finbert=16]Analyzing:  32%|███▏      | 149/468 [06:51<16:30,  3.11s/context, ticker=IXHL, groq=134, finbert=16]Analyzing:  32%|███▏      | 150/468 [06:51<16:49,  3.17s/context, ticker=IXHL, groq=134, finbert=16]Analyzing:  32%|███▏      | 150/468 [06:53<16:49,  3.17s/context, ticker=IXHL, groq=135, finbert=16]Analyzing:  32%|███▏      | 151/468 [06:53<15:20,  2.90s/context, ticker=IXHL, groq=135, finbert=16]  EONR: 3 contexts → sampling 3
+Analyzing:  32%|███▏      | 151/468 [06:53<15:20,  2.90s/context, ticker=EONR, groq=135, finbert=17]Analyzing:  32%|███▏      | 152/468 [06:56<15:17,  2.90s/context, ticker=EONR, groq=136, finbert=17]Analyzing:  33%|███▎      | 153/468 [06:56<12:18,  2.34s/context, ticker=EONR, groq=136, finbert=17]Analyzing:  33%|███▎      | 153/468 [06:56<12:18,  2.34s/context, ticker=EONR, groq=136, finbert=18]  COCP: 5 contexts → sampling 5
+Analyzing:  33%|███▎      | 154/468 [06:56<12:15,  2.34s/context, ticker=COCP, groq=136, finbert=19]Analyzing:  33%|███▎      | 155/468 [06:56<07:31,  1.44s/context, ticker=COCP, groq=136, finbert=19]Analyzing:  33%|███▎      | 155/468 [06:59<07:31,  1.44s/context, ticker=COCP, groq=137, finbert=19]Analyzing:  33%|███▎      | 156/468 [06:59<08:46,  1.69s/context, ticker=COCP, groq=137, finbert=19]Analyzing:  33%|███▎      | 156/468 [07:02<08:46,  1.69s/context, ticker=COCP, groq=138, finbert=19]Analyzing:  34%|███▎      | 157/468 [07:02<10:59,  2.12s/context, ticker=COCP, groq=138, finbert=19]Analyzing:  34%|███▎      | 157/468 [07:07<10:59,  2.12s/context, ticker=COCP, groq=139, finbert=19]Analyzing:  34%|███▍      | 158/468 [07:07<13:56,  2.70s/context, ticker=COCP, groq=139, finbert=19]Analyzing:  34%|███▍      | 158/468 [07:09<13:56,  2.70s/context, ticker=COCP, groq=140, finbert=19]Analyzing:  34%|███▍      | 159/468 [07:09<13:22,  2.60s/context, ticker=COCP, groq=140, finbert=19]  PROP: 8 contexts → sampling 8
+Analyzing:  34%|███▍      | 159/468 [07:13<13:22,  2.60s/context, ticker=PROP, groq=141, finbert=19]Analyzing:  34%|███▍      | 160/468 [07:13<15:04,  2.94s/context, ticker=PROP, groq=141, finbert=19]Analyzing:  34%|███▍      | 160/468 [07:17<15:04,  2.94s/context, ticker=PROP, groq=142, finbert=19]Analyzing:  34%|███▍      | 161/468 [07:17<17:04,  3.34s/context, ticker=PROP, groq=142, finbert=19]Analyzing:  34%|███▍      | 161/468 [07:21<17:04,  3.34s/context, ticker=PROP, groq=143, finbert=19]Analyzing:  35%|███▍      | 162/468 [07:21<16:56,  3.32s/context, ticker=PROP, groq=143, finbert=19]Analyzing:  35%|███▍      | 162/468 [07:23<16:56,  3.32s/context, ticker=PROP, groq=144, finbert=19]Analyzing:  35%|███▍      | 163/468 [07:23<15:19,  3.01s/context, ticker=PROP, groq=144, finbert=19]Analyzing:  35%|███▍      | 163/468 [07:26<15:19,  3.01s/context, ticker=PROP, groq=145, finbert=19]Analyzing:  35%|███▌      | 164/468 [07:26<15:49,  3.12s/context, ticker=PROP, groq=145, finbert=19]Analyzing:  35%|███▌      | 164/468 [07:30<15:49,  3.12s/context, ticker=PROP, groq=146, finbert=19]Analyzing:  35%|███▌      | 165/468 [07:30<16:04,  3.18s/context, ticker=PROP, groq=146, finbert=19]Analyzing:  35%|███▌      | 165/468 [07:32<16:04,  3.18s/context, ticker=PROP, groq=147, finbert=19]Analyzing:  35%|███▌      | 166/468 [07:32<14:40,  2.91s/context, ticker=PROP, groq=147, finbert=19]Analyzing:  35%|███▌      | 166/468 [07:35<14:40,  2.91s/context, ticker=PROP, groq=148, finbert=19]Analyzing:  36%|███▌      | 167/468 [07:35<15:10,  3.02s/context, ticker=PROP, groq=148, finbert=19]  PROP: contrarian signal detected (top comment score=22, sentiment=-0.80)
+  EVER: 6 contexts → sampling 6
+Analyzing:  36%|███▌      | 167/468 [07:41<15:10,  3.02s/context, ticker=EVER, groq=150, finbert=19]Analyzing:  36%|███▌      | 168/468 [07:41<19:07,  3.82s/context, ticker=EVER, groq=150, finbert=19]Analyzing:  36%|███▌      | 168/468 [07:46<19:07,  3.82s/context, ticker=EVER, groq=151, finbert=19]Analyzing:  36%|███▌      | 169/468 [07:46<20:24,  4.10s/context, ticker=EVER, groq=151, finbert=19]Analyzing:  36%|███▌      | 169/468 [07:46<20:24,  4.10s/context, ticker=EVER, groq=151, finbert=20]Analyzing:  36%|███▋      | 170/468 [07:49<20:20,  4.10s/context, ticker=EVER, groq=152, finbert=20]Analyzing:  37%|███▋      | 171/468 [07:49<14:43,  2.98s/context, ticker=EVER, groq=152, finbert=20]Analyzing:  37%|███▋      | 171/468 [07:52<14:43,  2.98s/context, ticker=EVER, groq=153, finbert=20]Analyzing:  37%|███▋      | 172/468 [07:52<15:05,  3.06s/context, ticker=EVER, groq=153, finbert=20]Analyzing:  37%|███▋      | 172/468 [07:56<15:05,  3.06s/context, ticker=EVER, groq=154, finbert=20]Analyzing:  37%|███▋      | 173/468 [07:56<15:23,  3.13s/context, ticker=EVER, groq=154, finbert=20]  EVER: contrarian signal detected (top comment score=48, sentiment=-0.60)
+  USEG: 8 contexts → sampling 8
+Analyzing:  37%|███▋      | 173/468 [08:04<15:23,  3.13s/context, ticker=USEG, groq=156, finbert=20]Analyzing:  37%|███▋      | 174/468 [08:04<22:10,  4.52s/context, ticker=USEG, groq=156, finbert=20]Analyzing:  37%|███▋      | 174/468 [08:05<22:10,  4.52s/context, ticker=USEG, groq=157, finbert=20]Analyzing:  37%|███▋      | 175/468 [08:05<17:45,  3.64s/context, ticker=USEG, groq=157, finbert=20]Analyzing:  37%|███▋      | 175/468 [08:09<17:45,  3.64s/context, ticker=USEG, groq=158, finbert=20]Analyzing:  38%|███▊      | 176/468 [08:09<17:29,  3.59s/context, ticker=USEG, groq=158, finbert=20]Analyzing:  38%|███▊      | 176/468 [08:12<17:29,  3.59s/context, ticker=USEG, groq=159, finbert=20]Analyzing:  38%|███▊      | 177/468 [08:12<17:04,  3.52s/context, ticker=USEG, groq=159, finbert=20]Analyzing:  38%|███▊      | 177/468 [08:15<17:04,  3.52s/context, ticker=USEG, groq=160, finbert=20]Analyzing:  38%|███▊      | 178/468 [08:15<15:43,  3.25s/context, ticker=USEG, groq=160, finbert=20]Analyzing:  38%|███▊      | 178/468 [08:18<15:43,  3.25s/context, ticker=USEG, groq=161, finbert=20]Analyzing:  38%|███▊      | 179/468 [08:18<15:40,  3.25s/context, ticker=USEG, groq=161, finbert=20]Analyzing:  38%|███▊      | 179/468 [08:22<15:40,  3.25s/context, ticker=USEG, groq=162, finbert=20]Analyzing:  38%|███▊      | 180/468 [08:22<16:12,  3.38s/context, ticker=USEG, groq=162, finbert=20]Analyzing:  38%|███▊      | 180/468 [08:26<16:12,  3.38s/context, ticker=USEG, groq=163, finbert=20]Analyzing:  39%|███▊      | 181/468 [08:26<18:14,  3.81s/context, ticker=USEG, groq=163, finbert=20]  USEG: community pump warning (upvotes=1) → score 0.424 × 0.5
+  EDIT: 5 contexts → sampling 5
+Analyzing:  39%|███▊      | 181/468 [08:30<18:14,  3.81s/context, ticker=EDIT, groq=164, finbert=21]Analyzing:  39%|███▉      | 182/468 [08:30<17:38,  3.70s/context, ticker=EDIT, groq=164, finbert=21]Analyzing:  39%|███▉      | 182/468 [08:34<17:38,  3.70s/context, ticker=EDIT, groq=165, finbert=21]Analyzing:  39%|███▉      | 183/468 [08:34<18:29,  3.89s/context, ticker=EDIT, groq=165, finbert=21]Analyzing:  39%|███▉      | 183/468 [08:38<18:29,  3.89s/context, ticker=EDIT, groq=166, finbert=21]Analyzing:  39%|███▉      | 184/468 [08:38<17:54,  3.78s/context, ticker=EDIT, groq=166, finbert=21]Analyzing:  39%|███▉      | 184/468 [08:41<17:54,  3.78s/context, ticker=EDIT, groq=167, finbert=21]Analyzing:  40%|███▉      | 185/468 [08:41<17:14,  3.65s/context, ticker=EDIT, groq=167, finbert=21]Analyzing:  40%|███▉      | 185/468 [08:41<17:14,  3.65s/context, ticker=EDIT, groq=167, finbert=22]Analyzing:  40%|███▉      | 186/468 [08:41<12:11,  2.59s/context, ticker=EDIT, groq=167, finbert=22]  UPS: 3 contexts → sampling 3
+Analyzing:  40%|███▉      | 186/468 [08:45<12:11,  2.59s/context, ticker=UPS, groq=168, finbert=22] Analyzing:  40%|███▉      | 187/468 [08:45<13:09,  2.81s/context, ticker=UPS, groq=168, finbert=22]Analyzing:  40%|███▉      | 187/468 [08:47<13:09,  2.81s/context, ticker=UPS, groq=169, finbert=22]Analyzing:  40%|████      | 188/468 [08:47<12:20,  2.64s/context, ticker=UPS, groq=169, finbert=22]Analyzing:  40%|████      | 188/468 [08:49<12:20,  2.64s/context, ticker=UPS, groq=170, finbert=22]Analyzing:  40%|████      | 189/468 [08:49<11:46,  2.53s/context, ticker=UPS, groq=170, finbert=22]  RDW: 4 contexts → sampling 4
+Analyzing:  40%|████      | 189/468 [08:53<11:46,  2.53s/context, ticker=RDW, groq=171, finbert=22]Analyzing:  41%|████      | 190/468 [08:53<13:24,  2.89s/context, ticker=RDW, groq=171, finbert=22]Analyzing:  41%|████      | 190/468 [08:57<13:24,  2.89s/context, ticker=RDW, groq=172, finbert=22]Analyzing:  41%|████      | 191/468 [08:57<15:23,  3.34s/context, ticker=RDW, groq=172, finbert=22]Analyzing:  41%|████      | 191/468 [09:01<15:23,  3.34s/context, ticker=RDW, groq=173, finbert=22]Analyzing:  41%|████      | 192/468 [09:01<15:24,  3.35s/context, ticker=RDW, groq=173, finbert=22]Analyzing:  41%|████      | 192/468 [09:04<15:24,  3.35s/context, ticker=RDW, groq=174, finbert=22]Analyzing:  41%|████      | 193/468 [09:04<15:15,  3.33s/context, ticker=RDW, groq=174, finbert=22]  NVO: 4 contexts → sampling 4
+Analyzing:  41%|████      | 193/468 [09:04<15:15,  3.33s/context, ticker=NVO, groq=174, finbert=23]Analyzing:  41%|████▏     | 194/468 [09:04<10:48,  2.37s/context, ticker=NVO, groq=174, finbert=23]Analyzing:  41%|████▏     | 194/468 [09:07<10:48,  2.37s/context, ticker=NVO, groq=175, finbert=23]Analyzing:  42%|████▏     | 195/468 [09:07<12:19,  2.71s/context, ticker=NVO, groq=175, finbert=23]Analyzing:  42%|████▏     | 195/468 [09:08<12:19,  2.71s/context, ticker=NVO, groq=175, finbert=24]Analyzing:  42%|████▏     | 196/468 [09:08<08:44,  1.93s/context, ticker=NVO, groq=175, finbert=24]Analyzing:  42%|████▏     | 196/468 [09:10<08:44,  1.93s/context, ticker=NVO, groq=176, finbert=24]Analyzing:  42%|████▏     | 197/468 [09:10<09:09,  2.03s/context, ticker=NVO, groq=176, finbert=24]  NPT: 3 contexts → sampling 3
+Analyzing:  42%|████▏     | 197/468 [09:13<09:09,  2.03s/context, ticker=NPT, groq=177, finbert=24]Analyzing:  42%|████▏     | 198/468 [09:13<10:52,  2.42s/context, ticker=NPT, groq=177, finbert=24]Analyzing:  42%|████▏     | 198/468 [09:17<10:52,  2.42s/context, ticker=NPT, groq=178, finbert=24]Analyzing:  43%|████▎     | 199/468 [09:17<12:08,  2.71s/context, ticker=NPT, groq=178, finbert=24]Analyzing:  43%|████▎     | 199/468 [09:19<12:08,  2.71s/context, ticker=NPT, groq=179, finbert=24]Analyzing:  43%|████▎     | 200/468 [09:19<11:32,  2.58s/context, ticker=NPT, groq=179, finbert=24]  BTBD: 10 contexts → sampling 10
+Analyzing:  43%|████▎     | 200/468 [09:19<11:32,  2.58s/context, ticker=BTBD, groq=179, finbert=25]Analyzing:  43%|████▎     | 201/468 [09:19<08:12,  1.84s/context, ticker=BTBD, groq=179, finbert=25]Analyzing:  43%|████▎     | 201/468 [09:21<08:12,  1.84s/context, ticker=BTBD, groq=180, finbert=25]Analyzing:  43%|████▎     | 202/468 [09:21<08:53,  2.01s/context, ticker=BTBD, groq=180, finbert=25]Analyzing:  43%|████▎     | 202/468 [09:21<08:53,  2.01s/context, ticker=BTBD, groq=180, finbert=26]Analyzing:  43%|████▎     | 203/468 [09:21<06:21,  1.44s/context, ticker=BTBD, groq=180, finbert=26]Analyzing:  43%|████▎     | 203/468 [09:26<06:21,  1.44s/context, ticker=BTBD, groq=181, finbert=26]Analyzing:  44%|████▎     | 204/468 [09:26<10:11,  2.32s/context, ticker=BTBD, groq=181, finbert=26]Analyzing:  44%|████▎     | 204/468 [09:28<10:11,  2.32s/context, ticker=BTBD, groq=182, finbert=26]Analyzing:  44%|████▍     | 205/468 [09:28<10:16,  2.34s/context, ticker=BTBD, groq=182, finbert=26]Analyzing:  44%|████▍     | 205/468 [09:31<10:16,  2.34s/context, ticker=BTBD, groq=183, finbert=26]Analyzing:  44%|████▍     | 206/468 [09:31<10:21,  2.37s/context, ticker=BTBD, groq=183, finbert=26]Analyzing:  44%|████▍     | 206/468 [09:31<10:21,  2.37s/context, ticker=BTBD, groq=183, finbert=27]Analyzing:  44%|████▍     | 207/468 [09:31<07:21,  1.69s/context, ticker=BTBD, groq=183, finbert=27]Analyzing:  44%|████▍     | 207/468 [09:35<07:21,  1.69s/context, ticker=BTBD, groq=184, finbert=27]Analyzing:  44%|████▍     | 208/468 [09:35<11:03,  2.55s/context, ticker=BTBD, groq=184, finbert=27]Analyzing:  44%|████▍     | 208/468 [09:35<11:03,  2.55s/context, ticker=BTBD, groq=184, finbert=28]Analyzing:  45%|████▍     | 209/468 [09:35<07:52,  1.82s/context, ticker=BTBD, groq=184, finbert=28]Analyzing:  45%|████▍     | 209/468 [09:40<07:52,  1.82s/context, ticker=BTBD, groq=185, finbert=28]Analyzing:  45%|████▍     | 210/468 [09:40<11:11,  2.60s/context, ticker=BTBD, groq=185, finbert=28]  DTE: 4 contexts → sampling 4
+Analyzing:  45%|████▍     | 210/468 [09:40<11:11,  2.60s/context, ticker=DTE, groq=185, finbert=29] Analyzing:  45%|████▌     | 211/468 [09:42<11:08,  2.60s/context, ticker=DTE, groq=186, finbert=29]Analyzing:  45%|████▌     | 212/468 [09:42<08:16,  1.94s/context, ticker=DTE, groq=186, finbert=29]Analyzing:  45%|████▌     | 212/468 [09:46<08:16,  1.94s/context, ticker=DTE, groq=187, finbert=29]Analyzing:  46%|████▌     | 213/468 [09:46<09:48,  2.31s/context, ticker=DTE, groq=187, finbert=29]Analyzing:  46%|████▌     | 213/468 [09:49<09:48,  2.31s/context, ticker=DTE, groq=188, finbert=29]Analyzing:  46%|████▌     | 214/468 [09:49<11:09,  2.64s/context, ticker=DTE, groq=188, finbert=29]  ATCH: 9 contexts → sampling 9
+Analyzing:  46%|████▌     | 214/468 [09:49<11:09,  2.64s/context, ticker=ATCH, groq=188, finbert=30]Analyzing:  46%|████▌     | 215/468 [09:52<11:07,  2.64s/context, ticker=ATCH, groq=189, finbert=30]Analyzing:  46%|████▌     | 216/468 [09:52<08:34,  2.04s/context, ticker=ATCH, groq=189, finbert=30]Analyzing:  46%|████▌     | 216/468 [09:56<08:34,  2.04s/context, ticker=ATCH, groq=190, finbert=30]Analyzing:  46%|████▋     | 217/468 [09:56<10:46,  2.58s/context, ticker=ATCH, groq=190, finbert=30]Analyzing:  46%|████▋     | 217/468 [09:56<10:46,  2.58s/context, ticker=ATCH, groq=190, finbert=31]Analyzing:  47%|████▋     | 218/468 [09:58<10:43,  2.58s/context, ticker=ATCH, groq=191, finbert=31]Analyzing:  47%|████▋     | 219/468 [09:58<08:25,  2.03s/context, ticker=ATCH, groq=191, finbert=31]Analyzing:  47%|████▋     | 219/468 [10:02<08:25,  2.03s/context, ticker=ATCH, groq=192, finbert=31]Analyzing:  47%|████▋     | 220/468 [10:02<09:33,  2.31s/context, ticker=ATCH, groq=192, finbert=31]Analyzing:  47%|████▋     | 220/468 [10:05<09:33,  2.31s/context, ticker=ATCH, groq=193, finbert=31]Analyzing:  47%|████▋     | 221/468 [10:05<10:41,  2.60s/context, ticker=ATCH, groq=193, finbert=31]Analyzing:  47%|████▋     | 221/468 [10:05<10:41,  2.60s/context, ticker=ATCH, groq=193, finbert=32]Analyzing:  47%|████▋     | 222/468 [10:05<10:38,  2.60s/context, ticker=ATCH, groq=193, finbert=33]Analyzing:  48%|████▊     | 223/468 [10:05<06:22,  1.56s/context, ticker=ATCH, groq=193, finbert=33]  POLA: 6 contexts → sampling 6
+Analyzing:  48%|████▊     | 223/468 [10:09<06:22,  1.56s/context, ticker=POLA, groq=194, finbert=33]Analyzing:  48%|████▊     | 224/468 [10:09<08:12,  2.02s/context, ticker=POLA, groq=194, finbert=33]Analyzing:  48%|████▊     | 224/468 [10:09<08:12,  2.02s/context, ticker=POLA, groq=194, finbert=34]Analyzing:  48%|████▊     | 225/468 [10:14<08:10,  2.02s/context, ticker=POLA, groq=195, finbert=34]Analyzing:  48%|████▊     | 226/468 [10:14<08:38,  2.14s/context, ticker=POLA, groq=195, finbert=34]Analyzing:  48%|████▊     | 226/468 [10:18<08:38,  2.14s/context, ticker=POLA, groq=196, finbert=34]Analyzing:  49%|████▊     | 227/468 [10:18<10:41,  2.66s/context, ticker=POLA, groq=196, finbert=34]Analyzing:  49%|████▊     | 227/468 [10:18<10:41,  2.66s/context, ticker=POLA, groq=196, finbert=35]Analyzing:  49%|████▊     | 228/468 [10:18<08:14,  2.06s/context, ticker=POLA, groq=196, finbert=35]Analyzing:  49%|████▊     | 228/468 [10:23<08:14,  2.06s/context, ticker=POLA, groq=197, finbert=35]Analyzing:  49%|████▉     | 229/468 [10:23<10:29,  2.63s/context, ticker=POLA, groq=197, finbert=35]  FFAI: 5 contexts → sampling 5
+Analyzing:  49%|████▉     | 229/468 [10:23<10:29,  2.63s/context, ticker=FFAI, groq=197, finbert=36]Analyzing:  49%|████▉     | 230/468 [10:26<10:26,  2.63s/context, ticker=FFAI, groq=198, finbert=36]Analyzing:  49%|████▉     | 231/468 [10:26<08:46,  2.22s/context, ticker=FFAI, groq=198, finbert=36]Analyzing:  49%|████▉     | 231/468 [10:28<08:46,  2.22s/context, ticker=FFAI, groq=199, finbert=36]Analyzing:  50%|████▉     | 232/468 [10:28<08:49,  2.24s/context, ticker=FFAI, groq=199, finbert=36]Analyzing:  50%|████▉     | 232/468 [10:32<08:49,  2.24s/context, ticker=FFAI, groq=200, finbert=36]Analyzing:  50%|████▉     | 233/468 [10:32<09:51,  2.51s/context, ticker=FFAI, groq=200, finbert=36]Analyzing:  50%|████▉     | 233/468 [10:35<09:51,  2.51s/context, ticker=FFAI, groq=201, finbert=36]Analyzing:  50%|█████     | 234/468 [10:35<10:36,  2.72s/context, ticker=FFAI, groq=201, finbert=36]  COIN: 12 contexts → sampling 12
+Analyzing:  50%|█████     | 234/468 [10:38<10:36,  2.72s/context, ticker=COIN, groq=202, finbert=36]Analyzing:  50%|█████     | 235/468 [10:38<11:21,  2.92s/context, ticker=COIN, groq=202, finbert=36]Analyzing:  50%|█████     | 235/468 [10:41<11:21,  2.92s/context, ticker=COIN, groq=203, finbert=36]Analyzing:  50%|█████     | 236/468 [10:41<10:40,  2.76s/context, ticker=COIN, groq=203, finbert=36]Analyzing:  50%|█████     | 236/468 [10:44<10:40,  2.76s/context, ticker=COIN, groq=204, finbert=36]Analyzing:  51%|█████     | 237/468 [10:44<11:25,  2.97s/context, ticker=COIN, groq=204, finbert=36]Analyzing:  51%|█████     | 237/468 [10:48<11:25,  2.97s/context, ticker=COIN, groq=205, finbert=36]Analyzing:  51%|█████     | 238/468 [10:48<12:52,  3.36s/context, ticker=COIN, groq=205, finbert=36]Analyzing:  51%|█████     | 238/468 [10:51<12:52,  3.36s/context, ticker=COIN, groq=206, finbert=36]Analyzing:  51%|█████     | 239/468 [10:51<11:40,  3.06s/context, ticker=COIN, groq=206, finbert=36]Analyzing:  51%|█████     | 239/468 [10:51<11:40,  3.06s/context, ticker=COIN, groq=206, finbert=37]Analyzing:  51%|█████▏    | 240/468 [10:54<11:37,  3.06s/context, ticker=COIN, groq=207, finbert=37]Analyzing:  51%|█████▏    | 241/468 [10:54<09:11,  2.43s/context, ticker=COIN, groq=207, finbert=37]Analyzing:  51%|█████▏    | 241/468 [10:57<09:11,  2.43s/context, ticker=COIN, groq=208, finbert=37]Analyzing:  52%|█████▏    | 242/468 [10:57<09:59,  2.65s/context, ticker=COIN, groq=208, finbert=37]Analyzing:  52%|█████▏    | 242/468 [11:00<09:59,  2.65s/context, ticker=COIN, groq=209, finbert=37]Analyzing:  52%|█████▏    | 243/468 [11:00<09:36,  2.56s/context, ticker=COIN, groq=209, finbert=37]Analyzing:  52%|█████▏    | 243/468 [11:03<09:36,  2.56s/context, ticker=COIN, groq=210, finbert=37]Analyzing:  52%|█████▏    | 244/468 [11:03<10:18,  2.76s/context, ticker=COIN, groq=210, finbert=37]Analyzing:  52%|█████▏    | 244/468 [11:06<10:18,  2.76s/context, ticker=COIN, groq=211, finbert=37]Analyzing:  52%|█████▏    | 245/468 [11:06<10:50,  2.92s/context, ticker=COIN, groq=211, finbert=37]Analyzing:  52%|█████▏    | 245/468 [11:09<10:50,  2.92s/context, ticker=COIN, groq=212, finbert=37]Analyzing:  53%|█████▎    | 246/468 [11:09<10:18,  2.78s/context, ticker=COIN, groq=212, finbert=37]  HOOD: 3 contexts → sampling 3
+Analyzing:  53%|█████▎    | 246/468 [11:13<10:18,  2.78s/context, ticker=HOOD, groq=213, finbert=37]Analyzing:  53%|█████▎    | 247/468 [11:13<12:02,  3.27s/context, ticker=HOOD, groq=213, finbert=37]Analyzing:  53%|█████▎    | 247/468 [11:16<12:02,  3.27s/context, ticker=HOOD, groq=214, finbert=37]Analyzing:  53%|█████▎    | 248/468 [11:16<10:58,  2.99s/context, ticker=HOOD, groq=214, finbert=37]Analyzing:  53%|█████▎    | 248/468 [11:19<10:58,  2.99s/context, ticker=HOOD, groq=215, finbert=37]Analyzing:  53%|█████▎    | 249/468 [11:19<11:18,  3.10s/context, ticker=HOOD, groq=215, finbert=37]  AAOI: 3 contexts → sampling 3
+Analyzing:  53%|█████▎    | 249/468 [11:22<11:18,  3.10s/context, ticker=AAOI, groq=216, finbert=37]Analyzing:  53%|█████▎    | 250/468 [11:22<11:30,  3.17s/context, ticker=AAOI, groq=216, finbert=37]Analyzing:  53%|█████▎    | 250/468 [11:26<11:30,  3.17s/context, ticker=AAOI, groq=217, finbert=37]Analyzing:  54%|█████▎    | 251/468 [11:26<11:50,  3.27s/context, ticker=AAOI, groq=217, finbert=37]Analyzing:  54%|█████▎    | 251/468 [11:29<11:50,  3.27s/context, ticker=AAOI, groq=218, finbert=37]Analyzing:  54%|█████▍    | 252/468 [11:29<11:46,  3.27s/context, ticker=AAOI, groq=218, finbert=37]  DEFT: 4 contexts → sampling 4
+Analyzing:  54%|█████▍    | 252/468 [11:32<11:46,  3.27s/context, ticker=DEFT, groq=219, finbert=37]Analyzing:  54%|█████▍    | 253/468 [11:32<11:51,  3.31s/context, ticker=DEFT, groq=219, finbert=37]Analyzing:  54%|█████▍    | 253/468 [11:36<11:51,  3.31s/context, ticker=DEFT, groq=220, finbert=37]Analyzing:  54%|█████▍    | 254/468 [11:36<11:53,  3.33s/context, ticker=DEFT, groq=220, finbert=37]Analyzing:  54%|█████▍    | 254/468 [11:39<11:53,  3.33s/context, ticker=DEFT, groq=221, finbert=37]Analyzing:  54%|█████▍    | 255/468 [11:39<12:00,  3.38s/context, ticker=DEFT, groq=221, finbert=37]Analyzing:  54%|█████▍    | 255/468 [11:44<12:00,  3.38s/context, ticker=DEFT, groq=222, finbert=37]Analyzing:  55%|█████▍    | 256/468 [11:44<13:06,  3.71s/context, ticker=DEFT, groq=222, finbert=37]  ONDS: 6 contexts → sampling 6
+Analyzing:  55%|█████▍    | 256/468 [11:44<13:06,  3.71s/context, ticker=ONDS, groq=222, finbert=38]Analyzing:  55%|█████▍    | 257/468 [11:44<09:15,  2.63s/context, ticker=ONDS, groq=222, finbert=38]Analyzing:  55%|█████▍    | 257/468 [11:48<09:15,  2.63s/context, ticker=ONDS, groq=223, finbert=38]Analyzing:  55%|█████▌    | 258/468 [11:48<10:58,  3.14s/context, ticker=ONDS, groq=223, finbert=38]Analyzing:  55%|█████▌    | 258/468 [11:51<10:58,  3.14s/context, ticker=ONDS, groq=224, finbert=38]Analyzing:  55%|█████▌    | 259/468 [11:51<10:03,  2.89s/context, ticker=ONDS, groq=224, finbert=38]Analyzing:  55%|█████▌    | 259/468 [11:51<10:03,  2.89s/context, ticker=ONDS, groq=224, finbert=39]Analyzing:  56%|█████▌    | 260/468 [11:53<10:00,  2.89s/context, ticker=ONDS, groq=225, finbert=39]Analyzing:  56%|█████▌    | 261/468 [11:53<07:12,  2.09s/context, ticker=ONDS, groq=225, finbert=39]Analyzing:  56%|█████▌    | 261/468 [11:56<07:12,  2.09s/context, ticker=ONDS, groq=226, finbert=39]Analyzing:  56%|█████▌    | 262/468 [11:56<08:18,  2.42s/context, ticker=ONDS, groq=226, finbert=39]  III: 4 contexts → sampling 4
+Analyzing:  56%|█████▌    | 262/468 [12:00<08:18,  2.42s/context, ticker=III, groq=227, finbert=39] Analyzing:  56%|█████▌    | 263/468 [12:00<09:32,  2.79s/context, ticker=III, groq=227, finbert=39]Analyzing:  56%|█████▌    | 263/468 [12:05<09:32,  2.79s/context, ticker=III, groq=228, finbert=39]Analyzing:  56%|█████▋    | 264/468 [12:05<11:01,  3.24s/context, ticker=III, groq=228, finbert=39]Analyzing:  56%|█████▋    | 264/468 [12:07<11:01,  3.24s/context, ticker=III, groq=229, finbert=39]Analyzing:  57%|█████▋    | 265/468 [12:07<10:03,  2.97s/context, ticker=III, groq=229, finbert=39]Analyzing:  57%|█████▋    | 265/468 [12:10<10:03,  2.97s/context, ticker=III, groq=230, finbert=39]Analyzing:  57%|█████▋    | 266/468 [12:10<10:16,  3.05s/context, ticker=III, groq=230, finbert=39]  SNGX: 5 contexts → sampling 5
+Analyzing:  57%|█████▋    | 266/468 [12:15<10:16,  3.05s/context, ticker=SNGX, groq=232, finbert=39]Analyzing:  57%|█████▋    | 267/468 [12:15<11:57,  3.57s/context, ticker=SNGX, groq=232, finbert=39]Analyzing:  57%|█████▋    | 267/468 [12:20<11:57,  3.57s/context, ticker=SNGX, groq=233, finbert=39]Analyzing:  57%|█████▋    | 268/468 [12:20<12:52,  3.86s/context, ticker=SNGX, groq=233, finbert=39]Analyzing:  57%|█████▋    | 268/468 [12:23<12:52,  3.86s/context, ticker=SNGX, groq=234, finbert=39]Analyzing:  57%|█████▋    | 269/468 [12:23<12:35,  3.80s/context, ticker=SNGX, groq=234, finbert=39]Analyzing:  57%|█████▋    | 269/468 [12:26<12:35,  3.80s/context, ticker=SNGX, groq=235, finbert=39]Analyzing:  58%|█████▊    | 270/468 [12:26<12:01,  3.65s/context, ticker=SNGX, groq=235, finbert=39]Analyzing:  58%|█████▊    | 270/468 [12:30<12:01,  3.65s/context, ticker=SNGX, groq=236, finbert=39]Analyzing:  58%|█████▊    | 271/468 [12:30<11:37,  3.54s/context, ticker=SNGX, groq=236, finbert=39]  ASTS: 3 contexts → sampling 3
+Analyzing:  58%|█████▊    | 271/468 [12:33<11:37,  3.54s/context, ticker=ASTS, groq=237, finbert=39]Analyzing:  58%|█████▊    | 272/468 [12:33<11:19,  3.47s/context, ticker=ASTS, groq=237, finbert=39]Analyzing:  58%|█████▊    | 272/468 [12:35<11:19,  3.47s/context, ticker=ASTS, groq=238, finbert=39]Analyzing:  58%|█████▊    | 273/468 [12:35<10:07,  3.11s/context, ticker=ASTS, groq=238, finbert=39]Analyzing:  58%|█████▊    | 273/468 [12:38<10:07,  3.11s/context, ticker=ASTS, groq=239, finbert=39]Analyzing:  59%|█████▊    | 274/468 [12:38<09:26,  2.92s/context, ticker=ASTS, groq=239, finbert=39]  WOLF: 23 contexts → sampling 15
+Analyzing:  59%|█████▊    | 274/468 [12:42<09:26,  2.92s/context, ticker=WOLF, groq=240, finbert=39]Analyzing:  59%|█████▉    | 275/468 [12:42<10:45,  3.35s/context, ticker=WOLF, groq=240, finbert=39]Analyzing:  59%|█████▉    | 275/468 [12:47<10:45,  3.35s/context, ticker=WOLF, groq=241, finbert=39]Analyzing:  59%|█████▉    | 276/468 [12:47<11:54,  3.72s/context, ticker=WOLF, groq=241, finbert=39]Analyzing:  59%|█████▉    | 276/468 [12:51<11:54,  3.72s/context, ticker=WOLF, groq=242, finbert=39]Analyzing:  59%|█████▉    | 277/468 [12:51<12:29,  3.93s/context, ticker=WOLF, groq=242, finbert=39]Analyzing:  59%|█████▉    | 277/468 [12:51<12:29,  3.93s/context, ticker=WOLF, groq=242, finbert=40]Analyzing:  59%|█████▉    | 278/468 [12:55<12:25,  3.93s/context, ticker=WOLF, groq=243, finbert=40]Analyzing:  60%|█████▉    | 279/468 [12:55<09:15,  2.94s/context, ticker=WOLF, groq=243, finbert=40]Analyzing:  60%|█████▉    | 279/468 [12:57<09:15,  2.94s/context, ticker=WOLF, groq=244, finbert=40]Analyzing:  60%|█████▉    | 280/468 [12:57<08:43,  2.79s/context, ticker=WOLF, groq=244, finbert=40]Analyzing:  60%|█████▉    | 280/468 [13:01<08:43,  2.79s/context, ticker=WOLF, groq=245, finbert=40]Analyzing:  60%|██████    | 281/468 [13:01<09:18,  2.99s/context, ticker=WOLF, groq=245, finbert=40]Analyzing:  60%|██████    | 281/468 [13:01<09:18,  2.99s/context, ticker=WOLF, groq=245, finbert=41]Analyzing:  60%|██████    | 282/468 [13:01<06:49,  2.20s/context, ticker=WOLF, groq=245, finbert=41]Analyzing:  60%|██████    | 282/468 [13:04<06:49,  2.20s/context, ticker=WOLF, groq=246, finbert=41]Analyzing:  60%|██████    | 283/468 [13:04<07:46,  2.52s/context, ticker=WOLF, groq=246, finbert=41]Analyzing:  60%|██████    | 283/468 [13:07<07:46,  2.52s/context, ticker=WOLF, groq=247, finbert=41]Analyzing:  61%|██████    | 284/468 [13:07<08:28,  2.76s/context, ticker=WOLF, groq=247, finbert=41]Analyzing:  61%|██████    | 284/468 [13:11<08:28,  2.76s/context, ticker=WOLF, groq=248, finbert=41]Analyzing:  61%|██████    | 285/468 [13:11<08:56,  2.93s/context, ticker=WOLF, groq=248, finbert=41]Analyzing:  61%|██████    | 285/468 [13:13<08:56,  2.93s/context, ticker=WOLF, groq=249, finbert=41]Analyzing:  61%|██████    | 286/468 [13:13<08:23,  2.77s/context, ticker=WOLF, groq=249, finbert=41]Analyzing:  61%|██████    | 286/468 [13:17<08:23,  2.77s/context, ticker=WOLF, groq=250, finbert=41]Analyzing:  61%|██████▏   | 287/468 [13:17<09:46,  3.24s/context, ticker=WOLF, groq=250, finbert=41]Analyzing:  61%|██████▏   | 287/468 [13:20<09:46,  3.24s/context, ticker=WOLF, groq=251, finbert=41]Analyzing:  62%|██████▏   | 288/468 [13:20<09:00,  3.00s/context, ticker=WOLF, groq=251, finbert=41]Analyzing:  62%|██████▏   | 288/468 [13:20<09:00,  3.00s/context, ticker=WOLF, groq=251, finbert=42]  WOLF: MOD INTERVENTION detected → score -0.547 × 0.2
+  BBBY: 7 contexts → sampling 7
+Analyzing:  62%|██████▏   | 289/468 [13:23<08:57,  3.00s/context, ticker=BBBY, groq=252, finbert=42]Analyzing:  62%|██████▏   | 290/468 [13:23<07:08,  2.41s/context, ticker=BBBY, groq=252, finbert=42]Analyzing:  62%|██████▏   | 290/468 [13:27<07:08,  2.41s/context, ticker=BBBY, groq=253, finbert=42]Analyzing:  62%|██████▏   | 291/468 [13:27<07:44,  2.63s/context, ticker=BBBY, groq=253, finbert=42]Analyzing:  62%|██████▏   | 291/468 [13:30<07:44,  2.63s/context, ticker=BBBY, groq=254, finbert=42]Analyzing:  62%|██████▏   | 292/468 [13:30<08:25,  2.87s/context, ticker=BBBY, groq=254, finbert=42]Analyzing:  62%|██████▏   | 292/468 [13:34<08:25,  2.87s/context, ticker=BBBY, groq=255, finbert=42]Analyzing:  63%|██████▎   | 293/468 [13:34<08:45,  3.00s/context, ticker=BBBY, groq=255, finbert=42]Analyzing:  63%|██████▎   | 293/468 [13:37<08:45,  3.00s/context, ticker=BBBY, groq=256, finbert=42]Analyzing:  63%|██████▎   | 294/468 [13:37<08:56,  3.08s/context, ticker=BBBY, groq=256, finbert=42]Analyzing:  63%|██████▎   | 294/468 [13:40<08:56,  3.08s/context, ticker=BBBY, groq=257, finbert=42]Analyzing:  63%|██████▎   | 295/468 [13:40<09:07,  3.16s/context, ticker=BBBY, groq=257, finbert=42]Analyzing:  63%|██████▎   | 295/468 [13:44<09:07,  3.16s/context, ticker=BBBY, groq=258, finbert=42]Analyzing:  63%|██████▎   | 296/468 [13:44<09:21,  3.27s/context, ticker=BBBY, groq=258, finbert=42]  LINK: 6 contexts → sampling 6
+Analyzing:  63%|██████▎   | 296/468 [13:47<09:21,  3.27s/context, ticker=LINK, groq=259, finbert=42]Analyzing:  63%|██████▎   | 297/468 [13:47<09:20,  3.28s/context, ticker=LINK, groq=259, finbert=42]Analyzing:  63%|██████▎   | 297/468 [13:50<09:20,  3.28s/context, ticker=LINK, groq=260, finbert=42]Analyzing:  64%|██████▎   | 298/468 [13:50<09:18,  3.29s/context, ticker=LINK, groq=260, finbert=42]Analyzing:  64%|██████▎   | 298/468 [13:53<09:18,  3.29s/context, ticker=LINK, groq=261, finbert=42]Analyzing:  64%|██████▍   | 299/468 [13:53<08:25,  2.99s/context, ticker=LINK, groq=261, finbert=42]Analyzing:  64%|██████▍   | 299/468 [13:56<08:25,  2.99s/context, ticker=LINK, groq=262, finbert=42]Analyzing:  64%|██████▍   | 300/468 [13:56<08:37,  3.08s/context, ticker=LINK, groq=262, finbert=42]Analyzing:  64%|██████▍   | 300/468 [13:59<08:37,  3.08s/context, ticker=LINK, groq=263, finbert=42]Analyzing:  64%|██████▍   | 301/468 [13:59<08:46,  3.15s/context, ticker=LINK, groq=263, finbert=42]Analyzing:  64%|██████▍   | 301/468 [14:03<08:46,  3.15s/context, ticker=LINK, groq=264, finbert=42]Analyzing:  65%|██████▍   | 302/468 [14:03<08:50,  3.19s/context, ticker=LINK, groq=264, finbert=42]  TNXP: 3 contexts → sampling 3
+Analyzing:  65%|██████▍   | 302/468 [14:03<08:50,  3.19s/context, ticker=TNXP, groq=264, finbert=43]Analyzing:  65%|██████▍   | 303/468 [14:03<06:15,  2.27s/context, ticker=TNXP, groq=264, finbert=43]Analyzing:  65%|██████▍   | 303/468 [14:07<06:15,  2.27s/context, ticker=TNXP, groq=265, finbert=43]Analyzing:  65%|██████▍   | 304/468 [14:07<07:30,  2.75s/context, ticker=TNXP, groq=265, finbert=43]Analyzing:  65%|██████▍   | 304/468 [14:11<07:30,  2.75s/context, ticker=TNXP, groq=266, finbert=43]Analyzing:  65%|██████▌   | 305/468 [14:11<08:45,  3.22s/context, ticker=TNXP, groq=266, finbert=43]  NBIS: 19 contexts → sampling 15
+Analyzing:  65%|██████▌   | 305/468 [14:13<08:45,  3.22s/context, ticker=NBIS, groq=267, finbert=43]Analyzing:  65%|██████▌   | 306/468 [14:13<08:00,  2.96s/context, ticker=NBIS, groq=267, finbert=43]Analyzing:  65%|██████▌   | 306/468 [14:17<08:00,  2.96s/context, ticker=NBIS, groq=268, finbert=43]Analyzing:  66%|██████▌   | 307/468 [14:17<08:25,  3.14s/context, ticker=NBIS, groq=268, finbert=43]Analyzing:  66%|██████▌   | 307/468 [14:21<08:25,  3.14s/context, ticker=NBIS, groq=269, finbert=43]Analyzing:  66%|██████▌   | 308/468 [14:21<09:37,  3.61s/context, ticker=NBIS, groq=269, finbert=43]Analyzing:  66%|██████▌   | 308/468 [14:25<09:37,  3.61s/context, ticker=NBIS, groq=270, finbert=43]Analyzing:  66%|██████▌   | 309/468 [14:25<09:18,  3.51s/context, ticker=NBIS, groq=270, finbert=43]Analyzing:  66%|██████▌   | 309/468 [14:28<09:18,  3.51s/context, ticker=NBIS, groq=271, finbert=43]Analyzing:  66%|██████▌   | 310/468 [14:28<09:03,  3.44s/context, ticker=NBIS, groq=271, finbert=43]Analyzing:  66%|██████▌   | 310/468 [14:28<09:03,  3.44s/context, ticker=NBIS, groq=271, finbert=44]Analyzing:  66%|██████▋   | 311/468 [14:31<09:00,  3.44s/context, ticker=NBIS, groq=272, finbert=44]Analyzing:  67%|██████▋   | 312/468 [14:31<06:25,  2.47s/context, ticker=NBIS, groq=272, finbert=44]Analyzing:  67%|██████▋   | 312/468 [14:35<06:25,  2.47s/context, ticker=NBIS, groq=273, finbert=44]Analyzing:  67%|██████▋   | 313/468 [14:35<07:33,  2.92s/context, ticker=NBIS, groq=273, finbert=44]Analyzing:  67%|██████▋   | 313/468 [14:38<07:33,  2.92s/context, ticker=NBIS, groq=274, finbert=44]Analyzing:  67%|██████▋   | 314/468 [14:38<07:25,  2.89s/context, ticker=NBIS, groq=274, finbert=44]Analyzing:  67%|██████▋   | 314/468 [14:43<07:25,  2.89s/context, ticker=NBIS, groq=275, finbert=44]Analyzing:  67%|██████▋   | 315/468 [14:43<09:04,  3.56s/context, ticker=NBIS, groq=275, finbert=44]Analyzing:  67%|██████▋   | 315/468 [14:46<09:04,  3.56s/context, ticker=NBIS, groq=276, finbert=44]Analyzing:  68%|██████▊   | 316/468 [14:46<08:12,  3.24s/context, ticker=NBIS, groq=276, finbert=44]Analyzing:  68%|██████▊   | 316/468 [14:48<08:12,  3.24s/context, ticker=NBIS, groq=277, finbert=44]Analyzing:  68%|██████▊   | 317/468 [14:48<07:28,  2.97s/context, ticker=NBIS, groq=277, finbert=44]Analyzing:  68%|██████▊   | 317/468 [14:51<07:28,  2.97s/context, ticker=NBIS, groq=278, finbert=44]Analyzing:  68%|██████▊   | 318/468 [14:51<07:38,  3.06s/context, ticker=NBIS, groq=278, finbert=44]Analyzing:  68%|██████▊   | 318/468 [14:54<07:38,  3.06s/context, ticker=NBIS, groq=279, finbert=44]Analyzing:  68%|██████▊   | 319/468 [14:54<07:12,  2.90s/context, ticker=NBIS, groq=279, finbert=44]Analyzing:  68%|██████▊   | 319/468 [14:57<07:12,  2.90s/context, ticker=NBIS, groq=280, finbert=44]Analyzing:  68%|██████▊   | 320/468 [14:57<07:30,  3.05s/context, ticker=NBIS, groq=280, finbert=44]  ASTC: 3 contexts → sampling 3
+Analyzing:  68%|██████▊   | 320/468 [15:00<07:30,  3.05s/context, ticker=ASTC, groq=281, finbert=44]Analyzing:  69%|██████▊   | 321/468 [15:00<07:38,  3.12s/context, ticker=ASTC, groq=281, finbert=44]Analyzing:  69%|██████▊   | 321/468 [15:04<07:38,  3.12s/context, ticker=ASTC, groq=282, finbert=44]Analyzing:  69%|██████▉   | 322/468 [15:04<07:47,  3.20s/context, ticker=ASTC, groq=282, finbert=44]Analyzing:  69%|██████▉   | 322/468 [15:07<07:47,  3.20s/context, ticker=ASTC, groq=283, finbert=44]Analyzing:  69%|██████▉   | 323/468 [15:07<07:55,  3.28s/context, ticker=ASTC, groq=283, finbert=44]  CAR: 3 contexts → sampling 3
+Analyzing:  69%|██████▉   | 323/468 [15:07<07:55,  3.28s/context, ticker=CAR, groq=283, finbert=45] Analyzing:  69%|██████▉   | 324/468 [15:07<05:35,  2.33s/context, ticker=CAR, groq=283, finbert=45]Analyzing:  69%|██████▉   | 324/468 [15:07<05:35,  2.33s/context, ticker=CAR, groq=283, finbert=46]Analyzing:  69%|██████▉   | 325/468 [15:11<05:33,  2.33s/context, ticker=CAR, groq=284, finbert=46]Analyzing:  70%|██████▉   | 326/468 [15:11<04:49,  2.04s/context, ticker=CAR, groq=284, finbert=46]  IOVA: 5 contexts → sampling 5
+Analyzing:  70%|██████▉   | 326/468 [15:13<04:49,  2.04s/context, ticker=IOVA, groq=285, finbert=46]Analyzing:  70%|██████▉   | 327/468 [15:13<04:57,  2.11s/context, ticker=IOVA, groq=285, finbert=46]Analyzing:  70%|██████▉   | 327/468 [15:15<04:57,  2.11s/context, ticker=IOVA, groq=286, finbert=46]Analyzing:  70%|███████   | 328/468 [15:15<05:00,  2.15s/context, ticker=IOVA, groq=286, finbert=46]Analyzing:  70%|███████   | 328/468 [15:19<05:00,  2.15s/context, ticker=IOVA, groq=287, finbert=46]Analyzing:  70%|███████   | 329/468 [15:19<05:42,  2.46s/context, ticker=IOVA, groq=287, finbert=46]Analyzing:  70%|███████   | 329/468 [15:21<05:42,  2.46s/context, ticker=IOVA, groq=288, finbert=46]Analyzing:  71%|███████   | 330/468 [15:21<05:33,  2.42s/context, ticker=IOVA, groq=288, finbert=46]Analyzing:  71%|███████   | 330/468 [15:24<05:33,  2.42s/context, ticker=IOVA, groq=289, finbert=46]Analyzing:  71%|███████   | 331/468 [15:24<06:06,  2.68s/context, ticker=IOVA, groq=289, finbert=46]  GPUS: 4 contexts → sampling 4
+Analyzing:  71%|███████   | 331/468 [15:28<06:06,  2.68s/context, ticker=GPUS, groq=290, finbert=46]Analyzing:  71%|███████   | 332/468 [15:28<06:34,  2.90s/context, ticker=GPUS, groq=290, finbert=46]Analyzing:  71%|███████   | 332/468 [15:30<06:34,  2.90s/context, ticker=GPUS, groq=291, finbert=46]Analyzing:  71%|███████   | 333/468 [15:30<06:06,  2.71s/context, ticker=GPUS, groq=291, finbert=46]Analyzing:  71%|███████   | 333/468 [15:33<06:06,  2.71s/context, ticker=GPUS, groq=292, finbert=46]Analyzing:  71%|███████▏  | 334/468 [15:33<06:25,  2.88s/context, ticker=GPUS, groq=292, finbert=46]Analyzing:  71%|███████▏  | 334/468 [15:37<06:25,  2.88s/context, ticker=GPUS, groq=293, finbert=46]Analyzing:  72%|███████▏  | 335/468 [15:37<06:54,  3.12s/context, ticker=GPUS, groq=293, finbert=46]  EVGN: 3 contexts → sampling 3
+Analyzing:  72%|███████▏  | 335/468 [15:41<06:54,  3.12s/context, ticker=EVGN, groq=294, finbert=46]Analyzing:  72%|███████▏  | 336/468 [15:41<07:39,  3.48s/context, ticker=EVGN, groq=294, finbert=46]Analyzing:  72%|███████▏  | 336/468 [15:45<07:39,  3.48s/context, ticker=EVGN, groq=295, finbert=46]Analyzing:  72%|███████▏  | 337/468 [15:45<07:36,  3.49s/context, ticker=EVGN, groq=295, finbert=46]Analyzing:  72%|███████▏  | 337/468 [15:45<07:36,  3.49s/context, ticker=EVGN, groq=295, finbert=47]Analyzing:  72%|███████▏  | 338/468 [15:45<05:22,  2.48s/context, ticker=EVGN, groq=295, finbert=47]  GLP: 4 contexts → sampling 4
+Analyzing:  72%|███████▏  | 338/468 [15:49<05:22,  2.48s/context, ticker=GLP, groq=296, finbert=47] Analyzing:  72%|███████▏  | 339/468 [15:49<06:41,  3.11s/context, ticker=GLP, groq=296, finbert=47]Analyzing:  72%|███████▏  | 339/468 [15:54<06:41,  3.11s/context, ticker=GLP, groq=297, finbert=47]Analyzing:  73%|███████▎  | 340/468 [15:54<07:23,  3.46s/context, ticker=GLP, groq=297, finbert=47]Analyzing:  73%|███████▎  | 340/468 [15:56<07:23,  3.46s/context, ticker=GLP, groq=298, finbert=47]Analyzing:  73%|███████▎  | 341/468 [15:56<06:36,  3.12s/context, ticker=GLP, groq=298, finbert=47]Analyzing:  73%|███████▎  | 341/468 [15:59<06:36,  3.12s/context, ticker=GLP, groq=299, finbert=47]Analyzing:  73%|███████▎  | 342/468 [15:59<06:40,  3.18s/context, ticker=GLP, groq=299, finbert=47]  TACO: 29 contexts → sampling 15
+Analyzing:  73%|███████▎  | 342/468 [16:03<06:40,  3.18s/context, ticker=TACO, groq=300, finbert=47]Analyzing:  73%|███████▎  | 343/468 [16:03<06:41,  3.21s/context, ticker=TACO, groq=300, finbert=47]Analyzing:  73%|███████▎  | 343/468 [16:05<06:41,  3.21s/context, ticker=TACO, groq=301, finbert=47]Analyzing:  74%|███████▎  | 344/468 [16:05<06:03,  2.93s/context, ticker=TACO, groq=301, finbert=47]Analyzing:  74%|███████▎  | 344/468 [16:08<06:03,  2.93s/context, ticker=TACO, groq=302, finbert=47]Analyzing:  74%|███████▎  | 345/468 [16:08<06:21,  3.10s/context, ticker=TACO, groq=302, finbert=47]Analyzing:  74%|███████▎  | 345/468 [16:13<06:21,  3.10s/context, ticker=TACO, groq=303, finbert=47]Analyzing:  74%|███████▍  | 346/468 [16:13<07:01,  3.46s/context, ticker=TACO, groq=303, finbert=47]Analyzing:  74%|███████▍  | 346/468 [16:15<07:01,  3.46s/context, ticker=TACO, groq=304, finbert=47]Analyzing:  74%|███████▍  | 347/468 [16:15<06:15,  3.10s/context, ticker=TACO, groq=304, finbert=47]Analyzing:  74%|███████▍  | 347/468 [16:17<06:15,  3.10s/context, ticker=TACO, groq=305, finbert=47]Analyzing:  74%|███████▍  | 348/468 [16:17<05:42,  2.85s/context, ticker=TACO, groq=305, finbert=47]Analyzing:  74%|███████▍  | 348/468 [16:21<05:42,  2.85s/context, ticker=TACO, groq=306, finbert=47]Analyzing:  75%|███████▍  | 349/468 [16:21<05:54,  2.98s/context, ticker=TACO, groq=306, finbert=47]Analyzing:  75%|███████▍  | 349/468 [16:24<05:54,  2.98s/context, ticker=TACO, groq=307, finbert=47]Analyzing:  75%|███████▍  | 350/468 [16:24<06:04,  3.09s/context, ticker=TACO, groq=307, finbert=47]Analyzing:  75%|███████▍  | 350/468 [16:26<06:04,  3.09s/context, ticker=TACO, groq=308, finbert=47]Analyzing:  75%|███████▌  | 351/468 [16:26<05:41,  2.92s/context, ticker=TACO, groq=308, finbert=47]Analyzing:  75%|███████▌  | 351/468 [16:30<05:41,  2.92s/context, ticker=TACO, groq=309, finbert=47]Analyzing:  75%|███████▌  | 352/468 [16:30<05:51,  3.03s/context, ticker=TACO, groq=309, finbert=47]Analyzing:  75%|███████▌  | 352/468 [16:33<05:51,  3.03s/context, ticker=TACO, groq=310, finbert=47]Analyzing:  75%|███████▌  | 353/468 [16:33<06:05,  3.18s/context, ticker=TACO, groq=310, finbert=47]Analyzing:  75%|███████▌  | 353/468 [16:36<06:05,  3.18s/context, ticker=TACO, groq=311, finbert=47]Analyzing:  76%|███████▌  | 354/468 [16:36<06:06,  3.21s/context, ticker=TACO, groq=311, finbert=47]Analyzing:  76%|███████▌  | 354/468 [16:40<06:06,  3.21s/context, ticker=TACO, groq=312, finbert=47]Analyzing:  76%|███████▌  | 355/468 [16:40<06:05,  3.24s/context, ticker=TACO, groq=312, finbert=47]Analyzing:  76%|███████▌  | 355/468 [16:42<06:05,  3.24s/context, ticker=TACO, groq=313, finbert=47]Analyzing:  76%|███████▌  | 356/468 [16:42<05:31,  2.96s/context, ticker=TACO, groq=313, finbert=47]Analyzing:  76%|███████▌  | 356/468 [16:45<05:31,  2.96s/context, ticker=TACO, groq=314, finbert=47]Analyzing:  76%|███████▋  | 357/468 [16:45<05:38,  3.05s/context, ticker=TACO, groq=314, finbert=47]  NYC: 7 contexts → sampling 7
+Analyzing:  76%|███████▋  | 357/468 [16:45<05:38,  3.05s/context, ticker=NYC, groq=314, finbert=48] Analyzing:  76%|███████▋  | 358/468 [16:48<05:35,  3.05s/context, ticker=NYC, groq=315, finbert=48]Analyzing:  77%|███████▋  | 359/468 [16:48<04:01,  2.22s/context, ticker=NYC, groq=315, finbert=48]Analyzing:  77%|███████▋  | 359/468 [16:48<04:01,  2.22s/context, ticker=NYC, groq=315, finbert=49]Analyzing:  77%|███████▋  | 360/468 [16:50<03:59,  2.22s/context, ticker=NYC, groq=316, finbert=49]Analyzing:  77%|███████▋  | 361/468 [16:50<03:12,  1.80s/context, ticker=NYC, groq=316, finbert=49]Analyzing:  77%|███████▋  | 361/468 [16:53<03:12,  1.80s/context, ticker=NYC, groq=317, finbert=49]Analyzing:  77%|███████▋  | 362/468 [16:53<03:46,  2.13s/context, ticker=NYC, groq=317, finbert=49]Analyzing:  77%|███████▋  | 362/468 [16:57<03:46,  2.13s/context, ticker=NYC, groq=318, finbert=49]Analyzing:  78%|███████▊  | 363/468 [16:57<04:14,  2.42s/context, ticker=NYC, groq=318, finbert=49]Analyzing:  78%|███████▊  | 363/468 [16:59<04:14,  2.42s/context, ticker=NYC, groq=319, finbert=49]Analyzing:  78%|███████▊  | 364/468 [16:59<04:08,  2.39s/context, ticker=NYC, groq=319, finbert=49]  UNH: 21 contexts → sampling 15
+Analyzing:  78%|███████▊  | 364/468 [17:02<04:08,  2.39s/context, ticker=UNH, groq=320, finbert=49]Analyzing:  78%|███████▊  | 365/468 [17:02<04:31,  2.64s/context, ticker=UNH, groq=320, finbert=49]Analyzing:  78%|███████▊  | 365/468 [17:05<04:31,  2.64s/context, ticker=UNH, groq=321, finbert=49]Analyzing:  78%|███████▊  | 366/468 [17:05<04:20,  2.55s/context, ticker=UNH, groq=321, finbert=49]Analyzing:  78%|███████▊  | 366/468 [17:08<04:20,  2.55s/context, ticker=UNH, groq=322, finbert=49]Analyzing:  78%|███████▊  | 367/468 [17:08<04:40,  2.77s/context, ticker=UNH, groq=322, finbert=49]Analyzing:  78%|███████▊  | 367/468 [17:08<04:40,  2.77s/context, ticker=UNH, groq=322, finbert=50]Analyzing:  79%|███████▊  | 368/468 [17:10<04:37,  2.77s/context, ticker=UNH, groq=323, finbert=50]Analyzing:  79%|███████▉  | 369/468 [17:10<03:23,  2.06s/context, ticker=UNH, groq=323, finbert=50]Analyzing:  79%|███████▉  | 369/468 [17:10<03:23,  2.06s/context, ticker=UNH, groq=323, finbert=51]Analyzing:  79%|███████▉  | 370/468 [17:13<03:21,  2.06s/context, ticker=UNH, groq=324, finbert=51]Analyzing:  79%|███████▉  | 371/468 [17:13<02:49,  1.75s/context, ticker=UNH, groq=324, finbert=51]Analyzing:  79%|███████▉  | 371/468 [17:16<02:49,  1.75s/context, ticker=UNH, groq=325, finbert=51]Analyzing:  79%|███████▉  | 372/468 [17:16<03:19,  2.08s/context, ticker=UNH, groq=325, finbert=51]Analyzing:  79%|███████▉  | 372/468 [17:20<03:19,  2.08s/context, ticker=UNH, groq=326, finbert=51]Analyzing:  80%|███████▉  | 373/468 [17:20<03:44,  2.36s/context, ticker=UNH, groq=326, finbert=51]Analyzing:  80%|███████▉  | 373/468 [17:22<03:44,  2.36s/context, ticker=UNH, groq=327, finbert=51]Analyzing:  80%|███████▉  | 374/468 [17:22<03:43,  2.38s/context, ticker=UNH, groq=327, finbert=51]Analyzing:  80%|███████▉  | 374/468 [17:26<03:43,  2.38s/context, ticker=UNH, groq=328, finbert=51]Analyzing:  80%|████████  | 375/468 [17:26<04:29,  2.90s/context, ticker=UNH, groq=328, finbert=51]Analyzing:  80%|████████  | 375/468 [17:30<04:29,  2.90s/context, ticker=UNH, groq=329, finbert=51]Analyzing:  80%|████████  | 376/468 [17:30<04:40,  3.05s/context, ticker=UNH, groq=329, finbert=51]Analyzing:  80%|████████  | 376/468 [17:33<04:40,  3.05s/context, ticker=UNH, groq=330, finbert=51]Analyzing:  81%|████████  | 377/468 [17:33<04:49,  3.19s/context, ticker=UNH, groq=330, finbert=51]Analyzing:  81%|████████  | 377/468 [17:38<04:49,  3.19s/context, ticker=UNH, groq=331, finbert=51]Analyzing:  81%|████████  | 378/468 [17:38<05:15,  3.50s/context, ticker=UNH, groq=331, finbert=51]Analyzing:  81%|████████  | 378/468 [17:38<05:15,  3.50s/context, ticker=UNH, groq=331, finbert=52]  CMS: 3 contexts → sampling 3
+Analyzing:  81%|████████  | 379/468 [17:41<05:11,  3.50s/context, ticker=CMS, groq=332, finbert=53]Analyzing:  81%|████████  | 380/468 [17:41<03:59,  2.73s/context, ticker=CMS, groq=332, finbert=53]Analyzing:  81%|████████  | 380/468 [17:43<03:59,  2.73s/context, ticker=CMS, groq=333, finbert=53]Analyzing:  81%|████████▏ | 381/468 [17:43<03:47,  2.62s/context, ticker=CMS, groq=333, finbert=53]Analyzing:  81%|████████▏ | 381/468 [17:46<03:47,  2.62s/context, ticker=CMS, groq=334, finbert=53]Analyzing:  82%|████████▏ | 382/468 [17:46<03:37,  2.53s/context, ticker=CMS, groq=334, finbert=53]  AKA: 3 contexts → sampling 3
+Analyzing:  82%|████████▏ | 382/468 [17:49<03:37,  2.53s/context, ticker=AKA, groq=335, finbert=53]Analyzing:  82%|████████▏ | 383/468 [17:49<03:52,  2.73s/context, ticker=AKA, groq=335, finbert=53]Analyzing:  82%|████████▏ | 383/468 [17:51<03:52,  2.73s/context, ticker=AKA, groq=336, finbert=53]Analyzing:  82%|████████▏ | 384/468 [17:51<03:41,  2.64s/context, ticker=AKA, groq=336, finbert=53]Analyzing:  82%|████████▏ | 384/468 [17:55<03:41,  2.64s/context, ticker=AKA, groq=337, finbert=53]Analyzing:  82%|████████▏ | 385/468 [17:55<03:58,  2.88s/context, ticker=AKA, groq=337, finbert=53]  IBM: 6 contexts → sampling 6
+Analyzing:  82%|████████▏ | 385/468 [17:57<03:58,  2.88s/context, ticker=IBM, groq=338, finbert=53]Analyzing:  82%|████████▏ | 386/468 [17:57<03:41,  2.70s/context, ticker=IBM, groq=338, finbert=53]Analyzing:  82%|████████▏ | 386/468 [18:01<03:41,  2.70s/context, ticker=IBM, groq=339, finbert=53]Analyzing:  83%|████████▎ | 387/468 [18:01<03:58,  2.94s/context, ticker=IBM, groq=339, finbert=53]Analyzing:  83%|████████▎ | 387/468 [18:05<03:58,  2.94s/context, ticker=IBM, groq=340, finbert=53]Analyzing:  83%|████████▎ | 388/468 [18:05<04:26,  3.33s/context, ticker=IBM, groq=340, finbert=53]Analyzing:  83%|████████▎ | 388/468 [18:08<04:26,  3.33s/context, ticker=IBM, groq=341, finbert=53]Analyzing:  83%|████████▎ | 389/468 [18:08<04:28,  3.40s/context, ticker=IBM, groq=341, finbert=53]Analyzing:  83%|████████▎ | 389/468 [18:12<04:28,  3.40s/context, ticker=IBM, groq=342, finbert=53]Analyzing:  83%|████████▎ | 390/468 [18:12<04:22,  3.37s/context, ticker=IBM, groq=342, finbert=53]Analyzing:  83%|████████▎ | 390/468 [18:16<04:22,  3.37s/context, ticker=IBM, groq=343, finbert=53]Analyzing:  84%|████████▎ | 391/468 [18:16<04:45,  3.71s/context, ticker=IBM, groq=343, finbert=53]  CPA: 3 contexts → sampling 3
+Analyzing:  84%|████████▎ | 391/468 [18:20<04:45,  3.71s/context, ticker=CPA, groq=344, finbert=53]Analyzing:  84%|████████▍ | 392/468 [18:20<04:32,  3.58s/context, ticker=CPA, groq=344, finbert=53]Analyzing:  84%|████████▍ | 392/468 [18:22<04:32,  3.58s/context, ticker=CPA, groq=345, finbert=53]Analyzing:  84%|████████▍ | 393/468 [18:22<04:01,  3.22s/context, ticker=CPA, groq=345, finbert=53]Analyzing:  84%|████████▍ | 393/468 [18:25<04:01,  3.22s/context, ticker=CPA, groq=346, finbert=53]Analyzing:  84%|████████▍ | 394/468 [18:25<04:00,  3.25s/context, ticker=CPA, groq=346, finbert=53]  AGI: 9 contexts → sampling 9
+Analyzing:  84%|████████▍ | 394/468 [18:28<04:00,  3.25s/context, ticker=AGI, groq=347, finbert=53]Analyzing:  84%|████████▍ | 395/468 [18:28<03:37,  2.97s/context, ticker=AGI, groq=347, finbert=53]Analyzing:  84%|████████▍ | 395/468 [18:31<03:37,  2.97s/context, ticker=AGI, groq=348, finbert=53]Analyzing:  85%|████████▍ | 396/468 [18:31<03:41,  3.08s/context, ticker=AGI, groq=348, finbert=53]Analyzing:  85%|████████▍ | 396/468 [18:34<03:41,  3.08s/context, ticker=AGI, groq=349, finbert=53]Analyzing:  85%|████████▍ | 397/468 [18:34<03:43,  3.14s/context, ticker=AGI, groq=349, finbert=53]Analyzing:  85%|████████▍ | 397/468 [18:36<03:43,  3.14s/context, ticker=AGI, groq=350, finbert=53]Analyzing:  85%|████████▌ | 398/468 [18:36<03:21,  2.88s/context, ticker=AGI, groq=350, finbert=53]Analyzing:  85%|████████▌ | 398/468 [18:40<03:21,  2.88s/context, ticker=AGI, groq=351, finbert=53]Analyzing:  85%|████████▌ | 399/468 [18:40<03:27,  3.00s/context, ticker=AGI, groq=351, finbert=53]Analyzing:  85%|████████▌ | 399/468 [18:42<03:27,  3.00s/context, ticker=AGI, groq=352, finbert=53]Analyzing:  85%|████████▌ | 400/468 [18:42<03:09,  2.79s/context, ticker=AGI, groq=352, finbert=53]Analyzing:  85%|████████▌ | 400/468 [18:46<03:09,  2.79s/context, ticker=AGI, groq=353, finbert=53]Analyzing:  86%|████████▌ | 401/468 [18:46<03:24,  3.06s/context, ticker=AGI, groq=353, finbert=53]Analyzing:  86%|████████▌ | 401/468 [18:50<03:24,  3.06s/context, ticker=AGI, groq=354, finbert=53]Analyzing:  86%|████████▌ | 402/468 [18:50<03:46,  3.44s/context, ticker=AGI, groq=354, finbert=53]Analyzing:  86%|████████▌ | 402/468 [18:53<03:46,  3.44s/context, ticker=AGI, groq=355, finbert=53]Analyzing:  86%|████████▌ | 403/468 [18:53<03:43,  3.44s/context, ticker=AGI, groq=355, finbert=53]  AGI: contrarian signal detected (top comment score=71, sentiment=-0.80)
+  NYT: 5 contexts → sampling 5
+Analyzing:  86%|████████▌ | 403/468 [18:59<03:43,  3.44s/context, ticker=NYT, groq=357, finbert=53]Analyzing:  86%|████████▋ | 404/468 [18:59<04:26,  4.17s/context, ticker=NYT, groq=357, finbert=53]Analyzing:  86%|████████▋ | 404/468 [19:03<04:26,  4.17s/context, ticker=NYT, groq=358, finbert=53]Analyzing:  87%|████████▋ | 405/468 [19:03<04:06,  3.91s/context, ticker=NYT, groq=358, finbert=53]Analyzing:  87%|████████▋ | 405/468 [19:06<04:06,  3.91s/context, ticker=NYT, groq=359, finbert=53]Analyzing:  87%|████████▋ | 406/468 [19:06<03:50,  3.72s/context, ticker=NYT, groq=359, finbert=53]Analyzing:  87%|████████▋ | 406/468 [19:08<03:50,  3.72s/context, ticker=NYT, groq=360, finbert=53]Analyzing:  87%|████████▋ | 407/468 [19:08<03:25,  3.36s/context, ticker=NYT, groq=360, finbert=53]Analyzing:  87%|████████▋ | 407/468 [19:12<03:25,  3.36s/context, ticker=NYT, groq=361, finbert=53]Analyzing:  87%|████████▋ | 408/468 [19:12<03:20,  3.34s/context, ticker=NYT, groq=361, finbert=53]  NYT: contrarian signal detected (top comment score=34, sentiment=-0.80)
+  LLY: 63 contexts → sampling 15
+Analyzing:  87%|████████▋ | 408/468 [19:17<03:20,  3.34s/context, ticker=LLY, groq=363, finbert=53]Analyzing:  87%|████████▋ | 409/468 [19:17<03:57,  4.02s/context, ticker=LLY, groq=363, finbert=53]Analyzing:  87%|████████▋ | 409/468 [19:20<03:57,  4.02s/context, ticker=LLY, groq=364, finbert=53]Analyzing:  88%|████████▊ | 410/468 [19:20<03:28,  3.59s/context, ticker=LLY, groq=364, finbert=53]Analyzing:  88%|████████▊ | 410/468 [19:24<03:28,  3.59s/context, ticker=LLY, groq=365, finbert=53]Analyzing:  88%|████████▊ | 411/468 [19:24<03:38,  3.83s/context, ticker=LLY, groq=365, finbert=53]Analyzing:  88%|████████▊ | 411/468 [19:28<03:38,  3.83s/context, ticker=LLY, groq=366, finbert=53]Analyzing:  88%|████████▊ | 412/468 [19:28<03:26,  3.68s/context, ticker=LLY, groq=366, finbert=53]Analyzing:  88%|████████▊ | 412/468 [19:28<03:26,  3.68s/context, ticker=LLY, groq=366, finbert=54]Analyzing:  88%|████████▊ | 413/468 [19:28<02:23,  2.61s/context, ticker=LLY, groq=366, finbert=54]Analyzing:  88%|████████▊ | 413/468 [19:30<02:23,  2.61s/context, ticker=LLY, groq=367, finbert=54]Analyzing:  88%|████████▊ | 414/468 [19:30<02:16,  2.53s/context, ticker=LLY, groq=367, finbert=54]Analyzing:  88%|████████▊ | 414/468 [19:33<02:16,  2.53s/context, ticker=LLY, groq=368, finbert=54]Analyzing:  89%|████████▊ | 415/468 [19:33<02:27,  2.78s/context, ticker=LLY, groq=368, finbert=54]Analyzing:  89%|████████▊ | 415/468 [19:36<02:27,  2.78s/context, ticker=LLY, groq=369, finbert=54]Analyzing:  89%|████████▉ | 416/468 [19:36<02:16,  2.63s/context, ticker=LLY, groq=369, finbert=54]Analyzing:  89%|████████▉ | 416/468 [19:39<02:16,  2.63s/context, ticker=LLY, groq=370, finbert=54]Analyzing:  89%|████████▉ | 417/468 [19:39<02:25,  2.86s/context, ticker=LLY, groq=370, finbert=54]Analyzing:  89%|████████▉ | 417/468 [19:43<02:25,  2.86s/context, ticker=LLY, groq=371, finbert=54]Analyzing:  89%|████████▉ | 418/468 [19:43<02:31,  3.04s/context, ticker=LLY, groq=371, finbert=54]Analyzing:  89%|████████▉ | 418/468 [19:46<02:31,  3.04s/context, ticker=LLY, groq=372, finbert=54]Analyzing:  90%|████████▉ | 419/468 [19:46<02:33,  3.13s/context, ticker=LLY, groq=372, finbert=54]Analyzing:  90%|████████▉ | 419/468 [19:46<02:33,  3.13s/context, ticker=LLY, groq=372, finbert=55]Analyzing:  90%|████████▉ | 420/468 [19:46<01:46,  2.22s/context, ticker=LLY, groq=372, finbert=55]Analyzing:  90%|████████▉ | 420/468 [19:48<01:46,  2.22s/context, ticker=LLY, groq=373, finbert=55]Analyzing:  90%|████████▉ | 421/468 [19:48<01:45,  2.25s/context, ticker=LLY, groq=373, finbert=55]Analyzing:  90%|████████▉ | 421/468 [19:52<01:45,  2.25s/context, ticker=LLY, groq=374, finbert=55]Analyzing:  90%|█████████ | 422/468 [19:52<01:58,  2.58s/context, ticker=LLY, groq=374, finbert=55]Analyzing:  90%|█████████ | 422/468 [19:55<01:58,  2.58s/context, ticker=LLY, groq=375, finbert=55]Analyzing:  90%|█████████ | 423/468 [19:55<02:07,  2.84s/context, ticker=LLY, groq=375, finbert=55]  LLY: contrarian signal detected (top comment score=1151, sentiment=-0.80)
+  BMI: 16 contexts → sampling 15
+Analyzing:  90%|█████████ | 423/468 [20:03<02:07,  2.84s/context, ticker=BMI, groq=377, finbert=55]Analyzing:  91%|█████████ | 424/468 [20:03<03:11,  4.34s/context, ticker=BMI, groq=377, finbert=55]Analyzing:  91%|█████████ | 424/468 [20:07<03:11,  4.34s/context, ticker=BMI, groq=378, finbert=55]Analyzing:  91%|█████████ | 425/468 [20:07<02:55,  4.09s/context, ticker=BMI, groq=378, finbert=55]Analyzing:  91%|█████████ | 425/468 [20:09<02:55,  4.09s/context, ticker=BMI, groq=379, finbert=55]Analyzing:  91%|█████████ | 426/468 [20:09<02:29,  3.56s/context, ticker=BMI, groq=379, finbert=55]Analyzing:  91%|█████████ | 426/468 [20:12<02:29,  3.56s/context, ticker=BMI, groq=380, finbert=55]Analyzing:  91%|█████████ | 427/468 [20:12<02:24,  3.53s/context, ticker=BMI, groq=380, finbert=55]Analyzing:  91%|█████████ | 427/468 [20:16<02:24,  3.53s/context, ticker=BMI, groq=381, finbert=55]Analyzing:  91%|█████████▏| 428/468 [20:16<02:19,  3.48s/context, ticker=BMI, groq=381, finbert=55]Analyzing:  91%|█████████▏| 428/468 [20:18<02:19,  3.48s/context, ticker=BMI, groq=382, finbert=55]Analyzing:  92%|█████████▏| 429/468 [20:18<02:03,  3.17s/context, ticker=BMI, groq=382, finbert=55]Analyzing:  92%|█████████▏| 429/468 [20:21<02:03,  3.17s/context, ticker=BMI, groq=383, finbert=55]Analyzing:  92%|█████████▏| 430/468 [20:21<02:02,  3.24s/context, ticker=BMI, groq=383, finbert=55]Analyzing:  92%|█████████▏| 430/468 [20:24<02:02,  3.24s/context, ticker=BMI, groq=384, finbert=55]Analyzing:  92%|█████████▏| 431/468 [20:24<01:49,  2.97s/context, ticker=BMI, groq=384, finbert=55]Analyzing:  92%|█████████▏| 431/468 [20:27<01:49,  2.97s/context, ticker=BMI, groq=385, finbert=55]Analyzing:  92%|█████████▏| 432/468 [20:27<01:51,  3.10s/context, ticker=BMI, groq=385, finbert=55]Analyzing:  92%|█████████▏| 432/468 [20:30<01:51,  3.10s/context, ticker=BMI, groq=386, finbert=55]Analyzing:  93%|█████████▎| 433/468 [20:30<01:39,  2.85s/context, ticker=BMI, groq=386, finbert=55]Analyzing:  93%|█████████▎| 433/468 [20:32<01:39,  2.85s/context, ticker=BMI, groq=387, finbert=55]Analyzing:  93%|█████████▎| 434/468 [20:32<01:32,  2.74s/context, ticker=BMI, groq=387, finbert=55]Analyzing:  93%|█████████▎| 434/468 [20:35<01:32,  2.74s/context, ticker=BMI, groq=388, finbert=55]Analyzing:  93%|█████████▎| 435/468 [20:35<01:35,  2.90s/context, ticker=BMI, groq=388, finbert=55]Analyzing:  93%|█████████▎| 435/468 [20:38<01:35,  2.90s/context, ticker=BMI, groq=389, finbert=55]Analyzing:  93%|█████████▎| 436/468 [20:38<01:27,  2.74s/context, ticker=BMI, groq=389, finbert=55]Analyzing:  93%|█████████▎| 436/468 [20:41<01:27,  2.74s/context, ticker=BMI, groq=390, finbert=55]Analyzing:  93%|█████████▎| 437/468 [20:41<01:30,  2.91s/context, ticker=BMI, groq=390, finbert=55]Analyzing:  93%|█████████▎| 437/468 [20:43<01:30,  2.91s/context, ticker=BMI, groq=391, finbert=55]Analyzing:  94%|█████████▎| 438/468 [20:43<01:22,  2.75s/context, ticker=BMI, groq=391, finbert=55]  SNDK: 3 contexts → sampling 3
+Analyzing:  94%|█████████▎| 438/468 [20:47<01:22,  2.75s/context, ticker=SNDK, groq=392, finbert=55]Analyzing:  94%|█████████▍| 439/468 [20:47<01:26,  2.98s/context, ticker=SNDK, groq=392, finbert=55]Analyzing:  94%|█████████▍| 439/468 [20:49<01:26,  2.98s/context, ticker=SNDK, groq=393, finbert=55]Analyzing:  94%|█████████▍| 440/468 [20:49<01:20,  2.86s/context, ticker=SNDK, groq=393, finbert=55]Analyzing:  94%|█████████▍| 440/468 [20:55<01:20,  2.86s/context, ticker=SNDK, groq=394, finbert=55]Analyzing:  94%|█████████▍| 441/468 [20:55<01:38,  3.63s/context, ticker=SNDK, groq=394, finbert=55]  LEU: 6 contexts → sampling 6
+Analyzing:  94%|█████████▍| 441/468 [20:58<01:38,  3.63s/context, ticker=LEU, groq=395, finbert=55] Analyzing:  94%|█████████▍| 442/468 [20:58<01:32,  3.55s/context, ticker=LEU, groq=395, finbert=55]Analyzing:  94%|█████████▍| 442/468 [21:02<01:32,  3.55s/context, ticker=LEU, groq=396, finbert=55]Analyzing:  95%|█████████▍| 443/468 [21:02<01:27,  3.49s/context, ticker=LEU, groq=396, finbert=55]Analyzing:  95%|█████████▍| 443/468 [21:05<01:27,  3.49s/context, ticker=LEU, groq=397, finbert=55]Analyzing:  95%|█████████▍| 444/468 [21:05<01:24,  3.52s/context, ticker=LEU, groq=397, finbert=55]Analyzing:  95%|█████████▍| 444/468 [21:07<01:24,  3.52s/context, ticker=LEU, groq=398, finbert=55]Analyzing:  95%|█████████▌| 445/468 [21:07<01:12,  3.16s/context, ticker=LEU, groq=398, finbert=55]Analyzing:  95%|█████████▌| 445/468 [21:10<01:12,  3.16s/context, ticker=LEU, groq=399, finbert=55]Analyzing:  95%|█████████▌| 446/468 [21:10<01:03,  2.90s/context, ticker=LEU, groq=399, finbert=55]Analyzing:  95%|█████████▌| 446/468 [21:13<01:03,  2.90s/context, ticker=LEU, groq=400, finbert=55]Analyzing:  96%|█████████▌| 447/468 [21:13<01:04,  3.06s/context, ticker=LEU, groq=400, finbert=55]  PBR: 5 contexts → sampling 5
+Analyzing:  96%|█████████▌| 447/468 [21:20<01:04,  3.06s/context, ticker=PBR, groq=402, finbert=55]Analyzing:  96%|█████████▌| 448/468 [21:20<01:24,  4.23s/context, ticker=PBR, groq=402, finbert=55]Analyzing:  96%|█████████▌| 448/468 [21:23<01:24,  4.23s/context, ticker=PBR, groq=403, finbert=55]Analyzing:  96%|█████████▌| 449/468 [21:23<01:14,  3.94s/context, ticker=PBR, groq=403, finbert=55]Analyzing:  96%|█████████▌| 449/468 [21:24<01:14,  3.94s/context, ticker=PBR, groq=403, finbert=56]Analyzing:  96%|█████████▌| 450/468 [21:27<01:11,  3.94s/context, ticker=PBR, groq=404, finbert=56]Analyzing:  96%|█████████▋| 451/468 [21:27<00:49,  2.90s/context, ticker=PBR, groq=404, finbert=56]Analyzing:  96%|█████████▋| 451/468 [21:30<00:49,  2.90s/context, ticker=PBR, groq=405, finbert=56]Analyzing:  97%|█████████▋| 452/468 [21:30<00:48,  3.05s/context, ticker=PBR, groq=405, finbert=56]  FCF: 5 contexts → sampling 5
+Analyzing:  97%|█████████▋| 452/468 [21:35<00:48,  3.05s/context, ticker=FCF, groq=406, finbert=56]Analyzing:  97%|█████████▋| 453/468 [21:35<00:51,  3.46s/context, ticker=FCF, groq=406, finbert=56]Analyzing:  97%|█████████▋| 453/468 [21:39<00:51,  3.46s/context, ticker=FCF, groq=407, finbert=56]Analyzing:  97%|█████████▋| 454/468 [21:39<00:52,  3.74s/context, ticker=FCF, groq=407, finbert=56]Analyzing:  97%|█████████▋| 454/468 [21:42<00:52,  3.74s/context, ticker=FCF, groq=408, finbert=56]Analyzing:  97%|█████████▋| 455/468 [21:42<00:43,  3.33s/context, ticker=FCF, groq=408, finbert=56]Analyzing:  97%|█████████▋| 455/468 [21:45<00:43,  3.33s/context, ticker=FCF, groq=409, finbert=56]Analyzing:  97%|█████████▋| 456/468 [21:45<00:40,  3.37s/context, ticker=FCF, groq=409, finbert=56]Analyzing:  97%|█████████▋| 456/468 [21:49<00:40,  3.37s/context, ticker=FCF, groq=410, finbert=56]Analyzing:  98%|█████████▊| 457/468 [21:49<00:37,  3.42s/context, ticker=FCF, groq=410, finbert=56]  AMD: 3 contexts → sampling 3
+Analyzing:  98%|█████████▊| 457/468 [21:53<00:37,  3.42s/context, ticker=AMD, groq=411, finbert=56]Analyzing:  98%|█████████▊| 458/468 [21:53<00:36,  3.67s/context, ticker=AMD, groq=411, finbert=56]Analyzing:  98%|█████████▊| 458/468 [21:56<00:36,  3.67s/context, ticker=AMD, groq=412, finbert=56]Analyzing:  98%|█████████▊| 459/468 [21:56<00:32,  3.59s/context, ticker=AMD, groq=412, finbert=56]Analyzing:  98%|█████████▊| 459/468 [21:59<00:32,  3.59s/context, ticker=AMD, groq=413, finbert=56]Analyzing:  98%|█████████▊| 460/468 [21:59<00:25,  3.23s/context, ticker=AMD, groq=413, finbert=56]  CNA: 5 contexts → sampling 5
+Analyzing:  98%|█████████▊| 460/468 [22:02<00:25,  3.23s/context, ticker=CNA, groq=414, finbert=56]Analyzing:  99%|█████████▊| 461/468 [22:02<00:22,  3.28s/context, ticker=CNA, groq=414, finbert=56]Analyzing:  99%|█████████▊| 461/468 [22:05<00:22,  3.28s/context, ticker=CNA, groq=415, finbert=56]Analyzing:  99%|█████████▊| 462/468 [22:05<00:19,  3.29s/context, ticker=CNA, groq=415, finbert=56]Analyzing:  99%|█████████▊| 462/468 [22:08<00:19,  3.29s/context, ticker=CNA, groq=416, finbert=56]Analyzing:  99%|█████████▉| 463/468 [22:08<00:14,  2.99s/context, ticker=CNA, groq=416, finbert=56]Analyzing:  99%|█████████▉| 463/468 [22:10<00:14,  2.99s/context, ticker=CNA, groq=417, finbert=56]Analyzing:  99%|█████████▉| 464/468 [22:10<00:11,  2.81s/context, ticker=CNA, groq=417, finbert=56]Analyzing:  99%|█████████▉| 464/468 [22:13<00:11,  2.81s/context, ticker=CNA, groq=418, finbert=56]Analyzing:  99%|█████████▉| 465/468 [22:13<00:08,  2.97s/context, ticker=CNA, groq=418, finbert=56]  IRS: 3 contexts → sampling 3
+Analyzing:  99%|█████████▉| 465/468 [22:17<00:08,  2.97s/context, ticker=IRS, groq=419, finbert=56]Analyzing: 100%|█████████▉| 466/468 [22:17<00:06,  3.08s/context, ticker=IRS, groq=419, finbert=56]Analyzing: 100%|█████████▉| 466/468 [22:20<00:06,  3.08s/context, ticker=IRS, groq=420, finbert=56]Analyzing: 100%|█████████▉| 467/468 [22:20<00:03,  3.16s/context, ticker=IRS, groq=420, finbert=56]Analyzing: 100%|█████████▉| 467/468 [22:20<00:03,  3.16s/context, ticker=IRS, groq=420, finbert=57]Analyzing: 100%|██████████| 468/468 [22:20<00:00,  2.86s/context, ticker=IRS, groq=420, finbert=57]
+
+Sentiment sources: FinBERT=57, Groq=420
+Groq API calls used: 420/14400 daily limit
+Groq API calls efficiency: 2.92%
+
+Step 3: Adding Stock prices from yahoo finance...
+
+Step 3.5: Checking bearish stock flags...
+  ONDS: VampireStocks scam_group (confidence=0.9) → score 0.736 × penalty
+  ASTS: VampireStocks confirmed_dump (confidence=0.8) → score 0.104 × penalty
+  NPT: VampireStocks confirmed_dump (confidence=0.8) → score -0.444 × penalty
+
+Step 4: Saving results to database...
+Saved 39 stocks to database, 0 already existed
+Performance tracking: recorded 39 flagged stocks for 2026-04-07
+  Warning: SPCE has no float data — including with caution!
+  Warning: LUNR has no float data — including with caution!
+  Warning: POLA has no float data — including with caution!
+  Warning: DEFT has no float data — including with caution!
+  Warning: INDO has no float data — including with caution!
+  Warning: DTE has no float data — including with caution!
+  Warning: PBR has no float data — including with caution!
+  Warning: ONDS has no float data — including with caution!
+  Warning: EVGN has no float data — including with caution!
+  Warning: RBNE has no float data — including with caution!
+  Warning: RDW has no float data — including with caution!
+  Warning: MOBX has no float data — including with caution!
+  Warning: IBM has no float data — including with caution!
+  Warning: ATCH has no float data — including with caution!
+  Warning: BTBD has no float data — including with caution!
+  Warning: GPUS has no float data — including with caution!
+  Warning: ASTC has no float data — including with caution!
+  Warning: III has no float data — including with caution!
+  Warning: ANNA has no float data — including with caution!
+  Warning: COCP has no float data — including with caution!
+  Warning: AAOI has no float data — including with caution!
+  Warning: LEU has no float data — including with caution!
+  Warning: ITP has no float data — including with caution!
+  Warning: SRXH has no float data — including with caution!
+  Warning: DVLT has no float data — including with caution!
+  Warning: CARE has no float data — including with caution!
+  Warning: GLP has no float data — including with caution!
+  Warning: USEG has no float data — including with caution!
+  Warning: COIN has no float data — including with caution!
+  Warning: IBRX has no float data — including with caution!
+  Warning: TNXP has no float data — including with caution!
+  Warning: FCF has no float data — including with caution!
+  Warning: UNH has no float data — including with caution!
+  Warning: FFAI has no float data — including with caution!
+  Warning: OWL has no float data — including with caution!
+  Warning: MIGI has no float data — including with caution!
+  Warning: ASTS has no float data — including with caution!
+  Warning: SNGX has no float data — including with caution!
+  Warning: CPA has no float data — including with caution!
+  Warning: AIXI has no float data — including with caution!
+  Warning: IOVA has no float data — including with caution!
+  Warning: IBKR has no float data — including with caution!
+  Warning: EONR has no float data — including with caution!
+  Warning: AKA has no float data — including with caution!
+  Warning: CUPR has no float data — including with caution!
+  Warning: EVER has no float data — including with caution!
+  Warning: BBBY has no float data — including with caution!
+  Warning: WOLF has no float data — including with caution!
+  Warning: SMX has no float data — including with caution!
+  Warning: LINK has no float data — including with caution!
+  Warning: UPS has no float data — including with caution!
+  Warning: TPET has no float data — including with caution!
+  Warning: CMS has no float data — including with caution!
+  Warning: CAR has no float data — including with caution!
+  Warning: AGI has no float data — including with caution!
+  Warning: PROP has no float data — including with caution!
+  Warning: NVNI has no float data — including with caution!
+  Warning: CNA has no float data — including with caution!
+  Warning: NYT has no float data — including with caution!
+  Warning: TACO has no float data — including with caution!
+  Warning: NPT has no float data — including with caution!
+  Warning: NBIS has no float data — including with caution!
+  Warning: EDIT has no float data — including with caution!
+  Warning: BMI has no float data — including with caution!
+  Warning: HOOD has no float data — including with caution!
+  Warning: NYC has no float data — including with caution!
+  Warning: IXHL has no float data — including with caution!
+  Warning: NVO has no float data — including with caution!
+  Warning: AMD has no float data — including with caution!
+  Warning: LLY has no float data — including with caution!
+  Warning: SNDK has no float data — including with caution!
+  Warning: IRS has no float data — including with caution!
+
+Step 5: Catalyst assessment for filtered results...
+  [SPCE] raw: {
+  "has_catalyst": false,
+  "catalyst_type": "none",
+  "confidence": 0.0,
+  "re
+  SPCE: has_catalyst=False type=none confidence=0.0 | The comments mention a short term squeeze and price targets without backing, indicating general hype and speculation without a real verifiable catalyst.
+  [POLA] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "product launch",
+  "confidence": 0
+  POLA: has_catalyst=True type=product launch confidence=0.8 | The discussion mentions a specific upcoming product release scheduled for mid 2026, which is expected to create a fundamental shift and generate revenue.
+  [INDO] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "geopolitical",
+  "confidence": 0.8
+  INDO: has_catalyst=True type=geopolitical confidence=0.8 | The discussion mentions a surge in oil prices due to the Iran war, which could be a direct catalyst for INDO's stock price.
+  [RBNE] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "contract",
+  "confidence": 0.8,
+  
+  RBNE: has_catalyst=True type=contract confidence=0.8 | The company has a contract to buy up to a million shares, which could be a significant catalyst for the stock price.
+  [MOBX] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "contract",
+  "confidence": 0.8,
+  
+  MOBX: has_catalyst=True type=contract confidence=0.8 | MOBX received a $3.2M order for technology used in TSA airport scanners, indicating a significant government contract.
+  [ATCH] raw: {
+  "has_catalyst": false,
+  "catalyst_type": "none",
+  "confidence": 0.0,
+  "re
+  ATCH: has_catalyst=False type=none confidence=0.0 | The comments mention general hype, price targets without backing, and short squeeze setup, indicating no real verifiable catalyst.
+  [BTBD] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "merger",
+  "confidence": 0.8,
+  "r
+  BTBD: has_catalyst=True type=merger confidence=0.8 | The company is advancing a merger with Aero Velocity, with a shareholder meeting and approvals deadline mentioned in their recent earnings report.
+  [III] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "partnership",
+  "confidence": 0.8,
+  III: has_catalyst=True type=partnership confidence=0.8 | The mention of the wife being part of the team that created Basel and the discussion of Poet Technologies as an acquisition target suggest a potential partnership or commercial agreement.
+  [ANNA] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "regulatory",
+  "confidence": 0.8,
+
+  ANNA: has_catalyst=True type=regulatory confidence=0.8 | The mention of potential delisting due to an unspecified reason suggests a regulatory event, such as a delisting from a stock exchange.
+  [ITP] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "earnings",
+  "confidence": 0.8,
+  
+  ITP: has_catalyst=True type=earnings confidence=0.8 | The mention of an upcoming ER (earnings report) with a potential positive trend suggests a catalyst for the stock price increase.
+  [SRXH] raw: {"has_catalyst": true, "catalyst_type": "merger", "confidence": 0.8, "reasoning"
+  SRXH: has_catalyst=True type=merger confidence=0.8 | The comments mention a specific merger as a potential catalyst for the stock's future.
+  [DVLT] raw: {"has_catalyst": true, "catalyst_type": "partnership", "confidence": 0.8, "reaso
+  DVLT: has_catalyst=True type=partnership confidence=0.8 | The company's announcement of a serious partnership, as mentioned in the stock info and technical analysis update, adds fuel to the stock's growth.
+  [USEG] raw: {
+  "has_catalyst": false,
+  "catalyst_type": "none",
+  "confidence": 0.0,
+  "re
+  USEG: has_catalyst=False type=none confidence=0.0 | The discussion mentions a potential dilution of $8mil and a pump, but no specific, verifiable catalyst is mentioned.
+  [MIGI] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "contract",
+  "confidence": 0.8,
+  
+  MIGI: has_catalyst=True type=contract confidence=0.8 | The company has a new management team in place after a takeover offer for the whole company at 10/share.
+  [AIXI] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "patent",
+  "confidence": 0.8,
+  "r
+  AIXI: has_catalyst=True type=patent confidence=0.8 | The China Supreme Court upholding AI patents in an Apple dispute is mentioned as a reason for AIXI's 920% increase.
+  [EONR] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "partnership",
+  "confidence": 0.8,
+  EONR: has_catalyst=True type=partnership confidence=0.8 | The mention of EONR dip as a buy opportunity due to strong fundamentals and a reference to FLYX's new Starlink connectivity implies a potential partnership or commercial agreement.
+  [CUPR] raw: {
+  "has_catalyst": false,
+  "catalyst_type": "none",
+  "confidence": 0.0,
+  "re
+  CUPR: has_catalyst=False type=none confidence=0.0 | The discussion revolves around general hype, short squeeze setup, and price targets without backing, indicating no real verifiable catalyst.
+  [SMX] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "none",
+  "confidence": 0.0,
+  "rea
+  SMX: has_catalyst=False type=none confidence=0.0 | There is no clear evidence of a specific catalyst, but the mention of 'As Oil Prices Surge and Conflict Threatens Stability' suggests a potential indirect catalyst related to the company's positioning.
+  [LINK] raw: {"has_catalyst": true, "catalyst_type": "partnership", "confidence": 0.8, "reaso
+  LINK: has_catalyst=True type=partnership confidence=0.8 | Multiple Reddit users mention a potential partnership with a well-known company in the industry, citing unnamed sources and speculation.
+  [TPET] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "regulatory",
+  "confidence": 0.8,
+
+  TPET: has_catalyst=True type=regulatory confidence=0.8 | The looming Tuesday 8 PM deadline for an Iran deal and U.S. preparedness to target power plants may impact oil prices and potentially affect $TPET.
+  [TACO] raw: {
+  "has_catalyst": true,
+  "catalyst_type": "none",
+  "confidence": 0.0,
+  "rea
+  TACO: has_catalyst=False type=none confidence=0.0 | The comments mention a specific event (Liberation Day 2.0) that could be a real catalyst, but it's unclear what it refers to.
+  Catalyst assessment: 21 Groq calls used
+
+Step 6: Writing output to files...
+
+
+Step 7: Updating Google Sheet...
+Google Sheets update failed: [Errno 2] No such file or directory: 'credentials.json'
+output.json was already saved — data is not lost
+=== Main pipeline done at Tue Apr  7 13:00:32 UTC 2026 ===
+=== Price updater starting at Tue Apr  7 13:00:32 UTC 2026 ===
+=== Price Updater — 2026-04-07 ===
+
+No T+1 updates needed
+No T+3 updates needed
+No T+7 updates needed
+
+✓ Price updater complete — 0 records updated
+=== Price updater done at Tue Apr  7 13:00:33 UTC 2026 ===
