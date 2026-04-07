@@ -23,3 +23,5 @@ venv/
 backend/run_main.ps1
 backend/run_price_updater.ps1
 backend/migrations/
+backend/db-backup/threadradar_2026-04-07.db-shm
+backend/db-backup/threadradar_2026-04-07.db-wal

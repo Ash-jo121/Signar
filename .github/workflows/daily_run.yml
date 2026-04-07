@@ -31,37 +31,59 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/requirements.txt
 
-      # ── 3. Restore DB from cache ──────────────────────────────────
+      # ── 3. Set today's date ───────────────────────────────────────
+      - name: Set today's date
+        run: echo "TODAY=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+
+      # ── 4. Restore DB from cache ──────────────────────────────────
       - name: Restore database from cache
         uses: actions/cache@v4
+        id: db-cache
         with:
           path: backend/threadradar.db
           key: threadradar-db-latest
           restore-keys: threadradar-db-
 
-      - name: Verify database
+      # ── 5. Verify or seed database ────────────────────────────────
+      - name: Verify or seed database
         run: |
           if [ -f backend/threadradar.db ]; then
-            echo "✓ Database restored from cache ($(ls -lh backend/threadradar.db | awk '{print $5}'))"
+            echo "✓ Database restored from cache"
+            ls -lh backend/threadradar.db
           else
             echo "⚠ No cached DB — checking for backup seed..."
             LATEST=$(ls backend/db-backup/threadradar_*.db 2>/dev/null | sort | tail -1)
             if [ -n "$LATEST" ]; then
               cp "$LATEST" backend/threadradar.db
-              echo "✓ Seeded from: $LATEST ($(ls -lh backend/threadradar.db | awk '{print $5}'))"
+              echo "✓ Seeded from: $LATEST"
+              ls -lh backend/threadradar.db
             else
-              echo "⚠ No backup found — initializing fresh DB"
+              echo "⚠ No backup found — will initialize fresh DB"
             fi
           fi
 
-      # ── 4. Create logs directory + set date ───────────────────────
+          # Show DB contents before run
+          if [ -f backend/threadradar.db ]; then
+            echo "--- DB contents before run ---"
+            python3 -c "
+              import sqlite3
+              conn = sqlite3.connect('backend/threadradar.db')
+              tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
+              for t in tables:
+                  try:
+                      count = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
+                      print(f'  {t}: {count} rows')
+                  except Exception as e:
+                      print(f'  {t}: ERROR - {e}')
+              conn.close()
+            "
+          fi
+
+      # ── 6. Create logs directory ──────────────────────────────────
       - name: Create logs directory
         run: mkdir -p logs
 
-      - name: Set today's date
-        run: echo "TODAY=$(date +%Y-%m-%d)" >> $GITHUB_ENV
-
-      # ── 5. Run main pipeline ──────────────────────────────────────
+      # ── 7. Run main pipeline ──────────────────────────────────────
       - name: Run ThreadRadar main pipeline
         working-directory: backend
         env:
@@ -71,11 +93,47 @@ jobs:
           PROXY_HOST: ${{ secrets.PROXY_HOST }}
           PROXY_PORT: ${{ secrets.PROXY_PORT }}
         run: |
+          echo "Working directory: $(pwd)"
+          echo "DB before run: $(ls -lh threadradar.db 2>/dev/null || echo 'NOT FOUND')"
           echo "=== ThreadRadar starting at $(date) ===" | tee ../logs/run_$(date +%Y-%m-%d).log
           python -u main.py 2>&1 | tee -a ../logs/run_$(date +%Y-%m-%d).log
+          echo "DB after run: $(ls -lh threadradar.db 2>/dev/null || echo 'NOT FOUND')"
           echo "=== Main pipeline done at $(date) ===" | tee -a ../logs/run_$(date +%Y-%m-%d).log
 
-      # ── 6. Run price updater ──────────────────────────────────────
+      # ── 8. Verify DB after pipeline ───────────────────────────────
+      - name: Verify database after pipeline
+        run: |
+          echo "--- DB contents after main pipeline ---"
+          echo "DB size: $(ls -lh backend/threadradar.db 2>/dev/null | awk '{print $5}' || echo 'NOT FOUND')"
+          python3 -c "
+            import sqlite3
+            conn = sqlite3.connect('backend/threadradar.db')
+            tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
+            for t in tables:
+                try:
+                    count = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
+                    print(f'  {t}: {count} rows')
+                except Exception as e:
+                    print(f'  {t}: ERROR - {e}')
+
+            import os
+            today = os.environ.get('TODAY', '')
+            if today:
+                for t in ['daily_sentiment', 'daily_contexts', 'performance_tracking']:
+                    try:
+                        col = 'date' if t != 'performance_tracking' else 'flagged_date'
+                        count = conn.execute(
+                            f'SELECT COUNT(*) FROM {t} WHERE {col} = ?', (today,)
+                        ).fetchone()[0]
+                        print(f'  {t} today ({today}): {count} rows')
+                    except Exception as e:
+                        print(f'  {t} today: ERROR - {e}')
+            conn.close()
+          "
+        env:
+          TODAY: ${{ env.TODAY }}
+
+      # ── 9. Run price updater ──────────────────────────────────────
       - name: Run price updater
         working-directory: backend
         env:
@@ -89,7 +147,25 @@ jobs:
           python -u price_updater.py 2>&1 | tee -a ../logs/run_$(date +%Y-%m-%d).log
           echo "=== Price updater done at $(date) ===" | tee -a ../logs/run_$(date +%Y-%m-%d).log
 
-      # ── 7. Upload DB to Railway ───────────────────────────────────
+      # ── 10. Verify DB after price updater ─────────────────────────
+      - name: Verify database after price updater
+        run: |
+          echo "--- DB contents after price updater ---"
+          echo "DB size: $(ls -lh backend/threadradar.db | awk '{print $5}')"
+          python3 -c "
+            import sqlite3
+            conn = sqlite3.connect('backend/threadradar.db')
+            tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
+            for t in tables:
+                try:
+                    count = conn.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
+                    print(f'  {t}: {count} rows')
+                except Exception as e:
+                    print(f'  {t}: ERROR - {e}')
+            conn.close()
+          "
+
+      # ── 11. Upload DB to Railway ──────────────────────────────────
       - name: Upload database to Railway
         working-directory: backend
         env:
@@ -113,23 +189,23 @@ jobs:
           fi
           echo "✓ Database uploaded to Railway successfully"
 
-      # ── 8. Save DB back to cache ──────────────────────────────────
+      # ── 12. Save DB back to cache ─────────────────────────────────
       - name: Save database to cache
         uses: actions/cache@v4
         with:
           path: backend/threadradar.db
           key: threadradar-db-latest
 
-      # ── 9. Daily DB backup to repo ────────────────────────────────
+      # ── 13. Daily DB backup to repo ───────────────────────────────
       - name: Daily database backup
         if: always()
         run: |
-          mkdir -p db-backup
+          mkdir -p backend/db-backup
           if [ -f backend/threadradar.db ]; then
             cp backend/threadradar.db backend/db-backup/threadradar_${{ env.TODAY }}.db
             git config --global user.email "threadradar-bot@github.com"
             git config --global user.name "ThreadRadar Bot"
-            git add db-backup/
+            git add backend/db-backup/
             git diff --staged --quiet && echo "No DB changes" || \
               git commit -m "Daily DB backup ${{ env.TODAY }} [skip ci]"
             git push || echo "Push failed"
@@ -137,7 +213,7 @@ jobs:
             echo "No DB file to backup"
           fi
 
-      # ── 10. Commit logs and output ────────────────────────────────
+      # ── 14. Commit logs and output ────────────────────────────────
       - name: Commit logs and output files
         if: always()
         run: |
@@ -150,7 +226,7 @@ jobs:
             git commit -m "Run ${{ env.TODAY }} output and logs [skip ci]"
           git push || echo "Push failed — non-critical"
 
-      # ── 11. Upload artifacts ──────────────────────────────────────
+      # ── 15. Upload artifacts ──────────────────────────────────────
       - name: Upload run artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -162,7 +238,7 @@ jobs:
             backend/output.txt
           retention-days: 30
 
-      # ── 12. Email on success ──────────────────────────────────────
+      # ── 16. Email on success ──────────────────────────────────────
       - name: Email on success
         if: success()
         uses: dawidd6/action-send-mail@v3
@@ -174,17 +250,18 @@ jobs:
           subject: "ThreadRadar ✓ Run completed ${{ github.run_number }}"
           to: ${{ secrets.GMAIL_USERNAME }}
           from: ThreadRadar Bot
+          attachments: backend/output.txt
           body: |
             ThreadRadar daily run completed successfully.
 
             Run: #${{ github.run_number }}
             Date: ${{ env.TODAY }}
 
-            Logs and output files are committed to the repo.
-            Download full artifacts from GitHub Actions:
+            Attached: today's output summary.
+            Full artifacts and logs:
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-      # ── 13. Email on failure ──────────────────────────────────────
+      # ── 17. Email on failure ──────────────────────────────────────
       - name: Email on failure
         if: failure()
         uses: dawidd6/action-send-mail@v3
