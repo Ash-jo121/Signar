@@ -65,7 +65,7 @@ jobs:
           # Show DB contents before run
           if [ -f backend/threadradar.db ]; then
             echo "--- DB contents before run ---"
-            python3 -c "
+            python3 << 'EOF'
               import sqlite3
               conn = sqlite3.connect('backend/threadradar.db')
               tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
@@ -76,7 +76,7 @@ jobs:
                   except Exception as e:
                       print(f'  {t}: ERROR - {e}')
               conn.close()
-            "
+            EOF
           fi
 
       # ── 6. Create logs directory ──────────────────────────────────
@@ -105,7 +105,7 @@ jobs:
         run: |
           echo "--- DB contents after main pipeline ---"
           echo "DB size: $(ls -lh backend/threadradar.db 2>/dev/null | awk '{print $5}' || echo 'NOT FOUND')"
-          python3 -c "
+          python3 << 'EOF'
             import sqlite3
             conn = sqlite3.connect('backend/threadradar.db')
             tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
@@ -129,7 +129,7 @@ jobs:
                     except Exception as e:
                         print(f'  {t} today: ERROR - {e}')
             conn.close()
-          "
+          EOF
         env:
           TODAY: ${{ env.TODAY }}
 
@@ -152,7 +152,7 @@ jobs:
         run: |
           echo "--- DB contents after price updater ---"
           echo "DB size: $(ls -lh backend/threadradar.db | awk '{print $5}')"
-          python3 -c "
+          python3 << 'EOF'
             import sqlite3
             conn = sqlite3.connect('backend/threadradar.db')
             tables = ['daily_sentiment', 'daily_contexts', 'posts', 'bearish_stocks', 'performance_tracking']
@@ -163,7 +163,7 @@ jobs:
                 except Exception as e:
                     print(f'  {t}: ERROR - {e}')
             conn.close()
-          "
+          EOF
 
       # ── 11. Upload DB to Railway ──────────────────────────────────
       - name: Upload database to Railway
