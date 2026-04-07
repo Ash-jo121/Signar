@@ -118,7 +118,6 @@ jobs:
           echo "--- DB contents after price updater ---"
           echo "DB size: $(ls -lh backend/threadradar.db | awk '{print $5}')"
           python3 backend/check_db.py
-          EOF
 
       # ── 11. Upload DB to Railway ──────────────────────────────────
       - name: Upload database to Railway
