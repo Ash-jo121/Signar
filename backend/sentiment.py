@@ -167,7 +167,7 @@ Contexts:
 {contexts_text}
 
 Based on ALL the above comments together, return a SINGLE JSON object (not an array):
-{{"has_catalyst": true/false, "catalyst_type": "FDA/contract/earnings/partnership/clinical/regulatory/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
+{{"has_catalyst": true/false, "catalyst_type": "FDA/earnings/contract/partnership/clinical/regulatory/patent/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
 
 REAL catalysts (has_catalyst = true):
 - FDA approval, trial results, PDUFA date
@@ -181,12 +181,14 @@ REAL catalysts (has_catalyst = true):
 NOT catalysts (has_catalyst = false):
 - Short squeeze setup, float/short interest discussion
 - Cost to borrow (CTB) spikes
+- Short squeeze as catalyst type
 - Price targets without backing
 - General hype, moon/rocket language
 - Watchlist mentions without reasoning
-- Technical analysis only
+- Technical analysis only (Wyckoff, chart patterns, support/resistance)
 - War/geopolitical speculation without direct company contract
 - "Waiting for catalyst" with no catalyst named
+- Borrow rate discussions
 
 Return ONLY the JSON object. No explanation. No array. No markdown.""",
                 }
@@ -220,7 +222,7 @@ Return ONLY the JSON object. No explanation. No array. No markdown.""",
                 "reasoning": result.get("reasoning", ""),
             }
 
-            if result_dict["has_catalyst"] == "none":
+            if result_dict["catalyst_type"] == "none":
                 result_dict["has_catalyst"] = False
 
             return result_dict
