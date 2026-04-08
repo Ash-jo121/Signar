@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import json
 import shutil
 import os
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
@@ -57,3 +58,17 @@ async def upload_database(file: UploadFile = File(...), x_api_key: str = Header(
 
     print(f"Database updated at {datetime.now()}")
     return {"status": "ok", "message": "Database updated successfully"}
+
+
+@app.get("/api/download-db")
+async def download_database(x_api_key: str = Header(None)):
+    if x_api_key != os.getenv("UPLOAD_API_KEY"):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    db_path = "threadradar.db"
+    if not os.path.exists(db_path):
+        raise HTTPException(status_code=404, detail="Database not found")
+
+    return FileResponse(
+        db_path, media_type="application/octet-stream", filename="threadradar.db"
+    )
