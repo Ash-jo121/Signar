@@ -136,25 +136,21 @@ def process_update(conn, row, period_days, price_col, return_col, updated_col):
 
     # Check for reverse split
     had_split, split_ratio = had_split_since(ticker, flagged_date)
-    if had_split:
+    if had_split and not row["split_adjusted"]:
         print(
             f"  {ticker} | SPLIT DETECTED (ratio={split_ratio}) — "
             f"adjusting flagged price ${flagged_price} → "
             f"${round(flagged_price / split_ratio, 4)}"
         )
-        # Adjust flagged price to post-split equivalent for fair comparison
-        # If 1:12 reverse split, flagged_price × 12 = post-split equivalent
-        # split_ratio from yfinance for reverse splits is < 1 (e.g. 0.0833 for 1:12)
-        # So adjusted = flagged_price / split_ratio
         adjusted_flagged = round(flagged_price / split_ratio, 4)
-
-        # Update flagged_price in DB to post-split adjusted
         conn.execute(
-            "UPDATE performance_tracking SET flagged_price = ? "
+            "UPDATE performance_tracking SET flagged_price = ?, split_adjusted = 1 "
             "WHERE ticker = ? AND flagged_date = ?",
             (adjusted_flagged, ticker, flagged_date),
         )
         flagged_price = adjusted_flagged
+    elif had_split and row["split_adjusted"]:
+        print(f"  {ticker} | split already adjusted — skipping re-adjustment")
 
     # Sanity check after adjustment
     if is_anomalous_return(flagged_price, price, period_days):
@@ -189,6 +185,18 @@ def process_update(conn, row, period_days, price_col, return_col, updated_col):
 
 def update_performance_prices():
     conn = get_connection()
+
+    existing_cols = [
+        col[1]
+        for col in conn.execute("PRAGMA table_info(performance_tracking)").fetchall()
+    ]
+    if "split_adjusted" not in existing_cols:
+        conn.execute(
+            "ALTER TABLE performance_tracking ADD COLUMN split_adjusted INTEGER DEFAULT 0"
+        )
+        conn.commit()
+        print("✓ Migration: added split_adjusted column")
+
     today = datetime.now().strftime("%Y-%m-%d")
     updated_total = 0
 
@@ -197,7 +205,7 @@ def update_performance_prices():
     # T+1
     pending_1d = conn.execute(
         """
-        SELECT ticker, flagged_date, flagged_price
+        SELECT ticker, flagged_date, flagged_price, split_adjusted
         FROM performance_tracking
         WHERE updated_1d = 0
           AND flagged_price > 0
@@ -220,7 +228,7 @@ def update_performance_prices():
     # T+3
     pending_3d = conn.execute(
         """
-        SELECT ticker, flagged_date, flagged_price
+        SELECT ticker, flagged_date, flagged_price, split_adjusted
         FROM performance_tracking
         WHERE updated_3d = 0
           AND flagged_price > 0
@@ -243,7 +251,7 @@ def update_performance_prices():
     # T+7
     pending_7d = conn.execute(
         """
-        SELECT ticker, flagged_date, flagged_price
+        SELECT ticker, flagged_date, flagged_price, split_adjusted
         FROM performance_tracking
         WHERE updated_7d = 0
           AND flagged_price > 0
