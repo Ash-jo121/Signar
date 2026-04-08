@@ -1,40 +1,40 @@
-$SPCE [CATALYST: PARTNERSHIP] 
-  Mentions: 12.0 | Sentiment: +0.814 | Score: +1.440
-  Context: You guys need to check out SPCE. Short term squeeze coming soon 🚀
+$DRMA [CATALYST: PRODUCT LAUNCH] 
+  Mentions: 8.4 | Sentiment: +0.673 | Score: +1.126
+  Context: $DRMA low volume but heating up as 1.40 downtrend breaks upward. mid 2026 product launch on horizon.
 
-$DEFT [CATALYST: EARNINGS] 
-  Mentions: 16.6 | Sentiment: +0.687 | Score: +1.193
-  Context: DEFT shareholder meeting soon. Im watching closely
-
-$POLA [CATALYST: PRODUCT RELEASE] 
-  Mentions: 10.4 | Sentiment: +0.753 | Score: +1.147
+$POLA [CATALYST: PRODUCT LAUNCH] 
+  Mentions: 7.4 | Sentiment: +0.689 | Score: +0.960
   Context: $DRMA: Low float, low volume. technical break out forming at 1.40 break. Building a swing on known u
 
-$LNAI [NO CATALYST] 
-  Mentions: 7.0 | Sentiment: +0.640 | Score: +1.039
-  Context: LNAI she’s coming Let her come She wants more
-
-$CALC [CATALYST: CLINICAL] 
-  Mentions: 16.8 | Sentiment: +0.414 | Score: +0.772
-  Context: Usually, big pharma waits for Phase 3 readiness to de risk the deal. Right now, everyone is waiting 
-
-$BTBD [NO CATALYST] 
-  Mentions: 46.9 | Sentiment: +0.386 | Score: +0.761
-  Context: I swear if you guys pump $CAPS when they release their 10-K. $BTBD looks like child’s play at a glan
-
-$MIGI [NO CATALYST] 
-  Mentions: 15.8 | Sentiment: +0.364 | Score: +0.673
-  Context: MIGI is sooo the play this week
-
-$CYCN [CATALYST: PARTNERSHIP] 
-  Mentions: 8.3 | Sentiment: +0.501 | Score: +0.669
-  Context: I made profit on ELAB, BFRG, and CYCN last week. What about you guys? And what are you gonna be look
+$ANNA [NO CATALYST] 
+  Mentions: 27.0 | Sentiment: +0.321 | Score: +0.617
+  Context: Where do we see ANNA going with the Iran news?
 
 $INDO [CATALYST: GEOPOLITICAL] 
-  Mentions: 8.2 | Sentiment: +0.437 | Score: +0.618
+  Mentions: 6.0 | Sentiment: +0.504 | Score: +0.607
   Context: INDO (Indonesia Energy Corp) from $3-$40 on 2022. The reason? Read this and it will be familliar. Sa
 
 $ATCH [CATALYST: EARNINGS] 
-  Mentions: 7.5 | Sentiment: +0.360 | Score: +0.591
-  Context: ATCH, I recommended this morning & gained 13% just today!! New Client onboarding & blowout Q2 number
+  Mentions: 14.1 | Sentiment: +0.320 | Score: +0.582
+  Context: Keeping an eye on ATCH, seems to be on reversal this week.
+
+$BTBD [CATALYST: PARTNERSHIP] 
+  Mentions: 13.6 | Sentiment: +0.651 | Score: +0.571
+  Context: $BTBD Drone/Merger Reclaiming Trend And Pushing Into The Next Breakout Test **I just finished a char
+
+$CYCU [CATALYST: CONTRACT] 
+  Mentions: 17.0 | Sentiment: +0.412 | Score: +0.564
+  Context: CYCU it is time. About to do a CYCN very soon
+
+$AEHL [CATALYST: COURT RULING] 
+  Mentions: 16.1 | Sentiment: +0.268 | Score: +0.497
+  Context: Right? I am waiting for it to dip before the rip. Could be worth the gamble if it drops more. I am l
+
+$QNCX [CATALYST: VOLUME] 
+  Mentions: 48.2 | Sentiment: +0.213 | Score: +0.449
+  Context: Who got in yesterday for QNCX when i told y'all to board the train? 👀 it was trading around .13 then
+
+$DVLT [CATALYST: PARTNERSHIP] 
+  Mentions: 34.3 | Sentiment: +0.385 | Score: +0.414
+  Context: DVLT is building a 4-layer system, not 4 separate products The more I look at DVLT, the less it feel
 

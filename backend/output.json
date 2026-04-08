@@ -1,56 +1,51 @@
 [
   {
-    "ticker": "SPCE",
-    "mentions": 12.0,
-    "avg_sentiment": 0.814,
-    "final_score": 1.44,
+    "ticker": "DRMA",
+    "mentions": 8.4,
+    "avg_sentiment": 0.673,
+    "final_score": 1.126,
     "top_contexts": [
       {
-        "text": "You guys need to check out SPCE. Short term squeeze coming soon 🚀",
+        "text": "$DRMA low volume but heating up as 1.40 downtrend breaks upward. mid 2026 product launch on horizon.",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "#TLDR  ---  Ticker: SPCE (Virgin Galactic)  Direction: Up (Literally to Space 🚀)  Prognosis: Buy Shares, July $7 Calls, and Jan 2027 Calls  Strategy: Ride the SpaceX IPO \"sympathy play\" hype train before the news drops.   Hopium Level: 400-Bagger (Because if a used car company like Carvana can",
+        "text": "$DRMA is also setting up with potential. Pressure building in anticipation of the fundementaly changing Product release scheduled for mid 2026. The more retail holds the more technical lvls are broken to the upside.",
         "sentiment": "positive",
         "score": 0.8
       },
       {
-        "text": "Shorter Verison: Starwars Up :)",
+        "text": "Same thing at $DRMA. uptrend continuing. mid 2026 product launch on horizon.",
         "sentiment": "positive",
         "score": 0.6
-      },
-      {
-        "text": "SPCE? Was once a big hit, high short interest, announced they are starting operations again. Calls are cheap too. Idk, I’m looking to hear opinions",
-        "sentiment": "neutral",
-        "score": 0.0
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 2.97,
-    "change_percent": -3.26,
-    "market_cap": 241783872,
-    "fifty_two_week_high": 6.64,
-    "fifty_two_week_low": 2.13,
-    "volume": 13560329,
-    "analyst_target": 3.646,
-    "recommendation": "hold",
-    "sector": "Industrials",
-    "description": "Virgin Galactic Holdings, Inc., an aerospace and space travel company, focuses on the development, manufacture, and operation of spaceships and related technologies. It engages in the design and development, manufacturing, ground and flight testing, spaceflight operation, and post-flight maintenance of spaceflight systems for private individuals, researchers, and government agencies. The company is headquartered in Tustin, California.",
-    "name": "Virgin Galactic Holdings, Inc.",
-    "symbol": "SPCE",
-    "short_name": "Virgin Galactic Holdings, Inc.",
-    "industry": "Aerospace & Defense",
-    "website": "https://www.virgingalactic.com",
-    "exchange": "NYQ",
+    "price": 1.35,
+    "change_percent": 2.27,
+    "market_cap": 5429893,
+    "fifty_two_week_high": 9.9,
+    "fifty_two_week_low": 1.1,
+    "volume": 95850,
+    "analyst_target": 4.0,
+    "recommendation": "buy",
+    "sector": "Healthcare",
+    "description": "Dermata Therapeutics, Inc., a late-stage medical dermatology company, focuses on identifying, developing, and commercializing pharmaceutical product candidates for the treatment of medical skin diseases and aesthetic applications. Its lead product candidate is XYNGARI, which is in Phase 3 clinical studies for the treatment of moderate-to-severe acne, as well as completed Phase 1b proof of concept (POC) trial for mild-to-moderate psoriasis. The company is also developing DMT410 that has completed Phase 1b POC trials for the treatment of axillary hyperhidrosis and aesthetic skin conditions. It has a clinical trial collaboration agreement with Revance Therapeutics, Inc. to conduct a multi-center clinical trial to evaluate the topical application of XYNGARI with DAXXIFY, Revance's botulinum toxin type A. Dermata Therapeutics, Inc. was incorporated in 2014 and is headquartered in San Diego, California.",
+    "name": "Dermata Therapeutics, Inc.",
+    "symbol": "DRMA",
+    "short_name": "Dermata Therapeutics, Inc.",
+    "industry": "Biotechnology",
+    "website": "https://www.dermatarx.com",
+    "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
-    "city": "Tustin",
+    "city": "San Diego",
     "state": "CA",
-    "zip": "92782",
-    "phone": "949 774 7640",
+    "zip": "92130",
+    "phone": "858 800 2543",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -67,112 +62,20 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/SPCE.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=virgingalactic.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/DRMA.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=dermatarx.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "partnership",
+    "catalyst_type": "product launch",
     "catalyst_confidence": 0.8
   },
   {
-    "ticker": "DEFT",
-    "mentions": 16.6,
-    "avg_sentiment": 0.687,
-    "final_score": 1.193,
-    "top_contexts": [
-      {
-        "text": "DEFT shareholder meeting soon. Im watching closely",
-        "sentiment": "positive",
-        "score": 0.2
-      },
-      {
-        "text": "Ive been holding a small portion just in case something good happens lol",
-        "sentiment": "positive",
-        "score": 0.2
-      },
-      {
-        "text": "DEFT up 20%. How the fuck am I going to sleep",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "They posted record earnings Thurday night.",
-        "sentiment": "positive",
-        "score": 0.908
-      },
-      {
-        "text": "DEFT posted record earnings AH Thursday. BITF looks interesting after transitioning out of Bitcoin mining into power generation/infrastructure. Ticker change to KEEL scheduled for Monday morning. LNKS is a wildcard gamble. Opening with low float after 250-1 reverse split. I picked up enough $0.007",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "$DEFT new record earnings. Lessssgooo",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "$DEFT. New record earnings this friday. Waiting to buy Monday",
-        "sentiment": "positive",
-        "score": 0.6
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 0.79,
-    "change_percent": 1.48,
-    "market_cap": 317612896,
-    "fifty_two_week_high": 4.95,
-    "fifty_two_week_low": 0.47,
-    "volume": 4398499,
-    "analyst_target": 3.1848352,
-    "recommendation": "strong_buy",
-    "sector": "Financial Services",
-    "description": "DeFi Technologies Inc., a technology company, develops exchange traded products that synthetically track the value of a single DeFi protocol or a basket of protocols in Canada. The company offers asset management services, such as indirect exposure to underlying digital assets, digital asset indexes, or other decentralized finance instruments. It is also involved in early-stage investments in companies, banks, and foundations in the digital asset space; operation of a specialized arbitrage trading desk that focuses on identifying and capitalizing on low-risk arbitrage opportunities within the digital asset market; private research that produces research reports on digital assets; and provision of OTC desk and digital asset liquidity. The company was formerly known as Valour Inc. and changed its name to DeFi Technologies Inc. in July 2023. DeFi Technologies Inc. was incorporated in 1986 and is headquartered in Toronto, Canada.",
-    "name": "DeFi Technologies Inc.",
-    "symbol": "DEFT",
-    "short_name": "Defi Technologies, Inc.",
-    "industry": "Capital Markets",
-    "website": "https://defi.tech",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "Canada",
-    "city": "Toronto",
-    "state": "ON",
-    "zip": "M5R 1J2",
-    "phone": "Unknown",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/DEFT.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=defi.tech&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "earnings",
-    "catalyst_confidence": 0.9
-  },
-  {
     "ticker": "POLA",
-    "mentions": 10.4,
-    "avg_sentiment": 0.753,
-    "final_score": 1.147,
+    "mentions": 7.4,
+    "avg_sentiment": 0.689,
+    "final_score": 0.96,
     "top_contexts": [
       {
         "text": "$DRMA: Low float, low volume. technical break out forming at 1.40 break. Building a swing on known upcoming PR scheduled for mid 2026. Will be the start of a fundemental shift with a new income stream on the market.  $POLA 1.80+ Squeeze potential, low float recovering from recent profit taking buil",
@@ -195,30 +98,30 @@
         "score": 0.6
       },
       {
-        "text": "$DRMA: accumulation phase before $2+.($2-$5+pt) Building momo on a technical uptrend forming due to the low float and upcoming Skin Care product release scheduled for mid 2026. Which will create a fundemental shift due to revenue generated by product sales. $POLA $2+ is of interest, ER risk. Stocks",
+        "text": "$DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of the mid 2026 product launch. Will be the start of a fundemental shift with a revenue generating product to strengthen the balance sheets.  $POLA: Low float, trapped shorts, 1.80+ daily curl recovery and",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "$DRMA: Low float Accumulating for mid 2026 product release pr that will be the beginning of retail revenue and a fundemental shift. Lots of technical lvls that may bring in momo traders. $2-$5+ Price target.  $POLA: VPA increasing volume spikes on the past daily chart. watching and evaluating this",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "$DRMA is setting up for a move higher on anticipated news breaking on there mid 2026 Product Launch low float technical breakout. $POLA over $2 puts it into play on the daily.",
+        "text": "$POLA Update: AH through PM Chart Read Finally able to finish chart analysis for this. Here’s a quick review of AH: **It mirrored the levels I drew almost 100%.** **It blew through the $1.95 level. Now that’s key support.** **It steadily pushed through the 2.18 area and the 2.30–2.36 supply zone",
         "sentiment": "positive",
-        "score": 0.888
-      },
-      {
-        "text": "$DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of the mid 2026 product launch. Will be the start of a fundemental shift with a revenue generating product to strengthen the balance sheets.  $POLA: Low float, trapped shorts, 1.80+ daily curl recovery and",
-        "sentiment": "positive",
-        "score": 0.8
+        "score": 0.881
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
     "price": 1.74,
-    "change_percent": -3.07,
-    "market_cap": 4645740,
+    "change_percent": -2.79,
+    "market_cap": 4659128,
     "fifty_two_week_high": 5.75,
     "fifty_two_week_low": 1.31,
-    "volume": 89400,
+    "volume": 138731,
     "analyst_target": 0,
     "recommendation": "none",
     "sector": "Industrials",
@@ -257,61 +160,76 @@
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "product release",
+    "catalyst_type": "product launch",
     "catalyst_confidence": 0.8
   },
   {
-    "ticker": "LNAI",
-    "mentions": 7.0,
-    "avg_sentiment": 0.64,
-    "final_score": 1.039,
+    "ticker": "ANNA",
+    "mentions": 27.0,
+    "avg_sentiment": 0.321,
+    "final_score": 0.617,
     "top_contexts": [
       {
-        "text": "LNAI she’s coming Let her come She wants more",
-        "sentiment": "positive",
-        "score": 0.6
+        "text": "Where do we see ANNA going with the Iran news?",
+        "sentiment": "neutral",
+        "score": 0.0
       },
       {
-        "text": "**LNAI** LFG  We need to break .4 wall to fly",
-        "sentiment": "positive",
-        "score": 0.6
+        "text": "I'm interested as well might be a buy now no?",
+        "sentiment": "neutral",
+        "score": 0.0
       },
       {
-        "text": "LNAI holding strong Not selling for Macaroon",
-        "sentiment": "positive",
-        "score": 0.717
+        "text": "Honestly no idea. I’m holding shares. Curious to see where oil bottoms out and if both sides can not strike each other in the next few weeks.",
+        "sentiment": "neutral",
+        "score": 0.0
       },
       {
-        "text": "**LNAI** breakthru again soon Let’s break .4 n moon",
+        "text": "trump going to start blowing up a whole civilisation so come on ANNA",
+        "sentiment": "negative",
+        "score": -0.8
+      },
+      {
+        "text": "No matter what happens this afternoon/evening, I think ANNA has plenty of more chances to rise this week.",
         "sentiment": "positive",
-        "score": 0.6
+        "score": 0.731
+      },
+      {
+        "text": "Absolutely, the prices are still being managed across the board, the deficits won't reflect for a few weeks",
+        "sentiment": "negative",
+        "score": -0.4
+      },
+      {
+        "text": "$ANNA War Keeps pushing highs, initially went up on news, has not been brought down since despite massive shorts. Regardless of strait status this weekend, any escalation in the M.E. and in Oil prices have correlated with uptrend.  LNG in Europe is going to be hit hard for years to come, I expect A",
+        "sentiment": "positive",
+        "score": 0.8
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 0.4,
-    "change_percent": 41.28,
-    "market_cap": 9614474,
-    "fifty_two_week_high": 5.5,
-    "fifty_two_week_low": 0.151,
-    "volume": 122307828,
+    "price": 7.89,
+    "change_percent": 1.02,
+    "market_cap": 320806432,
+    "fifty_two_week_high": 18.3,
+    "fifty_two_week_low": 2.31,
+    "volume": 2776202,
     "analyst_target": 0,
     "recommendation": "none",
-    "sector": "Healthcare",
-    "description": "Lunai Bioworks Inc., a pre-clinical stage biotechnology company, provides medicine, diagnostics, and biodefense products the United States and the Netherlands. It operates through three segments, RENB, BioSymetrics, and RENC. The company is developing a genetically modified allogeneic dendritic cell therapeutic vaccines, including RENB-DC11 to treat solid tumors primarily for pancreatic tumors; and RENB-DC20 for the treatment of breast cancer. It also develops an artificial intelligence platform technology for early cancer detection and its recurrence that uses a multi-omics approach to search for individual biomarkers that are present even in asymptomatic patients. The company was formerly known as Renovaro Inc. and changed its name to Lunai Bioworks Inc. in August 2025. Lunai Bioworks Inc. is headquartered in Los Angeles, California.",
-    "name": "Lunai Bioworks Inc.",
-    "symbol": "LNAI",
-    "short_name": "Lunai Bioworks Inc.",
-    "industry": "Biotechnology",
-    "website": "https://www.lunaibioworks.com",
+    "sector": "Energy",
+    "description": "AleAnna, Inc., a development-stage natural gas resource company, focuses on delivering critical natural gas supplies in Europe and Italy. The company operates through onshore conventional natural gas exploration and renewable natural gas development. AleAnna, Inc. was founded in 2007 and is headquartered in Dallas, Texas.",
+    "name": "AleAnna, Inc.",
+    "symbol": "ANNA",
+    "short_name": "AleAnna, Inc.",
+    "industry": "Oil & Gas E&P",
+    "website": "https://www.aleannainc.com",
     "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
-    "city": "Los Angeles",
-    "state": "CA",
-    "zip": "90067",
-    "phone": "305 918 1980",
+    "city": "Dallas",
+    "state": "TX",
+    "zip": "75201",
+    "phone": "469 396 2200",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -328,358 +246,20 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/LNAI.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=lunaibioworks.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/ANNA.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=aleannainc.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": false,
     "catalyst_type": "none",
     "catalyst_confidence": 0.0
-  },
-  {
-    "ticker": "CALC",
-    "mentions": 16.8,
-    "avg_sentiment": 0.414,
-    "final_score": 0.772,
-    "top_contexts": [
-      {
-        "text": "Usually, big pharma waits for Phase 3 readiness to de risk the deal. Right now, everyone is waiting on that H1 2026 catalyst: the finalized pivotal trial design with the FDA. Once that path is clear, $CALC becomes an incredibly cheap acquisition target. Why spend years developing your own when you c",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "True. I also think that with the high insider ownership management actually has an incentive to sell at a high premium rather than just diluting us forever. This looks like one of the best risk/reward plays at least in biotech. I'm getting in",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "CALC for this week is the better notice for me",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Got in $CALC, data is actually legit. 100% reduction in respiratory failure (Phase 2b), peer reviewed in The Lancet. Zero approved competitors in a 300k patient market. Market cap is under cash value. Should fly as soon as we get the next FDA news for Phase 3",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "It might seem like a great purchase however their phase 2 had ended after being in trial since covid times. Expect this investment to be long.",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Where is it at with phase 3? Just looking for an update on how it goes or is it about to pass?",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Same, let's see. Should have good FDA results in a few weeks, it's going to be a good Q2",
-        "sentiment": "positive",
-        "score": 0.871
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 0.73,
-    "change_percent": 20.37,
-    "market_cap": 11504080,
-    "fifty_two_week_high": 7.2,
-    "fifty_two_week_low": 0.461,
-    "volume": 407008,
-    "analyst_target": 10.33333,
-    "recommendation": "none",
-    "sector": "Healthcare",
-    "description": "CalciMedica, Inc., a clinical-stage biopharmaceutical company, develops therapeutics for illnesses caused by inflammatory and immunologic processes and direct cellular damage. Its lead product candidate comprises Auxora, an intravenous formulated small molecule calcium release-activated calcium (CRAC) channel inhibitors for the treatment of acute pancreatitis, asparaginase-induced pancreatic toxicity, and acute kidney injury, as well as severe COVID-19 pneumonia. The company also develops Auxora for the treatment of ulcerative colitis, traumatic brain injury, and allergic asthma; and oral CRAC channel inhibitors for use in chronic inflammatory and immunologic disease. The company is based in La Jolla, California.",
-    "name": "CalciMedica, Inc.",
-    "symbol": "CALC",
-    "short_name": "CalciMedica, Inc.",
-    "industry": "Biotechnology",
-    "website": "https://calcimedica.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "La Jolla",
-    "state": "CA",
-    "zip": "92037",
-    "phone": "858 952 5500",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/CALC.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=calcimedica.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "clinical",
-    "catalyst_confidence": 0.8
-  },
-  {
-    "ticker": "BTBD",
-    "mentions": 46.9,
-    "avg_sentiment": 0.386,
-    "final_score": 0.761,
-    "top_contexts": [
-      {
-        "text": "I swear if you guys pump $CAPS when they release their 10-K. $BTBD looks like child’s play at a glance…",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Nice setups mentioned here for next week.   I'm not going to say I drank the $BTBD Kool-Aid but I just looked at the chart and the son of a bish blew through previous resistance right out of the gate in overnight trading. Straight line up to $2.50.  I probably missed entry on this one but congrats",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "I'm almost afraid to say this but I think $BTBD is setting up for a move as well.   I probably missed it this time but I'll be watching for dips in the morning.",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "BTBD think this can run soon. Add it to your WL",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "I like it too. I love that $BTBD is giving trades without running so hard it needs a lot of time to reset. A real breakout would be great but so would another month of these ranges. :-)",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "$IBG....everyone talking about BTBD.....IBG merger is any day, on reg sho list, and tiny float, going parabolic anyday",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "Happy easter to all! BTBD is my top play going into the new week. Have done extensive due diligence on the merger and this one has insane potential .",
-        "sentiment": "positive",
-        "score": 0.8
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 1.86,
-    "change_percent": -11.0,
-    "market_cap": 11447787,
-    "fifty_two_week_high": 5.6,
-    "fifty_two_week_low": 1.0,
-    "volume": 749843,
-    "analyst_target": 0,
-    "recommendation": "none",
-    "sector": "Consumer Cyclical",
-    "description": "BT Brands, Inc. owns and operates fast-food restaurants in the north central region of United States. The company operates Burger Time restaurants that offer various burgers and other food products, such as chicken sandwiches, pulled pork sandwiches, chicken tenders, chicken chunks, sides, and soft drinks located in Minnesota, North Dakota, and South Dakota. It also operates Bagger Dave's Burger Tavern, Inc. restaurants that provide burgers, pizzas, fries, beers, milkshakes, salads, and other items located in Michigan, Ohio, and Indiana. The company was founded in 1987 and is based in West Fargo, North Dakota.",
-    "name": "BT Brands, Inc.",
-    "symbol": "BTBD",
-    "short_name": "BT Brands, Inc.",
-    "industry": "Restaurants",
-    "website": "https://itsburgertime.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "West Fargo",
-    "state": "ND",
-    "zip": "58078",
-    "phone": "307 274 3055",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/BTBD.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=itsburgertime.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": false,
-    "catalyst_type": "none",
-    "catalyst_confidence": 0.0
-  },
-  {
-    "ticker": "MIGI",
-    "mentions": 15.8,
-    "avg_sentiment": 0.364,
-    "final_score": 0.673,
-    "top_contexts": [
-      {
-        "text": "MIGI is sooo the play this week",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Just gotta get rid of the panic sellers",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "Sitting waiting for it to take off",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "MIGI It designs, builds, and operates facilities primarily for Bitcoin mining (self-mining and customer colocation/hosting services), while increasingly pivoting toward artificial intelligence (AI), high-performance computing (HPC), and other compute-intensive applications. Main mover was this :  S",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "MIGI overnight 👀.  Will it hold?  Is it possible I’ll go green on this one?",
-        "sentiment": "neutral",
-        "score": 0.0
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 3.08,
-    "change_percent": 19.11,
-    "market_cap": 3526957,
-    "fifty_two_week_high": 40.0,
-    "fifty_two_week_low": 1.7,
-    "volume": 5977968,
-    "analyst_target": 0,
-    "recommendation": "none",
-    "sector": "Financial Services",
-    "description": "Mawson Infrastructure Group Inc. develops and operates digital infrastructure for digital currency on the bitcoin blockchain network in the United States. It engages in digital currency or bitcoin self-mining, customer co-location and related services, and energy markets, as well as operates data center facilities. The company is based in Midland, Pennsylvania.",
-    "name": "Mawson Infrastructure Group Inc.",
-    "symbol": "MIGI",
-    "short_name": "Mawson Infrastructure Group Inc",
-    "industry": "Capital Markets",
-    "website": "https://www.mawsoninc.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "Midland",
-    "state": "PA",
-    "zip": "15059",
-    "phone": "412 515 0896",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/MIGI.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=mawsoninc.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": false,
-    "catalyst_type": "none",
-    "catalyst_confidence": 0.0
-  },
-  {
-    "ticker": "CYCN",
-    "mentions": 8.3,
-    "avg_sentiment": 0.501,
-    "final_score": 0.669,
-    "top_contexts": [
-      {
-        "text": "I made profit on ELAB, BFRG, and CYCN last week. What about you guys? And what are you gonna be looking at tomorrow?",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Dang that's impressive! This week I made 100% on ELAB and about 40% on BFRG and CYCN. You must use a fast brokerage, what do you use?",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "$CYCN +183% — Korsana merger and $380M financing Cyclerion Therapeutics (CYCN) ran hard on Tuesday after announcing a merger agreement with Korsana Biosciences, a privately held biotech focused on Alzheimer's disease. The deal came with $380 million in committed financing, sending shares from $1.55",
-        "sentiment": "positive",
-        "score": 0.8
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 3.53,
-    "change_percent": -14.94,
-    "market_cap": 15286008,
-    "fifty_two_week_high": 8.48,
-    "fifty_two_week_low": 1.027,
-    "volume": 816722,
-    "analyst_target": 8.0,
-    "recommendation": "none",
-    "sector": "Healthcare",
-    "description": "Cyclerion Therapeutics, Inc., a biopharmaceutical company, develops treatments for serious diseases serious diseases with novel sGC stimulators in both the central nervous system (CNS) and the periphery. It is developing Olinciguat, an orally administered vascular soluble guanylate cyclase (sGC) stimulator, which is in Phase 2 clinical trial to treat cardiovascular diseases; and Praliciguat, a systemic sGC stimulator for the treatment of rare kidney disease. It has a license agreement with Akebia to develop, manufacture, medical affair, and commercializes Praliciguat and other related products. The company was incorporated in 2018 and is headquartered in Cambridge, Massachusetts.",
-    "name": "Cyclerion Therapeutics, Inc.",
-    "symbol": "CYCN",
-    "short_name": "Cyclerion Therapeutics, Inc.",
-    "industry": "Biotechnology",
-    "website": "https://www.cyclerion.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "Cambridge",
-    "state": "MA",
-    "zip": "02142",
-    "phone": "857 327 8778",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/CYCN.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=cyclerion.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "partnership",
-    "catalyst_confidence": 0.9
   },
   {
     "ticker": "INDO",
-    "mentions": 8.2,
-    "avg_sentiment": 0.437,
-    "final_score": 0.618,
+    "mentions": 6.0,
+    "avg_sentiment": 0.504,
+    "final_score": 0.607,
     "top_contexts": [
       {
         "text": "INDO (Indonesia Energy Corp) from $3-$40 on 2022. The reason? Read this and it will be familliar. Same reason different rivalry The surge in Indonesia Energy Corp (INDO) stock around March 4, 2022, was a historic \"perfect storm\" of geopolitical crisis and market mechanics. On that single day, the st",
@@ -694,38 +274,28 @@
       {
         "text": "This is a great writeup. People forget how fast these micro cap oil names can move when you combine a geopolitical catalyst with a tiny float and trapped shorts. INDO going from $3 to $40 in a week is insane but when you look at the mechanics it makes total sense. What's crazy is we might be watchi",
         "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Stay away from INDO. Do your research.",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "I have done. It’s only up from here!",
-        "sentiment": "positive",
         "score": 0.8
-      },
-      {
-        "text": "Did you? I learned the hard way by investing at the beginning. I do hope you’re right. Indonesia does not fully profit from the increased energy prices caused by the Middle East war because the country is a net importer of oil and refined fuel, transforming the surge in global prices into a massive",
-        "sentiment": "negative",
-        "score": -0.4
       },
       {
         "text": "$INDO is my play for today. I feel good about 🚀 Why $INDO Could Run MASSIVE Today 🚀 • Oil prices still elevated on Iran / Middle East supply risk — any fresh headline can light up energy tickers fast. • Tiny market cap (\\~$70M) and small float \\~9.5M shares — it doesn’t take much real buying deman",
         "sentiment": "positive",
         "score": 0.8
+      },
+      {
+        "text": "I really wish this was the INDO of ‘22; I miss her but she’s changed a lot in the past 4 years.  - float has 6x’d (1.5M then vs ~9M now) - management has diluted into every run since ‘22 due to operational losses & compounding debt ($7M) - Revenue has halved now compared to back then (4M v 2M)",
+        "sentiment": "negative",
+        "score": -0.953
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 3.5,
-    "change_percent": 0.0,
-    "market_cap": 52456160,
+    "price": 3.58,
+    "change_percent": 2.29,
+    "market_cap": 53655156,
     "fifty_two_week_high": 8.5,
-    "fifty_two_week_low": 2.12,
-    "volume": 757860,
+    "fifty_two_week_low": 2.14,
+    "volume": 1194509,
     "analyst_target": 0,
     "recommendation": "none",
     "sector": "Energy",
@@ -769,14 +339,34 @@
   },
   {
     "ticker": "ATCH",
-    "mentions": 7.5,
-    "avg_sentiment": 0.36,
-    "final_score": 0.591,
+    "mentions": 14.1,
+    "avg_sentiment": 0.32,
+    "final_score": 0.582,
     "top_contexts": [
       {
-        "text": "ATCH, I recommended this morning & gained 13% just today!! New Client onboarding & blowout Q2 numbers coming!!",
+        "text": "Keeping an eye on ATCH, seems to be on reversal this week.",
         "sentiment": "positive",
-        "score": 0.886
+        "score": 0.4
+      },
+      {
+        "text": "With possible market going GREEEENNNN , do we think this could also push ATCH to begin climbing? It’s been all good news for this thing, and it’s INSANELY undervalued -",
+        "sentiment": "positive",
+        "score": 0.806
+      },
+      {
+        "text": "ATCH, I recommended a Buy yesterday & it’s up 17% in two days..4% today in a down market! This Qtr & YOY will be blowout, end of yr $1.00+!!",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "Easy $1 and that is without the bank",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "$ATCH the run has already started!! 👍👍👍",
+        "sentiment": "positive",
+        "score": 0.6
       },
       {
         "text": "I recommended ATCH this morning due to information on new client onboarding & Q2 blowout numbers..up 13% today!!",
@@ -787,37 +377,17 @@
         "text": "Absolutely recommend ATCH. It’s getting the traction and will be above $2 by EOY",
         "sentiment": "positive",
         "score": 0.8
-      },
-      {
-        "text": "Sorry bro do your homework might have been as a space but not in 2026, got 800k shares I’ll be retiring next year!",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "lol I love seeing traders lose their money 🤣🤣🤣",
-        "sentiment": "negative",
-        "score": -0.751
-      },
-      {
-        "text": "Reverse split dilution reverse split dilution over and over. Your loss.",
-        "sentiment": "negative",
-        "score": -0.8
-      },
-      {
-        "text": "He’s right they clear their own trades and or check their own homework….clearly this is where this family office sticks their kids to “ try and make some money “ off  Joe retail",
-        "sentiment": "negative",
-        "score": -0.6
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
     "price": 0.23,
-    "change_percent": 2.72,
-    "market_cap": 34114920,
+    "change_percent": 5.9,
+    "market_cap": 35177736,
     "fifty_two_week_high": 1.92,
     "fifty_two_week_low": 0.137,
-    "volume": 2572174,
+    "volume": 5913162,
     "analyst_target": 1.0,
     "recommendation": "none",
     "sector": "Financial Services",
@@ -857,6 +427,461 @@
     "vampire_confidence": 0.0,
     "has_catalyst": true,
     "catalyst_type": "earnings",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "BTBD",
+    "mentions": 13.6,
+    "avg_sentiment": 0.651,
+    "final_score": 0.571,
+    "top_contexts": [
+      {
+        "text": "$BTBD Drone/Merger Reclaiming Trend And Pushing Into The Next Breakout Test **I just finished a chart dive into $BTBD** and I’m posting my analysis because I believe there could be solid play here. It’s a tiny-cap with a \\~3M float that just made a solid run about a week ago, faded, and **appears t",
+        "sentiment": "positive",
+        "score": 0.798
+      },
+      {
+        "text": "$BTBD Update On Merger Play With Breakout Chart **About a week ago I posted about** this merger play based on some unusual price action and a review of the charts. We saw a subsequent run from \\~$1.85 at the time of the post to a high of $2.32 the next morning followed by some fade to settle into a",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "BTBD drone merger name ww BTBD just released their earnings report this week which stated that they are still advancing the merger with Aero Velocity. shareholder meeting and approvals have a deadline of April 30 so we are getting close. the recent establishment of headquarters in Mississippi shows",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "$BTBD Huge Merger Potential. Next Weeks Runner? have been digging into BTBD lately and the numbers from their 2025 full year results look solid. The company reported restaurant level EBITDA up 138 percent to 1.7 million dollars from 723 thousand in 2024. That is a big jump in margins to 12.4 percent",
+        "sentiment": "positive",
+        "score": 0.931
+      },
+      {
+        "text": "BTBD small cap drone merger name BTBD just released their earnings report this week which stated that they are still advancing the merger with Aero Velocity. shareholder meeting and approvals have a deadline of April 30 so we are getting close. the recent establishment of headquarters in Mississippi",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "$BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finished chart dive into $BTBD** and I’m posting my analysis because I believe there could be solid play here.       It’s a tiny-cap with a \\~3M float that just made a solid run about a week ago, faded, and",
+        "sentiment": "positive",
+        "score": 0.851
+      },
+      {
+        "text": "$BTBD Drone merger nearing, two hottest themes right now.",
+        "sentiment": "positive",
+        "score": 0.6
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.95,
+    "change_percent": -6.7,
+    "market_cap": 12001712,
+    "fifty_two_week_high": 5.6,
+    "fifty_two_week_low": 1.0,
+    "volume": 943470,
+    "analyst_target": 0,
+    "recommendation": "none",
+    "sector": "Consumer Cyclical",
+    "description": "BT Brands, Inc. owns and operates fast-food restaurants in the north central region of United States. The company operates Burger Time restaurants that offer various burgers and other food products, such as chicken sandwiches, pulled pork sandwiches, chicken tenders, chicken chunks, sides, and soft drinks located in Minnesota, North Dakota, and South Dakota. It also operates Bagger Dave's Burger Tavern, Inc. restaurants that provide burgers, pizzas, fries, beers, milkshakes, salads, and other items located in Michigan, Ohio, and Indiana. The company was founded in 1987 and is based in West Fargo, North Dakota.",
+    "name": "BT Brands, Inc.",
+    "symbol": "BTBD",
+    "short_name": "BT Brands, Inc.",
+    "industry": "Restaurants",
+    "website": "https://itsburgertime.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "United States",
+    "city": "West Fargo",
+    "state": "ND",
+    "zip": "58078",
+    "phone": "307 274 3055",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/BTBD.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=itsburgertime.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "partnership",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "CYCU",
+    "mentions": 17.0,
+    "avg_sentiment": 0.412,
+    "final_score": 0.564,
+    "top_contexts": [
+      {
+        "text": "CYCU it is time. About to do a CYCN very soon",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "CYCU can breakout very soon - $150M in contract backlog Everyone keeps chasing hype tickers while Cycurion ($CYCU) is sitting on one of the strongest real‑world fundamentals in the entire microcap cybersecurity space. This company isn’t selling dreams — it’s sitting on a massive, multi‑year governme",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "$CYCU Low Float Cyber News Today & Trend Building I'll follow up with more details but putting this out there now bc it's live and I just caught it. $CYCU [had solid news today](",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "$CYCU has been a good trader and I agree something could be setting up here. I've been watching this sector closely since the White House started dedicating so much attention to it. They've definitely been punching above their weight in this sector.",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Yeah, the tenor of their response was definitely one of a company that knows they're in a strong position and have nothing to hide. I trade all manner of pennies and I'm generally not focusing on fundamentals or qualitative assesments but I will say $CYCU is exactly what a growth-phase company shoul",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "CYCU looks like the #1 gapper tomorrow, most oversold small cap rn",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "CYCU a top watch with cyber treats ramping up from Iran. cyber security name here coming off bottom",
+        "sentiment": "positive",
+        "score": 0.6
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.29,
+    "change_percent": 21.7,
+    "market_cap": 5402761,
+    "fifty_two_week_high": 15.884086,
+    "fifty_two_week_low": 0.77,
+    "volume": 1800138,
+    "analyst_target": 7.0,
+    "recommendation": "strong_buy",
+    "sector": "Technology",
+    "description": "Cycurion, Inc. provides information technology security solutions. The company provides consulting and advisory services, such as security control assessments, security architecture and engineering, risk management and compliance audits, staff augmentation, cybersecurity awareness and training, cloud security, virtual CISO support, and digital modernization. It also offers managed IT services, which include project and license management, network infrastructure, systems engineering and administration, voice and data infrastructure engineering and management, application development, IT help desk support, and staff augmentation. In addition, the company provides managed security services including managed detection and response, external attack surface management, threat hunting and threat intelligence, end point detection and response, firewall management, threat and vulnerability management, vulnerability and penetration testing, 24/7/365 security monitoring, and digital forensic and incident response. Further, it offers ARx platform, a turnkey web application protection and managed security solution that combines all the essential cybersecurity layers. The company provides solutions to enterprise businesses, small and medium businesses, government agencies, healthcare, and higher education industries. Cycurion, Inc. was founded in 2017 and is headquartered in McLean, Virginia.",
+    "name": "Cycurion, Inc.",
+    "symbol": "CYCU",
+    "short_name": "Cycurion, Inc.",
+    "industry": "Information Technology Services",
+    "website": "https://cycurion.com",
+    "exchange": "NGM",
+    "currency": "USD",
+    "country": "United States",
+    "city": "McLean",
+    "state": "VA",
+    "zip": "22102",
+    "phone": "888 341 6680",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/CYCU.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=cycurion.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "contract",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "AEHL",
+    "mentions": 16.1,
+    "avg_sentiment": 0.268,
+    "final_score": 0.497,
+    "top_contexts": [
+      {
+        "text": "Right? I am waiting for it to dip before the rip. Could be worth the gamble if it drops more. I am liking the FTD data so far... Shorts have to pay up next week.",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "What dip you think it can reach? People started buying since it's like Aixi, do not wait",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "Wait AEHL is in a lawsuit with Apple and the court has ruled in AEHL's favor???",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Due Diligence — Antelope Enterprise Holdings Ltd. (AEHL / BIYA) Nasdaq Capital Market · Holding cayman — Cina (livestreaming e-commerce) + USA (energia + Bitcoin) · Jinjiang, Fujian, PRC · \\~40 dipendenti · Fondata 1993 (ex China Ceramics) · Rapporto al 2 aprile 2026 Giudizio: ALTISSIMO RISCHIO /",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Do you think AEHL has this type of potential? If so, why?",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Just buy and hold, it is same as aixi",
+        "sentiment": "neutral",
+        "score": 0.0
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.16,
+    "change_percent": 0.0,
+    "market_cap": 1914038,
+    "fifty_two_week_high": 50.52,
+    "fifty_two_week_low": 1.02,
+    "volume": 571946,
+    "analyst_target": 0,
+    "recommendation": "none",
+    "sector": "Industrials",
+    "description": "Antelope Enterprise Holdings Limited, through its subsidiaries, provides livestream e-commerce, and business management and information systems consulting services in the People's Republic of China and the United States. The company operates social media and e-commerce platforms for consumer goods brands, merchants, and small-scale ecommerce platforms customers. It also provides business management and consulting services which consist of computer consulting services and online social media platform development, as well as sales of software use rights for digital data deposit platforms and asset management systems. In addition, the company is involved in natural gas power generation and power station acquisitions and investments businesses; film and television entertainment, internet celebrity economy, live streaming, and game businesses; and trading of building materials. The company was formerly known as China Ceramics Co., Ltd. and changed its name to Antelope Enterprise Holdings Limited in October 2020. Antelope Enterprise Holdings Limited was founded in 1993 and is headquartered in Jinjiang, the People's Republic of China.",
+    "name": "Antelope Enterprise Holdings Limited",
+    "symbol": "AEHL",
+    "short_name": "Antelope Enterprise Holdings Li",
+    "industry": "Building Products & Equipment",
+    "website": "https://www.aehltd.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "China",
+    "city": "Jinjiang",
+    "state": "Unknown",
+    "zip": "Unknown",
+    "phone": "Unknown",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/AEHL.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=aehltd.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "court ruling",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "QNCX",
+    "mentions": 48.2,
+    "avg_sentiment": 0.213,
+    "final_score": 0.449,
+    "top_contexts": [
+      {
+        "text": "Who got in yesterday for QNCX when i told y'all to board the train? 👀 it was trading around .13 then",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Took a big hit on TPET, hoping QNCX can make up for it today",
+        "sentiment": "positive",
+        "score": 0.898
+      },
+      {
+        "text": "Should've stayed in QNCX. Welp unless AIXI goes to the moon again my day is already over! Tomorrow. Tomorrow will be my day for sure.",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Off the AIXI train. Platform 2 for QNCX",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "QNCX $27 million volume pre-market...",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "QNCX getting ready for next leg up?",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "There isn’t any news. QNCX’s just being pumped on discords.",
+        "sentiment": "negative",
+        "score": -0.78
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 0.16,
+    "change_percent": 86.29,
+    "market_cap": 9076083,
+    "fifty_two_week_high": 4.55,
+    "fifty_two_week_low": 0.08,
+    "volume": 501362353,
+    "analyst_target": 0.0,
+    "recommendation": "none",
+    "sector": "Healthcare",
+    "description": "Quince Therapeutics, Inc., a biopharmaceutical company, focuses on acquiring, developing, and commercializing therapeutics for patients with debilitating and rare diseases. The company's lead asset candidature comprises EryDex for the treatment of rare pediatric neurodegenerative disease, including A-T, an inherited autosomal recessive neurodegenerative and immunodeficiency disorder caused by mutations in ATM gene. Its AIDE technology platform, a drug/device combination platform that uses an automated process to encapsulate a drug into a patient's own red blood cells, as well as consists of an automated equipment the RCL, a sterile single-use consumable treatment kit comprising kit medical devices, syringe kit, and process solutions. The company was formerly known as Cortexyme, Inc. and changed its name to Quince Therapeutics, Inc. in August 2022. The company was incorporated in 2012 and is headquartered in South San Francisco, California.",
+    "name": "Quince Therapeutics, Inc.",
+    "symbol": "QNCX",
+    "short_name": "Quince Therapeutics, Inc.",
+    "industry": "Biotechnology",
+    "website": "https://www.quincetx.com",
+    "exchange": "NMS",
+    "currency": "USD",
+    "country": "United States",
+    "city": "South San Francisco",
+    "state": "CA",
+    "zip": "94080",
+    "phone": "415 910 5717",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/QNCX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=quincetx.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "volume",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "DVLT",
+    "mentions": 34.3,
+    "avg_sentiment": 0.385,
+    "final_score": 0.414,
+    "top_contexts": [
+      {
+        "text": "DVLT is building a 4-layer system, not 4 separate products The more I look at DVLT, the less it feels like a random collection of product names and the more it looks like an actual architecture. Data Vault looks like the storage layer.   DataValue looks like the pricing layer.   DataScore looks lik",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "SanQtum might be the most overlooked part of the story Most people looking at Datavault AI (DVLT) focus on AI, data monetization, or tokenization. But after digging a bit deeper, I think the real question is infrastructure, specifically SanQtum. SanQtum is described as a near-edge compute layer,",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "4 sessions of clean structure – still looks like continuation DVLT has now put together 4 straight sessions of trend respect, and what stands out is how well the structure is holding even outside regular hours. Both afterhours and premarket are not giving the move back, which usually means sellers a",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "DVLT Deep Dive: Explosive Growth & Real Momentum Time for some solid DD on DVLT from my perspective as both a trader and long term holder. This company is making serious waves in AI driven data monetization, real world asset tokenization, and their Web3 platform. Fiscal year 25 revenue jumped 1",
+        "sentiment": "positive",
+        "score": 0.919
+      },
+      {
+        "text": "Ones that could have 5x 10x potential in next 6 - 12 months with actual revenue, DEFI DVLT RZLV.",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "Is this news related to DVLT ?",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "DVLT isn’t just talking - they’re showing up at every major RWA event globally One thing I always watch with early-stage companies is where they show up. Because anyone can put out a press release. Not everyone gets a seat at the table. DVLT has been everywhere recently, and not in a random wa",
+        "sentiment": "positive",
+        "score": 0.6
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 0.7,
+    "change_percent": -5.39,
+    "market_cap": 427251424,
+    "fifty_two_week_high": 4.1,
+    "fifty_two_week_low": 0.25,
+    "volume": 27882271,
+    "analyst_target": 3.0,
+    "recommendation": "buy",
+    "sector": "Technology",
+    "description": "Datavault AI Inc., a data sciences technology company, owns and operates data management platforms with high computing capabilities in North America, Asia Pacific, Europe, and internationally. The company is focused on the delivery of cyber-secure, privacy protected data management and monetization technologies, as well as offers artificial intelligence driven agents, such as Data Vault, DataValue, DataScore, and Data Vault Bank. It also offers wireless audio standards and data-over-sound technologies, creating solutions for audio experiences, secure data transmission, credentialing, and RWA tokenization; and ADIO, a data over sound platform, and WiSA E, a wireless audio technology. The company was formerly known as WiSA Technologies, Inc. and changed its name to Datavault AI Inc. in February 2025. Datavault AI Inc. was incorporated in 2010 and is headquartered in Beaverton, Oregon.",
+    "name": "Datavault AI Inc.",
+    "symbol": "DVLT",
+    "short_name": "Datavault AI Inc.",
+    "industry": "Software - Infrastructure",
+    "website": "https://datavaultsite.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "United States",
+    "city": "Beaverton",
+    "state": "OR",
+    "zip": "97006",
+    "phone": "408 627 4716",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/DVLT.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=datavaultsite.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "partnership",
     "catalyst_confidence": 0.8
   }
 ]
