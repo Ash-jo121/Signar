@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), "output.json")
+DATA_PATH = "/data/output.json"
 
 
 def load_data():
@@ -44,13 +44,25 @@ def health():
     return {"status": "ok"}
 
 
+@app.post("/api/upload-output")
+async def upload_output(file: UploadFile = File(...), x_api_key: str = Header(None)):
+    if x_api_key != os.getenv("UPLOAD_API_KEY"):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    with open("/data/output.json", "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    print(f"output.json updated at {datetime.now()}")
+    return {"status": "ok", "message": "output.json updated successfully"}
+
+
 @app.post("/api/upload-db")
 async def upload_database(file: UploadFile = File(...), x_api_key: str = Header(None)):
     # Simple secret key auth so random people can't overwrite your DB
     if x_api_key != os.getenv("UPLOAD_API_KEY"):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
-    db_path = "threadradar.db"
+    db_path = "/data/threadradar.db"
 
     # Write the uploaded file to disk
     with open(db_path, "wb") as buffer:
@@ -65,7 +77,7 @@ async def download_database(x_api_key: str = Header(None)):
     if x_api_key != os.getenv("UPLOAD_API_KEY"):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
-    db_path = "threadradar.db"
+    db_path = "/data/threadradar.db"
     if not os.path.exists(db_path):
         raise HTTPException(status_code=404, detail="Database not found")
 

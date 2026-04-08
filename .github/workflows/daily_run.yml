@@ -37,11 +37,11 @@ jobs:
 
       # ── 4. Restore DB from cache ──────────────────────────────────
       - name: Restore database from cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         id: db-cache
         with:
           path: backend/threadradar.db
-          key: threadradar-db-latest
+          key: threadradar-db-${{ env.TODAY }}
           restore-keys: threadradar-db-
 
       # ── 5. Verify or seed database ────────────────────────────────
@@ -143,14 +143,33 @@ jobs:
             exit 1
           fi
           echo "✓ Database uploaded to Railway successfully"
+      
+      - name: Upload output.json to Railway
+        if: always()
+        working-directory: backend
+        env:
+          RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
+          UPLOAD_API_KEY: ${{ secrets.UPLOAD_API_KEY }}
+        run: |
+          echo "Uploading output.json to Railway..."
+          response=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "x-api-key: $UPLOAD_API_KEY" \
+            -F "file=@output.json" \
+            "$RAILWAY_URL/api/upload-output")
+
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -1)
+          echo "Response: $body"
+          echo "✓ output.json uploaded to Railway"
 
       # ── 12. Save DB back to cache ─────────────────────────────────
       - name: Save database to cache
         if: always()
-        uses: actions/cache@v4
+        uses: actions/cache/save@v4
         with:
           path: backend/threadradar.db
-          key: threadradar-db-latest
+          key: threadradar-db-${{ env.TODAY }}
 
       # ── 13. Daily DB backup to repo ───────────────────────────────
       - name: Daily database backup
