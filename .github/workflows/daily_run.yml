@@ -52,7 +52,7 @@ jobs:
             ls -lh backend/threadradar.db
           else
             echo "⚠ No cached DB — checking for backup seed..."
-            LATEST=$(ls backend/db-backup/threadradar_*.db 2>/dev/null | sort | tail -1)
+            LATEST=$(ls backend/db-backup/threadradar_2*.db 2>/dev/null | sort | tail -1)
             if [ -n "$LATEST" ]; then
               cp "$LATEST" backend/threadradar.db
               echo "✓ Seeded from: $LATEST"
@@ -143,7 +143,7 @@ jobs:
             exit 1
           fi
           echo "✓ Database uploaded to Railway successfully"
-      
+
       - name: Upload output.json to Railway
         if: always()
         working-directory: backend
