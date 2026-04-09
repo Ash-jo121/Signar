@@ -1,40 +1,40 @@
-$DRMA [CATALYST: PRODUCT LAUNCH] 
-  Mentions: 8.4 | Sentiment: +0.673 | Score: +1.126
-  Context: $DRMA low volume but heating up as 1.40 downtrend breaks upward. mid 2026 product launch on horizon.
-
-$POLA [CATALYST: PRODUCT LAUNCH] 
-  Mentions: 7.4 | Sentiment: +0.689 | Score: +0.960
-  Context: $DRMA: Low float, low volume. technical break out forming at 1.40 break. Building a swing on known u
-
-$ANNA [NO CATALYST] 
-  Mentions: 27.0 | Sentiment: +0.321 | Score: +0.617
-  Context: Where do we see ANNA going with the Iran news?
-
-$INDO [CATALYST: GEOPOLITICAL] 
-  Mentions: 6.0 | Sentiment: +0.504 | Score: +0.607
-  Context: INDO (Indonesia Energy Corp) from $3-$40 on 2022. The reason? Read this and it will be familliar. Sa
-
 $ATCH [CATALYST: EARNINGS] 
-  Mentions: 14.1 | Sentiment: +0.320 | Score: +0.582
-  Context: Keeping an eye on ATCH, seems to be on reversal this week.
+  Mentions: 7.3 | Sentiment: +0.745 | Score: +1.219
+  Context: With possible market going GREEEENNNN , do we think this could also push ATCH to begin climbing? It’
 
-$BTBD [CATALYST: PARTNERSHIP] 
-  Mentions: 13.6 | Sentiment: +0.651 | Score: +0.571
-  Context: $BTBD Drone/Merger Reclaiming Trend And Pushing Into The Next Breakout Test **I just finished a char
+$DRMA [CATALYST: PRODUCT RELEASE] 
+  Mentions: 9.4 | Sentiment: +0.665 | Score: +1.133
+  Context: $POLA 1.80+ daily curl down trend break. low float, exhausted sellers. Round 2 starting. $DRMA: Low 
 
-$CYCU [CATALYST: CONTRACT] 
-  Mentions: 17.0 | Sentiment: +0.412 | Score: +0.564
-  Context: CYCU it is time. About to do a CYCN very soon
+$FLYX [CATALYST: PARTNERSHIP] 
+  Mentions: 6.2 | Sentiment: +0.671 | Score: +1.069
+  Context: So here’s the scoop: FLYX is acquiring Jet.AI’s aviation division in an all-stock deal. While the co
+
+$OMEX [CATALYST: PARTNERSHIP] 
+  Mentions: 14.0 | Sentiment: +0.754 | Score: +0.820
+  Context: $OMEX +56% — $1B deep-sea minerals merger with American Ocean Minerals Odyssey Marine Exploration (O
+
+$QNCX [CATALYST: CLINICAL] 
+  Mentions: 41.3 | Sentiment: +0.414 | Score: +0.803
+  Context: I went down with the ship of QNCX and lost big. Anyone got a life raft for tomorrow?
+
+$UCAR [NO CATALYST] 
+  Mentions: 37.0 | Sentiment: +0.393 | Score: +0.763
+  Context: $UCAR +239% — $3.19M private placement sparks massive squeeze U Power Limited (UCAR) absolutely ripp
+
+$COCP [CATALYST: FDA] 
+  Mentions: 5.3 | Sentiment: +0.604 | Score: +0.750
+  Context: COCP Cocrystal Pharma Inc THIS SHOULD EXPLODE AND IS SET UP FOR IT, load up! The drug of the year fo
+
+$MIGI [CATALYST: PARTNERSHIP] 
+  Mentions: 9.3 | Sentiment: +0.574 | Score: +0.742
+  Context: Certainly looks good for continuation after holding strong and consolidating last night
+
+$ARAI [NO CATALYST] 
+  Mentions: 21.1 | Sentiment: +0.472 | Score: +0.728
+  Context: $ARAI Wild Momentum With Room For Continuation Tomorrow Someone posted about this and when I looked 
 
 $AEHL [CATALYST: COURT RULING] 
-  Mentions: 16.1 | Sentiment: +0.268 | Score: +0.497
-  Context: Right? I am waiting for it to dip before the rip. Could be worth the gamble if it drops more. I am l
-
-$QNCX [CATALYST: VOLUME] 
-  Mentions: 48.2 | Sentiment: +0.213 | Score: +0.449
-  Context: Who got in yesterday for QNCX when i told y'all to board the train? 👀 it was trading around .13 then
-
-$DVLT [CATALYST: PARTNERSHIP] 
-  Mentions: 34.3 | Sentiment: +0.385 | Score: +0.414
-  Context: DVLT is building a 4-layer system, not 4 separate products The more I look at DVLT, the less it feel
+  Mentions: 23.1 | Sentiment: +0.411 | Score: +0.596
+  Context: AEHL - oversold low float low cap The title says it all and it’s a chinese stock. Price seems to hav
 
