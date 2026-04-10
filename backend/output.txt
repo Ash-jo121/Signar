@@ -1,40 +1,40 @@
-$ATCH [CATALYST: EARNINGS] 
-  Mentions: 7.3 | Sentiment: +0.745 | Score: +1.219
-  Context: With possible market going GREEEENNNN , do we think this could also push ATCH to begin climbing? It’
+$ARAI [CATALYST: EARNINGS] 
+  Mentions: 30.7 | Sentiment: +0.537 | Score: +0.907
+  Context: ARAI many people told me ARAI looked bad when I called the upside here Next day it ran 67-70% plus 🔥
 
-$DRMA [CATALYST: PRODUCT RELEASE] 
-  Mentions: 9.4 | Sentiment: +0.665 | Score: +1.133
-  Context: $POLA 1.80+ daily curl down trend break. low float, exhausted sellers. Round 2 starting. $DRMA: Low 
+$BURU [CATALYST: CLINICAL] 
+  Mentions: 10.6 | Sentiment: +0.789 | Score: +0.900
+  Context: BURU is actually alive and well, may be ready to explode [$BURU]( almost back down no 0 shares left.
 
-$FLYX [CATALYST: PARTNERSHIP] 
-  Mentions: 6.2 | Sentiment: +0.671 | Score: +1.069
-  Context: So here’s the scoop: FLYX is acquiring Jet.AI’s aviation division in an all-stock deal. While the co
+$ELAB [CATALYST: CONTRACT] 
+  Mentions: 7.6 | Sentiment: +0.487 | Score: +0.802
+  Context: Closing the day with +425. ONCO and NVNI were my winners. I re-entered ONCO at 1,50 because I think 
 
-$OMEX [CATALYST: PARTNERSHIP] 
-  Mentions: 14.0 | Sentiment: +0.754 | Score: +0.820
-  Context: $OMEX +56% — $1B deep-sea minerals merger with American Ocean Minerals Odyssey Marine Exploration (O
+$POLA [CATALYST: PRODUCT LAUNCH] 
+  Mentions: 5.0 | Sentiment: +0.724 | Score: +0.779
+  Context: $DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of th
 
-$QNCX [CATALYST: CLINICAL] 
-  Mentions: 41.3 | Sentiment: +0.414 | Score: +0.803
-  Context: I went down with the ship of QNCX and lost big. Anyone got a life raft for tomorrow?
+$ANNA [CATALYST: EARNINGS] 
+  Mentions: 21.5 | Sentiment: +0.395 | Score: +0.707
+  Context: ANNA need to come down to be attraktive for me again I am holding DVLT big time. Hope that the that 
 
-$UCAR [NO CATALYST] 
-  Mentions: 37.0 | Sentiment: +0.393 | Score: +0.763
-  Context: $UCAR +239% — $3.19M private placement sparks massive squeeze U Power Limited (UCAR) absolutely ripp
+$ISPC [NO CATALYST] 
+  Mentions: 13.1 | Sentiment: +0.395 | Score: +0.678
+  Context: ISPC huge volume, small float  Volume 7million in 13 minutes of premarket!  $0.20 now
 
-$COCP [CATALYST: FDA] 
-  Mentions: 5.3 | Sentiment: +0.604 | Score: +0.750
-  Context: COCP Cocrystal Pharma Inc THIS SHOULD EXPLODE AND IS SET UP FOR IT, load up! The drug of the year fo
+$BTBD [CATALYST: PARTNERSHIP] 
+  Mentions: 7.0 | Sentiment: +0.676 | Score: +0.571
+  Context: $BTBD Huge Merger Potential. Next Weeks Runner? have been digging into BTBD lately and the numbers f
 
-$MIGI [CATALYST: PARTNERSHIP] 
-  Mentions: 9.3 | Sentiment: +0.574 | Score: +0.742
-  Context: Certainly looks good for continuation after holding strong and consolidating last night
+$PSTV [CATALYST: SEC FILING, SPECIFIC REGULATORY EVENT] 
+  Mentions: 6.3 | Sentiment: +0.357 | Score: +0.528
+  Context: PSTV genuinely has ample potential for a 10x upside. (2) You might dismiss my post as simply a promo
 
-$ARAI [NO CATALYST] 
-  Mentions: 21.1 | Sentiment: +0.472 | Score: +0.728
-  Context: $ARAI Wild Momentum With Room For Continuation Tomorrow Someone posted about this and when I looked 
+$IQST [CATALYST: PARTNERSHIP] 
+  Mentions: 24.4 | Sentiment: +0.358 | Score: +0.471
+  Context: IQST Microcap DD – Real $400M Revenue Run Rate, Clean Structure & Fresh Digital Health Catalyst Was 
 
-$AEHL [CATALYST: COURT RULING] 
-  Mentions: 23.1 | Sentiment: +0.411 | Score: +0.596
-  Context: AEHL - oversold low float low cap The title says it all and it’s a chinese stock. Price seems to hav
+$SRXH [CATALYST: REGULATORY] 
+  Mentions: 12.8 | Sentiment: +0.257 | Score: +0.460
+  Context: SRXH almost guaranteed to go up overnight
 
