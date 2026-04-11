@@ -1,40 +1,40 @@
-$ARAI [CATALYST: EARNINGS] 
-  Mentions: 30.7 | Sentiment: +0.537 | Score: +0.907
-  Context: ARAI many people told me ARAI looked bad when I called the upside here Next day it ran 67-70% plus 🔥
+$CUE [CATALYST: CONTRACT] 
+  Mentions: 5.5 | Sentiment: +0.685 | Score: +0.963
+  Context: $CUE heading to $1 very soon big $7.5 million deal finalized. Payment in May.
 
-$BURU [CATALYST: CLINICAL] 
-  Mentions: 10.6 | Sentiment: +0.789 | Score: +0.900
-  Context: BURU is actually alive and well, may be ready to explode [$BURU]( almost back down no 0 shares left.
-
-$ELAB [CATALYST: CONTRACT] 
-  Mentions: 7.6 | Sentiment: +0.487 | Score: +0.802
-  Context: Closing the day with +425. ONCO and NVNI were my winners. I re-entered ONCO at 1,50 because I think 
+$SAFX [CATALYST: CLINICAL] 
+  Mentions: 13.1 | Sentiment: +0.712 | Score: +0.894
+  Context: SAFX was great today Many thanks to Prestigious Garlic!
 
 $POLA [CATALYST: PRODUCT LAUNCH] 
   Mentions: 5.0 | Sentiment: +0.724 | Score: +0.779
   Context: $DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of th
 
-$ANNA [CATALYST: EARNINGS] 
-  Mentions: 21.5 | Sentiment: +0.395 | Score: +0.707
-  Context: ANNA need to come down to be attraktive for me again I am holding DVLT big time. Hope that the that 
+$SIDU [CATALYST: PARTNERSHIP] 
+  Mentions: 7.1 | Sentiment: +0.435 | Score: +0.707
+  Context: $MTEK will go massive with SpaceX has their IPO soon. They are one of the cheapest space stocks on t
 
-$ISPC [NO CATALYST] 
-  Mentions: 13.1 | Sentiment: +0.395 | Score: +0.678
-  Context: ISPC huge volume, small float  Volume 7million in 13 minutes of premarket!  $0.20 now
+$ANNA [CATALYST: REGULATORY] 
+  Mentions: 13.3 | Sentiment: +0.392 | Score: +0.652
+  Context: ANNA has turned out to be absolute shite... Maybe it was all bcoz of war.
+
+$ARAI [CATALYST: PATENT] 
+  Mentions: 14.2 | Sentiment: +0.445 | Score: +0.615
+  Context: ARAI guys go check it out something is coming and getting advantage of it will be quite easy. Good f
+
+$FUSE [CATALYST: SHAREHOLDER LETTER] 
+  Mentions: 9.3 | Sentiment: +0.399 | Score: +0.611
+  Context: $FUSE +41% — AI company surges on shareholder letter highlighting agentic AI strategy Fusemachines (
 
 $BTBD [CATALYST: PARTNERSHIP] 
-  Mentions: 7.0 | Sentiment: +0.676 | Score: +0.571
-  Context: $BTBD Huge Merger Potential. Next Weeks Runner? have been digging into BTBD lately and the numbers f
+  Mentions: 6.0 | Sentiment: +0.616 | Score: +0.585
+  Context: $BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finishe
 
-$PSTV [CATALYST: SEC FILING, SPECIFIC REGULATORY EVENT] 
-  Mentions: 6.3 | Sentiment: +0.357 | Score: +0.528
+$IQST [CATALYST: REVENUE/EARNINGS] 
+  Mentions: 13.3 | Sentiment: +0.502 | Score: +0.564
+  Context: What happened to your IQST play? Its now at 1.77.
+
+$PSTV [NO CATALYST] 
+  Mentions: 6.3 | Sentiment: +0.316 | Score: +0.467
   Context: PSTV genuinely has ample potential for a 10x upside. (2) You might dismiss my post as simply a promo
-
-$IQST [CATALYST: PARTNERSHIP] 
-  Mentions: 24.4 | Sentiment: +0.358 | Score: +0.471
-  Context: IQST Microcap DD – Real $400M Revenue Run Rate, Clean Structure & Fresh Digital Health Catalyst Was 
-
-$SRXH [CATALYST: REGULATORY] 
-  Mentions: 12.8 | Sentiment: +0.257 | Score: +0.460
-  Context: SRXH almost guaranteed to go up overnight
 
