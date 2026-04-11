@@ -161,7 +161,10 @@ def assess_catalyst_quality(ticker, contexts, retry=False):
             messages=[
                 {
                     "role": "user",
-                    "content": f"""You are analyzing Reddit discussion about stock {ticker} to determine if there is evidence of a real verifiable catalyst.
+                    "content": f"""You are analyzing Reddit discussion about stock {ticker} to determine if there is evidence of a real verifiable catalyst SPECIFICALLY for {ticker}.
+
+IMPORTANT: Only assess catalysts directly attributed to {ticker} itself.
+If a context mentions {ticker} alongside another stock's catalyst, ignore the other stock's catalyst entirely.
 
 Contexts:
 {contexts_text}
@@ -189,6 +192,10 @@ NOT catalysts (has_catalyst = false):
 - War/geopolitical speculation without direct company contract
 - "Waiting for catalyst" with no catalyst named
 - Borrow rate discussions
+- Delisting notice or compliance warning (this is a risk event, not a catalyst)
+- Reverse stock split announcement
+- Share dilution or offering announcement
+- Insider ownership percentage without named event
 
 Return ONLY the JSON object. No explanation. No array. No markdown.""",
                 }

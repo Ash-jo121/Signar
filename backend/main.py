@@ -411,7 +411,16 @@ if __name__ == "__main__":
 
     catalyst_calls = 0
     for result in results:
-        context_texts = [ctx["text"] for ctx in result.get("top_contexts", [])]
+        ticker = result["ticker"]
+
+        context_texts = [
+            ctx["text"]
+            for ctx in result.get("top_contexts", [])
+            if ticker.upper() in ctx["text"].upper()
+        ]
+        if not context_texts:
+            context_texts = [ctx["text"] for ctx in result.get("top_contexts", [])]
+
         catalyst = assess_catalyst_quality(result["ticker"], context_texts)
         result["has_catalyst"] = catalyst["has_catalyst"]
         result["catalyst_type"] = catalyst["catalyst_type"]
