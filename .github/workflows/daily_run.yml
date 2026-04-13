@@ -2,7 +2,7 @@ name: ThreadRadar Daily Run
 
 on:
   schedule:
-    - cron: "30 8 * * 1-7"
+    - cron: "30 8 * * *"
   workflow_dispatch:
 
 jobs:
