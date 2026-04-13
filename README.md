@@ -2,13 +2,13 @@
 
 > Automated Reddit sentiment analysis for penny stock discovery
 
-ThreadRadar scrapes penny stock subreddits, extracts ticker mentions, and runs financial sentiment analysis using FinBERT — turning hours of manual Reddit browsing into a ranked daily dashboard.
+ThreadRadar scrapes penny stock subreddits, extracts ticker mentions, and runs financial sentiment analysis using AI ( FinBERT + Groq ) — turning hours of manual Reddit browsing into a ranked daily dashboard.
 
 ---
 
 ## The Problem
 
-Finding promising penny stocks on Reddit means manually reading through hundreds of posts and comments across multiple subreddits like r/pennystocks, r/Pennystock, and r/smallstreetbets. A single post can have 200+ comments, many of which contain counter-arguments, DD (due diligence), or warnings that completely change the picture. Doing this manually takes hours.
+Finding promising penny stocks on Reddit means manually reading through hundreds of posts and comments across multiple subreddits like r/pennystocks, r/Pennystock, r/smallstreetbets etc. A single post can have 200+ comments, many of which contain counter-arguments, DD (due diligence), or warnings that completely change the picture. Doing this manually takes hours.
 
 ThreadRadar automates the entire pipeline and surfaces the top picks in seconds.
 
@@ -16,21 +16,10 @@ ThreadRadar automates the entire pipeline and surfaces the top picks in seconds.
 
 ## How It Works
 
-```
-Reddit JSON API
-      ↓
-  scraper.py          → Fetches posts + all nested comments (hot & new)
-      ↓
-  extractor.py        → Extracts ticker symbols using regex + blacklist filtering
-      ↓
-  sentiment.py        → Scores each mention using FinBERT (financial BERT model) and Groq
-      ↓
-  main.py             → Aggregates scores, weights by upvotes, ranks tickers
-      ↓
-  output.json         → Consumed by React frontend dashboard
-```
+<img width="1819" height="795" alt="image" src="https://github.com/user-attachments/assets/baead758-a788-442a-a4e4-7d444a222d60" />
 
-The sentiment score reflects the **full conversation** — not just the original post. A bullish post with bearish comments will score lower than a bullish post with supporting comments. This is the key insight: Reddit counters matter. We take the aggregate sentiment of the reddit comment tree to get the full score for a stock pick.
+
+The sentiment score reflects the **full conversation** — not just the original post. A bullish post with bearish comments will score lower than a bullish post with supporting comments. This is the key insight: Reddit counters matter along with the upvote score for the comment. We take the aggregate sentiment of the reddit comment tree to get the full score for a stock pick. Context inheritance is also considered, whenever a comment is taken it need not mention a ticker or stock. 
 
 ---
 
@@ -45,11 +34,11 @@ The sentiment score reflects the **full conversation** — not just the original
 | Layer              | Technology                                                                            |
 | ------------------ | ------------------------------------------------------------------------------------- |
 | Reddit Data        | Reddit Public JSON API (no auth required)                                             |
-| Ticker Extraction  | Regex + NASDAQ/NYSE ticker blacklist                                                  |
+| Ticker Extraction  | Regex + NASDAQ/NYSE ticker blacklist + Common words                                   |
 | Sentiment Analysis | [FinBERT](https://huggingface.co/ProsusAI/finbert) (financial domain BERT) + Groq API |
 | Backend            | Python — `requests`, `transformers`, `torch`                                          |
 | Frontend           | React + Tailwind CSS                                                                  |
-| Scheduling         | Runs every 24 hours (cron / task scheduler)                                           |
+| Scheduling         | Runs every 24 hours ( github actions )                                                |
 
 **Why FinBERT over VADER?**
 General sentiment models don't understand financial language. VADER scores "this stock is going to the moon" as neutral. FinBERT was trained on financial news and analyst reports — it correctly understands terms like "bullish", "FDA approval", "short squeeze", and "dilution".
@@ -61,12 +50,19 @@ General sentiment models don't understand financial language. VADER scores "this
 ```
 threadradar/
   backend/
-    scraper.py        # Fetches posts and nested comments from Reddit
-    extractor.py      # Extracts and filters ticker symbols from text
-    sentiment.py      # FinBERT sentiment scoring
-    main.py           # Pipeline orchestration + ranking + output
-    output.json       # Generated output consumed by frontend
-    output.txt        # Human-readable version of output
+      constants/
+            config.py
+            exclusion.py
+      integrations/
+            yahooFn.py
+            google_sheets_integration.py
+            
+     scraper.py        # Fetches posts and nested comments from Reddit
+     extractor.py      # Extracts and filters ticker symbols from text
+     sentiment.py      # FinBERT sentiment scoring
+     main.py           # Pipeline orchestration + ranking + output
+     output.json       # Generated output consumed by frontend
+     output.txt        # Human-readable version of output
   frontend/
     src/
       App.jsx
@@ -121,8 +117,7 @@ Open `http://localhost:5173` in your browser.
 **Linux/Mac (cron):**
 
 ```bash
-# Run every day at 6 AM
-0 6 * * * cd /path/to/threadradar/backend && python main.py
+# Run every day at 3 PM
 ```
 
 **Windows (Task Scheduler):**
@@ -137,7 +132,11 @@ Create a basic task that runs `python main.py` from the backend directory daily.
 | r/pennystocks          | Primary — most active penny stock community |
 | r/Pennystock           | Secondary — additional coverage             |
 | r/smallstreetbets      | Tertiary — broader retail sentiment         |
-| r/RobinHoodPennyStocks | Less traffic subreddit will add in future   |
+| r/RobinHoodPennyStocks |                                             |
+| r/10xPennyStocks       |                                             | 
+| r/Shortsqueeze         |                                             |
+| r/SqueezePlays         |                                             |
+| r/wallstreetbets       | Only penny stocks                           |
 
 ---
 
@@ -163,6 +162,7 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
 - **Pump-and-dump risk** — Reddit penny stock communities are susceptible to coordinated pumping. High sentiment scores do not guarantee legitimate picks. Always do your own research.
 - **OTC stock data gaps** — Some penny stocks trade OTC and may not have full price data available via Yahoo Finance.
+- **Float data are not obtainable through yahoo finance, we are bypassing the stocks with a warning.
   <!-- - **Rate limiting** — Reddit's unauthenticated API limits requests. The pipeline includes automatic retry logic but the `top` category is sometimes unavailable. -->
   <!-- - **FinBERT and Reddit slang** — FinBERT was trained on formal financial text. Reddit slang like "to the moon 🚀" scores as neutral rather than positive. This is intentional conservatism — we prefer false negatives over false positives. -->
 
@@ -187,9 +187,9 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 - [x] Historical data storage (sqlite)
 - [x] Scheduler
 - [x] Performance tracking — did the picks actually move?
+- [x] Pump-and-dump detection (sudden mention spikes)
 - [ ] Search functionality for past picks
 - [ ] Subreddit weighting (r/pennystocks > r/smallstreetbets)
-- [ ] Pump-and-dump detection (sudden mention spikes)
 - [ ] Reddit OAuth for higher rate limits
 - [ ] Stock specific subreddit to be analyzed for more data
 
