@@ -1,116 +1,44 @@
 [
   {
-    "ticker": "CUE",
-    "mentions": 5.5,
-    "avg_sentiment": 0.685,
-    "final_score": 0.963,
-    "top_contexts": [
-      {
-        "text": "$CUE heading to $1 very soon big $7.5 million deal finalized. Payment in May.",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "I bought CUE this morning. I made 10K profit today in less than 15 minutes. I am done for today",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "CUE , they landed a deal worth 7.5 mil",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Great stock.  I am in since .18 Where do you set your target price? Do you think we can see over 2 or even over 3$?",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "great news and potential, borrow rate trash for now",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "I just bought in last night at .21. I'll hold for a few days see, looks very promising!",
-        "sentiment": "positive",
-        "score": 0.6
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 0.5,
-    "change_percent": 71.36,
-    "market_cap": 49015952,
-    "fifty_two_week_high": 1.03,
-    "fifty_two_week_low": 0.166,
-    "volume": 230256654,
-    "analyst_target": 4.0,
-    "recommendation": "strong_buy",
-    "sector": "Healthcare",
-    "description": "Cue Biopharma, Inc., a clinical-stage biopharmaceutical company, develops a novel class of injectable therapeutics to selectively engage and modulate targeted, disease relevant T cells in the United States. Its lead drug product candidate is the CUE-401, a bifunctional fusion protein designed to promote immune tolerance by inducing iTregs from Teff cells which is in preclinical trial; and CUE-501, a treatment of autoimmune disease via anti-viral T cell-mediated depletion of B cells. The company also develops CUE-101, which is in phase 1b clinical trial to treat HPV+ recurrent metastatic, or head and neck squamous cell carcinoma in second line, and beyond patients as a monotherapy, as well as in phase 1b clinical trial for the treatment of head and neck squamous cell carcinoma as a first line, therapy in combination with standard of care KEYTRUDA; and CUE-102, which is in phase 1b clinical trial as a monotherapy in late line recurrent metastatic WT1+ colorectal, gastric, ovarian, and pancreatic cancer. It has collaboration agreements with LG Chem, Ltd. for the development of CUE-101 and CUE-102 Immuno-STATs; collaboration and option agreement with Ono Pharmaceutical Co., Ltd to development and commercialization rights for CUE-401; and license agreement with Albert Einstein College of Medicine. The company was formerly known as Imagen Biopharma, Inc. and changed its name to Cue Biopharma, Inc. in October 2016. Cue Biopharma, Inc. was incorporated in 2014 and is headquartered in Boston, Massachusetts.",
-    "name": "Cue Biopharma, Inc.",
-    "symbol": "CUE",
-    "short_name": "Cue Biopharma, Inc.",
-    "industry": "Biotechnology",
-    "website": "https://www.cuebiopharma.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "Boston",
-    "state": "MA",
-    "zip": "02135",
-    "phone": "617 949 2680",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/CUE.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=cuebiopharma.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "contract",
-    "catalyst_confidence": 0.8
-  },
-  {
     "ticker": "SAFX",
-    "mentions": 13.1,
-    "avg_sentiment": 0.712,
-    "final_score": 0.894,
+    "mentions": 24.7,
+    "avg_sentiment": 0.562,
+    "final_score": 1.014,
     "top_contexts": [
       {
-        "text": "SAFX was great today Many thanks to Prestigious Garlic!",
+        "text": "SAFX is picking up volume.  getting in now.  I think it's a better play than something that already ran up to 80%",
         "sentiment": "positive",
-        "score": 0.835
+        "score": 0.918
       },
       {
-        "text": "SAFX - If you're not buying SAFX right now I don't know what you're doing Maybe I came in a little too hot and it rubbed peeps the wrong way. All I’m saying, SAFX is setting up for some huge potential and currently has excellent volume and momentum, do with this information what you will.",
-        "sentiment": "positive",
-        "score": 0.8
+        "text": "CLIK, UCAR, SAFX. RMSG seems to be pretty active, 92% of low float locked up. Still watching oil - as someone below noted, something seems off.",
+        "sentiment": "neutral",
+        "score": 0.0
       },
       {
-        "text": "I mean, you can just look at the stocks and companies? SAFX in a much different place. And COCP needs to get through its final trials before real movement, but I tried to share about it early. I mean the drug was fast tracked by the fda and is an easily administered treatment for a fucked up conditi",
+        "text": "I'll buy ALLO tomorrow at 7. If the news is good at 8:30, I'll hold for a nice scalp. If not, I'll bail quickly. In either case, I also plan to get into SAFX, assuming it continues to rise.",
         "sentiment": "positive",
-        "score": 0.4
+        "score": 0.6
       },
       {
-        "text": "yea yea yea, anyways I'm not kidding about SAFX i'd hop in before it's too late, the ship ain't coming back down too far.",
+        "text": "Apart from the merger, are there any catalysts which are foreseen this year? I bought in at .13-.14 so really just curious if this is a short term flip. I sadly missed my chance at SAFX by a day so any response positive or negative would be great",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "$DRMA: building a position for the 1.40-1.60 daily break out on building low volume anticipation of mid 2026 product launch.  $SAFX: off recent PR and Fridays AH explosive volume.",
         "sentiment": "positive",
-        "score": 0.8
+        "score": 0.852
+      },
+      {
+        "text": "$SAFX, XCF both have made some positive gains",
+        "sentiment": "positive",
+        "score": 0.932
+      },
+      {
+        "text": "$DRMA longer term with coming product launch mid 2026 and daily technical lvls broken at 1.40, 1.60. And $SAFX aff recent pr and Fridays AH action.",
+        "sentiment": "positive",
+        "score": 0.6
       }
     ],
     "mod_flagged": false,
@@ -159,16 +87,21 @@
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "clinical",
-    "catalyst_confidence": 0.8
+    "has_catalyst": false,
+    "catalyst_type": "none",
+    "catalyst_confidence": 0.0
   },
   {
-    "ticker": "POLA",
-    "mentions": 5.0,
-    "avg_sentiment": 0.724,
-    "final_score": 0.779,
+    "ticker": "DRMA",
+    "mentions": 8.0,
+    "avg_sentiment": 0.574,
+    "final_score": 0.952,
     "top_contexts": [
+      {
+        "text": "same with $DRMA with its mid 2026 product launch.",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
       {
         "text": "$DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of the mid 2026 product launch. Will be the start of a fundemental shift with a revenue generating product to strengthen the balance sheets.  $POLA: Low float, trapped shorts, 1.80+ daily curl recovery and",
         "sentiment": "positive",
@@ -180,41 +113,36 @@
         "score": 0.6
       },
       {
-        "text": "$POLA Update: AH through PM Chart Read Finally able to finish chart analysis for this. Here’s a quick review of AH: **It mirrored the levels I drew almost 100%.** **It blew through the $1.95 level. Now that’s key support.** **It steadily pushed through the 2.18 area and the 2.30–2.36 supply zone",
+        "text": "Added more $DRMA for mid 2026 product launch pr low float gap up.",
         "sentiment": "positive",
-        "score": 0.881
-      },
-      {
-        "text": "Momo Traders Check Out $POLA Price Action, Could Be Setting Up Hi all. Just drawing your attention to some interesting price action because it looks constructive and could be setting up for a bigger move.  **$POLA, nano Float, 42% short interest,** haven’t found any news. Today it basically ripped",
-        "sentiment": "positive",
-        "score": 0.6
+        "score": 0.865
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 1.82,
-    "change_percent": 2.82,
-    "market_cap": 4873341,
-    "fifty_two_week_high": 5.75,
-    "fifty_two_week_low": 1.31,
-    "volume": 97426,
-    "analyst_target": 0,
-    "recommendation": "none",
-    "sector": "Industrials",
-    "description": "Polar Power, Inc. designs, manufactures, and sells direct current (DC) power generators, renewable energy, and cooling systems in the United States, Canada, Australia, the South Pacific Islands, Asia, Europe, the Middle East, the United Kingdom, and South Africa. The company offers DC base power systems, DC hybrid power systems, DC solar hybrid power systems that are available in diesel, natural gas, LPG/propane, and renewable fuel formats; and mobile power systems. It also provides global network management, aftermarket and service parts, and product and warranty services. The company serves telecommunications, military, commercial, industrial, and marine markets. It sells its products through a direct sales force, and independent service providers and dealers. The company was formerly known as Polar Products, Inc. and changed its name to Polar Power, Inc. in October 1991. Polar Power, Inc. was incorporated in 1979 and is based in Gardena, California.",
-    "name": "Polar Power, Inc.",
-    "symbol": "POLA",
-    "short_name": "Polar Power, Inc.",
-    "industry": "Electrical Equipment & Parts",
-    "website": "https://www.polarpower.com",
+    "price": 1.22,
+    "change_percent": 0.83,
+    "market_cap": 4907014,
+    "fifty_two_week_high": 9.9,
+    "fifty_two_week_low": 1.1,
+    "volume": 75170,
+    "analyst_target": 4.0,
+    "recommendation": "buy",
+    "sector": "Healthcare",
+    "description": "Dermata Therapeutics, Inc., a late-stage medical dermatology company, focuses on identifying, developing, and commercializing pharmaceutical product candidates for the treatment of medical skin diseases and aesthetic applications. Its lead product candidate is XYNGARI, which is in Phase 3 clinical studies for the treatment of moderate-to-severe acne, as well as completed Phase 1b proof of concept (POC) trial for mild-to-moderate psoriasis. The company is also developing DMT410 that has completed Phase 1b POC trials for the treatment of axillary hyperhidrosis and aesthetic skin conditions. It has a clinical trial collaboration agreement with Revance Therapeutics, Inc. to conduct a multi-center clinical trial to evaluate the topical application of XYNGARI with DAXXIFY, Revance's botulinum toxin type A. Dermata Therapeutics, Inc. was incorporated in 2014 and is headquartered in San Diego, California.",
+    "name": "Dermata Therapeutics, Inc.",
+    "symbol": "DRMA",
+    "short_name": "Dermata Therapeutics, Inc.",
+    "industry": "Biotechnology",
+    "website": "https://www.dermatarx.com",
     "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
-    "city": "Gardena",
+    "city": "San Diego",
     "state": "CA",
-    "zip": "90248",
-    "phone": "310 830 9153",
+    "zip": "92130",
+    "phone": "858 800 2543",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -231,72 +159,72 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/POLA.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=polarpower.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/DRMA.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=dermatarx.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
     "catalyst_type": "product launch",
-    "catalyst_confidence": 0.8
+    "catalyst_confidence": 0.9
   },
   {
-    "ticker": "SIDU",
-    "mentions": 7.1,
-    "avg_sentiment": 0.435,
-    "final_score": 0.707,
+    "ticker": "FLYX",
+    "mentions": 6.3,
+    "avg_sentiment": 0.63,
+    "final_score": 0.885,
     "top_contexts": [
       {
-        "text": "$MTEK will go massive with SpaceX has their IPO soon. They are one of the cheapest space stocks on the market and have a mission with $SIDU later this year",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "I ask chatGPT FOR top penny stocks.  I look at fundamentals, revenue growth (generally not profitable but a climb to profit), if these are solid I read articles on what Wall Street is saying.  If they recently did a share offering I buy.  Did this with SIDU, bitfarm, Asts, last year and did well.  C",
+        "text": "Their merger with FLYX is supposed to be completed by the end of the month and they have a SpaceX connection so it has potential.",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "$3.95~ exited at $4.18 for quick gain haha",
-        "sentiment": "negative",
-        "score": -0.4
+        "text": "FLYX + Jet.AI: Hidden AI Catalyst Set-Up Before April 30 🚀 FLYX (flyExclusive) is starting to look interesting at current levels because the upcoming deal with Jet.AI could act as a near-term catalyst. You’ve got a private aviation company that’s tightening its focus while potentially integrating AI",
+        "sentiment": "positive",
+        "score": 0.6
       },
       {
-        "text": "Oh nice. Didn't want to hold through the weekend? I bought on the buy signal (3.61 reddit post if you search sidu this week) but holding through the weekend",
+        "text": "FLYX (flyExclusive) is starting to look interesting at current levels because the upcoming deal with Jet.AI could act as a near-term catalyst. You’ve got a private aviation company that’s tightening its focus while potentially integrating AI-driven booking and optimization tech, which the market ten",
         "sentiment": "positive",
-        "score": 0.4
+        "score": 0.6
       },
       {
-        "text": "I might buy on Monday, but I try not to hold positions throughout the weekend. Hope you get some major gains though!",
+        "text": "They FLYX deal should be approved by the sec anyday. If you don't give them a chance now theres no point doing it once it's announced",
         "sentiment": "positive",
-        "score": 0.726
+        "score": 0.6
+      },
+      {
+        "text": "✈️ FLYX looking like a sleeper gem. Growth, Starlink upgrades, insider buys, patents = bullish sauce. Hold tight, dips are for picking up cheap tendies. 💸🔥",
+        "sentiment": "positive",
+        "score": 0.8
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 4.25,
-    "change_percent": 27.25,
-    "market_cap": 282709376,
-    "fifty_two_week_high": 5.39,
-    "fifty_two_week_low": 0.628,
-    "volume": 47986142,
-    "analyst_target": 10.0,
+    "price": 2.28,
+    "change_percent": 3.17,
+    "market_cap": 238952960,
+    "fifty_two_week_high": 8.88,
+    "fifty_two_week_low": 1.9,
+    "volume": 114296,
+    "analyst_target": 7.0,
     "recommendation": "none",
     "sector": "Industrials",
-    "description": "Sidus Space, Inc. engages in the design, manufacture, launch, and data collection of commercial satellite worldwide. The company's space services include satellite design and manufacturing, such as LizzieSat, LizzieSat-XL, and Lunar Lizzie. It also offers technology hosting and mission management AI-enhanced Data-as-a-Service, utilizing the Orlaith AI ecosystem, which includes FeatherEdge AI processor, and Cielo AI solutions from space, on the LizzieSat platform to deliver timely data insights from space. The company also provides space and defense manufacturing, a mission-critical components and systems engineered for space environments, including precision machining and assembly; 3D printing; mechanical/electrical assembly and test; and design engineering, as well as technology design and integration. It serves commercial space, aerospace, and defense industries. The company was founded in 2012 and is headquartered in Merritt Island, Florida.",
-    "name": "Sidus Space, Inc.",
-    "symbol": "SIDU",
-    "short_name": "Sidus Space, Inc.",
-    "industry": "Aerospace & Defense",
-    "website": "https://www.sidusspace.com",
-    "exchange": "NCM",
+    "description": "flyExclusive, Inc. owns and operates jet aircraft in North America. The company also offers jet charter services; aircraft maintenance, modification, repair, inspection, overhaul operation services; interior and exterior refurbishment services; and aircraft management services, as well as wholesale and retail ad hoc flights, a jet club program, partnership program, fractional program, and other services. flyExclusive, Inc. is headquartered in Kinston, North Carolina.",
+    "name": "flyExclusive, Inc.",
+    "symbol": "FLYX",
+    "short_name": "flyExclusive, Inc.",
+    "industry": "Airlines",
+    "website": "https://www.flyexclusive.com",
+    "exchange": "ASE",
     "currency": "USD",
     "country": "United States",
-    "city": "Merritt Island",
-    "state": "FL",
-    "zip": "32953",
-    "phone": "321 450 5633",
+    "city": "Kinston",
+    "state": "NC",
+    "zip": "28504",
+    "phone": "252 208 7715",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -313,8 +241,8 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/SIDU.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=sidusspace.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/FLYX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=flyexclusive.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
@@ -323,72 +251,72 @@
     "catalyst_confidence": 0.8
   },
   {
-    "ticker": "ANNA",
-    "mentions": 13.3,
-    "avg_sentiment": 0.392,
-    "final_score": 0.652,
+    "ticker": "OMEX",
+    "mentions": 10.8,
+    "avg_sentiment": 0.467,
+    "final_score": 0.743,
     "top_contexts": [
       {
-        "text": "ANNA has turned out to be absolute shite... Maybe it was all bcoz of war.",
+        "text": "Too bad it came just as hard down as it went up",
         "sentiment": "negative",
-        "score": -0.6
+        "score": -0.4
       },
       {
-        "text": "ANNA is a seriously good short squeeze candidate It's been a while since I posted on here, and I am not the first one to suggest Aleanna (ANNA). But it's breaking out to around $10 in overnight trading. CTB is around 700% and rising (saw some quotes around 900%). I've always said that a high CTB is",
+        "text": "OMEX merger news watching for 🚀",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "Reverse split coming in the next week so idk",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Whats the source for that wasnt it june or july?",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Also thats if it even happens nothing was set in stone as far as i can see, my thoughts were there was a chance that happens and if so itd be months away",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "OMEX day trade: $1B merger catalyst just dropped — they’re combining with a deep-sea mining firm led by an ex–Rio Tinto CEO to build a major critical minerals platform  Setup: Support: ~$1.00 Pivot: ~$1.30 Gamma wall: $2 (key ceiling/magnet) Trade: reclaim $1.30–1.40 + volume = momentum push toward",
         "sentiment": "positive",
         "score": 0.8
       },
       {
-        "text": "Wtf, has ANNA been delisted? Cannot sell my shared and apparently it is because of that",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "LOL ANNA doesn't have call options.",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "I sold ANNA yesterday at $8.50.  Bought back in today because the war isn’t over, energy prices in Italy have not magically been fixed and the SI has increased so for those reasons and insiders own 93% Im back in at $6.35, up already",
+        "text": "$OMEX +56% — $1B deep-sea minerals merger with American Ocean Minerals Odyssey Marine Exploration (OMEX) ripped in premarket on Tuesday after announcing a definitive all-stock merger with American Ocean Minerals Corp (AOMC) to form a $1 billion critical minerals and rare earths company focused on de",
         "sentiment": "positive",
         "score": 0.8
-      },
-      {
-        "text": "Their er is soon right? Their books look good so I would assume another solid er?",
-        "sentiment": "positive",
-        "score": 0.788
-      },
-      {
-        "text": "You did not bring ANNA lol you informed people after reading someone else's DD but thanks for sharing it was sick",
-        "sentiment": "negative",
-        "score": -0.4
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 4.99,
-    "change_percent": -17.93,
-    "market_cap": 202892784,
-    "fifty_two_week_high": 18.3,
-    "fifty_two_week_low": 2.31,
-    "volume": 1765852,
+    "price": 0.88,
+    "change_percent": -17.05,
+    "market_cap": 49010856,
+    "fifty_two_week_high": 4.43,
+    "fifty_two_week_low": 0.37,
+    "volume": 6961003,
     "analyst_target": 0,
     "recommendation": "none",
-    "sector": "Energy",
-    "description": "AleAnna, Inc., a development-stage natural gas resource company, focuses on delivering critical natural gas supplies in Europe and Italy. The company operates through onshore conventional natural gas exploration and renewable natural gas development. AleAnna, Inc. was founded in 2007 and is headquartered in Dallas, Texas.",
-    "name": "AleAnna, Inc.",
-    "symbol": "ANNA",
-    "short_name": "AleAnna, Inc.",
-    "industry": "Oil & Gas E&P",
-    "website": "https://www.aleannainc.com",
+    "sector": "Basic Materials",
+    "description": "Odyssey Marine Exploration, Inc., together with its subsidiaries, discovers, validates, and develops seafloor mineral resources including polymetallic nodules for battery metals and subsea phosphate deposits for fertilizers. The company offers comprehensive research, marine operations, and regulatory compliance support and explores for phosphate and gold deposits. The company works with governments and seafloor rights holders worldwide and develops its projects in collaboration with a global network of partners, academics, and industry professionals. It also provides specialized mineral exploration, project development, and marine services to clients. Odyssey Marine Exploration, Inc. is headquartered in Tampa, Florida.",
+    "name": "Odyssey Marine Exploration, Inc.",
+    "symbol": "OMEX",
+    "short_name": "Odyssey Marine Exploration, Inc",
+    "industry": "Other Industrial Metals & Mining",
+    "website": "https://www.odysseymarine.com",
     "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
-    "city": "Dallas",
-    "state": "TX",
-    "zip": "75201",
-    "phone": "469 396 2200",
+    "city": "Tampa",
+    "state": "FL",
+    "zip": "33609",
+    "phone": "813 876 1776",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -405,53 +333,53 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/ANNA.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=aleannainc.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/OMEX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=odysseymarine.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "regulatory",
-    "catalyst_confidence": 0.8
+    "catalyst_type": "partnership",
+    "catalyst_confidence": 0.9
   },
   {
-    "ticker": "ARAI",
-    "mentions": 14.2,
-    "avg_sentiment": 0.445,
-    "final_score": 0.615,
+    "ticker": "IQST",
+    "mentions": 12.6,
+    "avg_sentiment": 0.544,
+    "final_score": 0.727,
     "top_contexts": [
       {
-        "text": "ARAI guys go check it out something is coming and getting advantage of it will be quite easy. Good fundamentals and the ceo care about the share price as he says in his interview/podcast go check it out if you want I think its worth the risk! Enjoy your weekend",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "🚨 $ARAI Snagged Its 10th US Patent – This Could Be the Real Infrastructure Play for Drone & Robot Deliveries $ARAI (Arrive AI) just hit a legit milestone their 10th U.S. patent. These guys are straight-up building Arrive Points: smart, secure mailboxes that let drones, ground robots, and regular",
+        "text": "a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide in",
         "sentiment": "positive",
         "score": 0.8
       },
       {
-        "text": "$ARAI Wild Momentum With Room For Continuation Tomorrow Someone posted about this and when I looked at the day's performance my first thought was how strong it closed. It literally continued climbing with **good volume in overnight trading.** Let me couch this by saying **it's already made significa",
+        "text": "This Hidden Microcap Has Real Revenue, a Clean Structure, and a Fresh Digital Health Deal Hey guys, I’ve been digging into a microcap that’s been flying completely under the radar but has a setup that feels really solid. The company is iQSTEL (IQST). They run a global B2B telecom platform that route",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "Man, that's a seriously thorough breakdown on $ARAI. You've really dug into those levels and the momentum flip on the 15min. Appreciate you sharing the detailed character change too. Those low float runners can definitely get wild, and you've got a solid plan for it. Good luck tomorrow!",
+        "text": "IQST , 340mil in revenue , is operating in 20 countries.  10mil MC. lol. Why they are burning 9mil each year with 340mil revenue, I do not know. But compared to other tickers that have no revenue this is nuts.",
         "sentiment": "positive",
-        "score": 0.8
+        "score": 0.6
       },
       {
-        "text": "ARAI go check it out its worth the risk something coming might not be huge but easy to take advantage of it. Avg at .86 good luck and enjoy your weekend",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "You think it will go up it is at 1.05",
+        "text": "Will be sure to take a look :)",
         "sentiment": "neutral",
         "score": 0.0
       },
       {
-        "text": "that’s last nights price it’s at .92 rn",
+        "text": "Telecom. Think it’s small margins. They are Working with the big boys.  They project revenue of 400mil 2026 and 1 billion for 2027. They venture into cybersecurity as well. Maybe that’s were profit will arrive.  Get in while under 2usd, it’s a barging. Compared to any other stock with 3x times Mark",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Interesting, I do need to look into the cybersecurity stocks as I do feel they have a lot of room to grow",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "Lmao , try IQST. Its a telecom company.",
         "sentiment": "neutral",
         "score": 0.0
       }
@@ -459,28 +387,28 @@
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 0.81,
-    "change_percent": -21.36,
-    "market_cap": 29511964,
-    "fifty_two_week_high": 40.0,
-    "fifty_two_week_low": 0.51,
-    "volume": 20569557,
-    "analyst_target": 12.0,
+    "price": 1.81,
+    "change_percent": -19.2,
+    "market_cap": 9178045,
+    "fifty_two_week_high": 18.6824,
+    "fifty_two_week_low": 1.48,
+    "volume": 3905100,
+    "analyst_target": 18.0,
     "recommendation": "none",
-    "sector": "Technology",
-    "description": "Arrive AI Inc. a developmental technology company, designs and implement viable smart mailbox and platform system for smart, secure, and seamless exchange of packages, goods, supplies, food, and medications between people, by robots, and drones in the United States. Arrive AI Inc. was formerly known as Arrive Technology Inc. and changed its name to Arrive AI Inc. in September 2024. The company was incorporated in 2020 and is based in Fishers, Indiana.",
-    "name": "Arrive AI Inc.",
-    "symbol": "ARAI",
-    "short_name": "Arrive AI Inc.",
-    "industry": "Software - Infrastructure",
-    "website": "https://www.arriveai.com",
-    "exchange": "NGM",
+    "sector": "Communication Services",
+    "description": "iQSTEL Inc. provides telecommunication services as a wholesale carrier of voice, short message service (SMS), and data for other telecom companies. The company offers VoIP, SMS, proprietary Internet of Things, and international fiber-optic communication services; international long-distance voice services for telecommunications operators; submarine fiber optic network capacity for internet, such as 4G and 5G; and network infrastructure services to the retail end users. It also provides international voice termination for carriers, US/Canada inbound / origination, global DIDs and toll-free numbers, private branch exchange for small businesses, and SIP trunking services; ItsBchain, a blockchain technology and solutions provider that focus on the telecom sector; financial services to immigrants; mobile number portability application services; electric motorcycles and mid speed cars; white label solutions; and Fintech ecosystem, including a debit card, US bank account, and a mobile app/wallet to manage remittances and mobile top up. The company serves wholesale carrier, government, corporate, enterprise, and small and medium companies in North America, Switzerland, Latin America, and rest of Europe. iQSTEL Inc. is based in Coral Gables, Florida.",
+    "name": "iQSTEL Inc.",
+    "symbol": "IQST",
+    "short_name": "iQSTEL Inc.",
+    "industry": "Telecom Services",
+    "website": "https://www.iqstel.com",
+    "exchange": "NCM",
     "currency": "USD",
     "country": "United States",
-    "city": "Fishers",
-    "state": "IN",
-    "zip": "46037",
-    "phone": "463 270 0092",
+    "city": "Coral Gables",
+    "state": "FL",
+    "zip": "33134",
+    "phone": "954 951 8191",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -497,77 +425,67 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/ARAI.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=arriveai.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/IQST.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=iqstel.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "patent",
+    "catalyst_type": "revenue/earnings",
     "catalyst_confidence": 0.8
   },
   {
-    "ticker": "FUSE",
-    "mentions": 9.3,
-    "avg_sentiment": 0.399,
-    "final_score": 0.611,
+    "ticker": "VRAX",
+    "mentions": 5.1,
+    "avg_sentiment": 0.446,
+    "final_score": 0.688,
     "top_contexts": [
       {
-        "text": "$FUSE +41% — AI company surges on shareholder letter highlighting agentic AI strategy Fusemachines (FUSE) ripped Thursday after publishing a shareholder letter that lit up the AI momentum trade. The stock gapped from $0.85 to over $2.20 by after-hours. \\*\\***The catalyst**\\*\\* CEO Sameer Maskey",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "Damn wish I would have caught FUSE earlier.",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "yeah it was too quiet in here this morning",
+        "text": "In VRAX at 0.18 for a scalp. Let’s see how it plays out",
         "sentiment": "neutral",
         "score": 0.0
       },
       {
-        "text": "Damn, could be a play monday morning when people take their profits and it dips. I'm watching FUSE right now as well",
+        "text": "I like VRAX, SAFX, AIXI, EONR, ANNA (careful with oil)",
         "sentiment": "positive",
         "score": 0.4
       },
       {
-        "text": "Current price $1.83 sits between support at $0.68 and resistance at $28.63—that's a 40x range telling you the market's still pricing in uncertainty. 60% bullish confidence on momentum signals suggests short-term follow-through, but need 2x average volume to confirm the breakout holds past $2.50, oth",
-        "sentiment": "neutral",
-        "score": 0.0
+        "text": "WTF is going on with VRAX? Up 75% as soon as pre market started",
+        "sentiment": "positive",
+        "score": 0.915
       },
       {
-        "text": "NEW YORK, April 09, 2026 (GLOBE NEWSWIRE) -- Fusemachines Inc. (NASDAQ: FUSE), a leading enterprise AI company, today released a shareholder letter from its Founder and CEO Dr. Sameer Maskey outlining the company’s vision and positioning in the emerging era of agentic AI. With more than 25 years of",
-        "sentiment": "neutral",
-        "score": 0.0
+        "text": "Big move AH Friday after all warrants were delcared exercised by an investor for shares at 0.4$. Lots of chatter online",
+        "sentiment": "positive",
+        "score": 0.4
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 1.83,
-    "change_percent": 115.29,
-    "market_cap": 52957032,
-    "fifty_two_week_high": 25.0,
-    "fifty_two_week_low": 0.8,
-    "volume": 115757627,
-    "analyst_target": 0,
+    "price": 0.1,
+    "change_percent": -22.83,
+    "market_cap": 772779,
+    "fifty_two_week_high": 1.2,
+    "fifty_two_week_low": 0.1,
+    "volume": 6002422,
+    "analyst_target": 1.0,
     "recommendation": "none",
-    "sector": "Technology",
-    "description": "Fusemachines Inc. develops and delivers artificial intelligence (AI) as a service and machine learning software solutions. The company offers Fuse Anna which is an AI assistant for follow ups through daily reminders; and Fuse Prospector which is an artificial intelligence sales platform. Further, the company offers managed outbound services and AI as a service for big data processing, data management, and cloud analytics. Additionally, it offers Fusemachines AI fellowship program, which provides selected scholars from underserved communities with mentorship and resources to develop advanced skills in artificial intelligence and machine learning, as well as Fusemachines Academy, a learning platform to build and enhance skills. The company serves governments, financial institutions, and e-commerce companies. The company is based in New York, New York with an additional offices in Kathmandu, Nepal; Toronto, Canada; Kochi, India; Santo Domingo, Cuba.",
-    "name": "Fusemachines Inc.",
-    "symbol": "FUSE",
-    "short_name": "Fusemachines Inc.",
-    "industry": "Software - Application",
-    "website": "https://fusemachines.com",
-    "exchange": "NGM",
+    "sector": "Healthcare",
+    "description": "Virax Biolabs Group Limited, a biotechnology company, distributes diagnostics test kits for the prevention, detection, diagnosis, and risk management of viral diseases in the field of T cell in Vitro Diagnostics. The company offers various in-vitro diagnostics test kits comprising respiratory, pregnancy and fertility, infectious diseases, sti, drugs of abuse, oncology, cardiac, women's health, other test kits under the ViraxClear brands; and rapid and molecular tests for small animal veterinary diagnostics under the ViraxVet brand. It also provides ViraxImmune, a T cell In vitro diagnostic device and wellness mobile application; and service, such as antibody engineering, custom peptides, protein sequencing, vaccine efficacy testing, immunology lab services, kits and reagents. In addition, the company is involved in research and development activities; and provision of procurement, warehousing, product development, and staffing management services. It serves research organizations, corporations, independent laboratories, large hospital systems and public and private institutions, as well as distributor customers. The company operates in the United Kingdom, the United States, and China. The company was formerly known as Virax Biolabs (Cayman) Limited and changed its name to Virax Biolabs Group Limited in September 2021. Virax Biolabs Group Limited was founded in 2013 and is headquartered in Lanarkshire, the United Kingdom.",
+    "name": "Virax Biolabs Group Limited",
+    "symbol": "VRAX",
+    "short_name": "Virax Biolabs Group Limited",
+    "industry": "Biotechnology",
+    "website": "https://viraxbiolabs.com",
+    "exchange": "NCM",
     "currency": "USD",
-    "country": "United States",
-    "city": "New York",
-    "state": "NY",
-    "zip": "10001",
-    "phone": "347-212-5075",
+    "country": "United Kingdom",
+    "city": "Lanarkshire",
+    "state": "Unknown",
+    "zip": "ML1 5UH",
+    "phone": "44 20 7788 7414",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -584,14 +502,14 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/FUSE.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=fusemachines.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/VRAX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=viraxbiolabs.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "shareholder letter",
-    "catalyst_confidence": 0.8
+    "has_catalyst": false,
+    "catalyst_type": "none",
+    "catalyst_confidence": 0.0
   },
   {
     "ticker": "BTBD",
@@ -662,76 +580,76 @@
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "partnership",
+    "catalyst_type": "contract",
     "catalyst_confidence": 0.8
   },
   {
-    "ticker": "IQST",
-    "mentions": 13.3,
-    "avg_sentiment": 0.502,
-    "final_score": 0.564,
+    "ticker": "ARAI",
+    "mentions": 21.8,
+    "avg_sentiment": 0.353,
+    "final_score": 0.577,
     "top_contexts": [
       {
-        "text": "What happened to your IQST play? Its now at 1.77.",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "$IQST is probably the most undervalued penny stock in the market right now and is forecasting $1b+ in revenue for 2027 and already doing 300m+ each year with only a $11M market cap. Insane growth with no long term debt this can be huge",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide in",
+        "text": "ARAI preparing for another pump",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "This Hidden Microcap Has Real Revenue, a Clean Structure, and a Fresh Digital Health Deal Hey guys, I’ve been digging into a microcap that’s been flying completely under the radar but has a setup that feels really solid. The company is iQSTEL (IQST). They run a global B2B telecom platform that route",
+        "text": "I hope ARAI will do well next week",
+        "sentiment": "positive",
+        "score": 0.931
+      },
+      {
+        "text": "$ARAI Wild Momentum With Room For Continuation Tomorrow Someone posted about this and when I looked at the day's performance my first thought was how strong it closed. It literally continued climbing with **good volume in overnight trading.** Let me couch this by saying **it's already made significa",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "a small cap name looking at billion dollar revenues IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide inc",
+        "text": "Man, that's a seriously thorough breakdown on $ARAI. You've really dug into those levels and the momentum flip on the 15min. Appreciate you sharing the detailed character change too. Those low float runners can definitely get wild, and you've got a solid plan for it. Good luck tomorrow!",
         "sentiment": "positive",
         "score": 0.8
       },
       {
-        "text": "$IQST - \"Our focus now is transitioning from building revenue scale to expanding profitability,\" said Leandro Iglesias, Chairman and CEO of IQSTEL. $IQST - \"Our focus now is transitioning from building revenue scale to expanding profitability,\" said Leandro Iglesias, Chairman and CEO of IQSTEL. \"Aft",
+        "text": "🚨 $ARAI Snagged Its 10th US Patent – This Could Be the Real Infrastructure Play for Drone & Robot Deliveries $ARAI (Arrive AI) just hit a legit milestone their 10th U.S. patent. These guys are straight-up building Arrive Points: smart, secure mailboxes that let drones, ground robots, and regular",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "Should I hold or sell my ARAI I have like 120 shares rn at 1.19 average cost I don’t know if I should keep holding",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "I am watching the ARAI stock for this Monday. It is going to move nicely on 15 of April",
         "sentiment": "positive",
         "score": 0.4
-      },
-      {
-        "text": "$IQST a fast-growing multi sector name ww IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide including maj",
-        "sentiment": "positive",
-        "score": 0.6
       }
     ],
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 1.81,
-    "change_percent": -19.2,
-    "market_cap": 9178045,
-    "fifty_two_week_high": 18.6824,
-    "fifty_two_week_low": 1.48,
-    "volume": 3907437,
-    "analyst_target": 18.0,
+    "price": 0.81,
+    "change_percent": -21.36,
+    "market_cap": 29511964,
+    "fifty_two_week_high": 40.0,
+    "fifty_two_week_low": 0.51,
+    "volume": 20569557,
+    "analyst_target": 12.0,
     "recommendation": "none",
-    "sector": "Communication Services",
-    "description": "iQSTEL Inc. provides telecommunication services as a wholesale carrier of voice, short message service (SMS), and data for other telecom companies. The company offers VoIP, SMS, proprietary Internet of Things, and international fiber-optic communication services; international long-distance voice services for telecommunications operators; submarine fiber optic network capacity for internet, such as 4G and 5G; and network infrastructure services to the retail end users. It also provides international voice termination for carriers, US/Canada inbound / origination, global DIDs and toll-free numbers, private branch exchange for small businesses, and SIP trunking services; ItsBchain, a blockchain technology and solutions provider that focus on the telecom sector; financial services to immigrants; mobile number portability application services; electric motorcycles and mid speed cars; white label solutions; and Fintech ecosystem, including a debit card, US bank account, and a mobile app/wallet to manage remittances and mobile top up. The company serves wholesale carrier, government, corporate, enterprise, and small and medium companies in North America, Switzerland, Latin America, and rest of Europe. iQSTEL Inc. is based in Coral Gables, Florida.",
-    "name": "iQSTEL Inc.",
-    "symbol": "IQST",
-    "short_name": "iQSTEL Inc.",
-    "industry": "Telecom Services",
-    "website": "https://www.iqstel.com",
-    "exchange": "NCM",
+    "sector": "Technology",
+    "description": "Arrive AI Inc. a developmental technology company, designs and implement viable smart mailbox and platform system for smart, secure, and seamless exchange of packages, goods, supplies, food, and medications between people, by robots, and drones in the United States. Arrive AI Inc. was formerly known as Arrive Technology Inc. and changed its name to Arrive AI Inc. in September 2024. The company was incorporated in 2020 and is based in Fishers, Indiana.",
+    "name": "Arrive AI Inc.",
+    "symbol": "ARAI",
+    "short_name": "Arrive AI Inc.",
+    "industry": "Software - Infrastructure",
+    "website": "https://www.arriveai.com",
+    "exchange": "NGM",
     "currency": "USD",
     "country": "United States",
-    "city": "Coral Gables",
-    "state": "FL",
-    "zip": "33134",
-    "phone": "954 951 8191",
+    "city": "Fishers",
+    "state": "IN",
+    "zip": "46037",
+    "phone": "463 270 0092",
     "email": "Unknown",
     "ceo": "Unknown",
     "num_employees": 0,
@@ -748,20 +666,107 @@
     "splits": {},
     "stock_splits": {},
     "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/IQST.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=iqstel.com&sz=64",
+    "logo_url": "https://financialmodelingprep.com/image-stock/ARAI.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=arriveai.com&sz=64",
     "vampire_flagged": false,
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "revenue/earnings",
+    "catalyst_type": "patent",
     "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "AEHL",
+    "mentions": 9.8,
+    "avg_sentiment": 0.363,
+    "final_score": 0.56,
+    "top_contexts": [
+      {
+        "text": "My plays for this week are AEHL and SRXH either of them works for me so lets goo",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Thoughts on $aehl? I know you said 5-6 days a couple days ago..",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "$AEHL ✅ Potential for a mega Move .. like $AIXI . Overbeaten setup . 3 months liquidity  $6 area ..  something big could happen on this one .",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Do you think AEHL has this type of potential? If so, why?",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Just buy and hold, it is same as aixi",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Why aehl if you don’t mind me asking?",
+        "sentiment": "neutral",
+        "score": 0.0
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.08,
+    "change_percent": -6.9,
+    "market_cap": 1782035,
+    "fifty_two_week_high": 50.52,
+    "fifty_two_week_low": 1.02,
+    "volume": 289546,
+    "analyst_target": 0,
+    "recommendation": "none",
+    "sector": "Industrials",
+    "description": "Antelope Enterprise Holdings Limited, through its subsidiaries, provides livestream e-commerce, and business management and information systems consulting services in the People's Republic of China and the United States. The company operates social media and e-commerce platforms for consumer goods brands, merchants, and small-scale ecommerce platforms customers. It also provides business management and consulting services which consist of computer consulting services and online social media platform development, as well as sales of software use rights for digital data deposit platforms and asset management systems. In addition, the company is involved in natural gas power generation and power station acquisitions and investments businesses; film and television entertainment, internet celebrity economy, live streaming, and game businesses; and trading of building materials. The company was formerly known as China Ceramics Co., Ltd. and changed its name to Antelope Enterprise Holdings Limited in October 2020. Antelope Enterprise Holdings Limited was founded in 1993 and is headquartered in Jinjiang, the People's Republic of China.",
+    "name": "Antelope Enterprise Holdings Limited",
+    "symbol": "AEHL",
+    "short_name": "Antelope Enterprise Holdings Li",
+    "industry": "Building Products & Equipment",
+    "website": "https://www.aehltd.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "China",
+    "city": "Jinjiang",
+    "state": "Unknown",
+    "zip": "Unknown",
+    "phone": "Unknown",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/AEHL.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=aehltd.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": false,
+    "catalyst_type": "none",
+    "catalyst_confidence": 0.0
   },
   {
     "ticker": "PSTV",
     "mentions": 6.3,
-    "avg_sentiment": 0.316,
-    "final_score": 0.467,
+    "avg_sentiment": 0.357,
+    "final_score": 0.528,
     "top_contexts": [
       {
         "text": "PSTV genuinely has ample potential for a 10x upside. (2) You might dismiss my post as simply a promotional or exaggerated piece. Yes. As a shareholder, I maintain a highly positive perspective. However, I am not merely exaggerating or stating falsehoods. [",
@@ -847,6 +852,6 @@
     "vampire_confidence": 0.0,
     "has_catalyst": false,
     "catalyst_type": "none",
-    "catalyst_confidence": 0.5
+    "catalyst_confidence": 0.0
   }
 ]

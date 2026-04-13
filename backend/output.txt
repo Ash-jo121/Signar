@@ -1,40 +1,40 @@
-$CUE [CATALYST: CONTRACT] 
-  Mentions: 5.5 | Sentiment: +0.685 | Score: +0.963
-  Context: $CUE heading to $1 very soon big $7.5 million deal finalized. Payment in May.
+$SAFX [NO CATALYST] 
+  Mentions: 24.7 | Sentiment: +0.562 | Score: +1.014
+  Context: SAFX is picking up volume.  getting in now.  I think it's a better play than something that already 
 
-$SAFX [CATALYST: CLINICAL] 
-  Mentions: 13.1 | Sentiment: +0.712 | Score: +0.894
-  Context: SAFX was great today Many thanks to Prestigious Garlic!
+$DRMA [CATALYST: PRODUCT LAUNCH] 
+  Mentions: 8.0 | Sentiment: +0.574 | Score: +0.952
+  Context: same with $DRMA with its mid 2026 product launch.
 
-$POLA [CATALYST: PRODUCT LAUNCH] 
-  Mentions: 5.0 | Sentiment: +0.724 | Score: +0.779
-  Context: $DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of th
+$FLYX [CATALYST: PARTNERSHIP] 
+  Mentions: 6.3 | Sentiment: +0.630 | Score: +0.885
+  Context: Their merger with FLYX is supposed to be completed by the end of the month and they have a SpaceX co
 
-$SIDU [CATALYST: PARTNERSHIP] 
-  Mentions: 7.1 | Sentiment: +0.435 | Score: +0.707
-  Context: $MTEK will go massive with SpaceX has their IPO soon. They are one of the cheapest space stocks on t
+$OMEX [CATALYST: PARTNERSHIP] 
+  Mentions: 10.8 | Sentiment: +0.467 | Score: +0.743
+  Context: Too bad it came just as hard down as it went up
 
-$ANNA [CATALYST: REGULATORY] 
-  Mentions: 13.3 | Sentiment: +0.392 | Score: +0.652
-  Context: ANNA has turned out to be absolute shite... Maybe it was all bcoz of war.
+$IQST [CATALYST: REVENUE/EARNINGS] 
+  Mentions: 12.6 | Sentiment: +0.544 | Score: +0.727
+  Context: a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently si
 
-$ARAI [CATALYST: PATENT] 
-  Mentions: 14.2 | Sentiment: +0.445 | Score: +0.615
-  Context: ARAI guys go check it out something is coming and getting advantage of it will be quite easy. Good f
+$VRAX [NO CATALYST] 
+  Mentions: 5.1 | Sentiment: +0.446 | Score: +0.688
+  Context: In VRAX at 0.18 for a scalp. Let’s see how it plays out
 
-$FUSE [CATALYST: SHAREHOLDER LETTER] 
-  Mentions: 9.3 | Sentiment: +0.399 | Score: +0.611
-  Context: $FUSE +41% — AI company surges on shareholder letter highlighting agentic AI strategy Fusemachines (
-
-$BTBD [CATALYST: PARTNERSHIP] 
+$BTBD [CATALYST: CONTRACT] 
   Mentions: 6.0 | Sentiment: +0.616 | Score: +0.585
   Context: $BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finishe
 
-$IQST [CATALYST: REVENUE/EARNINGS] 
-  Mentions: 13.3 | Sentiment: +0.502 | Score: +0.564
-  Context: What happened to your IQST play? Its now at 1.77.
+$ARAI [CATALYST: PATENT] 
+  Mentions: 21.8 | Sentiment: +0.353 | Score: +0.577
+  Context: ARAI preparing for another pump
+
+$AEHL [NO CATALYST] 
+  Mentions: 9.8 | Sentiment: +0.363 | Score: +0.560
+  Context: My plays for this week are AEHL and SRXH either of them works for me so lets goo
 
 $PSTV [NO CATALYST] 
-  Mentions: 6.3 | Sentiment: +0.316 | Score: +0.467
+  Mentions: 6.3 | Sentiment: +0.357 | Score: +0.528
   Context: PSTV genuinely has ample potential for a 10x upside. (2) You might dismiss my post as simply a promo
 
