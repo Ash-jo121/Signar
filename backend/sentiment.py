@@ -165,31 +165,35 @@ def assess_catalyst_quality(ticker, contexts, retry=False):
 
 IMPORTANT: Only assess catalysts directly attributed to {ticker} itself.
 If a context mentions {ticker} alongside another stock's catalyst, ignore the other stock's catalyst entirely.
+If a context discusses another company's FDA approval, trial, or contract and {ticker} is only mentioned for comparison, that is NOT a catalyst for {ticker}.
 
 Contexts:
 {contexts_text}
 
 Based on ALL the above comments together, return a SINGLE JSON object (not an array):
-{{"has_catalyst": true/false, "catalyst_type": "FDA/earnings/contract/partnership/clinical/regulatory/patent/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
+{{"has_catalyst": true/false, "catalyst_type": "FDA/earnings/contract/partnership/clinical/regulatory/patent/merger/capital raise/production/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
 
 REAL catalysts (has_catalyst = true):
 - FDA approval, trial results, PDUFA date
 - Government contract, DoD/DHS award
 - Revenue/earnings news with specific numbers
-- Named partnership or commercial agreement
+- Named partnership or commercial agreement with a named counterparty
 - SEC filing, specific regulatory event
 - Clinical trial data or milestone
 - Court ruling or patent decision
+- Confirmed merger or acquisition announcement
+- Capital raise with specific dollar amount
+- Production milestone with specific numbers (e.g. doubling output)
 
 NOT catalysts (has_catalyst = false):
 - Short squeeze setup, float/short interest discussion
 - Cost to borrow (CTB) spikes
-- Short squeeze as catalyst type
 - Price targets without backing
 - General hype, moon/rocket language
 - Watchlist mentions without reasoning
 - Technical analysis only (Wyckoff, chart patterns, support/resistance)
-- War/geopolitical speculation without direct company contract
+- Macro/geopolitical events (oil supply, energy crisis, war, tariffs, sanctions) — even if they could benefit the company
+- Energy supply disruptions, commodity price shocks, or geopolitical speculation without a named contract or deal for {ticker}
 - "Waiting for catalyst" with no catalyst named
 - Borrow rate discussions
 - Delisting notice or compliance warning (this is a risk event, not a catalyst)

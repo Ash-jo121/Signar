@@ -2,6 +2,8 @@ import json
 import math
 import re
 import time
+import os
+from datetime import date
 from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
@@ -439,6 +441,15 @@ if __name__ == "__main__":
 
     with open("output.json", "w", encoding="utf-8") as file:
         json.dump(results[:10], file, indent=2, ensure_ascii=False)
+
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+    dated_file = os.path.join(
+        output_dir, f"output_{date.today().strftime('%Y-%m-%d')}.json"
+    )
+    with open(dated_file, "w", encoding="utf-8") as file:
+        json.dump(results[:10], file, indent=2, ensure_ascii=False)
+    print(f"Output written to {dated_file}")
 
     with open("output.txt", "w", encoding="utf-8") as file:
         for r in results[:10]:
