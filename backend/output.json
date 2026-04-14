@@ -1,196 +1,17 @@
 [
   {
-    "ticker": "SAFX",
-    "mentions": 24.7,
-    "avg_sentiment": 0.562,
-    "final_score": 1.014,
-    "top_contexts": [
-      {
-        "text": "SAFX is picking up volume.  getting in now.  I think it's a better play than something that already ran up to 80%",
-        "sentiment": "positive",
-        "score": 0.918
-      },
-      {
-        "text": "CLIK, UCAR, SAFX. RMSG seems to be pretty active, 92% of low float locked up. Still watching oil - as someone below noted, something seems off.",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "I'll buy ALLO tomorrow at 7. If the news is good at 8:30, I'll hold for a nice scalp. If not, I'll bail quickly. In either case, I also plan to get into SAFX, assuming it continues to rise.",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Apart from the merger, are there any catalysts which are foreseen this year? I bought in at .13-.14 so really just curious if this is a short term flip. I sadly missed my chance at SAFX by a day so any response positive or negative would be great",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "$DRMA: building a position for the 1.40-1.60 daily break out on building low volume anticipation of mid 2026 product launch.  $SAFX: off recent PR and Fridays AH explosive volume.",
-        "sentiment": "positive",
-        "score": 0.852
-      },
-      {
-        "text": "$SAFX, XCF both have made some positive gains",
-        "sentiment": "positive",
-        "score": 0.932
-      },
-      {
-        "text": "$DRMA longer term with coming product launch mid 2026 and daily technical lvls broken at 1.40, 1.60. And $SAFX aff recent pr and Fridays AH action.",
-        "sentiment": "positive",
-        "score": 0.6
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 0.81,
-    "change_percent": 49.54,
-    "market_cap": 224490688,
-    "fifty_two_week_high": 45.9,
-    "fifty_two_week_low": 0.119,
-    "volume": 60644942,
-    "analyst_target": 0.4,
-    "recommendation": "none",
-    "sector": "Utilities",
-    "description": "XCF Global, Inc. manufactures and sells renewable fuels in the United States. It develops and operates clean fuel production facilities to produce clean-burning and sustainable biofuels, sustainable aviation fuels, and renewable diesel and naphtha products; and sells environmental credits. XCF Global, Inc. was founded in 2016 and is headquartered in Houston, Texas.",
-    "name": "XCF Global, Inc.",
-    "symbol": "SAFX",
-    "short_name": "XCF Global, Inc.",
-    "industry": "Utilities - Renewable",
-    "website": "https://xcf.global",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "Houston",
-    "state": "TX",
-    "zip": "77042",
-    "phone": "(346) 630-4724",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/SAFX.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=xcf.global&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": false,
-    "catalyst_type": "none",
-    "catalyst_confidence": 0.0
-  },
-  {
-    "ticker": "DRMA",
-    "mentions": 8.0,
-    "avg_sentiment": 0.574,
-    "final_score": 0.952,
-    "top_contexts": [
-      {
-        "text": "same with $DRMA with its mid 2026 product launch.",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "$DRMA: $2-$5-$10 PT. Low volume, Low float, building strength and accumulating in anticipation of the mid 2026 product launch. Will be the start of a fundemental shift with a revenue generating product to strengthen the balance sheets.  $POLA: Low float, trapped shorts, 1.80+ daily curl recovery and",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "$DRMA: Low float Accumulating for mid 2026 product release pr that will be the beginning of retail revenue and a fundemental shift. Lots of technical lvls that may bring in momo traders. $2-$5+ Price target.  $POLA: VPA increasing volume spikes on the past daily chart. watching and evaluating this",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Added more $DRMA for mid 2026 product launch pr low float gap up.",
-        "sentiment": "positive",
-        "score": 0.865
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 1.22,
-    "change_percent": 0.83,
-    "market_cap": 4907014,
-    "fifty_two_week_high": 9.9,
-    "fifty_two_week_low": 1.1,
-    "volume": 75170,
-    "analyst_target": 4.0,
-    "recommendation": "buy",
-    "sector": "Healthcare",
-    "description": "Dermata Therapeutics, Inc., a late-stage medical dermatology company, focuses on identifying, developing, and commercializing pharmaceutical product candidates for the treatment of medical skin diseases and aesthetic applications. Its lead product candidate is XYNGARI, which is in Phase 3 clinical studies for the treatment of moderate-to-severe acne, as well as completed Phase 1b proof of concept (POC) trial for mild-to-moderate psoriasis. The company is also developing DMT410 that has completed Phase 1b POC trials for the treatment of axillary hyperhidrosis and aesthetic skin conditions. It has a clinical trial collaboration agreement with Revance Therapeutics, Inc. to conduct a multi-center clinical trial to evaluate the topical application of XYNGARI with DAXXIFY, Revance's botulinum toxin type A. Dermata Therapeutics, Inc. was incorporated in 2014 and is headquartered in San Diego, California.",
-    "name": "Dermata Therapeutics, Inc.",
-    "symbol": "DRMA",
-    "short_name": "Dermata Therapeutics, Inc.",
-    "industry": "Biotechnology",
-    "website": "https://www.dermatarx.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "San Diego",
-    "state": "CA",
-    "zip": "92130",
-    "phone": "858 800 2543",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/DRMA.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=dermatarx.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "product launch",
-    "catalyst_confidence": 0.9
-  },
-  {
     "ticker": "FLYX",
-    "mentions": 6.3,
-    "avg_sentiment": 0.63,
-    "final_score": 0.885,
+    "mentions": 5.3,
+    "avg_sentiment": 0.671,
+    "final_score": 1.042,
     "top_contexts": [
       {
-        "text": "Their merger with FLYX is supposed to be completed by the end of the month and they have a SpaceX connection so it has potential.",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "FLYX + Jet.AI: Hidden AI Catalyst Set-Up Before April 30 🚀 FLYX (flyExclusive) is starting to look interesting at current levels because the upcoming deal with Jet.AI could act as a near-term catalyst. You’ve got a private aviation company that’s tightening its focus while potentially integrating AI",
+        "text": "They FLYX deal should be approved by the sec anyday. If you don't give them a chance now theres no point doing it once it's announced",
         "sentiment": "positive",
         "score": 0.6
       },
       {
         "text": "FLYX (flyExclusive) is starting to look interesting at current levels because the upcoming deal with Jet.AI could act as a near-term catalyst. You’ve got a private aviation company that’s tightening its focus while potentially integrating AI-driven booking and optimization tech, which the market ten",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "They FLYX deal should be approved by the sec anyday. If you don't give them a chance now theres no point doing it once it's announced",
         "sentiment": "positive",
         "score": 0.6
       },
@@ -203,12 +24,12 @@
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 2.28,
-    "change_percent": 3.17,
-    "market_cap": 238952960,
+    "price": 2.36,
+    "change_percent": 3.51,
+    "market_cap": 247337264,
     "fifty_two_week_high": 8.88,
     "fifty_two_week_low": 1.9,
-    "volume": 114296,
+    "volume": 122258,
     "analyst_target": 7.0,
     "recommendation": "none",
     "sector": "Industrials",
@@ -251,10 +72,102 @@
     "catalyst_confidence": 0.8
   },
   {
+    "ticker": "SAFX",
+    "mentions": 33.7,
+    "avg_sentiment": 0.52,
+    "final_score": 0.993,
+    "top_contexts": [
+      {
+        "text": "About to Go All In on One Stock… Someone Talk Me Out of It I’ve got about $50K in cash and I’m this close to going all in on SAFX. Not gonna lie, I know this sounds kind of crazy. But at this price, it just feels like one of those opportunities that doesn’t come around often. Still, part of me thi",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Let's talk about SAFX  In June production doubles to 38 million.  The big dogs jump in when the money goes up. In two years another plant will open.  This is a rare confluence of a small company on the verge of 1: A big, integrating merger.  2: Geopolitics destroying oil supply and transport.   3",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "It feels good to be a part of this haha.  New to self directed investing but I read this guy's ideas about if you want to increase capital find a great opportunity and go all in. I'm not all in with SAFX but a good percentage and I keep adding because duh!",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "You wanna *talk* SAFX or retire on it? Which is it? Because I’m gonna retire on it.",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "First mover advantage? What are you talking aboutm, there are already big companies producing SAF. Neste (global leader), World Energy, Marathon Petroleum and many more. SAFX is just new small starting player.   Neste is doing 750M per year, SAFX is doing so far 0 and their max capacity is 38M, in t",
+        "sentiment": "negative",
+        "score": -0.6
+      },
+      {
+        "text": "SAFX, been there for months expecting this. Great CEO, great company, great thesis, and great timing",
+        "sentiment": "positive",
+        "score": 0.849
+      },
+      {
+        "text": "SAFX, IBRX & TSLA   Definite trades for me!  QNCX just completed a 1-10 reverse split so has some volume to it,  made a little trading that today so worth a looking at tomorrow.",
+        "sentiment": "positive",
+        "score": 0.6
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.05,
+    "change_percent": 28.83,
+    "market_cap": 289221120,
+    "fifty_two_week_high": 45.9,
+    "fifty_two_week_low": 0.119,
+    "volume": 57701067,
+    "analyst_target": 0.4,
+    "recommendation": "none",
+    "sector": "Utilities",
+    "description": "XCF Global, Inc. manufactures and sells renewable fuels in the United States. It develops and operates clean fuel production facilities to produce clean-burning and sustainable biofuels, sustainable aviation fuels, and renewable diesel and naphtha products; and sells environmental credits. XCF Global, Inc. was founded in 2016 and is headquartered in Houston, Texas.",
+    "name": "XCF Global, Inc.",
+    "symbol": "SAFX",
+    "short_name": "XCF Global, Inc.",
+    "industry": "Utilities - Renewable",
+    "website": "https://xcf.global",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "United States",
+    "city": "Houston",
+    "state": "TX",
+    "zip": "77042",
+    "phone": "(346) 630-4724",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/SAFX.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=xcf.global&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "production",
+    "catalyst_confidence": 0.8
+  },
+  {
     "ticker": "OMEX",
-    "mentions": 10.8,
-    "avg_sentiment": 0.467,
-    "final_score": 0.743,
+    "mentions": 7.3,
+    "avg_sentiment": 0.627,
+    "final_score": 0.902,
     "top_contexts": [
       {
         "text": "Too bad it came just as hard down as it went up",
@@ -262,29 +175,19 @@
         "score": -0.4
       },
       {
-        "text": "OMEX merger news watching for 🚀",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "Reverse split coming in the next week so idk",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Whats the source for that wasnt it june or july?",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Also thats if it even happens nothing was set in stone as far as i can see, my thoughts were there was a chance that happens and if so itd be months away",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "OMEX day trade: $1B merger catalyst just dropped — they’re combining with a deep-sea mining firm led by an ex–Rio Tinto CEO to build a major critical minerals platform  Setup: Support: ~$1.00 Pivot: ~$1.30 Gamma wall: $2 (key ceiling/magnet) Trade: reclaim $1.30–1.40 + volume = momentum push toward",
+        "text": "OMEX $1B merger forms largest U.S. deep-sea critical minerals platform, closing by Q3 2026.",
         "sentiment": "positive",
         "score": 0.8
+      },
+      {
+        "text": "OMEX has Merger Investor Conference Call.  FLYX merger update: $50M funding requirement removed via 8-K, reducing risk and dilution, increasing chances deal closes before April 30 deadline.",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "OMEX while its on a dip has major 1b merger conference call at 10am et time good news or no bad news could be positive",
+        "sentiment": "positive",
+        "score": 0.6
       },
       {
         "text": "$OMEX +56% — $1B deep-sea minerals merger with American Ocean Minerals Odyssey Marine Exploration (OMEX) ripped in premarket on Tuesday after announcing a definitive all-stock merger with American Ocean Minerals Corp (AOMC) to form a $1 billion critical minerals and rare earths company focused on de",
@@ -295,12 +198,12 @@
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 0.88,
-    "change_percent": -17.05,
-    "market_cap": 49010856,
+    "price": 0.99,
+    "change_percent": 12.59,
+    "market_cap": 57784972,
     "fifty_two_week_high": 4.43,
-    "fifty_two_week_low": 0.37,
-    "volume": 6961003,
+    "fifty_two_week_low": 0.39,
+    "volume": 7313136,
     "analyst_target": 0,
     "recommendation": "none",
     "sector": "Basic Materials",
@@ -340,46 +243,46 @@
     "vampire_confidence": 0.0,
     "has_catalyst": true,
     "catalyst_type": "partnership",
-    "catalyst_confidence": 0.9
+    "catalyst_confidence": 0.8
   },
   {
-    "ticker": "IQST",
-    "mentions": 12.6,
-    "avg_sentiment": 0.544,
-    "final_score": 0.727,
+    "ticker": "MBAI",
+    "mentions": 12.3,
+    "avg_sentiment": 0.564,
+    "final_score": 0.893,
     "top_contexts": [
       {
-        "text": "a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide in",
+        "text": "This Setup is ready to breakout at any given moment (MBAI) is turning into one of the most active micro‑caps because the MBody AI merger is already moving forward filings done, shareholder approval secured, and the company openly confirming progress. This isn’t a rumor; the transition is underway, a",
         "sentiment": "positive",
         "score": 0.8
       },
       {
-        "text": "This Hidden Microcap Has Real Revenue, a Clean Structure, and a Fresh Digital Health Deal Hey guys, I’ve been digging into a microcap that’s been flying completely under the radar but has a setup that feels really solid. The company is iQSTEL (IQST). They run a global B2B telecom platform that route",
+        "text": "And another MBAI post. What’s it been already, 20 posts in the last couple of days",
+        "sentiment": "negative",
+        "score": -0.2
+      },
+      {
+        "text": "MBAI merger should come this week then 4+ possible",
         "sentiment": "positive",
         "score": 0.6
       },
       {
-        "text": "IQST , 340mil in revenue , is operating in 20 countries.  10mil MC. lol. Why they are burning 9mil each year with 340mil revenue, I do not know. But compared to other tickers that have no revenue this is nuts.",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Will be sure to take a look :)",
+        "text": "Why This week it says 1H could be June?",
         "sentiment": "neutral",
         "score": 0.0
       },
       {
-        "text": "Telecom. Think it’s small margins. They are Working with the big boys.  They project revenue of 400mil 2026 and 1 billion for 2027. They venture into cybersecurity as well. Maybe that’s were profit will arrive.  Get in while under 2usd, it’s a barging. Compared to any other stock with 3x times Mark",
+        "text": "MBAI will be the next parabolic runner. 6+ coming after the merger. NO dilution risks and bottomed! (MBAI) is turning into one of the most active micro‑caps because the MBody AI merger is already moving forward filings done, shareholder approval secured, and the company openly confirming progress. T",
         "sentiment": "positive",
-        "score": 0.6
+        "score": 0.743
       },
       {
-        "text": "Interesting, I do need to look into the cybersecurity stocks as I do feel they have a lot of room to grow",
+        "text": "$MBAI    robotics/ai merger happening very soon! easy double or triple from here",
         "sentiment": "positive",
-        "score": 0.4
+        "score": 0.8
       },
       {
-        "text": "Lmao , try IQST. Its a telecom company.",
+        "text": "Where do you think the price going in the next few days?",
         "sentiment": "neutral",
         "score": 0.0
       }
@@ -387,12 +290,442 @@
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 1.81,
-    "change_percent": -19.2,
-    "market_cap": 9178045,
+    "price": 1.8,
+    "change_percent": 7.14,
+    "market_cap": 13119046,
+    "fifty_two_week_high": 3.92,
+    "fifty_two_week_low": 0.593,
+    "volume": 554207,
+    "analyst_target": 0,
+    "recommendation": "none",
+    "sector": "Healthcare",
+    "description": "Check-Cap Ltd., a clinical stage medical diagnostics company, focuses on capsule-based screening technology products. Check-Cap Ltd. was incorporated in 2004 and is based in Isfiya, Israel.",
+    "name": "Check-Cap Ltd.",
+    "symbol": "MBAI",
+    "short_name": "Check-Cap Ltd.",
+    "industry": "Diagnostics & Research",
+    "website": "https://check-cap.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "Israel",
+    "city": "Isfiya",
+    "state": "Unknown",
+    "zip": "3009000",
+    "phone": "Unknown",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/MBAI.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=check-cap.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "partnership",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "GPRO",
+    "mentions": 8.4,
+    "avg_sentiment": 0.462,
+    "final_score": 0.721,
+    "top_contexts": [
+      {
+        "text": "$gpro guys there is the hype right now and it will fly soon",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "PM volume is already way above the 20 day volume average",
+        "sentiment": "positive",
+        "score": 0.844
+      },
+      {
+        "text": "$gpro lets go to sleep and wake up at +50% or more!!",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "This subreddit is so different than it was last year. It’s strange not seeing 100 people screaming about how GPRO is going to go to $100 tomorrow",
+        "sentiment": "negative",
+        "score": -0.4
+      },
+      {
+        "text": "SPGC! Sacks Parente Golf Company earnings reverse split name change",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "I at least used to see an interesting post once in awhile for a ticker I hadn’t heard about. I don’t think I’ve seen a ticker/post in like 6 months that has even remotely interested me",
+        "sentiment": "negative",
+        "score": -0.4
+      },
+      {
+        "text": "i think a lot of ppl just gave up on pennies",
+        "sentiment": "negative",
+        "score": -0.4
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 0.93,
+    "change_percent": 21.78,
+    "market_cap": 153475440,
+    "fifty_two_week_high": 3.05,
+    "fifty_two_week_low": 0.483,
+    "volume": 15272255,
+    "analyst_target": 1.3,
+    "recommendation": "none",
+    "sector": "Technology",
+    "description": "GoPro, Inc. provides cameras, mountable and wearable accessories, and subscription and services in the Americas, Europe, the Middle East, Africa, and the Asia Pacific. It offers cameras under the HERO13 Black, HERO12 Black, LIT HERO, HERO, MAX2, and MAX names; and camera attachments, including the Ultra Wide Lens Mod, Macro Lens Mod, ND Filter 4-Pack, Anamorphic Lens Mod, Media Mod, and Max Lens Mod 2.0. The company also provides equipment-based mounts comprising helmet, handlebar, roll bar, and tripod mounts; floating mounts, such as the Handler and Floaty; magnetic swivel clip, chest harness, and head strap mounts; and spare batteries, dive filters and charging accessories, and cables to connect GoPro cameras to computers, laptops, and television monitors. In addition, it offers Premium, Premium+, and Quik subscription, which are subscription services that include cloud storage for its content through its Quik mobile app. Further, the company provides mobile and web applications, and desktop plugins that offer a media workflow for archiving, editing, multi-clip story creation, and sharing content on the fly; and a lifestyle gear lineup, including bags, backpacks, and cases, as well as of t-shirts, hats, and other soft goods. It sells its products through retailers, distributors, and on GoPro.com. The company was formerly known as Woodman Labs, Inc. and changed its name to GoPro, Inc. in February 2014. GoPro, Inc. was founded in 2002 and is headquartered in San Mateo, California.",
+    "name": "GoPro, Inc.",
+    "symbol": "GPRO",
+    "short_name": "GoPro, Inc.",
+    "industry": "Consumer Electronics",
+    "website": "https://www.gopro.com",
+    "exchange": "NMS",
+    "currency": "USD",
+    "country": "United States",
+    "city": "San Mateo",
+    "state": "CA",
+    "zip": "94402",
+    "phone": "650 332 7600",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/GPRO.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=gopro.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": false,
+    "catalyst_type": "none",
+    "catalyst_confidence": 0.0
+  },
+  {
+    "ticker": "ANNA",
+    "mentions": 21.2,
+    "avg_sentiment": 0.355,
+    "final_score": 0.656,
+    "top_contexts": [
+      {
+        "text": "I think Im going in ANNA tomorrow",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Small gain on JTAI. I may go into ANNA tomorrow",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Why Anna? Everyone keeps saying Anna but can’t find any significant news as to why?",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "Because there’s a Natural Gas shock worldwide, and AleAnna delivers.",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "Hummm ok. Appreciate the input",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "You can find great DD on all of these companies on reddit, better than we can do in a few sentences. Domestic Euro producer just found alot more gas in their fields right as Qatar's output taken offline. Europe needs gas. ANNA has it in Italy.",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "EONR and ANNA. Bullish on both.",
+        "sentiment": "positive",
+        "score": 0.4
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 5.12,
+    "change_percent": 2.61,
+    "market_cap": 208178576,
+    "fifty_two_week_high": 18.3,
+    "fifty_two_week_low": 2.31,
+    "volume": 4881837,
+    "analyst_target": 0,
+    "recommendation": "none",
+    "sector": "Energy",
+    "description": "AleAnna, Inc., a development-stage natural gas resource company, focuses on delivering critical natural gas supplies in Europe and Italy. The company operates through onshore conventional natural gas exploration and renewable natural gas development. AleAnna, Inc. was founded in 2007 and is headquartered in Dallas, Texas.",
+    "name": "AleAnna, Inc.",
+    "symbol": "ANNA",
+    "short_name": "AleAnna, Inc.",
+    "industry": "Oil & Gas E&P",
+    "website": "https://www.aleannainc.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "United States",
+    "city": "Dallas",
+    "state": "TX",
+    "zip": "75201",
+    "phone": "469 396 2200",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/ANNA.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=aleannainc.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "regulatory",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "UCAR",
+    "mentions": 7.1,
+    "avg_sentiment": 0.417,
+    "final_score": 0.598,
+    "top_contexts": [
+      {
+        "text": "UCAR getting ready to go again.",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "Nice recap, man! Those are some wild moves on AIXI and UCAR. Getting those alerts and catching even a piece of those gains is the dream on pennies. Keep tracking that action!",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "U Power (UCAR) Stock Surges Over 300% After $3.19M Capital Raise I was hitting that buy button yesterday at 1.18, but my damn broker wouldnt let me buy. Thanks a lot! Will we see more juice today?",
+        "sentiment": "positive",
+        "score": 0.811
+      },
+      {
+        "text": "Your guess is as good as mine. My guess is it's gonna continue to drop. Today, tomorrow, and maybe Monday until it hits the target it wants - by my math around 3 cents. From there they can triple their money to 9 cents, take it back down, etc. And they can just leave us bag holding until they decide",
+        "sentiment": "negative",
+        "score": -0.713
+      },
+      {
+        "text": "Is a short squeeze likely in the near future? There’s a lot of speculation about it on Stocktwits. I just want to get out of the stock without taking a total loss",
+        "sentiment": "negative",
+        "score": -0.4
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.88,
+    "change_percent": -19.31,
+    "market_cap": 4010318,
+    "fifty_two_week_high": 49.8,
+    "fifty_two_week_low": 0.38,
+    "volume": 4939832,
+    "analyst_target": 2.0,
+    "recommendation": "buy",
+    "sector": "Consumer Cyclical",
+    "description": "U Power Limited, together with its subsidiaries, develops, manufactures, and sells new energy vehicles and battery swapping stations in the People's Republic of China, Thailand, Southeast Asia, South America, Hong Kong SAR, and Macau SAR markets. It also offers battery swapping and sourcing, as well as technical and consultation services. The company is involved in the provision of two-wheeled vehicle; and new energy vehicles sales. U Power Limited was founded in 2013 and is based in Wuhu, the People's Republic of China.",
+    "name": "U Power Limited",
+    "symbol": "UCAR",
+    "short_name": "U Power Limited",
+    "industry": "Auto & Truck Dealerships",
+    "website": "https://www.upincar.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "China",
+    "city": "Wuhu",
+    "state": "Unknown",
+    "zip": "241003",
+    "phone": "86 21 6859 3598",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/UCAR.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=upincar.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "capital raise",
+    "catalyst_confidence": 0.9
+  },
+  {
+    "ticker": "ZENA",
+    "mentions": 5.7,
+    "avg_sentiment": 0.434,
+    "final_score": 0.579,
+    "top_contexts": [
+      {
+        "text": "Good time to buy ZENA me thinks, bounced off the $2 area twice in the last two years. With how much is going on with drone warfare I think these drone stocks are due at some point in the near future. ZENAs catalysts haven’t really gone into effect yet so I’m adding some before that happens.",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "a lot of the drone sector is priced in now/the theme is over.",
+        "sentiment": "negative",
+        "score": -0.6
+      },
+      {
+        "text": "Plans to make a testing and manufacturing facility in Ukraine.",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "21 acquisitions and expanding! Zenatech ($ZENA) just added another company to its growing Drone-as-a-Service network, now pushing into the Pacific Northwest This is execution. ✔ National expansion ✔ Government + enterprise clients ✔ Recurring service model ✔ Active deployments They’re building",
+        "sentiment": "positive",
+        "score": 0.8
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 2.18,
+    "change_percent": 0.46,
+    "market_cap": 122757728,
+    "fifty_two_week_high": 7.109,
+    "fifty_two_week_low": 1.95,
+    "volume": 1168266,
+    "analyst_target": 7.131277,
+    "recommendation": "none",
+    "sector": "Technology",
+    "description": "ZenaTech, Inc., an enterprise software technology company, develops cloud-based software applications in Canada. It provides cloud-based enterprise software solutions for the medical records industry; software solutions for the automated facility management and center industry; safety and compliance management software and mobile solutions; field service management software and mobile solutions; browser-based enterprise software applications for public safety; and quantum computing solutions. The company also engages in the manufacturing, sale, and distribution of drones. ZenaTech, Inc. was formerly known as ZenaDrone, Inc. and changed its name to ZenaTech, Inc. on October 5, 2020. The company was incorporated in 2017 and is based in Vancouver, Canada.",
+    "name": "",
+    "symbol": "ZENA",
+    "short_name": "ZenaTech, Inc.",
+    "industry": "Software - Infrastructure",
+    "website": "https://www.zenatech.com",
+    "exchange": "NCM",
+    "currency": "USD",
+    "country": "Canada",
+    "city": "Vancouver",
+    "state": "BC",
+    "zip": "V6Z 1S4",
+    "phone": "647 249 1622",
+    "email": "Unknown",
+    "ceo": "Unknown",
+    "num_employees": 0,
+    "founded": 0,
+    "tags": [],
+    "similar": [],
+    "related": [],
+    "stats": {},
+    "financials": {},
+    "news": [],
+    "events": [],
+    "earnings": {},
+    "dividends": {},
+    "splits": {},
+    "stock_splits": {},
+    "stock_dividends": {},
+    "logo_url": "https://financialmodelingprep.com/image-stock/ZENA.png",
+    "logo_fallback": "https://www.google.com/s2/favicons?domain=zenatech.com&sz=64",
+    "vampire_flagged": false,
+    "vampire_flag_type": null,
+    "vampire_confidence": 0.0,
+    "has_catalyst": true,
+    "catalyst_type": "contract",
+    "catalyst_confidence": 0.8
+  },
+  {
+    "ticker": "IQST",
+    "mentions": 7.4,
+    "avg_sentiment": 0.578,
+    "final_score": 0.568,
+    "top_contexts": [
+      {
+        "text": "a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide in",
+        "sentiment": "positive",
+        "score": 0.6
+      },
+      {
+        "text": "$IQST - IQSTEL Inc. Announces Investor Conference Call to Discuss Q4 2025 and Full Year 2025 Financial Results $IQST News March 31, 2026 IQST - IQSTEL Inc. Announces Investor Conference Call to Discuss Q4 2025 and Full Year 2025 Financial Results",
+        "sentiment": "neutral",
+        "score": 0.0
+      },
+      {
+        "text": "a small cap name looking at billion dollar revenues IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide inc",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "IQST , massively undervalued. 300+million revenue , projection of 1 billion by 2027.  Market cap of 9 million? I truely don’t get it. I’m aware they burn cash right now.  But u have Pennystocks left and right - with no revenue , that burns more cash and is only a promise valued 3-6times that of IQS",
+        "sentiment": "positive",
+        "score": 0.8
+      },
+      {
+        "text": "Good luck. I hope they become profitable within next 1-2 years. Should be possible. Especially if their projection hold just a little bit.  It’s not a momentum stock, not a swing trade, not the most sexy market.  But if they start making a profit , they cannot be ignored.",
+        "sentiment": "positive",
+        "score": 0.4
+      },
+      {
+        "text": "$IQST a fast-growing multi sector name ww IQST is a name wort watching as it currently sits around a $12m MC while pushing $300m in revenues. per the recent FY 2025 results, they are aiming for reaching **$1 billion** in revenues by 2027. They work with 600+ telecom operators worldwide including maj",
+        "sentiment": "positive",
+        "score": 0.8
+      }
+    ],
+    "mod_flagged": false,
+    "mod_flag_type": null,
+    "mod_flag_score": 0,
+    "price": 1.75,
+    "change_percent": -3.31,
+    "market_cap": 8873800,
     "fifty_two_week_high": 18.6824,
     "fifty_two_week_low": 1.48,
-    "volume": 3905100,
+    "volume": 293189,
     "analyst_target": 18.0,
     "recommendation": "none",
     "sector": "Communication Services",
@@ -431,91 +764,14 @@
     "vampire_flag_type": null,
     "vampire_confidence": 0.0,
     "has_catalyst": true,
-    "catalyst_type": "revenue/earnings",
+    "catalyst_type": "earnings",
     "catalyst_confidence": 0.8
   },
   {
-    "ticker": "VRAX",
-    "mentions": 5.1,
-    "avg_sentiment": 0.446,
-    "final_score": 0.688,
-    "top_contexts": [
-      {
-        "text": "In VRAX at 0.18 for a scalp. Let’s see how it plays out",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "I like VRAX, SAFX, AIXI, EONR, ANNA (careful with oil)",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "WTF is going on with VRAX? Up 75% as soon as pre market started",
-        "sentiment": "positive",
-        "score": 0.915
-      },
-      {
-        "text": "Big move AH Friday after all warrants were delcared exercised by an investor for shares at 0.4$. Lots of chatter online",
-        "sentiment": "positive",
-        "score": 0.4
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 0.1,
-    "change_percent": -22.83,
-    "market_cap": 772779,
-    "fifty_two_week_high": 1.2,
-    "fifty_two_week_low": 0.1,
-    "volume": 6002422,
-    "analyst_target": 1.0,
-    "recommendation": "none",
-    "sector": "Healthcare",
-    "description": "Virax Biolabs Group Limited, a biotechnology company, distributes diagnostics test kits for the prevention, detection, diagnosis, and risk management of viral diseases in the field of T cell in Vitro Diagnostics. The company offers various in-vitro diagnostics test kits comprising respiratory, pregnancy and fertility, infectious diseases, sti, drugs of abuse, oncology, cardiac, women's health, other test kits under the ViraxClear brands; and rapid and molecular tests for small animal veterinary diagnostics under the ViraxVet brand. It also provides ViraxImmune, a T cell In vitro diagnostic device and wellness mobile application; and service, such as antibody engineering, custom peptides, protein sequencing, vaccine efficacy testing, immunology lab services, kits and reagents. In addition, the company is involved in research and development activities; and provision of procurement, warehousing, product development, and staffing management services. It serves research organizations, corporations, independent laboratories, large hospital systems and public and private institutions, as well as distributor customers. The company operates in the United Kingdom, the United States, and China. The company was formerly known as Virax Biolabs (Cayman) Limited and changed its name to Virax Biolabs Group Limited in September 2021. Virax Biolabs Group Limited was founded in 2013 and is headquartered in Lanarkshire, the United Kingdom.",
-    "name": "Virax Biolabs Group Limited",
-    "symbol": "VRAX",
-    "short_name": "Virax Biolabs Group Limited",
-    "industry": "Biotechnology",
-    "website": "https://viraxbiolabs.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United Kingdom",
-    "city": "Lanarkshire",
-    "state": "Unknown",
-    "zip": "ML1 5UH",
-    "phone": "44 20 7788 7414",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/VRAX.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=viraxbiolabs.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": false,
-    "catalyst_type": "none",
-    "catalyst_confidence": 0.0
-  },
-  {
     "ticker": "BTBD",
-    "mentions": 6.0,
+    "mentions": 5.0,
     "avg_sentiment": 0.616,
-    "final_score": 0.585,
+    "final_score": 0.568,
     "top_contexts": [
       {
         "text": "$BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finished chart dive into $BTBD** and I’m posting my analysis because I believe there could be solid play here.       It’s a tiny-cap with a \\~3M float that just made a solid run about a week ago, faded, and",
@@ -536,12 +792,12 @@
     "mod_flagged": false,
     "mod_flag_type": null,
     "mod_flag_score": 0,
-    "price": 1.62,
-    "change_percent": -7.95,
-    "market_cap": 9970655,
+    "price": 1.71,
+    "change_percent": 5.56,
+    "market_cap": 10524580,
     "fifty_two_week_high": 5.6,
     "fifty_two_week_low": 1.0,
-    "volume": 362860,
+    "volume": 132498,
     "analyst_target": 0,
     "recommendation": "none",
     "sector": "Consumer Cyclical",
@@ -582,276 +838,5 @@
     "has_catalyst": true,
     "catalyst_type": "contract",
     "catalyst_confidence": 0.8
-  },
-  {
-    "ticker": "ARAI",
-    "mentions": 21.8,
-    "avg_sentiment": 0.353,
-    "final_score": 0.577,
-    "top_contexts": [
-      {
-        "text": "ARAI preparing for another pump",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "I hope ARAI will do well next week",
-        "sentiment": "positive",
-        "score": 0.931
-      },
-      {
-        "text": "$ARAI Wild Momentum With Room For Continuation Tomorrow Someone posted about this and when I looked at the day's performance my first thought was how strong it closed. It literally continued climbing with **good volume in overnight trading.** Let me couch this by saying **it's already made significa",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Man, that's a seriously thorough breakdown on $ARAI. You've really dug into those levels and the momentum flip on the 15min. Appreciate you sharing the detailed character change too. Those low float runners can definitely get wild, and you've got a solid plan for it. Good luck tomorrow!",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "🚨 $ARAI Snagged Its 10th US Patent – This Could Be the Real Infrastructure Play for Drone & Robot Deliveries $ARAI (Arrive AI) just hit a legit milestone their 10th U.S. patent. These guys are straight-up building Arrive Points: smart, secure mailboxes that let drones, ground robots, and regular",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "Should I hold or sell my ARAI I have like 120 shares rn at 1.19 average cost I don’t know if I should keep holding",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "I am watching the ARAI stock for this Monday. It is going to move nicely on 15 of April",
-        "sentiment": "positive",
-        "score": 0.4
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 0.81,
-    "change_percent": -21.36,
-    "market_cap": 29511964,
-    "fifty_two_week_high": 40.0,
-    "fifty_two_week_low": 0.51,
-    "volume": 20569557,
-    "analyst_target": 12.0,
-    "recommendation": "none",
-    "sector": "Technology",
-    "description": "Arrive AI Inc. a developmental technology company, designs and implement viable smart mailbox and platform system for smart, secure, and seamless exchange of packages, goods, supplies, food, and medications between people, by robots, and drones in the United States. Arrive AI Inc. was formerly known as Arrive Technology Inc. and changed its name to Arrive AI Inc. in September 2024. The company was incorporated in 2020 and is based in Fishers, Indiana.",
-    "name": "Arrive AI Inc.",
-    "symbol": "ARAI",
-    "short_name": "Arrive AI Inc.",
-    "industry": "Software - Infrastructure",
-    "website": "https://www.arriveai.com",
-    "exchange": "NGM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "Fishers",
-    "state": "IN",
-    "zip": "46037",
-    "phone": "463 270 0092",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/ARAI.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=arriveai.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": true,
-    "catalyst_type": "patent",
-    "catalyst_confidence": 0.8
-  },
-  {
-    "ticker": "AEHL",
-    "mentions": 9.8,
-    "avg_sentiment": 0.363,
-    "final_score": 0.56,
-    "top_contexts": [
-      {
-        "text": "My plays for this week are AEHL and SRXH either of them works for me so lets goo",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Thoughts on $aehl? I know you said 5-6 days a couple days ago..",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "$AEHL ✅ Potential for a mega Move .. like $AIXI . Overbeaten setup . 3 months liquidity  $6 area ..  something big could happen on this one .",
-        "sentiment": "positive",
-        "score": 0.6
-      },
-      {
-        "text": "Do you think AEHL has this type of potential? If so, why?",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Just buy and hold, it is same as aixi",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "Why aehl if you don’t mind me asking?",
-        "sentiment": "neutral",
-        "score": 0.0
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 1.08,
-    "change_percent": -6.9,
-    "market_cap": 1782035,
-    "fifty_two_week_high": 50.52,
-    "fifty_two_week_low": 1.02,
-    "volume": 289546,
-    "analyst_target": 0,
-    "recommendation": "none",
-    "sector": "Industrials",
-    "description": "Antelope Enterprise Holdings Limited, through its subsidiaries, provides livestream e-commerce, and business management and information systems consulting services in the People's Republic of China and the United States. The company operates social media and e-commerce platforms for consumer goods brands, merchants, and small-scale ecommerce platforms customers. It also provides business management and consulting services which consist of computer consulting services and online social media platform development, as well as sales of software use rights for digital data deposit platforms and asset management systems. In addition, the company is involved in natural gas power generation and power station acquisitions and investments businesses; film and television entertainment, internet celebrity economy, live streaming, and game businesses; and trading of building materials. The company was formerly known as China Ceramics Co., Ltd. and changed its name to Antelope Enterprise Holdings Limited in October 2020. Antelope Enterprise Holdings Limited was founded in 1993 and is headquartered in Jinjiang, the People's Republic of China.",
-    "name": "Antelope Enterprise Holdings Limited",
-    "symbol": "AEHL",
-    "short_name": "Antelope Enterprise Holdings Li",
-    "industry": "Building Products & Equipment",
-    "website": "https://www.aehltd.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "China",
-    "city": "Jinjiang",
-    "state": "Unknown",
-    "zip": "Unknown",
-    "phone": "Unknown",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/AEHL.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=aehltd.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": false,
-    "catalyst_type": "none",
-    "catalyst_confidence": 0.0
-  },
-  {
-    "ticker": "PSTV",
-    "mentions": 6.3,
-    "avg_sentiment": 0.357,
-    "final_score": 0.528,
-    "top_contexts": [
-      {
-        "text": "PSTV genuinely has ample potential for a 10x upside. (2) You might dismiss my post as simply a promotional or exaggerated piece. Yes. As a shareholder, I maintain a highly positive perspective. However, I am not merely exaggerating or stating falsehoods. [",
-        "sentiment": "positive",
-        "score": 0.8
-      },
-      {
-        "text": "When exactly were there endless PSTV posts on the pennystocks subreddit every week? As far as I know, I made my first post a few days ago after several months of silence, and today is merely my second post. It is completely natural for the dedicated PSTV subreddit to have a majority of positive po",
-        "sentiment": "positive",
-        "score": 0.4
-      },
-      {
-        "text": "If you search for ‘pstv stock’ in the reddit search bar and filter for last week you can see that there are about half a dozen posts that have the exact same content as this post and dont offer new information, they are just trying to proselytize and spread the good word among the non believers.",
-        "sentiment": "negative",
-        "score": -0.6
-      },
-      {
-        "text": "You are telling an absurd lie. Where are these 5 or 6 identical posts you are talking about? Could you provide the links? The post about the company's cash reserves is exactly one post I wrote on the PSTV subreddit. I simply brought it over here because it supports my argument. There are no ident",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "Jesus christ man, calm down.  I am not attacking you (or the company for that matter).",
-        "sentiment": "neutral",
-        "score": 0.0
-      },
-      {
-        "text": "I am not agitated. It seems that after making false statements, you are unable to substantiate them with any proof. Is that how you choose to argue your point?",
-        "sentiment": "negative",
-        "score": -0.4
-      },
-      {
-        "text": "I leave it to each individual's judgment whether to view this as a promotional post or an opportunity. However, even as a shareholder, I would not have posted this if the outlook was poor and the potential for others to incur losses seemed higher. I did so because the RS that everyone feared has a",
-        "sentiment": "positive",
-        "score": 0.4
-      }
-    ],
-    "mod_flagged": false,
-    "mod_flag_type": null,
-    "mod_flag_score": 0,
-    "price": 4.8,
-    "change_percent": 22.45,
-    "market_cap": 32937730,
-    "fifty_two_week_high": 30.5,
-    "fifty_two_week_low": 2.9,
-    "volume": 1305738,
-    "analyst_target": 38.0,
-    "recommendation": "buy",
-    "sector": "Healthcare",
-    "description": "Plus Therapeutics, Inc., a clinical-stage pharmaceutical company, focuses on the development, manufacture, and commercialization of treatments for patients with cancer. The company's lead radiotherapeutic candidate is rhenium obisbemeda, a patented radiotherapy for patients with central nervous system and other cancers, including recurrent glioblastoma, leptomeningeal metastases, and pediatric brain cancers. It also develops Rhenium-188 NanoLiposome Biodegradable Alginate Microsphere to treat various solid organ cancers, such as primary and secondary liver cancers by intra-arterial injection. In addition, it develops and commercializes laboratory-developed tests comprising the CNSide Test to identify tumor cells that have metastasized to the central nervous system in patients with carcinomas and melanomas. The company was formerly known as Cytori Therapeutics, Inc. and changed its name to Plus Therapeutics, Inc. in July 2019. Plus Therapeutics, Inc. was founded in 1996 and is headquartered in Houston, Texas.",
-    "name": "Plus Therapeutics, Inc.",
-    "symbol": "PSTV",
-    "short_name": "PLUS THERAPEUTICS, Inc.",
-    "industry": "Biotechnology",
-    "website": "https://plustherapeutics.com",
-    "exchange": "NCM",
-    "currency": "USD",
-    "country": "United States",
-    "city": "Houston",
-    "state": "TX",
-    "zip": "77021",
-    "phone": "737 255 7194",
-    "email": "Unknown",
-    "ceo": "Unknown",
-    "num_employees": 0,
-    "founded": 0,
-    "tags": [],
-    "similar": [],
-    "related": [],
-    "stats": {},
-    "financials": {},
-    "news": [],
-    "events": [],
-    "earnings": {},
-    "dividends": {},
-    "splits": {},
-    "stock_splits": {},
-    "stock_dividends": {},
-    "logo_url": "https://financialmodelingprep.com/image-stock/PSTV.png",
-    "logo_fallback": "https://www.google.com/s2/favicons?domain=plustherapeutics.com&sz=64",
-    "vampire_flagged": false,
-    "vampire_flag_type": null,
-    "vampire_confidence": 0.0,
-    "has_catalyst": false,
-    "catalyst_type": "none",
-    "catalyst_confidence": 0.0
   }
 ]

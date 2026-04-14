@@ -1,40 +1,40 @@
-$SAFX [NO CATALYST] 
-  Mentions: 24.7 | Sentiment: +0.562 | Score: +1.014
-  Context: SAFX is picking up volume.  getting in now.  I think it's a better play than something that already 
-
-$DRMA [CATALYST: PRODUCT LAUNCH] 
-  Mentions: 8.0 | Sentiment: +0.574 | Score: +0.952
-  Context: same with $DRMA with its mid 2026 product launch.
-
 $FLYX [CATALYST: PARTNERSHIP] 
-  Mentions: 6.3 | Sentiment: +0.630 | Score: +0.885
-  Context: Their merger with FLYX is supposed to be completed by the end of the month and they have a SpaceX co
+  Mentions: 5.3 | Sentiment: +0.671 | Score: +1.042
+  Context: They FLYX deal should be approved by the sec anyday. If you don't give them a chance now theres no p
+
+$SAFX [CATALYST: PRODUCTION] 
+  Mentions: 33.7 | Sentiment: +0.520 | Score: +0.993
+  Context: About to Go All In on One Stock… Someone Talk Me Out of It I’ve got about $50K in cash and I’m this 
 
 $OMEX [CATALYST: PARTNERSHIP] 
-  Mentions: 10.8 | Sentiment: +0.467 | Score: +0.743
+  Mentions: 7.3 | Sentiment: +0.627 | Score: +0.902
   Context: Too bad it came just as hard down as it went up
 
-$IQST [CATALYST: REVENUE/EARNINGS] 
-  Mentions: 12.6 | Sentiment: +0.544 | Score: +0.727
+$MBAI [CATALYST: PARTNERSHIP] 
+  Mentions: 12.3 | Sentiment: +0.564 | Score: +0.893
+  Context: This Setup is ready to breakout at any given moment (MBAI) is turning into one of the most active mi
+
+$GPRO [NO CATALYST] 
+  Mentions: 8.4 | Sentiment: +0.462 | Score: +0.721
+  Context: $gpro guys there is the hype right now and it will fly soon
+
+$ANNA [CATALYST: REGULATORY] 
+  Mentions: 21.2 | Sentiment: +0.355 | Score: +0.656
+  Context: I think Im going in ANNA tomorrow
+
+$UCAR [CATALYST: CAPITAL RAISE] 
+  Mentions: 7.1 | Sentiment: +0.417 | Score: +0.598
+  Context: UCAR getting ready to go again.
+
+$ZENA [CATALYST: CONTRACT] 
+  Mentions: 5.7 | Sentiment: +0.434 | Score: +0.579
+  Context: Good time to buy ZENA me thinks, bounced off the $2 area twice in the last two years. With how much 
+
+$IQST [CATALYST: EARNINGS] 
+  Mentions: 7.4 | Sentiment: +0.578 | Score: +0.568
   Context: a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently si
 
-$VRAX [NO CATALYST] 
-  Mentions: 5.1 | Sentiment: +0.446 | Score: +0.688
-  Context: In VRAX at 0.18 for a scalp. Let’s see how it plays out
-
 $BTBD [CATALYST: CONTRACT] 
-  Mentions: 6.0 | Sentiment: +0.616 | Score: +0.585
+  Mentions: 5.0 | Sentiment: +0.616 | Score: +0.568
   Context: $BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finishe
-
-$ARAI [CATALYST: PATENT] 
-  Mentions: 21.8 | Sentiment: +0.353 | Score: +0.577
-  Context: ARAI preparing for another pump
-
-$AEHL [NO CATALYST] 
-  Mentions: 9.8 | Sentiment: +0.363 | Score: +0.560
-  Context: My plays for this week are AEHL and SRXH either of them works for me so lets goo
-
-$PSTV [NO CATALYST] 
-  Mentions: 6.3 | Sentiment: +0.357 | Score: +0.528
-  Context: PSTV genuinely has ample potential for a 10x upside. (2) You might dismiss my post as simply a promo
 
