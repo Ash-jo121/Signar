@@ -1,40 +1,40 @@
-$FLYX [CATALYST: PARTNERSHIP] 
-  Mentions: 5.3 | Sentiment: +0.671 | Score: +1.042
-  Context: They FLYX deal should be approved by the sec anyday. If you don't give them a chance now theres no p
+$BTBD [CATALYST: CONTRACT] 
+  Mentions: 12.3 | Sentiment: +0.667 | Score: +0.982
+  Context: $BTBD is going to explode soon
+
+$QSI [CATALYST: PATENT] 
+  Mentions: 5.0 | Sentiment: +0.608 | Score: +0.795
+  Context: $QSI LETS FUCKING GO.    [$QSI Quantum-Si (Incredibly undervalued at 0.85c close to all time low) ju
+
+$DRMA [CATALYST: PRODUCTION] 
+  Mentions: 6.3 | Sentiment: +0.478 | Score: +0.763
+  Context: wait until you realize you should be buying $DRMA on it low float low volume coming downtrend break 
+
+$RCT [CATALYST: CONTRACT] 
+  Mentions: 7.3 | Sentiment: +0.606 | Score: +0.753
+  Context: $RCT +21% — RedCloud Holdings surges on $30M Saudi Arabia licensing deal RedCloud Holdings (RCT) jum
+
+$SRXH [CATALYST: MERGER] 
+  Mentions: 33.4 | Sentiment: +0.346 | Score: +0.694
+  Context: $SRXH. After reading the S4 filing, is it still your play and why?
+
+$ELAB [NO CATALYST] 
+  Mentions: 5.3 | Sentiment: +0.552 | Score: +0.686
+  Context: $ELAB — recent move and current setup $ELAB — interesting price action after recent spike ELAB had a
+
+$MIGI [CATALYST: MERGER] 
+  Mentions: 5.0 | Sentiment: +0.659 | Score: +0.608
+  Context: $MIGI THE RERATE IS ON - NEW BOARD AND TEAM
+
+$BGMS [CATALYST: EARNINGS] 
+  Mentions: 5.0 | Sentiment: +0.716 | Score: +0.606
+  Context: $BGMS ✅ High accumulation today . Keep an eye on it folks ! Lots of buy candles ... at some point wi
+
+$MBAI [CATALYST: MERGER] 
+  Mentions: 7.7 | Sentiment: +0.436 | Score: +0.596
+  Context: This Setup could go parabolic at any moment! (MBAI) is turning into one of the most active micro‑cap
 
 $SAFX [CATALYST: PRODUCTION] 
-  Mentions: 33.7 | Sentiment: +0.520 | Score: +0.993
-  Context: About to Go All In on One Stock… Someone Talk Me Out of It I’ve got about $50K in cash and I’m this 
-
-$OMEX [CATALYST: PARTNERSHIP] 
-  Mentions: 7.3 | Sentiment: +0.627 | Score: +0.902
-  Context: Too bad it came just as hard down as it went up
-
-$MBAI [CATALYST: PARTNERSHIP] 
-  Mentions: 12.3 | Sentiment: +0.564 | Score: +0.893
-  Context: This Setup is ready to breakout at any given moment (MBAI) is turning into one of the most active mi
-
-$GPRO [NO CATALYST] 
-  Mentions: 8.4 | Sentiment: +0.462 | Score: +0.721
-  Context: $gpro guys there is the hype right now and it will fly soon
-
-$ANNA [CATALYST: REGULATORY] 
-  Mentions: 21.2 | Sentiment: +0.355 | Score: +0.656
-  Context: I think Im going in ANNA tomorrow
-
-$UCAR [CATALYST: CAPITAL RAISE] 
-  Mentions: 7.1 | Sentiment: +0.417 | Score: +0.598
-  Context: UCAR getting ready to go again.
-
-$ZENA [CATALYST: CONTRACT] 
-  Mentions: 5.7 | Sentiment: +0.434 | Score: +0.579
-  Context: Good time to buy ZENA me thinks, bounced off the $2 area twice in the last two years. With how much 
-
-$IQST [CATALYST: EARNINGS] 
-  Mentions: 7.4 | Sentiment: +0.578 | Score: +0.568
-  Context: a small cap name pushing for billion-dollar revenues IQST is a name wort watching as it currently si
-
-$BTBD [CATALYST: CONTRACT] 
-  Mentions: 5.0 | Sentiment: +0.616 | Score: +0.568
-  Context: $BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finishe
+  Mentions: 19.1 | Sentiment: +0.321 | Score: +0.580
+  Context: SAFX, but wait until after the morning knife ⚔️🏴‍☠️
 
