@@ -1,40 +1,40 @@
-$BTBD [CATALYST: CONTRACT] 
-  Mentions: 12.3 | Sentiment: +0.667 | Score: +0.982
+$MIGI [CATALYST: MERGER] 
+  Mentions: 10.0 | Sentiment: +0.684 | Score: +1.058
+  Context: $MIGI new board. New ceo is ready to announce the plan going forward. 144MW of power pivot into Ai h
+
+$MYSE [NO CATALYST] 
+  Mentions: 35.3 | Sentiment: +0.433 | Score: +0.855
+  Context: Is this the MYSE dip or is it already dead?
+
+$QSI [CATALYST: CLINICAL] 
+  Mentions: 8.7 | Sentiment: +0.538 | Score: +0.851
+  Context: $QSI Quantum-Si (Incredibly undervalued at 0.85c close to all time low) just released a manuscript o
+
+$BTBD [CATALYST: MERGER] 
+  Mentions: 10.3 | Sentiment: +0.591 | Score: +0.817
   Context: $BTBD is going to explode soon
 
-$QSI [CATALYST: PATENT] 
-  Mentions: 5.0 | Sentiment: +0.608 | Score: +0.795
-  Context: $QSI LETS FUCKING GO.    [$QSI Quantum-Si (Incredibly undervalued at 0.85c close to all time low) ju
+$SRXH [NO CATALYST] 
+  Mentions: 48.2 | Sentiment: +0.376 | Score: +0.782
+  Context: Thoughts on $SRXH What are people saying about this?
 
-$DRMA [CATALYST: PRODUCTION] 
-  Mentions: 6.3 | Sentiment: +0.478 | Score: +0.763
-  Context: wait until you realize you should be buying $DRMA on it low float low volume coming downtrend break 
+$CUE [CATALYST: CONTRACT] 
+  Mentions: 6.5 | Sentiment: +0.476 | Score: +0.763
+  Context: Thanks for the CUE tip - it's moving very nicely.  Any idea what the top might be?
 
-$RCT [CATALYST: CONTRACT] 
-  Mentions: 7.3 | Sentiment: +0.606 | Score: +0.753
-  Context: $RCT +21% — RedCloud Holdings surges on $30M Saudi Arabia licensing deal RedCloud Holdings (RCT) jum
+$MBAI [CATALYST: MERGER] 
+  Mentions: 5.1 | Sentiment: +0.468 | Score: +0.722
+  Context: $MBAI is my favorite. Robotics merger happening any day and is under 2. LAst time they put out news 
 
-$SRXH [CATALYST: MERGER] 
-  Mentions: 33.4 | Sentiment: +0.346 | Score: +0.694
-  Context: $SRXH. After reading the S4 filing, is it still your play and why?
-
-$ELAB [NO CATALYST] 
-  Mentions: 5.3 | Sentiment: +0.552 | Score: +0.686
-  Context: $ELAB — recent move and current setup $ELAB — interesting price action after recent spike ELAB had a
-
-$MIGI [CATALYST: MERGER] 
-  Mentions: 5.0 | Sentiment: +0.659 | Score: +0.608
-  Context: $MIGI THE RERATE IS ON - NEW BOARD AND TEAM
+$FLYX [CATALYST: MERGER] 
+  Mentions: 17.7 | Sentiment: +0.424 | Score: +0.721
+  Context: JTAI S-4 dropped yesterday for FLYX merger  Assuming they haven't diluted since the RS (which I don'
 
 $BGMS [CATALYST: EARNINGS] 
   Mentions: 5.0 | Sentiment: +0.716 | Score: +0.606
   Context: $BGMS ✅ High accumulation today . Keep an eye on it folks ! Lots of buy candles ... at some point wi
 
-$MBAI [CATALYST: MERGER] 
-  Mentions: 7.7 | Sentiment: +0.436 | Score: +0.596
-  Context: This Setup could go parabolic at any moment! (MBAI) is turning into one of the most active micro‑cap
-
-$SAFX [CATALYST: PRODUCTION] 
-  Mentions: 19.1 | Sentiment: +0.321 | Score: +0.580
-  Context: SAFX, but wait until after the morning knife ⚔️🏴‍☠️
+$AIXI [CATALYST: COURT RULING OR PATENT DECISION] 
+  Mentions: 14.4 | Sentiment: +0.425 | Score: +0.600
+  Context: If you look at my history you’ll see I called AIXI at 10 cents before it ran to $2.50 as well. If th
 
