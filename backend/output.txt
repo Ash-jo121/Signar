@@ -1,40 +1,40 @@
 $MIGI [CATALYST: MERGER] 
-  Mentions: 10.0 | Sentiment: +0.684 | Score: +1.058
+  Mentions: 11.0 | Sentiment: +0.655 | Score: +0.948
   Context: $MIGI new board. New ceo is ready to announce the plan going forward. 144MW of power pivot into Ai h
 
-$MYSE [NO CATALYST] 
-  Mentions: 35.3 | Sentiment: +0.433 | Score: +0.855
-  Context: Is this the MYSE dip or is it already dead?
-
-$QSI [CATALYST: CLINICAL] 
-  Mentions: 8.7 | Sentiment: +0.538 | Score: +0.851
-  Context: $QSI Quantum-Si (Incredibly undervalued at 0.85c close to all time low) just released a manuscript o
-
-$BTBD [CATALYST: MERGER] 
-  Mentions: 10.3 | Sentiment: +0.591 | Score: +0.817
+$BTBD [CATALYST: CONTRACT] 
+  Mentions: 11.6 | Sentiment: +0.498 | Score: +0.746
   Context: $BTBD is going to explode soon
 
-$SRXH [NO CATALYST] 
-  Mentions: 48.2 | Sentiment: +0.376 | Score: +0.782
-  Context: Thoughts on $SRXH What are people saying about this?
-
-$CUE [CATALYST: CONTRACT] 
-  Mentions: 6.5 | Sentiment: +0.476 | Score: +0.763
-  Context: Thanks for the CUE tip - it's moving very nicely.  Any idea what the top might be?
-
-$MBAI [CATALYST: MERGER] 
-  Mentions: 5.1 | Sentiment: +0.468 | Score: +0.722
-  Context: $MBAI is my favorite. Robotics merger happening any day and is under 2. LAst time they put out news 
-
 $FLYX [CATALYST: MERGER] 
-  Mentions: 17.7 | Sentiment: +0.424 | Score: +0.721
+  Mentions: 17.3 | Sentiment: +0.404 | Score: +0.680
   Context: JTAI S-4 dropped yesterday for FLYX merger  Assuming they haven't diluted since the RS (which I don'
+
+$NXXT [CATALYST: EARNINGS] 
+  Mentions: 28.3 | Sentiment: +0.600 | Score: +0.623
+  Context: NextNRG, Inc. Reports 195% Revenue Growth for Full Year 2025, Achieving $81.8 Million in Revenue Qui
+
+$OBAI [CATALYST: PARTNERSHIP] 
+  Mentions: 5.4 | Sentiment: +0.439 | Score: +0.615
+  Context: Our Bond ($OBAI): Just Signed Pharma Giants, a Top 3 US Telecom, and a Trillion Dollar Corporation i
 
 $BGMS [CATALYST: EARNINGS] 
   Mentions: 5.0 | Sentiment: +0.716 | Score: +0.606
   Context: $BGMS ✅ High accumulation today . Keep an eye on it folks ! Lots of buy candles ... at some point wi
 
-$AIXI [CATALYST: COURT RULING OR PATENT DECISION] 
-  Mentions: 14.4 | Sentiment: +0.425 | Score: +0.600
-  Context: If you look at my history you’ll see I called AIXI at 10 cents before it ran to $2.50 as well. If th
+$QSI [CATALYST: CLINICAL] 
+  Mentions: 8.7 | Sentiment: +0.372 | Score: +0.591
+  Context: $QSI Quantum-Si (Incredibly undervalued at 0.85c close to all time low) just released a manuscript o
+
+$IQST [CATALYST: EARNINGS] 
+  Mentions: 5.4 | Sentiment: +0.503 | Score: +0.548
+  Context: $IQST - IQSTEL Inc. Announces Investor Conference Call to Discuss Q4 2025 and Full Year 2025 Financi
+
+$SNBR [CATALYST: CAPITAL RAISE] 
+  Mentions: 7.8 | Sentiment: +0.324 | Score: +0.456
+  Context: SNBR steadily climbing is good for my port
+
+$III [NO CATALYST] 
+  Mentions: 10.1 | Sentiment: +0.262 | Score: +0.384
+  Context: $IMMP +30% — biotech bounces on FDA orphan drug designation after 82% crash Immutep Limited (IMMP) s
 
