@@ -1,40 +1,40 @@
 $DRMA [CATALYST: PRODUCTION] 
-  Mentions: 6.3 | Sentiment: +0.775 | Score: +1.238
-  Context: Keep an eye on $DRMA 1.40 breakout building for another 100%. with mid 2026 product launch getting c
+  Mentions: 7.3 | Sentiment: +0.752 | Score: +1.229
+  Context: $DRMA for the 1.40 technical breakout.
 
-$SAFX [CATALYST: PARTNERSHIP] 
-  Mentions: 6.6 | Sentiment: +0.553 | Score: +0.783
-  Context: I read a compelling argument about SAFX (sustainable aviation fuel)
+$EFOI [CATALYST: CONTRACT] 
+  Mentions: 21.2 | Sentiment: +0.433 | Score: +0.797
+  Context: $EFOI +117% — $6.6M multi-year data center contract on a 2.9M float Energy Focus (EFOI) ran hard on 
 
-$QSI [CATALYST: CLINICAL] 
-  Mentions: 6.3 | Sentiment: +0.483 | Score: +0.771
-  Context: QSI's USP is a do-it-yourself proteomics kit that uses a proprietary liquid to turn different compou
-
-$MYSE [NO CATALYST] 
-  Mentions: 40.5 | Sentiment: +0.358 | Score: +0.743
-  Context: MYSE TODAY GOING TO 30...LOW FLOAT
-
-$BTBD [CATALYST: MERGER] 
-  Mentions: 10.3 | Sentiment: +0.495 | Score: +0.709
-  Context: BTBD about to rip the roof off this burger joint!
-
-$ONFO [CATALYST: CAPITAL RAISE] 
-  Mentions: 13.0 | Sentiment: +0.445 | Score: +0.678
-  Context: $ONFO +101% — $100M equity facility sends micro-cap internet stock parabolic Onfolio Holdings (ONFO)
-
-$FLYX [CATALYST: MERGER] 
-  Mentions: 12.9 | Sentiment: +0.408 | Score: +0.672
-  Context: JTAI S-4 dropped yesterday for FLYX merger  Assuming they haven't diluted since the RS (which I don'
-
-$WNW [NO CATALYST] 
-  Mentions: 6.6 | Sentiment: +0.418 | Score: +0.605
-  Context: WNW low float play - huge upside **The Setup: Why WNW is Moving** The move you’re seeing today is a 
+$TOVX [NO CATALYST] 
+  Mentions: 9.4 | Sentiment: +0.459 | Score: +0.781
+  Context: TOVX kind of looks like it's going to make a new high
 
 $CRDL [CATALYST: CLINICAL] 
-  Mentions: 5.0 | Sentiment: +0.552 | Score: +0.594
-  Context: CRDL looks like accumulation for the next leg
+  Mentions: 10.0 | Sentiment: +0.553 | Score: +0.760
+  Context: CRDL lets see if a push comes during power hour for the $1.50 break
 
-$PBM [NO CATALYST] 
-  Mentions: 42.2 | Sentiment: +0.243 | Score: +0.518
-  Context: PBM up big... I didn't buy it yesterday at 5,65 and now it moons...
+$ISPC [NO CATALYST] 
+  Mentions: 13.9 | Sentiment: +0.461 | Score: +0.750
+  Context: A case for ISPC - I'm feeling good about today The bull case for ISPC is pretty simple. It’s a small
+
+$AIXI [CATALYST: SHORT SQUEEZE] 
+  Mentions: 8.7 | Sentiment: +0.529 | Score: +0.737
+  Context: Do we think AIXI is going back up?
+
+$BTBD [CATALYST: CONTRACT] 
+  Mentions: 9.6 | Sentiment: +0.414 | Score: +0.601
+  Context: A burger joint that screamed AI one day?  AI burgers and shoes, what can go wrong
+
+$FLYX [CATALYST: MERGER] 
+  Mentions: 16.1 | Sentiment: +0.327 | Score: +0.556
+  Context: Liking $FLYX as a potential squeeze / theme play Liking $FLYX into next week, with space and fly sto
+
+$AMS [CATALYST: ANALYST TARGET] 
+  Mentions: 12.4 | Sentiment: +0.383 | Score: +0.545
+  Context: $AMS Is a Confirmed Reversal, We Have a Swing! Just finishing a quick update to the $AMS thesis and 
+
+$MIGI [NO CATALYST] 
+  Mentions: 9.3 | Sentiment: +0.370 | Score: +0.534
+  Context: MIGI sold 30% of shares at 7.20. Rest will hold till 40+
 
