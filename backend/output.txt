@@ -1,40 +1,40 @@
 $DRMA [CATALYST: PRODUCTION] 
-  Mentions: 7.3 | Sentiment: +0.752 | Score: +1.229
+  Mentions: 6.0 | Sentiment: +0.736 | Score: +1.165
   Context: $DRMA for the 1.40 technical breakout.
 
-$EFOI [CATALYST: CONTRACT] 
-  Mentions: 21.2 | Sentiment: +0.433 | Score: +0.797
-  Context: $EFOI +117% — $6.6M multi-year data center contract on a 2.9M float Energy Focus (EFOI) ran hard on 
-
-$TOVX [NO CATALYST] 
-  Mentions: 9.4 | Sentiment: +0.459 | Score: +0.781
-  Context: TOVX kind of looks like it's going to make a new high
-
 $CRDL [CATALYST: CLINICAL] 
-  Mentions: 10.0 | Sentiment: +0.553 | Score: +0.760
+  Mentions: 10.0 | Sentiment: +0.603 | Score: +0.830
   Context: CRDL lets see if a push comes during power hour for the $1.50 break
 
-$ISPC [NO CATALYST] 
-  Mentions: 13.9 | Sentiment: +0.461 | Score: +0.750
-  Context: A case for ISPC - I'm feeling good about today The bull case for ISPC is pretty simple. It’s a small
-
-$AIXI [CATALYST: SHORT SQUEEZE] 
-  Mentions: 8.7 | Sentiment: +0.529 | Score: +0.737
-  Context: Do we think AIXI is going back up?
-
-$BTBD [CATALYST: CONTRACT] 
-  Mentions: 9.6 | Sentiment: +0.414 | Score: +0.601
-  Context: A burger joint that screamed AI one day?  AI burgers and shoes, what can go wrong
+$QSI [CATALYST: CLINICAL] 
+  Mentions: 5.4 | Sentiment: +0.602 | Score: +0.825
+  Context: $QSI, read up their latest 2 news. Researchers discovered a new measurement layer in cancer using th
 
 $FLYX [CATALYST: MERGER] 
-  Mentions: 16.1 | Sentiment: +0.327 | Score: +0.556
-  Context: Liking $FLYX as a potential squeeze / theme play Liking $FLYX into next week, with space and fly sto
+  Mentions: 23.4 | Sentiment: +0.425 | Score: +0.780
+  Context: FLYX has a merger deadline with JetAI.✈️
+
+$ISPC [NO CATALYST] 
+  Mentions: 11.9 | Sentiment: +0.481 | Score: +0.765
+  Context: A case for ISPC - I'm feeling good about today The bull case for ISPC is pretty simple. It’s a small
+
+$BTBD [CATALYST: MERGER] 
+  Mentions: 10.6 | Sentiment: +0.479 | Score: +0.720
+  Context: Check out BTBD as well. That one should be fun in a couple weeks
+
+$EFOI [CATALYST: CONTRACT] 
+  Mentions: 21.5 | Sentiment: +0.370 | Score: +0.659
+  Context: EFOI getting ready to go up on Monday?!
+
+$JTAI [CATALYST: MERGER] 
+  Mentions: 22.8 | Sentiment: +0.282 | Score: +0.536
+  Context: This guy has the best DD I’ve seen on $JTAI, give it a look. Merger completed 30th april with $FLYX 
+
+$TOVX [CATALYST: CLINICAL/REGULATORY] 
+  Mentions: 13.4 | Sentiment: +0.290 | Score: +0.522
+  Context: What are thoughts on TOVX going into Monday?
 
 $AMS [CATALYST: ANALYST TARGET] 
-  Mentions: 12.4 | Sentiment: +0.383 | Score: +0.545
+  Mentions: 10.1 | Sentiment: +0.367 | Score: +0.518
   Context: $AMS Is a Confirmed Reversal, We Have a Swing! Just finishing a quick update to the $AMS thesis and 
-
-$MIGI [NO CATALYST] 
-  Mentions: 9.3 | Sentiment: +0.370 | Score: +0.534
-  Context: MIGI sold 30% of shares at 7.20. Rest will hold till 40+
 
