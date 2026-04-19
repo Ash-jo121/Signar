@@ -11,7 +11,12 @@ from database import get_connection, init_db, record_flagged_stocks
 from database import save_daily_results
 from scraper import fetch_all
 from extractor import extract_from_post
-from sentiment import analyze_sentiment, assess_catalyst_quality, _request_times
+from sentiment import (
+    analyze_sentiment,
+    assess_catalyst_quality,
+    _request_times,
+    deduplicate_similar_contexts,
+)
 from tqdm import tqdm
 import traceback
 
@@ -187,6 +192,9 @@ def analyze_ticker_sentiment(all_posts):
 
                 all_short_texts = [c["short"] for c in data["contexts"]]
                 unique_contexts = list({c[:50]: c for c in all_short_texts}.values())
+                unique_contexts = deduplicate_similar_contexts(
+                    unique_contexts, threshold=0.6
+                )
                 sampled_contexts = sample_contexts(
                     unique_contexts, ticker, max_contexts=15
                 )

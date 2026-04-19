@@ -323,6 +323,36 @@ Post:
     return {"flag_type": "neutral", "confidence": 0.0, "tickers_mentioned": []}
 
 
+def deduplicate_similar_contexts(
+    contexts: list[str], threshold: float = 0.6
+) -> list[str]:
+    """
+    Remove near-duplicate contexts based on Jaccard word overlap.
+    Sorts by length descending first (longer = more informative) so
+    the more detailed version survives when duplicates are found.
+    """
+    # Sort longer texts first so the richer version is kept
+    sorted_ctx = sorted(contexts, key=len, reverse=True)
+    unique = []
+    for ctx in sorted_ctx:
+        words_ctx = set(ctx.lower().split())
+        if not words_ctx:
+            continue
+        is_dup = False
+        for existing in unique:
+            words_ex = set(existing.lower().split())
+            union = words_ctx | words_ex
+            if not union:
+                continue
+            overlap = len(words_ctx & words_ex) / len(union)
+            if overlap >= threshold:
+                is_dup = True
+                break
+        if not is_dup:
+            unique.append(ctx)
+    return unique
+
+
 if __name__ == "__main__":
     test_comments = [
         "RCKT is going to moon, expected FDA approval next week!",
