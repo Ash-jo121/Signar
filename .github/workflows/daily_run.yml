@@ -72,6 +72,11 @@ jobs:
       - name: Create logs directory
         run: mkdir -p logs
 
+      # Run migrations 
+      - name: Run DB migrations # ← ADD THIS STEP HERE
+        working-directory: backend
+        run: python3 migrate_add_author.py
+
       # ── 7. Run main pipeline ──────────────────────────────────────
       - name: Run ThreadRadar main pipeline
         working-directory: backend
