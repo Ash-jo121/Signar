@@ -419,6 +419,7 @@ def fetch_all():
                     "score": post["score"],
                     "num_comments": post.get("num_comments", 0),
                     "created_utc": post["created_utc"],
+                    "author": post.get("author", "unknown"),
                 }
             )
             comments = fetch_comments(post["id"], subreddit)
@@ -446,6 +447,7 @@ def fetch_all():
                     "score": post["score"],
                     "num_comments": post.get("num_comments", 0),
                     "created_utc": post["created_utc"],
+                    "author": post.get("author", "unknown"),
                 }
             )
             comments = fetch_comments(post["id"], subreddit)

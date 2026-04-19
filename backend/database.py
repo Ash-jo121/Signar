@@ -70,7 +70,8 @@ def init_db():
             status TEXT DEFAULT 'active',
             created_utc REAL,
             last_analyzed REAL,
-            fetched_utc REAL
+            fetched_utc REAL,
+            author TEXT
         ); 
         
          -- Performance tracking table
@@ -195,8 +196,8 @@ def save_post(post):
             """
             INSERT OR IGNORE INTO posts
             (id, subreddit, title, body, post_score, comment_count,
-             status, created_utc, fetched_utc)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+             status, created_utc, fetched_utc, author)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
             (
                 post["id"],
@@ -208,6 +209,7 @@ def save_post(post):
                 "active",
                 post.get("created_utc", 0),
                 time.time(),
+                post.get("author", "unknown"),
             ),
         )
         conn.commit()
@@ -298,7 +300,7 @@ def get_active_posts():
     rows = conn.execute(
         """
         SELECT id, subreddit, title, body, post_score, comment_count,
-               comment_count_at_analysis, created_utc, last_analyzed
+               comment_count_at_analysis, created_utc, last_analyzed, author
         FROM posts
         WHERE status = 'active'
           AND created_utc >= strftime('%s', 'now', '-3 days')
