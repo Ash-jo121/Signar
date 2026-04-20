@@ -323,6 +323,51 @@ def analyze_ticker_sentiment(all_posts):
     return results
 
 
+def apply_repetition_decay(results):
+    """
+    Penalize tickers that have appeared consistently for 3+ days
+    without a meaningful price move (indicating artificial inflation).
+    """
+    conn = get_connection()
+    for result in results:
+        ticker = result["ticker"]
+
+        # Check consecutive appearances in last 7 days
+        rows = conn.execute(
+            """
+            SELECT date, final_score, price
+            FROM daily_sentiment
+            WHERE ticker = ?
+            AND date >= date('now', '-7 days')
+            ORDER BY date DESC
+            LIMIT 7
+        """,
+            (ticker,),
+        ).fetchall()
+
+        if len(rows) < 3:
+            continue
+
+        # Check price movement across appearances
+        prices = [r["price"] for r in rows if r["price"] and r["price"] > 0]
+        if len(prices) >= 2:
+            price_range = (max(prices) - min(prices)) / min(prices)
+            # If appeared 3+ days and price moved less than 5% total
+            if price_range < 0.05:
+                days = len(rows)
+                decay = max(
+                    0.3, 1.0 - (days - 2) * 0.15
+                )  # 0.85 at 3d, 0.70 at 4d, 0.55 at 5d, 0.40 at 6d, 0.30 at 7d+
+                original = result["final_score"]
+                result["final_score"] = round(original * decay, 3)
+                print(
+                    f"  {ticker}: repetition decay ({days} days, {price_range:.1%} price move) → score {original} × {decay:.2f}"
+                )
+
+    conn.close()
+    return results
+
+
 if __name__ == "__main__":
     print("=== ThreadRadar ===\n")
 
@@ -384,6 +429,8 @@ if __name__ == "__main__":
         traceback.print_exc()
     finally:
         conn.close()
+
+    results = apply_repetition_decay(results)
 
     trackable = [
         r
