@@ -304,6 +304,8 @@ COMMON_ABBREVIATIONS = {
     "PTS",
     "PSA",
     "WTF",
+    "DYOR",
+    "DRMAW",
 }
 
 LOW_QUALITY_PATTERNS = [
