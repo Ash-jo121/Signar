@@ -1,40 +1,40 @@
 $DRMA [CATALYST: PRODUCTION] 
-  Mentions: 6.0 | Sentiment: +0.736 | Score: +1.165
-  Context: $DRMA for the 1.40 technical breakout.
-
-$CRDL [CATALYST: CLINICAL] 
-  Mentions: 10.0 | Sentiment: +0.603 | Score: +0.830
-  Context: CRDL lets see if a push comes during power hour for the $1.50 break
-
-$QSI [CATALYST: CLINICAL] 
-  Mentions: 5.4 | Sentiment: +0.602 | Score: +0.825
-  Context: $QSI, read up their latest 2 news. Researchers discovered a new measurement layer in cancer using th
-
-$FLYX [CATALYST: MERGER] 
-  Mentions: 23.4 | Sentiment: +0.425 | Score: +0.780
-  Context: FLYX has a merger deadline with JetAI.✈️
-
-$ISPC [NO CATALYST] 
-  Mentions: 11.9 | Sentiment: +0.481 | Score: +0.765
-  Context: A case for ISPC - I'm feeling good about today The bull case for ISPC is pretty simple. It’s a small
+  Mentions: 7.0 | Sentiment: +0.726 | Score: +1.179
+  Context: $DRMA low float un noticed upcoming product release mid 2026 changing the future fundemental outlook
 
 $BTBD [CATALYST: MERGER] 
-  Mentions: 10.6 | Sentiment: +0.479 | Score: +0.720
-  Context: Check out BTBD as well. That one should be fun in a couple weeks
+  Mentions: 11.3 | Sentiment: +0.525 | Score: +0.762
+  Context: $BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finishe
 
-$EFOI [CATALYST: CONTRACT] 
-  Mentions: 21.5 | Sentiment: +0.370 | Score: +0.659
-  Context: EFOI getting ready to go up on Monday?!
+$ISPC [NO CATALYST] 
+  Mentions: 10.9 | Sentiment: +0.461 | Score: +0.723
+  Context: A case for ISPC - I'm feeling good about today The bull case for ISPC is pretty simple. It’s a small
 
-$JTAI [CATALYST: MERGER] 
-  Mentions: 22.8 | Sentiment: +0.282 | Score: +0.536
-  Context: This guy has the best DD I’ve seen on $JTAI, give it a look. Merger completed 30th april with $FLYX 
+$TOVX [CATALYST: CLINICAL] 
+  Mentions: 19.9 | Sentiment: +0.378 | Score: +0.687
+  Context: TOVX $TOVX   Theriva™ Biologics (NYSE American: TOVX) Data to be presented in a poster session at th
 
-$TOVX [CATALYST: CLINICAL/REGULATORY] 
-  Mentions: 13.4 | Sentiment: +0.290 | Score: +0.522
-  Context: What are thoughts on TOVX going into Monday?
+$DYOR [NO CATALYST] 
+  Mentions: 18.0 | Sentiment: +0.650 | Score: +0.673
+  Context: $QSI, read up their latest 2 news. Researchers discovered a new measurement layer in cancer using th
 
-$AMS [CATALYST: ANALYST TARGET] 
-  Mentions: 10.1 | Sentiment: +0.367 | Score: +0.518
-  Context: $AMS Is a Confirmed Reversal, We Have a Swing! Just finishing a quick update to the $AMS thesis and 
+$AGAE [NO CATALYST] 
+  Mentions: 7.8 | Sentiment: +0.433 | Score: +0.668
+  Context: New Swing Play With Lots of Upside Potential I hope everyone is doing well! There’s a ticker I’ve be
+
+$FLYX [CATALYST: MERGER] 
+  Mentions: 21.0 | Sentiment: +0.362 | Score: +0.665
+  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
+
+$AIXI [NO CATALYST] 
+  Mentions: 11.9 | Sentiment: +0.466 | Score: +0.659
+  Context: $AIXI  I found this one on Reddit a couple of weekends ago and bought in Monday morn at .19 and watc
+
+$CRDL [NO CATALYST] 
+  Mentions: 9.3 | Sentiment: +0.383 | Score: +0.651
+  Context: There's still some upside potential, but it's looking like most of the move was already made now.
+
+$TACO [CATALYST: EARNINGS] 
+  Mentions: 21.5 | Sentiment: +0.323 | Score: +0.624
+  Context: This is not a TACO trade because the closure was completely contingent on Iran. Trump already wanted
 
