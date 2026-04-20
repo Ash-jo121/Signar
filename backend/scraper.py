@@ -81,6 +81,7 @@ def parse_post(p):
         "url": f"https://reddit.com{p['data']['permalink']}",
         "created_utc": p["data"]["created_utc"],
         "num_comments": p["data"]["num_comments"],
+        "author": p["data"].get("author", "unknown"),
     }
 
 
