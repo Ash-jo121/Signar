@@ -1,40 +1,40 @@
 $DRMA [CATALYST: PRODUCTION] 
-  Mentions: 7.0 | Sentiment: +0.726 | Score: +1.179
+  Mentions: 5.0 | Sentiment: +0.750 | Score: +1.153
   Context: $DRMA low float un noticed upcoming product release mid 2026 changing the future fundemental outlook
 
-$BTBD [CATALYST: MERGER] 
-  Mentions: 11.3 | Sentiment: +0.525 | Score: +0.762
-  Context: $BTBD Base-On-Base Breakout Push #2 In Progress As Merger Continues To Move Forward **I just finishe
+$CHAR [CATALYST: PARTNERSHIP] 
+  Mentions: 9.3 | Sentiment: +0.693 | Score: +1.076
+  Context: For anyone else who is nerding out on this morning's release like I am, here is a link that I found 
 
-$ISPC [NO CATALYST] 
-  Mentions: 10.9 | Sentiment: +0.461 | Score: +0.723
-  Context: A case for ISPC - I'm feeling good about today The bull case for ISPC is pretty simple. It’s a small
-
-$TOVX [CATALYST: CLINICAL] 
-  Mentions: 19.9 | Sentiment: +0.378 | Score: +0.687
-  Context: TOVX $TOVX   Theriva™ Biologics (NYSE American: TOVX) Data to be presented in a poster session at th
-
-$DYOR [NO CATALYST] 
-  Mentions: 18.0 | Sentiment: +0.650 | Score: +0.673
+$QSI [CATALYST: CLINICAL] 
+  Mentions: 15.6 | Sentiment: +0.624 | Score: +0.920
   Context: $QSI, read up their latest 2 news. Researchers discovered a new measurement layer in cancer using th
 
-$AGAE [NO CATALYST] 
-  Mentions: 7.8 | Sentiment: +0.433 | Score: +0.668
-  Context: New Swing Play With Lots of Upside Potential I hope everyone is doing well! There’s a ticker I’ve be
+$DGXX [CATALYST: PARTNERSHIP] 
+  Mentions: 8.0 | Sentiment: +0.441 | Score: +0.658
+  Context: I didn't read your post because of the way you wrote it. Having said that: I was in DGXX for some ti
 
 $FLYX [CATALYST: MERGER] 
-  Mentions: 21.0 | Sentiment: +0.362 | Score: +0.665
-  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
-
-$AIXI [NO CATALYST] 
-  Mentions: 11.9 | Sentiment: +0.466 | Score: +0.659
-  Context: $AIXI  I found this one on Reddit a couple of weekends ago and bought in Monday morn at .19 and watc
+  Mentions: 19.2 | Sentiment: +0.332 | Score: +0.611
+  Context: You tell me because I can't figure it out either lol I think the market is sceptical the deal will g
 
 $CRDL [NO CATALYST] 
-  Mentions: 9.3 | Sentiment: +0.383 | Score: +0.651
+  Mentions: 5.3 | Sentiment: +0.386 | Score: +0.598
   Context: There's still some upside potential, but it's looking like most of the move was already made now.
 
-$TACO [CATALYST: EARNINGS] 
-  Mentions: 21.5 | Sentiment: +0.323 | Score: +0.624
-  Context: This is not a TACO trade because the closure was completely contingent on Iran. Trump already wanted
+$CMND [CATALYST: CAPITAL RAISE] 
+  Mentions: 38.6 | Sentiment: +0.299 | Score: +0.596
+  Context: Is $CMND the move? It already popped, I think I read warrants were exercised, now the company would 
+
+$GPRO [CATALYST: PARTNERSHIP] 
+  Mentions: 5.5 | Sentiment: +0.401 | Score: +0.579
+  Context: $GPro stock could be the turnaround play of 2026 GoPro has been written off for years, but I think 2
+
+$ANNA [CATALYST: PRODUCTION] 
+  Mentions: 16.3 | Sentiment: +0.335 | Score: +0.559
+  Context: $ANNA – Potential 5x? Watching this closely Oil looking bullish with all the Strait of Hormuz tensio
+
+$LEO [CATALYST: PRODUCTION] 
+  Mentions: 6.9 | Sentiment: +0.328 | Score: +0.531
+  Context: That is one of the most outrageous things I’ve ever heard. 25x on a 2T valuation means 50T… that’s a
 
