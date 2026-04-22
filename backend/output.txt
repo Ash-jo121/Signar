@@ -1,40 +1,40 @@
 $DRMA [CATALYST: PRODUCTION] 
-  Mentions: 5.0 | Sentiment: +0.750 | Score: +1.153
-  Context: $DRMA low float un noticed upcoming product release mid 2026 changing the future fundemental outlook
+  Mentions: 8.0 | Sentiment: +0.738 | Score: +1.225
+  Context: $DRMA is the better sleeper play that has already cooled off and has building low volume momentum. T
 
 $CHAR [CATALYST: PARTNERSHIP] 
-  Mentions: 9.3 | Sentiment: +0.693 | Score: +1.076
+  Mentions: 14.3 | Sentiment: +0.553 | Score: +1.005
   Context: For anyone else who is nerding out on this morning's release like I am, here is a link that I found 
 
+$FLYX [CATALYST: MERGER] 
+  Mentions: 11.3 | Sentiment: +0.617 | Score: +1.000
+  Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
+
 $QSI [CATALYST: CLINICAL] 
-  Mentions: 15.6 | Sentiment: +0.624 | Score: +0.920
+  Mentions: 17.6 | Sentiment: +0.602 | Score: +0.960
   Context: $QSI, read up their latest 2 news. Researchers discovered a new measurement layer in cancer using th
 
-$DGXX [CATALYST: PARTNERSHIP] 
-  Mentions: 8.0 | Sentiment: +0.441 | Score: +0.658
+$DGXX [CATALYST: CONTRACT] 
+  Mentions: 8.3 | Sentiment: +0.586 | Score: +0.783
   Context: I didn't read your post because of the way you wrote it. Having said that: I was in DGXX for some ti
 
-$FLYX [CATALYST: MERGER] 
-  Mentions: 19.2 | Sentiment: +0.332 | Score: +0.611
-  Context: You tell me because I can't figure it out either lol I think the market is sceptical the deal will g
-
-$CRDL [NO CATALYST] 
-  Mentions: 5.3 | Sentiment: +0.386 | Score: +0.598
-  Context: There's still some upside potential, but it's looking like most of the move was already made now.
-
-$CMND [CATALYST: CAPITAL RAISE] 
-  Mentions: 38.6 | Sentiment: +0.299 | Score: +0.596
-  Context: Is $CMND the move? It already popped, I think I read warrants were exercised, now the company would 
-
 $GPRO [CATALYST: PARTNERSHIP] 
-  Mentions: 5.5 | Sentiment: +0.401 | Score: +0.579
+  Mentions: 7.6 | Sentiment: +0.412 | Score: +0.638
   Context: $GPro stock could be the turnaround play of 2026 GoPro has been written off for years, but I think 2
 
-$ANNA [CATALYST: PRODUCTION] 
-  Mentions: 16.3 | Sentiment: +0.335 | Score: +0.559
-  Context: $ANNA – Potential 5x? Watching this closely Oil looking bullish with all the Strait of Hormuz tensio
+$SRXH [NO CATALYST] 
+  Mentions: 26.9 | Sentiment: +0.325 | Score: +0.627
+  Context: SRXH news...DYOR Most people in here don't want the rumours i have access to, but a few people perso
 
-$LEO [CATALYST: PRODUCTION] 
-  Mentions: 6.9 | Sentiment: +0.328 | Score: +0.531
-  Context: That is one of the most outrageous things I’ve ever heard. 25x on a 2T valuation means 50T… that’s a
+$VTIX [CATALYST: CONTRACT] 
+  Mentions: 6.3 | Sentiment: +0.623 | Score: +0.568
+  Context: Sharing a panel with HTC Vive and Magicgate puts VTIX in the same conversation as established XR har
+
+$CMND [NO CATALYST] 
+  Mentions: 19.8 | Sentiment: +0.291 | Score: +0.445
+  Context: Got in ENVB at $5 and normally take any profit instantly but this time I wanted to hold at least 30 
+
+$BTBD [CATALYST: CONTRACT] 
+  Mentions: 5.3 | Sentiment: +0.254 | Score: +0.394
+  Context: Unfortunately doesn’t seem like the market cares. Would have already been factored in and hasn’t mov
 
