@@ -1,40 +1,40 @@
 $DRMA [CATALYST: PRODUCTION] 
-  Mentions: 8.0 | Sentiment: +0.738 | Score: +1.225
-  Context: $DRMA is the better sleeper play that has already cooled off and has building low volume momentum. T
-
-$CHAR [CATALYST: PARTNERSHIP] 
-  Mentions: 14.3 | Sentiment: +0.553 | Score: +1.005
-  Context: For anyone else who is nerding out on this morning's release like I am, here is a link that I found 
+  Mentions: 6.6 | Sentiment: +0.750 | Score: +0.483
+  Context: $DRMA low float un noticed upcoming product release mid 2026 changing the future fundemental outlook
 
 $FLYX [CATALYST: MERGER] 
-  Mentions: 11.3 | Sentiment: +0.617 | Score: +1.000
-  Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
+  Mentions: 11.3 | Sentiment: +0.569 | Score: +0.937
+  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
 
-$QSI [CATALYST: CLINICAL] 
-  Mentions: 17.6 | Sentiment: +0.602 | Score: +0.960
-  Context: $QSI, read up their latest 2 news. Researchers discovered a new measurement layer in cancer using th
+$DVLT [CATALYST: CAPITAL RAISE] 
+  Mentions: 12.0 | Sentiment: +0.634 | Score: +0.786
+  Context: DVLT, it's the only company that has the tech and capability to tokenize everything. The key is how 
 
-$DGXX [CATALYST: CONTRACT] 
-  Mentions: 8.3 | Sentiment: +0.586 | Score: +0.783
-  Context: I didn't read your post because of the way you wrote it. Having said that: I was in DGXX for some ti
+$FFAI [NO CATALYST] 
+  Mentions: 12.4 | Sentiment: +0.449 | Score: +0.745
+  Context: FROM THE  HATED  STOCK  TO THE MOST BUY YEAR TO DATE araday Future Intelligent Electric Inc. (NASDAQ
 
-$GPRO [CATALYST: PARTNERSHIP] 
-  Mentions: 7.6 | Sentiment: +0.412 | Score: +0.638
-  Context: $GPro stock could be the turnaround play of 2026 GoPro has been written off for years, but I think 2
+$CHAR [CATALYST: PARTNERSHIP] 
+  Mentions: 6.0 | Sentiment: +0.521 | Score: +0.726
+  Context: Good question, maybe wrong choice of words by me when I said "it didnt work out for Elkem" and when 
 
-$SRXH [NO CATALYST] 
-  Mentions: 26.9 | Sentiment: +0.325 | Score: +0.627
-  Context: SRXH news...DYOR Most people in here don't want the rumours i have access to, but a few people perso
+$ENVB [CATALYST: PATENT] 
+  Mentions: 5.8 | Sentiment: +0.470 | Score: +0.667
+  Context: $ENVB +22% — Trump psychedelics executive order + new US patent sends micro-cap biotech flying prema
 
-$VTIX [CATALYST: CONTRACT] 
-  Mentions: 6.3 | Sentiment: +0.623 | Score: +0.568
-  Context: Sharing a panel with HTC Vive and Magicgate puts VTIX in the same conversation as established XR har
+$CRDL [CATALYST: CLINICAL] 
+  Mentions: 6.0 | Sentiment: +0.502 | Score: +0.557
+  Context: CRDL’s move actually lines up with something At first glance I figured CRDL was just another small-c
 
-$CMND [NO CATALYST] 
-  Mentions: 19.8 | Sentiment: +0.291 | Score: +0.445
-  Context: Got in ENVB at $5 and normally take any profit instantly but this time I wanted to hold at least 30 
+$QNCX [CATALYST: REGULATORY] 
+  Mentions: 6.1 | Sentiment: +0.348 | Score: +0.552
+  Context: It's honestly hard to say..but I would hope the restructure is going well..with floor price already 
 
-$BTBD [CATALYST: CONTRACT] 
-  Mentions: 5.3 | Sentiment: +0.254 | Score: +0.394
-  Context: Unfortunately doesn’t seem like the market cares. Would have already been factored in and hasn’t mov
+$AGPU [CATALYST: CAPITAL RAISE] 
+  Mentions: 15.9 | Sentiment: +0.342 | Score: +0.523
+  Context: Axe Compute Secures $260 million, Three-Year Enterprise Contract for 2,304-GPU NVIDIA B300 Deploymen
+
+$CXAI [CATALYST: PARTNERSHIP] 
+  Mentions: 5.3 | Sentiment: +0.429 | Score: +0.467
+  Context: $CXAI just got featured in an official Google Cloud case study tiny AI penny stock, Google-validated
 
