@@ -1,40 +1,40 @@
-$DRMA [CATALYST: PRODUCTION] 
-  Mentions: 6.6 | Sentiment: +0.750 | Score: +0.483
-  Context: $DRMA low float un noticed upcoming product release mid 2026 changing the future fundemental outlook
+$QSI [CATALYST: CLINICAL] 
+  Mentions: 12.6 | Sentiment: +0.602 | Score: +0.966
+  Context: $QSI Quantum-Si is the Illumina of the proteomic field. Researchers found a new measurement layer in
 
 $FLYX [CATALYST: MERGER] 
-  Mentions: 11.3 | Sentiment: +0.569 | Score: +0.937
-  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
+  Mentions: 9.3 | Sentiment: +0.620 | Score: +0.963
+  Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
+
+$SKLZ [CATALYST: COURT RULING] 
+  Mentions: 32.1 | Sentiment: +0.499 | Score: +0.928
+  Context: SKLZ $SKLZ Skillz Won $420M In A Case Against Mobile Gaming Rival Papaya SKLZ $SKLZ just came out ha
+
+$IQST [CATALYST: REVENUE/EARNINGS] 
+  Mentions: 14.3 | Sentiment: +0.420 | Score: +0.707
+  Context: $IQST - IQSTEL Releases Shareholder Letter Highlighting Strategic Expansion, AI Platform Development
+
+$LSE [NO CATALYST] 
+  Mentions: 11.6 | Sentiment: +0.377 | Score: +0.614
+  Context: The fundamentals look promising, however, the financials pose a different picture. Revenue is consis
+
+$HITI [NO CATALYST] 
+  Mentions: 18.7 | Sentiment: +0.343 | Score: +0.610
+  Context: I think HITI just shot themselves in the foot with their PR about investigating market manipulation 
 
 $DVLT [CATALYST: CAPITAL RAISE] 
-  Mentions: 12.0 | Sentiment: +0.634 | Score: +0.786
+  Mentions: 21.2 | Sentiment: +0.380 | Score: +0.574
   Context: DVLT, it's the only company that has the tech and capability to tokenize everything. The key is how 
 
-$FFAI [NO CATALYST] 
-  Mentions: 12.4 | Sentiment: +0.449 | Score: +0.745
-  Context: FROM THE  HATED  STOCK  TO THE MOST BUY YEAR TO DATE araday Future Intelligent Electric Inc. (NASDAQ
-
-$CHAR [CATALYST: PARTNERSHIP] 
-  Mentions: 6.0 | Sentiment: +0.521 | Score: +0.726
-  Context: Good question, maybe wrong choice of words by me when I said "it didnt work out for Elkem" and when 
-
-$ENVB [CATALYST: PATENT] 
-  Mentions: 5.8 | Sentiment: +0.470 | Score: +0.667
-  Context: $ENVB +22% — Trump psychedelics executive order + new US patent sends micro-cap biotech flying prema
-
-$CRDL [CATALYST: CLINICAL] 
-  Mentions: 6.0 | Sentiment: +0.502 | Score: +0.557
-  Context: CRDL’s move actually lines up with something At first glance I figured CRDL was just another small-c
-
-$QNCX [CATALYST: REGULATORY] 
-  Mentions: 6.1 | Sentiment: +0.348 | Score: +0.552
-  Context: It's honestly hard to say..but I would hope the restructure is going well..with floor price already 
+$SIDU [NO CATALYST] 
+  Mentions: 6.0 | Sentiment: +0.346 | Score: +0.548
+  Context: SIDU keeps calling out to me. Starting a small position to hold overnight. Just a gut feeling I'm ge
 
 $AGPU [CATALYST: CAPITAL RAISE] 
-  Mentions: 15.9 | Sentiment: +0.342 | Score: +0.523
+  Mentions: 9.6 | Sentiment: +0.320 | Score: +0.491
   Context: Axe Compute Secures $260 million, Three-Year Enterprise Contract for 2,304-GPU NVIDIA B300 Deploymen
 
-$CXAI [CATALYST: PARTNERSHIP] 
-  Mentions: 5.3 | Sentiment: +0.429 | Score: +0.467
-  Context: $CXAI just got featured in an official Google Cloud case study tiny AI penny stock, Google-validated
+$MIGI [CATALYST: PARTNERSHIP] 
+  Mentions: 8.3 | Sentiment: +0.428 | Score: +0.469
+  Context: $MIGI —- UPDATE FROM NEW BOARD To give you some idea of how undervalued the power portfolio is,  Tha
 
