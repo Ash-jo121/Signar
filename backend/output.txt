@@ -1,40 +1,40 @@
-$QSI [CATALYST: CLINICAL] 
-  Mentions: 12.6 | Sentiment: +0.602 | Score: +0.966
-  Context: $QSI Quantum-Si is the Illumina of the proteomic field. Researchers found a new measurement layer in
+$SKLZ [CATALYST: PRODUCTION] 
+  Mentions: 33.5 | Sentiment: +0.480 | Score: +0.943
+  Context: SKLZ might finally be showing signs of a reversal 👀 After a long downtrend, price just broke above t
 
 $FLYX [CATALYST: MERGER] 
-  Mentions: 9.3 | Sentiment: +0.620 | Score: +0.963
+  Mentions: 7.3 | Sentiment: +0.582 | Score: +0.856
   Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
 
-$SKLZ [CATALYST: COURT RULING] 
-  Mentions: 32.1 | Sentiment: +0.499 | Score: +0.928
-  Context: SKLZ $SKLZ Skillz Won $420M In A Case Against Mobile Gaming Rival Papaya SKLZ $SKLZ just came out ha
+$MIGI [CATALYST: MERGER] 
+  Mentions: 12.3 | Sentiment: +0.606 | Score: +0.818
+  Context: $MIGI - Do some simple math, and you will easily reach the following conclusion Combined operating c
 
-$IQST [CATALYST: REVENUE/EARNINGS] 
-  Mentions: 14.3 | Sentiment: +0.420 | Score: +0.707
-  Context: $IQST - IQSTEL Releases Shareholder Letter Highlighting Strategic Expansion, AI Platform Development
+$DUOT [NO CATALYST] 
+  Mentions: 5.0 | Sentiment: +0.504 | Score: +0.775
+  Context: Correction, I *did* actually just double down on the $DUOT dip. Low float, low volume, you buy when 
+
+$QSI [CATALYST: CAPITAL RAISE] 
+  Mentions: 12.0 | Sentiment: +0.467 | Score: +0.756
+  Context: $QSI Quantum-Si is the Illumina of the proteomic field. Researchers found a new measurement layer in
 
 $LSE [NO CATALYST] 
-  Mentions: 11.6 | Sentiment: +0.377 | Score: +0.614
+  Mentions: 10.9 | Sentiment: +0.406 | Score: +0.665
   Context: The fundamentals look promising, however, the financials pose a different picture. Revenue is consis
 
-$HITI [NO CATALYST] 
-  Mentions: 18.7 | Sentiment: +0.343 | Score: +0.610
-  Context: I think HITI just shot themselves in the foot with their PR about investigating market manipulation 
-
-$DVLT [CATALYST: CAPITAL RAISE] 
-  Mentions: 21.2 | Sentiment: +0.380 | Score: +0.574
-  Context: DVLT, it's the only company that has the tech and capability to tokenize everything. The key is how 
+$IQST [CATALYST: REVENUE/EARNINGS] 
+  Mentions: 14.6 | Sentiment: +0.373 | Score: +0.635
+  Context: $IQST - IQSTEL Releases Shareholder Letter Highlighting Strategic Expansion, AI Platform Development
 
 $SIDU [NO CATALYST] 
   Mentions: 6.0 | Sentiment: +0.346 | Score: +0.548
   Context: SIDU keeps calling out to me. Starting a small position to hold overnight. Just a gut feeling I'm ge
 
-$AGPU [CATALYST: CAPITAL RAISE] 
-  Mentions: 9.6 | Sentiment: +0.320 | Score: +0.491
-  Context: Axe Compute Secures $260 million, Three-Year Enterprise Contract for 2,304-GPU NVIDIA B300 Deploymen
+$BURU [CATALYST: PARTNERSHIP] 
+  Mentions: 11.9 | Sentiment: +0.440 | Score: +0.544
+  Context: $BURU - UP almost 40% @$0.392 on HUGE 152M volume, HOD @$0.403. The Customer organization is a gover
 
-$MIGI [CATALYST: PARTNERSHIP] 
-  Mentions: 8.3 | Sentiment: +0.428 | Score: +0.469
-  Context: $MIGI —- UPDATE FROM NEW BOARD To give you some idea of how undervalued the power portfolio is,  Tha
+$SMX [CATALYST: CAPITAL RAISE] 
+  Mentions: 9.1 | Sentiment: +0.363 | Score: +0.541
+  Context: SMX might be building the “invisible infrastructure” behind supply chain tracking Most companies tal
 
