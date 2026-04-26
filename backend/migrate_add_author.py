@@ -11,22 +11,24 @@ def migrate():
     conn = sqlite3.connect(DB_PATH)
 
     # Check if column already exists
-    columns = [row[1] for row in conn.execute("PRAGMA table_info(posts)").fetchall()]
+    columns = [
+        row[1] for row in conn.execute("PRAGMA table_info(daily_sentiment)").fetchall()
+    ]
 
-    if "author" in columns:
-        print("Column 'author' already exists — skipping migration.")
+    if "raw_final_score" in columns:
+        print("Column 'raw_final_score' already exists — skipping migration.")
         conn.close()
         return
 
-    print("Adding 'author' column to posts table...")
-    conn.execute("ALTER TABLE posts ADD COLUMN author TEXT")
+    print("Adding 'raw_final_score' column to daily_sentiment table...")
+    conn.execute("ALTER TABLE daily_sentiment ADD COLUMN raw_final_score REAL")
     conn.commit()
 
     # Verify
     columns_after = [
-        row[1] for row in conn.execute("PRAGMA table_info(posts)").fetchall()
+        row[1] for row in conn.execute("PRAGMA table_info(daily_sentiment)").fetchall()
     ]
-    print(f"posts table columns: {columns_after}")
+    print(f"daily_sentiment table columns: {columns_after}")
     print("Migration complete.")
     conn.close()
 

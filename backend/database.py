@@ -40,6 +40,7 @@ def init_db():
             mod_flag_type TEXT,
             has_catalyst INTEGER DEFAULT 0,
             catalyst_type TEXT,
+            raw_final_score REAL,
             UNIQUE(date, ticker)
         );
 
@@ -138,8 +139,8 @@ def save_daily_results(results, date=None):
                 INSERT OR IGNORE INTO daily_sentiment 
                 (date, ticker, company_name, mentions, avg_sentiment, 
                  final_score, price, change_percent, market_cap, volume, sector,
-                 mod_flagged, mod_flag_type, has_catalyst, catalyst_type)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 mod_flagged, mod_flag_type, has_catalyst, catalyst_type, raw_final_score)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
                 (
                     date,
@@ -157,6 +158,7 @@ def save_daily_results(results, date=None):
                     result.get("mod_flag_type"),
                     1 if result.get("has_catalyst") else 0,
                     result.get("catalyst_type"),
+                    result.get("raw_final_score", result.get("final_score", 0)),
                 ),
             )
 

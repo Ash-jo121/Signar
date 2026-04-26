@@ -3,7 +3,7 @@ import math
 import re
 import time
 import os
-from datetime import date
+from datetime import date, datetime
 from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
@@ -430,6 +430,9 @@ if __name__ == "__main__":
     finally:
         conn.close()
 
+    for r in results:
+        r["raw_final_score"] = r["final_score"]
+
     results = apply_repetition_decay(results)
 
     trackable = [
@@ -450,6 +453,14 @@ if __name__ == "__main__":
             print(
                 f"  Warning: {r['ticker']} has no float data — including with caution!"
             )
+
+    filtered_out = [
+        r
+        for r in results
+        if abs(r.get("change_percent", 0)) > 30
+        and r.get("price", 0) > 0.05
+        and r.get("price", 0) <= 15
+    ]
 
     results = [
         r
@@ -491,6 +502,35 @@ if __name__ == "__main__":
         )
 
     print(f"  Catalyst assessment: {catalyst_calls} Groq calls used")
+
+    print("\nStep 5.5: Updating catalyst data in database...")
+    conn = get_connection()
+    today = datetime.now().strftime("%Y-%m-%d")
+    for result in results:
+        conn.execute(
+            """
+            UPDATE daily_sentiment
+            SET has_catalyst = ?,
+                catalyst_type = ?
+            WHERE date = ? AND ticker = ?
+            """,
+            (
+                1 if result.get("has_catalyst") else 0,
+                result.get("catalyst_type"),
+                today,
+                result["ticker"],
+            ),
+        )
+    conn.commit()
+    conn.close()
+    print(f"  Updated catalyst data for {len(results)} stocks")
+
+    if filtered_out:
+        print(f"\nFiltered out {len(filtered_out)} already-moved stocks:")
+        for r in filtered_out:
+            print(
+                f"  {r['ticker']}: {r['change_percent']:+.1f}% same-day move (score={r['final_score']})"
+            )
 
     print("\nStep 6: Writing output to files...\n")
 
