@@ -3,7 +3,7 @@ import math
 import re
 import time
 import os
-from datetime import date, datetime
+from datetime import date
 from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
@@ -505,7 +505,7 @@ if __name__ == "__main__":
 
     print("\nStep 5.5: Updating catalyst data in database...")
     conn = get_connection()
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = date.today().strftime("%Y-%m-%d")
     for result in results:
         conn.execute(
             """
