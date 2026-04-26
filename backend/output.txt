@@ -1,40 +1,40 @@
 $SKLZ [CATALYST: PRODUCTION] 
-  Mentions: 33.5 | Sentiment: +0.480 | Score: +0.943
+  Mentions: 32.5 | Sentiment: +0.480 | Score: +0.938
   Context: SKLZ might finally be showing signs of a reversal 👀 After a long downtrend, price just broke above t
+
+$MIGI [CATALYST: MERGER] 
+  Mentions: 11.3 | Sentiment: +0.691 | Score: +0.888
+  Context: $MIGI - Do some simple math, and you will easily reach the following conclusion Combined operating c
 
 $FLYX [CATALYST: MERGER] 
   Mentions: 7.3 | Sentiment: +0.582 | Score: +0.856
   Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
 
-$MIGI [CATALYST: MERGER] 
-  Mentions: 12.3 | Sentiment: +0.606 | Score: +0.818
-  Context: $MIGI - Do some simple math, and you will easily reach the following conclusion Combined operating c
-
-$DUOT [NO CATALYST] 
-  Mentions: 5.0 | Sentiment: +0.504 | Score: +0.775
-  Context: Correction, I *did* actually just double down on the $DUOT dip. Low float, low volume, you buy when 
+$SRXH [CATALYST: MERGER] 
+  Mentions: 13.0 | Sentiment: +0.609 | Score: +0.811
+  Context: SRXH - ya'll seeing this? It's fighting in a new way LFG, who's all in here??? A great close and con
 
 $QSI [CATALYST: CAPITAL RAISE] 
-  Mentions: 12.0 | Sentiment: +0.467 | Score: +0.756
+  Mentions: 11.0 | Sentiment: +0.502 | Score: +0.801
   Context: $QSI Quantum-Si is the Illumina of the proteomic field. Researchers found a new measurement layer in
 
+$IQST [CATALYST: REVENUE/EARNINGS] 
+  Mentions: 11.6 | Sentiment: +0.358 | Score: +0.630
+  Context: IQST looking good. no dilution , 1B revenue forecast for next year with huge catalysts / acquisition
+
+$AEC [CATALYST: PARTNERSHIP] 
+  Mentions: 6.8 | Sentiment: +0.379 | Score: +0.576
+  Context: 🔥 I Own 1.25% of $BLGO  - A Sub‑$50M Cleantech Company the Market Has Completely Mispriced **TL;DR**
+
+$SCNI [CATALYST: CAPITAL RAISE] 
+  Mentions: 8.0 | Sentiment: +0.434 | Score: +0.575
+  Context: $SCNI +40% — $2.6M dilutive financing taken as bullish on warrant-exercise math Scinai Immunotherape
+
 $LSE [NO CATALYST] 
-  Mentions: 10.9 | Sentiment: +0.406 | Score: +0.665
+  Mentions: 10.0 | Sentiment: +0.347 | Score: +0.565
   Context: The fundamentals look promising, however, the financials pose a different picture. Revenue is consis
 
-$IQST [CATALYST: REVENUE/EARNINGS] 
-  Mentions: 14.6 | Sentiment: +0.373 | Score: +0.635
-  Context: $IQST - IQSTEL Releases Shareholder Letter Highlighting Strategic Expansion, AI Platform Development
-
-$SIDU [NO CATALYST] 
-  Mentions: 6.0 | Sentiment: +0.346 | Score: +0.548
-  Context: SIDU keeps calling out to me. Starting a small position to hold overnight. Just a gut feeling I'm ge
-
-$BURU [CATALYST: PARTNERSHIP] 
-  Mentions: 11.9 | Sentiment: +0.440 | Score: +0.544
-  Context: $BURU - UP almost 40% @$0.392 on HUGE 152M volume, HOD @$0.403. The Customer organization is a gover
-
 $SMX [CATALYST: CAPITAL RAISE] 
-  Mentions: 9.1 | Sentiment: +0.363 | Score: +0.541
-  Context: SMX might be building the “invisible infrastructure” behind supply chain tracking Most companies tal
+  Mentions: 11.1 | Sentiment: +0.368 | Score: +0.546
+  Context: I’m the guy with $300k in ROLR and I think a GME/SMX/CAR-style short squeeze is coming Long story sh
 
