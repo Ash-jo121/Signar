@@ -454,12 +454,13 @@ if __name__ == "__main__":
     results = [
         r
         for r in results
-        if r.get("price", 0) > 0.05  # raised from 0.01
+        if r.get("price", 0) > 0.05
         and r.get("price", 0) <= 15
         and 0 < r.get("market_cap", 0) <= 500000000
         and (r.get("float_shares") is None or r.get("float_shares", 0) <= 50000000)
         and r["mentions"] >= 5
         and len(r["top_contexts"]) >= 3
+        and abs(r.get("change_percent", 0)) <= 30  # ← ADD THIS
     ]
 
     print("\nStep 5: Catalyst assessment for filtered results...")
