@@ -356,7 +356,7 @@ def apply_repetition_decay(results):
             if price_range < 0.05:
                 days = len(rows)
                 decay = max(
-                    0.3, 1.0 - (days - 2) * 0.15
+                    0.15, 1.0 - (days - 2) * 0.15
                 )  # 0.85 at 3d, 0.70 at 4d, 0.55 at 5d, 0.40 at 6d, 0.30 at 7d+
                 original = result["final_score"]
                 result["final_score"] = round(original * decay, 3)
