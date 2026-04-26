@@ -465,7 +465,6 @@ if __name__ == "__main__":
 
     print("\nStep 5: Catalyst assessment for filtered results...")
     _request_times.clear()
-    time.sleep(65)
 
     catalyst_calls = 0
     for result in results:
