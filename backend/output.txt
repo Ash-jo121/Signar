@@ -1,40 +1,40 @@
-$SKLZ [CATALYST: PRODUCTION] 
-  Mentions: 32.5 | Sentiment: +0.480 | Score: +0.938
-  Context: SKLZ might finally be showing signs of a reversal 👀 After a long downtrend, price just broke above t
+$MITQ [CATALYST: CONTRACT] 
+  Mentions: 8.0 | Sentiment: +0.785 | Score: +1.041
+  Context: $MITQ Has that look for next week, one of the most undervalued and cleanest micro cap &#x200B; $MITQ
 
 $MIGI [CATALYST: MERGER] 
-  Mentions: 11.3 | Sentiment: +0.691 | Score: +0.888
-  Context: $MIGI - Do some simple math, and you will easily reach the following conclusion Combined operating c
+  Mentions: 18.4 | Sentiment: +0.678 | Score: +0.932
+  Context: Well when you compare to NUAI I think it can but I’m trying to stay conservative.  NUAI 400M market 
+
+$SLNH [CATALYST: PARTNERSHIP] 
+  Mentions: 6.1 | Sentiment: +0.614 | Score: +0.891
+  Context: $SLNH has unveiled a further expansion of its strategic tie-up with Blockware. **$SLNH** has unveile
 
 $FLYX [CATALYST: MERGER] 
   Mentions: 7.3 | Sentiment: +0.582 | Score: +0.856
   Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
 
-$SRXH [CATALYST: MERGER] 
-  Mentions: 13.0 | Sentiment: +0.609 | Score: +0.811
-  Context: SRXH - ya'll seeing this? It's fighting in a new way LFG, who's all in here??? A great close and con
+$BURU [CATALYST: MERGER] 
+  Mentions: 6.0 | Sentiment: +0.615 | Score: +0.828
+  Context: $BURU - took a position today High-Risk/Reward Speculative Growth Play The real game-changer for Nub
 
 $QSI [CATALYST: CAPITAL RAISE] 
-  Mentions: 11.0 | Sentiment: +0.502 | Score: +0.801
+  Mentions: 9.0 | Sentiment: +0.484 | Score: +0.747
   Context: $QSI Quantum-Si is the Illumina of the proteomic field. Researchers found a new measurement layer in
 
+$EONR [CATALYST: EARNINGS] 
+  Mentions: 7.1 | Sentiment: +0.460 | Score: +0.659
+  Context: Worth a gamble imo, even a small position. Last quarterly they smashed the estimated EPS of -$.08 an
+
+$VIVO [CATALYST: PARTNERSHIP] 
+  Mentions: 8.4 | Sentiment: +0.475 | Score: +0.635
+  Context: VIVO, new AI Data Center play. 75 mill mc. Huge upside potential, re rating incoming. VivoPower (VIV
+
 $IQST [CATALYST: REVENUE/EARNINGS] 
-  Mentions: 11.6 | Sentiment: +0.358 | Score: +0.630
+  Mentions: 11.6 | Sentiment: +0.359 | Score: +0.631
   Context: IQST looking good. no dilution , 1B revenue forecast for next year with huge catalysts / acquisition
 
 $AEC [CATALYST: PARTNERSHIP] 
-  Mentions: 6.8 | Sentiment: +0.379 | Score: +0.576
+  Mentions: 6.8 | Sentiment: +0.401 | Score: +0.610
   Context: 🔥 I Own 1.25% of $BLGO  - A Sub‑$50M Cleantech Company the Market Has Completely Mispriced **TL;DR**
-
-$SCNI [CATALYST: CAPITAL RAISE] 
-  Mentions: 8.0 | Sentiment: +0.434 | Score: +0.575
-  Context: $SCNI +40% — $2.6M dilutive financing taken as bullish on warrant-exercise math Scinai Immunotherape
-
-$LSE [NO CATALYST] 
-  Mentions: 10.0 | Sentiment: +0.347 | Score: +0.565
-  Context: The fundamentals look promising, however, the financials pose a different picture. Revenue is consis
-
-$SMX [CATALYST: CAPITAL RAISE] 
-  Mentions: 11.1 | Sentiment: +0.368 | Score: +0.546
-  Context: I’m the guy with $300k in ROLR and I think a GME/SMX/CAR-style short squeeze is coming Long story sh
 
