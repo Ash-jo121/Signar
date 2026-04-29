@@ -270,6 +270,7 @@ LARGE_CAP_EXCLUDE = {
     "PLTR",
     "GME",
     "SMCI",
+    "BBBY"
 }
 
 COMMON_ABBREVIATIONS = {
