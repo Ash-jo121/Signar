@@ -295,7 +295,7 @@ def analyze_ticker_sentiment(all_posts):
 
             final_score = (
                 avg_sentiment
-                * (1 + math.log(1 + data["mentions"]) * 0.3)
+                * (1 + math.log(1 + data["mentions"]) * 0.1)
                 * engagement_multiplier
             )
 
