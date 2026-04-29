@@ -1,40 +1,40 @@
-$MITQ [CATALYST: CONTRACT] 
-  Mentions: 5.0 | Sentiment: +0.784 | Score: +1.061
-  Context: $MITQ Has that look for next week, one of the most undervalued and cleanest micro cap &#x200B; $MITQ
-
-$CMND [CATALYST: CLINICAL] 
-  Mentions: 10.9 | Sentiment: +0.502 | Score: +0.816
-  Context: Solid basket mentioned by SnozzberryBoom (CMPS, HELP, ATAI, DFTX) plus the three you listed. Thing t
+$HMR [NO CATALYST] 
+  Mentions: 5.2 | Sentiment: +0.690 | Score: +0.961
+  Context: I have done quite a bit of DD on Heidmar $HMR. I will just add this, because every time I see any po
 
 $FLYX [CATALYST: MERGER] 
-  Mentions: 7.3 | Sentiment: +0.530 | Score: +0.801
-  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
+  Mentions: 6.3 | Sentiment: +0.628 | Score: +0.882
+  Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
 
-$POLA [CATALYST: GOVERNMENT CONTRACT] 
-  Mentions: 10.6 | Sentiment: +0.516 | Score: +0.787
-  Context: $POLA is one of those tiny companies with massive real‑world connections that the market hasn’t woke
+$HUMA [NO CATALYST] 
+  Mentions: 5.3 | Sentiment: +0.490 | Score: +0.761
+  Context: What about HUMA? shares are cheap (.70) still available for purchase on Robinhood so accesible for a
 
-$VIVO [CATALYST: PARTNERSHIP] 
-  Mentions: 6.7 | Sentiment: +0.603 | Score: +0.778
-  Context: $VIVO Vivopower is the next... Im allin in this company What do u think? Insiders point to a heavy p
+$IPM [CATALYST: PRODUCTION] 
+  Mentions: 5.0 | Sentiment: +0.702 | Score: +0.755
+  Context: Implied re-rating potential: Positive PEA results like this (high IRR, low costs, long life, near-te
 
-$SRXH [CATALYST: MERGER] 
-  Mentions: 11.6 | Sentiment: +0.490 | Score: +0.190
-  Context: SRXH - ya'll seeing this? It's fighting in a new way LFG, who's all in here??? A great close and con
+$ATCH [NO CATALYST] 
+  Mentions: 6.3 | Sentiment: +0.441 | Score: +0.704
+  Context: ATCH seems to have some nice support at these levels. Wouldn’t be surprised to see another gap up th
+
+$EONR [CATALYST: EARNINGS] 
+  Mentions: 9.5 | Sentiment: +0.423 | Score: +0.667
+  Context: EONR earnings call EON Resources reported an outstanding financial year in 2025, with a significant 
 
 $ONCO [CATALYST: MERGER] 
-  Mentions: 9.7 | Sentiment: +0.401 | Score: +0.641
+  Mentions: 9.7 | Sentiment: +0.389 | Score: +0.621
   Context: My next high conviction stock pick: $ONCO A prominent and large hedge fund bought shares and it beca
 
-$AEC [CATALYST: PARTNERSHIP] 
-  Mentions: 6.8 | Sentiment: +0.379 | Score: +0.490
-  Context: 🔥 I Own 1.25% of $BLGO  - A Sub‑$50M Cleantech Company the Market Has Completely Mispriced **TL;DR**
+$SRXH [CATALYST: MERGER] 
+  Mentions: 10.0 | Sentiment: +0.420 | Score: +0.126
+  Context: SRXH - ya'll seeing this? It's fighting in a new way LFG, who's all in here??? A great close and con
 
-$PBM [CATALYST: CONTRACT] 
-  Mentions: 5.0 | Sentiment: +0.552 | Score: +0.509
-  Context: $PBM 360% cost to borrow. 52 week high $75 — The picks and shovels play on most rwcent executive ord
+$USEG [CATALYST: CONTRACT] 
+  Mentions: 14.9 | Sentiment: +0.249 | Score: +0.435
+  Context: U.S. Energy Corp U.S. Energy Corp. Signs Five-Year Helium Offtake Agreement with Investment-Grade Gl
 
-$SLNH [NO CATALYST] 
-  Mentions: 5.1 | Sentiment: +0.318 | Score: +0.491
-  Context: Do tell… I like $SLNH, have a position. But I also have positions in $HIVE, $APLD and even $GPUS for
+$KIDZ [NO CATALYST] 
+  Mentions: 5.6 | Sentiment: +0.263 | Score: +0.412
+  Context: Thank you!! Any thoughts on KIDZ with the Blackrock news?
 
