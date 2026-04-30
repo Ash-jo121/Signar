@@ -1,40 +1,40 @@
 $HMR [NO CATALYST] 
-  Mentions: 5.2 | Sentiment: +0.690 | Score: +0.961
+  Mentions: 6.5 | Sentiment: +0.653 | Score: +0.737
   Context: I have done quite a bit of DD on Heidmar $HMR. I will just add this, because every time I see any po
 
+$FATN [CATALYST: CONTRACT] 
+  Mentions: 50.6 | Sentiment: +0.520 | Score: +0.725
+  Context: FATN only has a 900k float and no dilution available to stop the run from continuing for days. These
+
 $FLYX [CATALYST: MERGER] 
-  Mentions: 6.3 | Sentiment: +0.628 | Score: +0.882
+  Mentions: 6.3 | Sentiment: +0.628 | Score: +0.662
   Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
 
-$HUMA [NO CATALYST] 
-  Mentions: 5.3 | Sentiment: +0.490 | Score: +0.761
-  Context: What about HUMA? shares are cheap (.70) still available for purchase on Robinhood so accesible for a
-
-$IPM [CATALYST: PRODUCTION] 
-  Mentions: 5.0 | Sentiment: +0.702 | Score: +0.755
-  Context: Implied re-rating potential: Positive PEA results like this (high IRR, low costs, long life, near-te
-
-$ATCH [NO CATALYST] 
-  Mentions: 6.3 | Sentiment: +0.441 | Score: +0.704
+$ATCH [CATALYST: EARNINGS] 
+  Mentions: 5.3 | Sentiment: +0.452 | Score: +0.535
   Context: ATCH seems to have some nice support at these levels. Wouldn’t be surprised to see another gap up th
 
-$EONR [CATALYST: EARNINGS] 
-  Mentions: 9.5 | Sentiment: +0.423 | Score: +0.667
-  Context: EONR earnings call EON Resources reported an outstanding financial year in 2025, with a significant 
+$NPV [CATALYST: PEA SELL THE NEWS EVENT] 
+  Mentions: 5.0 | Sentiment: +0.746 | Score: +0.528
+  Context: I think this sell the news off the Buffalo Potash PEA sell off is a huge buying opportunity! PEA sho
 
-$ONCO [CATALYST: MERGER] 
-  Mentions: 9.7 | Sentiment: +0.389 | Score: +0.621
-  Context: My next high conviction stock pick: $ONCO A prominent and large hedge fund bought shares and it beca
-
-$SRXH [CATALYST: MERGER] 
-  Mentions: 10.0 | Sentiment: +0.420 | Score: +0.126
+$SRXH [CATALYST: REGULATORY] 
+  Mentions: 13.0 | Sentiment: +0.592 | Score: +0.131
   Context: SRXH - ya'll seeing this? It's fighting in a new way LFG, who's all in here??? A great close and con
 
-$USEG [CATALYST: CONTRACT] 
-  Mentions: 14.9 | Sentiment: +0.249 | Score: +0.435
-  Context: U.S. Energy Corp U.S. Energy Corp. Signs Five-Year Helium Offtake Agreement with Investment-Grade Gl
+$NCI [CATALYST: SHORT SQUEEZE] 
+  Mentions: 5.8 | Sentiment: +0.429 | Score: +0.051
+  Context: NCI was about 2 weeks total, and its already seeming to gain steam and have a golden cross. addition
 
-$KIDZ [NO CATALYST] 
-  Mentions: 5.6 | Sentiment: +0.263 | Score: +0.412
-  Context: Thank you!! Any thoughts on KIDZ with the Blackrock news?
+$RMSG [CATALYST: REGULATORY] 
+  Mentions: 6.3 | Sentiment: +0.340 | Score: +0.408
+  Context: $RMSG: today marks 13th consecutive close over $1 bid‼️ Compliance REGAINED ✅ NASDAQ’s 4-day disclos
+
+$SLNH [CATALYST: PRODUCTION] 
+  Mentions: 6.9 | Sentiment: +0.378 | Score: +0.388
+  Context: SLNH building serious data center momentum at $1.07? SLNH caught my eye trading around $1.07/share—s
+
+$VEEE [NO CATALYST] 
+  Mentions: 5.2 | Sentiment: +0.326 | Score: +0.386
+  Context: I dipped my toes into $VEEE with 128 shares; I may keep doing it that way, \~100 shares a day until 
 
