@@ -98,7 +98,7 @@ def init_db():
             mod_flagged INTEGER DEFAULT 0,
             vampire_flagged INTEGER DEFAULT 0,
             final_score REAL DEFAULT 0.0,
-            engagement_ratio REAL DEFAULT 0.0
+            engagement_ratio REAL DEFAULT 0.0,
             UNIQUE(ticker, flagged_date)
         );
         
