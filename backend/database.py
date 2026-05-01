@@ -21,8 +21,7 @@ def get_connection():
 def init_db():
     conn = get_connection()
 
-    conn.executescript(
-        """-- Core table: one row per stock per day
+    conn.executescript("""-- Core table: one row per stock per day
         CREATE TABLE IF NOT EXISTS daily_sentiment (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT NOT NULL,
@@ -99,6 +98,7 @@ def init_db():
             mod_flagged INTEGER DEFAULT 0,
             vampire_flagged INTEGER DEFAULT 0,
             final_score REAL DEFAULT 0.0,
+            engagement_ratio REAL DEFAULT 0.0
             UNIQUE(ticker, flagged_date)
         );
         
@@ -113,8 +113,7 @@ def init_db():
             post_url TEXT,
             UNIQUE(ticker, flagged_date)
         );
-        """
-    )
+        """)
     conn.commit()
     conn.close()
     print("Database initialized successfully")
@@ -299,16 +298,14 @@ def ticker_exists_today(ticker, date=None):
 def get_active_posts():
     """Return all posts with status='active' created within last 3 days"""
     conn = get_connection()
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT id, subreddit, title, body, post_score, comment_count,
                comment_count_at_analysis, created_utc, last_analyzed, author
         FROM posts
         WHERE status = 'active'
           AND created_utc >= strftime('%s', 'now', '-3 days')
         ORDER BY created_utc DESC
-        """
-    ).fetchall()
+        """).fetchall()
     conn.close()
     return [dict(row) for row in rows]
 
@@ -333,14 +330,12 @@ def update_post_after_refresh(post_id, new_comment_count):
 def archive_old_posts():
     """Mark posts older than 3 days as archived"""
     conn = get_connection()
-    result = conn.execute(
-        """
+    result = conn.execute("""
         UPDATE posts
         SET status = 'archived'
         WHERE status = 'active'
           AND created_utc < strftime('%s', 'now', '-3 days')
-        """
-    )
+        """)
     count = result.rowcount
     conn.commit()
     conn.close()
@@ -364,8 +359,8 @@ def record_flagged_stocks(results, date=None):
                 (ticker, flagged_date, flagged_price, flagged_score,
                  flagged_sentiment, flagged_mentions, float_shares,
                  has_catalyst, catalyst_type, mod_flagged, vampire_flagged,
-                 final_score)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 final_score,engagement_ratio)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     result["ticker"],
@@ -380,6 +375,7 @@ def record_flagged_stocks(results, date=None):
                     1 if result.get("mod_flagged") else 0,
                     1 if result.get("vampire_flagged") else 0,
                     result.get("final_score", 0),
+                    result.get("engagement_ratio", 0),
                 ),
             )
             saved += 1
