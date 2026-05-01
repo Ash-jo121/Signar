@@ -50,8 +50,7 @@ def section(title, note=None):
 def summary(conn):
     section("DATASET SUMMARY")
 
-    row = conn.execute(
-        """
+    row = conn.execute("""
         SELECT
             COUNT(*)                    AS total_flags,
             COUNT(DISTINCT ticker)      AS unique_tickers,
@@ -62,8 +61,7 @@ def summary(conn):
             SUM(updated_3d)             AS resolved_3d,
             SUM(updated_7d)             AS resolved_7d
         FROM performance_tracking
-    """
-    ).fetchone()
+    """).fetchone()
 
     clean_row = conn.execute(
         """
@@ -90,8 +88,7 @@ def summary(conn):
 def hit_rate(conn):
     section("OVERALL HIT RATE", "Full dataset — no catalyst filter applied here")
 
-    row = conn.execute(
-        """
+    row = conn.execute("""
         SELECT
             COUNT(*)                                                AS n,
             AVG(return_1d)                                          AS avg_t1,
@@ -105,8 +102,7 @@ def hit_rate(conn):
                   / COUNT(*)                                        AS bad_loss
         FROM performance_tracking
         WHERE updated_1d = 1
-    """
-    ).fetchone()
+    """).fetchone()
 
     print(f"  Sample size         : {row['n']}")
     print(f"  Avg T+1 return      : {fmt(row['avg_t1'])}")
@@ -124,8 +120,7 @@ def score_buckets(conn):
         "Full dataset",
     )
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT
             CASE
                 WHEN final_score >= 0.8 THEN '1. High  (≥0.8)'
@@ -142,8 +137,7 @@ def score_buckets(conn):
         WHERE updated_1d = 1
         GROUP BY bucket
         ORDER BY bucket
-    """
-    ).fetchall()
+    """).fetchall()
 
     print(f"  {'Bucket':<22} {'N':>4}  {'Avg T+1':>9}  {'Avg T+7':>9}  {'Win%':>6}")
     divider()
@@ -245,8 +239,7 @@ def mod_impact(conn):
         "MOD FLAG IMPACT", "Full dataset — mod flag does not depend on catalyst data"
     )
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT
             CASE WHEN mod_flagged = 1
                  THEN 'Mod flagged'
@@ -261,8 +254,7 @@ def mod_impact(conn):
         WHERE updated_1d = 1
         GROUP BY mod_flagged
         ORDER BY mod_flagged DESC
-    """
-    ).fetchall()
+    """).fetchall()
 
     print(f"  {'Group':<14} {'N':>4}  {'Avg T+1':>9}  {'Avg T+7':>9}  {'Win%':>6}")
     divider()
@@ -277,8 +269,7 @@ def mod_impact(conn):
 def vampire_impact(conn):
     section("VAMPIRE FLAG EFFECTIVENESS", "Full dataset")
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT
             CASE WHEN vampire_flagged = 1
                  THEN 'Vampire flagged'
@@ -293,8 +284,7 @@ def vampire_impact(conn):
         WHERE updated_1d = 1
         GROUP BY vampire_flagged
         ORDER BY vampire_flagged DESC
-    """
-    ).fetchall()
+    """).fetchall()
 
     print(f"  {'Group':<18} {'N':>4}  {'Avg T+1':>9}  {'Avg T+7':>9}  {'Win%':>6}")
     divider()
@@ -312,8 +302,7 @@ def consistency_signal(conn):
         "Full dataset — ranked by avg T+7 return",
     )
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT
             ticker,
             COUNT(DISTINCT flagged_date)    AS days_flagged,
@@ -326,8 +315,7 @@ def consistency_signal(conn):
         GROUP BY ticker
         HAVING days_flagged >= 3
         ORDER BY avg_t7 DESC NULLS LAST
-    """
-    ).fetchall()
+    """).fetchall()
 
     if not rows:
         print("  No tickers with 3+ appearances and T+1 resolved yet.")
@@ -350,16 +338,14 @@ def consistency_signal(conn):
 def extremes(conn):
     section("TOP 10 WINNERS  (by T+1 return)", "Full dataset")
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT ticker, flagged_date, final_score, has_catalyst,
                catalyst_type, return_1d, return_7d
         FROM performance_tracking
         WHERE updated_1d = 1
         ORDER BY return_1d DESC
         LIMIT 10
-    """
-    ).fetchall()
+    """).fetchall()
 
     print(
         f"  {'Ticker':<6} {'Date':<12} {'Score':>6}  {'Cat':>3}"
@@ -377,16 +363,14 @@ def extremes(conn):
 
     section("BOTTOM 10 LOSSES  (by T+1 return)", "Full dataset")
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT ticker, flagged_date, final_score, has_catalyst,
                catalyst_type, return_1d, return_7d
         FROM performance_tracking
         WHERE updated_1d = 1
         ORDER BY return_1d ASC
         LIMIT 10
-    """
-    ).fetchall()
+    """).fetchall()
 
     print(
         f"  {'Ticker':<6} {'Date':<12} {'Score':>6}  {'Cat':>3}"
@@ -409,8 +393,7 @@ def mentions_analysis(conn):
         "MENTION COUNT vs RETURNS  — does higher mention count help?", "Full dataset"
     )
 
-    rows = conn.execute(
-        """
+    rows = conn.execute("""
         SELECT
             CASE
                 WHEN flagged_mentions >= 20 THEN '1. High  (≥20)'
@@ -427,8 +410,37 @@ def mentions_analysis(conn):
         WHERE updated_1d = 1
         GROUP BY bucket
         ORDER BY bucket
-    """
-    ).fetchall()
+    """).fetchall()
+
+    print(f"  {'Bucket':<22} {'N':>4}  {'Avg T+1':>9}  {'Avg T+7':>9}  {'Win%':>6}")
+    divider()
+    for r in rows:
+        print(
+            f"  {r['bucket']:<22} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
+            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+        )
+
+
+def sentiment_buckets(conn):
+    section("AVG SENTIMENT BUCKET ANALYSIS", "Full dataset")
+    rows = conn.execute("""
+        SELECT
+            CASE
+                WHEN flagged_sentiment >= 0.4 THEN '1. Strong  (>=0.4)'
+                WHEN flagged_sentiment >= 0.2 THEN '2. Mild    (0.2-0.4)'
+                WHEN flagged_sentiment >= 0.0 THEN '3. Neutral (0-0.2)'
+                ELSE                               '4. Negative (<0)'
+            END                         AS bucket,
+            COUNT(*)                    AS n,
+            AVG(return_1d)              AS avg_t1,
+            AVG(return_7d)              AS avg_t7,
+            100.0*SUM(CASE WHEN return_1d>0 THEN 1 END)
+                 /COUNT(*)              AS win_rate
+        FROM performance_tracking
+        WHERE updated_1d = 1
+        GROUP BY bucket
+        ORDER BY bucket
+    """).fetchall()
 
     print(f"  {'Bucket':<22} {'N':>4}  {'Avg T+1':>9}  {'Avg T+7':>9}  {'Win%':>6}")
     divider()
@@ -464,6 +476,7 @@ if __name__ == "__main__":
     catalyst_types(conn)
     consistency_signal(conn)
     extremes(conn)
+    sentiment_buckets(conn)
 
     conn.close()
 
