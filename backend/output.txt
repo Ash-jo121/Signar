@@ -1,40 +1,40 @@
-$HMR [NO CATALYST] 
-  Mentions: 6.5 | Sentiment: +0.653 | Score: +0.737
-  Context: I have done quite a bit of DD on Heidmar $HMR. I will just add this, because every time I see any po
+$XRX [CATALYST: SHORT SQUEEZE] 
+  Mentions: 139.9 | Sentiment: +0.441 | Score: +0.646
+  Context: Great feedback! Thanks for sharing 😄 I think the biggest factor deciding a squeeze comes down to the
 
-$FATN [CATALYST: CONTRACT] 
-  Mentions: 50.6 | Sentiment: +0.520 | Score: +0.725
-  Context: FATN only has a 900k float and no dilution available to stop the run from continuing for days. These
+$SKLZ [NO CATALYST] 
+  Mentions: 7.4 | Sentiment: +0.449 | Score: +0.463
+  Context: SKLZ is another good example you can look at the 5 mins and 15 mins over the last week. That 7.5 is 
 
-$FLYX [CATALYST: MERGER] 
-  Mentions: 6.3 | Sentiment: +0.628 | Score: +0.662
-  Context: Yup IMO. I loaded up on JTAI because even the S-4 filing says FLYX is risked to tank after the merge
+$EDIT [NO CATALYST] 
+  Mentions: 5.8 | Sentiment: +0.456 | Score: +0.511
+  Context: APLD - Heavily shorted, recent catalyst, shorts doubled down vs covering EDIT: found out 2024 conver
 
-$ATCH [CATALYST: EARNINGS] 
-  Mentions: 5.3 | Sentiment: +0.452 | Score: +0.535
-  Context: ATCH seems to have some nice support at these levels. Wouldn’t be surprised to see another gap up th
+$OSRH [NO CATALYST] 
+  Mentions: 13.2 | Sentiment: +0.387 | Score: +0.458
+  Context: $OSRH tiny deSPAC biotech penny with 20m Marketcap and $815m pending License deal with Definitive Ag
 
-$NPV [CATALYST: PEA SELL THE NEWS EVENT] 
-  Mentions: 5.0 | Sentiment: +0.746 | Score: +0.528
-  Context: I think this sell the news off the Buffalo Potash PEA sell off is a huge buying opportunity! PEA sho
+$NPV [NO CATALYST] 
+  Mentions: 6.0 | Sentiment: +0.602 | Score: +0.431
+  Context: Lithium 2026 start massive Bullrun - Best stock ASN Anson Ressources - Price analist 0,38 My friends
 
-$SRXH [CATALYST: REGULATORY] 
-  Mentions: 13.0 | Sentiment: +0.592 | Score: +0.131
-  Context: SRXH - ya'll seeing this? It's fighting in a new way LFG, who's all in here??? A great close and con
+$SRXH [CATALYST: MERGER] 
+  Mentions: 10.1 | Sentiment: +0.340 | Score: +0.394
+  Context: They didn't announce on time today as expected. I'm pissed. Left holding another bag. It was extreme
 
-$NCI [CATALYST: SHORT SQUEEZE] 
-  Mentions: 5.8 | Sentiment: +0.429 | Score: +0.051
-  Context: NCI was about 2 weeks total, and its already seeming to gain steam and have a golden cross. addition
+$CMPX [CATALYST: FDA] 
+  Mentions: 6.3 | Sentiment: +0.338 | Score: +0.378
+  Context: Both the General Counsel and Chief Accounting Officer of $CMPX bought shares two days ago - 25K and 
 
-$RMSG [CATALYST: REGULATORY] 
-  Mentions: 6.3 | Sentiment: +0.340 | Score: +0.408
-  Context: $RMSG: today marks 13th consecutive close over $1 bid‼️ Compliance REGAINED ✅ NASDAQ’s 4-day disclos
+$NXXT [CATALYST: PARTNERSHIP] 
+  Mentions: 35.5 | Sentiment: +0.445 | Score: +0.359
+  Context: Why Policy Alignment Around Grid Bottlenecks Is Quietly Turning Microgrids Into A Real Macro Theme W
 
-$SLNH [CATALYST: PRODUCTION] 
-  Mentions: 6.9 | Sentiment: +0.378 | Score: +0.388
-  Context: SLNH building serious data center momentum at $1.07? SLNH caught my eye trading around $1.07/share—s
+$AUUD [CATALYST: MERGER] 
+  Mentions: 9.4 | Sentiment: +0.237 | Score: +0.280
+  Context: Took a position in AUUD yesterday. Low float, high SI, high CTB and a pending merger. They just fini
 
-$VEEE [NO CATALYST] 
-  Mentions: 5.2 | Sentiment: +0.326 | Score: +0.386
-  Context: I dipped my toes into $VEEE with 128 shares; I may keep doing it that way, \~100 shares a day until 
+$AIXI [CATALYST: PATENT] 
+  Mentions: 5.3 | Sentiment: +0.300 | Score: +0.249
+  Context: Could AIXI Xiao- I Corporation create generational wealth for you and your family? AIXI holds firm a
 
