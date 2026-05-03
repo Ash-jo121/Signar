@@ -308,6 +308,7 @@ COMMON_ABBREVIATIONS = {
     "DYOR",
     "DRMAW",
     "EDIT",
+    "NPV",
 }
 
 LOW_QUALITY_PATTERNS = [
