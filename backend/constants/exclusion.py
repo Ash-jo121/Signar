@@ -270,7 +270,7 @@ LARGE_CAP_EXCLUDE = {
     "PLTR",
     "GME",
     "SMCI",
-    "BBBY"
+    "BBBY",
 }
 
 COMMON_ABBREVIATIONS = {
@@ -307,6 +307,7 @@ COMMON_ABBREVIATIONS = {
     "WTF",
     "DYOR",
     "DRMAW",
+    "EDIT",
 }
 
 LOW_QUALITY_PATTERNS = [
