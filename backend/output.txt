@@ -1,40 +1,40 @@
 $OSRH [CATALYST: REGULATORY] 
-  Mentions: 9.0 | Sentiment: +0.595 | Score: +0.622
+  Mentions: 8.0 | Sentiment: +0.591 | Score: +0.577
   Context: $OSRH tiny deSPAC biotech penny with 20m Marketcap and $815m pending License deal with Definitive Ag
 
 $SEGG [CATALYST: PARTNERSHIP] 
-  Mentions: 6.3 | Sentiment: +0.563 | Score: +0.607
+  Mentions: 7.3 | Sentiment: +0.460 | Score: +0.557
   Context: SEGG is going to surprise people, you have a major catalyst a couple days ago with the polymarket pa
 
+$SLNH [CATALYST: PRODUCTION] 
+  Mentions: 7.0 | Sentiment: +0.539 | Score: +0.554
+  Context: SLNH building serious data center momentum at $1.07? SLNH caught my eye trading around $1.07/share—s
+
 $SKLZ [NO CATALYST] 
-  Mentions: 10.4 | Sentiment: +0.407 | Score: +0.430
+  Mentions: 9.4 | Sentiment: +0.407 | Score: +0.428
   Context: SKLZ is another good example you can look at the 5 mins and 15 mins over the last week. That 7.5 is 
 
-$SRXH [CATALYST: REGULATORY] 
-  Mentions: 10.8 | Sentiment: +0.384 | Score: +0.447
-  Context: Pump and dump could be involved in a squeeze.  Pump n dump is coordinated, generally a bunch of bot 
-
-$HOVR [CATALYST: PATENT] 
-  Mentions: 8.4 | Sentiment: +0.336 | Score: +0.411
-  Context: Yeah I looked into it in August 2025 and I think October is when I bought. Put it on the back burner
+$AMS [NO CATALYST] 
+  Mentions: 14.4 | Sentiment: +0.360 | Score: +0.413
+  Context: AMS : Company update shows positive signs I started looking into American Shared Hospital Services (
 
 $JTAI [CATALYST: MERGER] 
-  Mentions: 10.8 | Sentiment: +0.350 | Score: +0.393
+  Mentions: 14.1 | Sentiment: +0.349 | Score: +0.408
   Context: My best play for Monday is $JTAI. Merger proxy to be filed on Monday PM Session, will show the net c
 
-$CMPX [CATALYST: FDA] 
-  Mentions: 6.7 | Sentiment: +0.271 | Score: +0.310
-  Context: Both the General Counsel and Chief Accounting Officer of $CMPX bought shares two days ago - 25K and 
+$SRXH [CATALYST: MERGER] 
+  Mentions: 23.4 | Sentiment: +0.336 | Score: +0.405
+  Context: Pump and dump could be involved in a squeeze.  Pump n dump is coordinated, generally a bunch of bot 
 
-$SAFX [CATALYST: PRODUCTION] 
-  Mentions: 10.5 | Sentiment: +0.227 | Score: +0.282
-  Context: SAFX. It’s been a favorite of short sellers for a while but it’s nearing an inflection point where t
+$ROLR [NO CATALYST] 
+  Mentions: 6.5 | Sentiment: +0.326 | Score: +0.392
+  Context: Hi! I agree with you in most points, though I almost have as much money in SEGG as in ROLR. Yes, ROL
 
-$III [NO CATALYST] 
-  Mentions: 8 | Sentiment: +0.533 | Score: +0.221
-  Context: This is bigger than a grid upgrade. It is federal money chasing energy bottlenecks The Defense Produ
+$AIXI [CATALYST: COURT RULING] 
+  Mentions: 8.3 | Sentiment: +0.433 | Score: +0.371
+  Context: $BCHT - SKLZ & AIXI playbook redux: $78.4M judgment in collection, $40M MC, lock-up live, no dilutio
 
-$AIXI [CATALYST: PATENT] 
-  Mentions: 8.3 | Sentiment: +0.200 | Score: +0.196
-  Context: Apple Earnings vs. AIXI Patent Victory: Stock Forecast & Analysis The Catalyst: Apple’s Q2 2026 Earn
+$ATCH [NO CATALYST] 
+  Mentions: 7.0 | Sentiment: +0.422 | Score: +0.357
+  Context: ATCH: Current and future prospects look so promising # The tl;dr AtlasClear: Scaling a Profitable Fi
 
