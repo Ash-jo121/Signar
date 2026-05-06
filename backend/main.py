@@ -21,8 +21,6 @@ from tqdm import tqdm
 import traceback
 
 
-engagement_ratio = 0
-
 def has_diverse_contexts(contexts, min_unique_patterns=3):
     patterns = set(c["full"][:30] for c in contexts)
     return len(patterns) >= min_unique_patterns
@@ -310,6 +308,7 @@ def analyze_ticker_sentiment(all_posts):
                 "mod_flagged": data["mod_flagged"],
                 "mod_flag_type": data["mod_flag_type"],
                 "mod_flag_score": data["mod_flag_score"],
+                "engagement_ratio": round(engagement_ratio, 3),
             }
 
             # Apply mod penalty immediately after score computation
@@ -417,7 +416,6 @@ if __name__ == "__main__":
                 result["vampire_flagged"] = True
                 result["vampire_flag_type"] = flag_type
                 result["vampire_confidence"] = confidence
-                result["engagement_ratio"] = round(engagement_ratio,3)
 
                 print(
                     f"  {result['ticker']}: VampireStocks {flag_type} "
