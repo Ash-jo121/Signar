@@ -1,40 +1,40 @@
-$HOUR [CATALYST: EARNINGS] 
-  Mentions: 10.3 | Sentiment: +0.650 | Score: +0.808
-  Context: ’ve been reviewing $HOUR after their latest filings, and the setup here is unusually technical for a
+$CABA [NO CATALYST] 
+  Mentions: 7.6 | Sentiment: +0.577 | Score: +0.701
+  Context: Ah well. Made 250 today ok CABA for a short trade. Not too bad I suppose. Time to go to sleep and ma
 
 $AEC [CATALYST: PARTNERSHIP] 
-  Mentions: 5.7 | Sentiment: +0.610 | Score: +0.602
-  Context: $BLGO important nuance: Aquatech isn’t just “some partner.” They claim 2,000+ global installations a
+  Mentions: 9.7 | Sentiment: +0.660 | Score: +0.653
+  Context: Aquatech is globally recognized for its technical excellence and innovation in sustainable water and
 
-$ATCH [NO CATALYST] 
-  Mentions: 6.4 | Sentiment: +0.364 | Score: +0.411
-  Context: ATCH: Current and future prospects look so promising The tl;dr AtlasClear: Scaling a Profitable Fina
+$MNTS [CATALYST: EARNINGS] 
+  Mentions: 8.3 | Sentiment: +0.501 | Score: +0.539
+  Context: MNTS breakthrough I'm surprised MNTS hasn't gotten more attention in this group after an extremely b
 
-$JTAI [CATALYST: MERGER] 
-  Mentions: 10.1 | Sentiment: +0.351 | Score: +0.399
-  Context: My best play for Monday is $JTAI. Merger proxy to be filed on Monday PM Session, will show the net c
+$HOUR [CATALYST: EARNINGS] 
+  Mentions: 15.3 | Sentiment: +0.358 | Score: +0.458
+  Context: $HOUR still has earnings report coming up and $142M in revenue as well as 1.7M net profit so let’s h
 
 $AUUD [NO CATALYST] 
-  Mentions: 18.8 | Sentiment: +0.291 | Score: +0.367
-  Context: AUUD - Auddia inc, ✅ Spirit Airlines 🛫 Auddia Introduces Voyex as Stranded Spirit Airlines Passenger
+  Mentions: 5.4 | Sentiment: +0.384 | Score: +0.456
+  Context: Holding 1000 shares of AUUD @ $1.80 average. 500k float, 60k shares available to short, CTB is climb
 
-$CMPX [CATALYST: FDA] 
-  Mentions: 10.8 | Sentiment: +0.272 | Score: +0.326
-  Context: Both the General Counsel and Chief Accounting Officer of $CMPX bought shares two days ago - 25K and 
+$BCG [CATALYST: EARNINGS] 
+  Mentions: 6 | Sentiment: +0.767 | Score: +0.366
+  Context: $BCG Reclaim and Pivot Forming a Tight Breakout Candidate I'm calling $BCG for a potential continuat
 
-$WSHP [CATALYST: CAPITAL RAISE] 
-  Mentions: 8.4 | Sentiment: +0.241 | Score: +0.029
-  Context: Insider info. If you were structuring a squeeze as a business model with a "shareback program," woul
+$ATCH [NO CATALYST] 
+  Mentions: 5.5 | Sentiment: +0.323 | Score: +0.358
+  Context: ATCH: Current and future prospects look so promising The tl;dr AtlasClear: Scaling a Profitable Fina
 
-$AMS [CATALYST: PRODUCTION] 
-  Mentions: 8.4 | Sentiment: +0.218 | Score: +0.267
-  Context: Tbf the ST board is kinda sketch & turned me off; if you click their accounts their posts are just r
+$SAFX [CATALYST: CAPITAL RAISE] 
+  Mentions: 6.6 | Sentiment: +0.295 | Score: +0.312
+  Context: Can’t speak for SAFX, but loaded 5mil of ECOX below .001 and holding for .03 which is reasonable bas
 
-$LFVN [CATALYST: CAPITAL RAISE] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 22.3 | Sentiment: +0.334 | Score: +0.207
-  Context: I will be buying LFVN for a potential squeeze I love the setup for this stock. Low float (10-11m), s
+$MOBX [CATALYST: GOVERNMENT CONTRACT] 
+  Mentions: 5.6 | Sentiment: +0.237 | Score: +0.282
+  Context: CMND only hits the 20% SI of OS that I look for. Also no options chain. I want a ramp, not a pump. L
 
-$GCTS [CATALYST: PRODUCTION] 
-  Mentions: 14.7 | Sentiment: +0.121 | Score: +0.127
-  Context: "Not telling you to research it"   Brother - I have a 30 inch monitor on tradingview 24/7 GCTS i can
+$PN [NO CATALYST] 
+  Mentions: 5.0 | Sentiment: +0.267 | Score: +0.268
+  Context: What’s everyone watching today? Any multi day runners? What’s everyone watching today? Any potential
 
