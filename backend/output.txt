@@ -1,40 +1,40 @@
-$CABA [NO CATALYST] 
-  Mentions: 7.6 | Sentiment: +0.577 | Score: +0.701
-  Context: Ah well. Made 250 today ok CABA for a short trade. Not too bad I suppose. Time to go to sleep and ma
+$DGXX [NO CATALYST] 
+  Mentions: 6.0 | Sentiment: +0.825 | Score: +0.986
+  Context: I backed KEEL, you backed DGXX, we both won, you just won a bit more (so far 😉) congrats
 
-$AEC [CATALYST: PARTNERSHIP] 
-  Mentions: 9.7 | Sentiment: +0.660 | Score: +0.653
-  Context: Aquatech is globally recognized for its technical excellence and innovation in sustainable water and
+$IPWR [CATALYST: EARNINGS] 
+  Mentions: 6.6 | Sentiment: +0.622 | Score: +0.683
+  Context: IPWR !!  can be 10x in  few  months from now Hello guys this company in my opinion can be 10x in few
 
-$MNTS [CATALYST: EARNINGS] 
-  Mentions: 8.3 | Sentiment: +0.501 | Score: +0.539
-  Context: MNTS breakthrough I'm surprised MNTS hasn't gotten more attention in this group after an extremely b
+$AUUD [CATALYST: MERGER] 
+  Mentions: 7.4 | Sentiment: +0.607 | Score: +0.681
+  Context: $AUUD: a rerating is imminent I’m very bullish on **Auddia Inc. ($AUUD)** as a near-term asymmetric 
 
-$HOUR [CATALYST: EARNINGS] 
-  Mentions: 15.3 | Sentiment: +0.358 | Score: +0.458
-  Context: $HOUR still has earnings report coming up and $142M in revenue as well as 1.7M net profit so let’s h
-
-$AUUD [NO CATALYST] 
-  Mentions: 5.4 | Sentiment: +0.384 | Score: +0.456
-  Context: Holding 1000 shares of AUUD @ $1.80 average. 500k float, 60k shares available to short, CTB is climb
+$EPOW [CATALYST: CONTRACT] 
+  Mentions: 9.3 | Sentiment: +0.768 | Score: +0.663
+  Context: Reminder to myself... buy a small bag of EPOW... NFA per X (EPOW E-Power just onboarded a veteran AI
 
 $BCG [CATALYST: EARNINGS] 
-  Mentions: 6 | Sentiment: +0.767 | Score: +0.366
-  Context: $BCG Reclaim and Pivot Forming a Tight Breakout Candidate I'm calling $BCG for a potential continuat
+  Mentions: 7.3 | Sentiment: +0.687 | Score: +0.611
+  Context: You tell me.    It was like a switch was thrown everytime it threw hands at that resistance. It's no
 
-$ATCH [NO CATALYST] 
-  Mentions: 5.5 | Sentiment: +0.323 | Score: +0.358
-  Context: ATCH: Current and future prospects look so promising The tl;dr AtlasClear: Scaling a Profitable Fina
+$AMS [NO CATALYST] 
+  Mentions: 14.3 | Sentiment: +0.711 | Score: +0.595
+  Context: AMS Afterhours/Premarket Movement With Bullish Swing Structure Just noticed some nice price action o
 
 $SAFX [CATALYST: CAPITAL RAISE] 
-  Mentions: 6.6 | Sentiment: +0.295 | Score: +0.312
-  Context: Can’t speak for SAFX, but loaded 5mil of ECOX below .001 and holding for .03 which is reasonable bas
+  Mentions: 9.9 | Sentiment: +0.515 | Score: +0.552
+  Context: $SOAR — Reverse Merger Play Nobody Is Talking About — Vote Tomorrow May 7 Sharing this because I thi
 
-$MOBX [CATALYST: GOVERNMENT CONTRACT] 
-  Mentions: 5.6 | Sentiment: +0.237 | Score: +0.282
-  Context: CMND only hits the 20% SI of OS that I look for. Also no options chain. I want a ramp, not a pump. L
+$LHAI [CATALYST: MERGER] 
+  Mentions: 9.7 | Sentiment: +0.445 | Score: +0.550
+  Context: LHAI I think they run this very hard in AH today. Either way great swing for a few weeks out. Just h
 
-$PN [NO CATALYST] 
-  Mentions: 5.0 | Sentiment: +0.267 | Score: +0.268
-  Context: What’s everyone watching today? Any multi day runners? What’s everyone watching today? Any potential
+$OSRH [CATALYST: PARTNERSHIP] 
+  Mentions: 8.3 | Sentiment: +0.545 | Score: +0.533
+  Context: MLSS. They have lock up agreements from January at .50, .70, and .90, and their owner hasn’t sold an
+
+$ALOT [NO CATALYST] 
+  Mentions: 6.2 | Sentiment: +0.335 | Score: +0.401
+  Context: There’s gonna be ALOT more millionaires coming. It’s not going to be special soon enough.
 
