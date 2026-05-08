@@ -1,40 +1,40 @@
-$DGXX [NO CATALYST] 
-  Mentions: 6.0 | Sentiment: +0.825 | Score: +0.986
-  Context: I backed KEEL, you backed DGXX, we both won, you just won a bit more (so far 😉) congrats
-
 $IPWR [CATALYST: EARNINGS] 
-  Mentions: 6.6 | Sentiment: +0.622 | Score: +0.683
+  Mentions: 7.7 | Sentiment: +0.622 | Score: +0.691
   Context: IPWR !!  can be 10x in  few  months from now Hello guys this company in my opinion can be 10x in few
 
-$AUUD [CATALYST: MERGER] 
-  Mentions: 7.4 | Sentiment: +0.607 | Score: +0.681
-  Context: $AUUD: a rerating is imminent I’m very bullish on **Auddia Inc. ($AUUD)** as a near-term asymmetric 
-
-$EPOW [CATALYST: CONTRACT] 
-  Mentions: 9.3 | Sentiment: +0.768 | Score: +0.663
-  Context: Reminder to myself... buy a small bag of EPOW... NFA per X (EPOW E-Power just onboarded a veteran AI
-
-$BCG [CATALYST: EARNINGS] 
-  Mentions: 7.3 | Sentiment: +0.687 | Score: +0.611
-  Context: You tell me.    It was like a switch was thrown everytime it threw hands at that resistance. It's no
+$DGXX [NO CATALYST] 
+  Mentions: 7.1 | Sentiment: +0.531 | Score: +0.642
+  Context: Heck ya! Glad to hear it. I know people were starting to get worried because they were supposed to h
 
 $AMS [NO CATALYST] 
-  Mentions: 14.3 | Sentiment: +0.711 | Score: +0.595
-  Context: AMS Afterhours/Premarket Movement With Bullish Swing Structure Just noticed some nice price action o
+  Mentions: 11.0 | Sentiment: +0.673 | Score: +0.639
+  Context: $AMS Afterhours/Premarket Movement With Bullish Swing Structure Just noticed some nice price action 
 
-$SAFX [CATALYST: CAPITAL RAISE] 
-  Mentions: 9.9 | Sentiment: +0.515 | Score: +0.552
-  Context: $SOAR — Reverse Merger Play Nobody Is Talking About — Vote Tomorrow May 7 Sharing this because I thi
+$BCG [NO CATALYST] 
+  Mentions: 5.4 | Sentiment: +0.659 | Score: +0.625
+  Context: You tell me.    It was like a switch was thrown everytime it threw hands at that resistance. It's no
+
+$BGDE [CATALYST: PARTNERSHIP] 
+  Mentions: 7.0 | Sentiment: +0.570 | Score: +0.585
+  Context: $BGDE - BIG DIGITAL ENERGY UPDATE 🚨 Statement released from the top. Josh Kilgore All, we’ve seen th
 
 $LHAI [CATALYST: MERGER] 
-  Mentions: 9.7 | Sentiment: +0.445 | Score: +0.550
-  Context: LHAI I think they run this very hard in AH today. Either way great swing for a few weeks out. Just h
+  Mentions: 12.9 | Sentiment: +0.412 | Score: +0.520
+  Context: If you’re hunting through small caps for real growth — not recycled promises, not vaporware — $LHAI 
 
-$OSRH [CATALYST: PARTNERSHIP] 
-  Mentions: 8.3 | Sentiment: +0.545 | Score: +0.533
-  Context: MLSS. They have lock up agreements from January at .50, .70, and .90, and their owner hasn’t sold an
+$FABC [CATALYST: PARTNERSHIP] 
+  Mentions: 7.8 | Sentiment: +0.456 | Score: +0.494
+  Context: I was very heavily positioned last year when it dropped to 3.50 because of Liberation Day tariffs, h
+
+$EPOW [CATALYST: CONTRACT] 
+  Mentions: 7.3 | Sentiment: +0.666 | Score: +0.444
+  Context: E-Power (NASDAQ: EPOW) announced on May 7, 2026 that its subsidiary received Patent No. CN2024105182
 
 $ALOT [NO CATALYST] 
-  Mentions: 6.2 | Sentiment: +0.335 | Score: +0.401
+  Mentions: 7.3 | Sentiment: +0.334 | Score: +0.405
   Context: There’s gonna be ALOT more millionaires coming. It’s not going to be special soon enough.
+
+$GCTS [NO CATALYST] 
+  Mentions: 6.0 | Sentiment: +0.372 | Score: +0.391
+  Context: Ahhh GCTS? my brother, this shits my baby, aint no doubt about them improving that stock by end of y
 
