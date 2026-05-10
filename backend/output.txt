@@ -1,40 +1,40 @@
 $CTM [CATALYST: EARNINGS] 
-  Mentions: 12.2 | Sentiment: +0.442 | Score: +0.452
+  Mentions: 15.5 | Sentiment: +0.454 | Score: +0.556
   Context: I took some profit when it was up close to $1. I bought in again in the $0.60s and Im going to let i
 
-$SEGG [CATALYST: PARTNERSHIP] 
-  Mentions: 7.3 | Sentiment: +0.374 | Score: +0.453
-  Context: SEGG and ROLR, both overlooked pennies with volume just starting to pick up. Both are launching thei
-
-$GDC [CATALYST: MERGER] 
-  Mentions: 13.1 | Sentiment: +0.365 | Score: +0.436
-  Context: GDC about to explode GDC has recently fallen 95%. It is .22 a share and they have an offer to take t
-
-$ALOT [NO CATALYST] 
-  Mentions: 5.3 | Sentiment: +0.320 | Score: +0.379
-  Context: There’s gonna be ALOT more millionaires coming. It’s not going to be special soon enough.
-
 $FABC [CATALYST: PRODUCTION] 
-  Mentions: 8.1 | Sentiment: +0.291 | Score: +0.356
+  Mentions: 9.1 | Sentiment: +0.458 | Score: +0.534
   Context: I was very heavily positioned last year when it dropped to 3.50 because of Liberation Day tariffs, h
 
-$ANNA [NO CATALYST] 
-  Mentions: 16.2 | Sentiment: +0.252 | Score: +0.323
-  Context: There are warrants somewhere above $11, so it won't cross that. I'm looking at a absolutely phenomen
+$GDC [CATALYST: CAPITAL RAISE] 
+  Mentions: 14.1 | Sentiment: +0.427 | Score: +0.518
+  Context: GDC about to explode GDC has recently fallen 95%. It is .22 a share and they have an offer to take t
+
+$SRXH [CATALYST: MERGER] 
+  Mentions: 23.0 | Sentiment: +0.411 | Score: +0.511
+  Context: SRXH ✍🏼 Write that down.. Letter of Effectiveness issued on May 7th 3pm for forward action for REVER
+
+$INO [CATALYST: CLINICAL] 
+  Mentions: 6.0 | Sentiment: +0.375 | Score: +0.394
+  Context: $INO: HANTAVIRUS OPPORTUNITY ANALYSIS - Only Public Company with Direct Hantavirus Vaccine Experienc
+
+$BURU [CATALYST: PRODUCTION] 
+  Mentions: 5.2 | Sentiment: +0.383 | Score: +0.344
+  Context: $BURU - UP 1% @$0.2474 on decent 3.3M volume, HOD @$0.2489... This milestone marks the transition fr
 
 $XRX [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 58.4 | Sentiment: +0.467 | Score: +0.307
+  Mentions: 69.8 | Sentiment: +0.502 | Score: +0.342
   Context: u/Cabininthewoodsdude made an update on XRX btw. He basically said he wants to see $3.00+. He said w
 
 $SAFX [CATALYST: PRODUCTION] 
-  Mentions: 8.2 | Sentiment: +0.264 | Score: +0.301
+  Mentions: 7.2 | Sentiment: +0.276 | Score: +0.312
   Context: Can’t speak for SAFX, but loaded 5mil of ECOX below .001 and holding for .03 which is reasonable bas
 
-$GCTS [NO CATALYST] 
-  Mentions: 12.6 | Sentiment: +0.200 | Score: +0.252
-  Context: Ahhh GCTS? my brother, this shits my baby, aint no doubt about them improving that stock by end of y
+$AMZE [CATALYST: PRODUCTION] 
+  Mentions: 14.8 | Sentiment: +0.255 | Score: +0.309
+  Context: $AMZE: Only Fans ex-CEO is a director, April 15th catalyst coming up **EDIT as I can't update the ti
 
-$SRXH [CATALYST: MERGER] 
-  Mentions: 20.4 | Sentiment: +0.206 | Score: +0.239
-  Context: Here is my only stock that i invested 100% of my life savings SRXH (soon to be EMJX after the merge)
+$VEEE [CATALYST: EARNINGS] 
+  Mentions: 6.3 | Sentiment: +0.326 | Score: +0.290
+  Context: The path to a double requires them to stop burning cash, stop diluting, and actually improve margins
 
