@@ -1,40 +1,40 @@
+$MEHA [CATALYST: EARNINGS] 
+  Mentions: 6.0 | Sentiment: +0.606 | Score: +0.724
+  Context: MEHA- it became profitable on the last earnings report, several weeks ago they announced partnership
+
+$AMS [NO CATALYST] 
+  Mentions: 6.3 | Sentiment: +0.644 | Score: +0.617
+  Context: $AMS Afterhours/Premarket Movement With Bullish Swing Structure Just noticed some nice price action 
+
 $CTM [CATALYST: EARNINGS] 
-  Mentions: 15.5 | Sentiment: +0.454 | Score: +0.556
+  Mentions: 15.2 | Sentiment: +0.442 | Score: +0.541
   Context: I took some profit when it was up close to $1. I bought in again in the $0.60s and Im going to let i
 
-$FABC [CATALYST: PRODUCTION] 
-  Mentions: 9.1 | Sentiment: +0.458 | Score: +0.534
-  Context: I was very heavily positioned last year when it dropped to 3.50 because of Liberation Day tariffs, h
-
-$GDC [CATALYST: CAPITAL RAISE] 
-  Mentions: 14.1 | Sentiment: +0.427 | Score: +0.518
-  Context: GDC about to explode GDC has recently fallen 95%. It is .22 a share and they have an offer to take t
-
-$SRXH [CATALYST: MERGER] 
-  Mentions: 23.0 | Sentiment: +0.411 | Score: +0.511
-  Context: SRXH ✍🏼 Write that down.. Letter of Effectiveness issued on May 7th 3pm for forward action for REVER
-
-$INO [CATALYST: CLINICAL] 
-  Mentions: 6.0 | Sentiment: +0.375 | Score: +0.394
-  Context: $INO: HANTAVIRUS OPPORTUNITY ANALYSIS - Only Public Company with Direct Hantavirus Vaccine Experienc
-
-$BURU [CATALYST: PRODUCTION] 
-  Mentions: 5.2 | Sentiment: +0.383 | Score: +0.344
-  Context: $BURU - UP 1% @$0.2474 on decent 3.3M volume, HOD @$0.2489... This milestone marks the transition fr
-
-$XRX [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 69.8 | Sentiment: +0.502 | Score: +0.342
+$XRX [CATALYST: SHORT SQUEEZE] [MOD FLAG: COMMUNITY_CALL]
+  Mentions: 81.1 | Sentiment: +0.549 | Score: +0.374
   Context: u/Cabininthewoodsdude made an update on XRX btw. He basically said he wants to see $3.00+. He said w
 
+$VEEE [CATALYST: EARNINGS] 
+  Mentions: 7.3 | Sentiment: +0.429 | Score: +0.364
+  Context: Thinking VEEE shares for Monday. Holding for at least a couple months. Twin Veee. Power Cats Co. Rec
+
+$SRXH [CATALYST: MERGER] 
+  Mentions: 28.3 | Sentiment: +0.275 | Score: +0.360
+  Context: Will probably trade the range it's at now, maybe +/- 10%, until the merger is completed. After that 
+
+$GCTS [CATALYST: PRODUCTION] 
+  Mentions: 11.3 | Sentiment: +0.275 | Score: +0.344
+  Context: What do you think about the timeline for the stock? I think the SpaceX IPO will do wonders for GCTS 
+
+$INO [CATALYST: CLINICAL] 
+  Mentions: 5.0 | Sentiment: +0.301 | Score: +0.301
+  Context: $INO: HANTAVIRUS OPPORTUNITY ANALYSIS - Only Public Company with Direct Hantavirus Vaccine Experienc
+
 $SAFX [CATALYST: PRODUCTION] 
-  Mentions: 7.2 | Sentiment: +0.276 | Score: +0.312
+  Mentions: 7.2 | Sentiment: +0.264 | Score: +0.299
   Context: Can’t speak for SAFX, but loaded 5mil of ECOX below .001 and holding for .03 which is reasonable bas
 
-$AMZE [CATALYST: PRODUCTION] 
-  Mentions: 14.8 | Sentiment: +0.255 | Score: +0.309
-  Context: $AMZE: Only Fans ex-CEO is a director, April 15th catalyst coming up **EDIT as I can't update the ti
-
-$VEEE [CATALYST: EARNINGS] 
-  Mentions: 6.3 | Sentiment: +0.326 | Score: +0.290
-  Context: The path to a double requires them to stop burning cash, stop diluting, and actually improve margins
+$FABC [CATALYST: PRODUCTION] 
+  Mentions: 5.1 | Sentiment: +0.252 | Score: +0.298
+  Context: I was very heavily positioned last year when it dropped to 3.50 because of Liberation Day tariffs, h
 
