@@ -1,40 +1,40 @@
-$MEHA [CATALYST: EARNINGS] 
-  Mentions: 6.0 | Sentiment: +0.606 | Score: +0.724
-  Context: MEHA- it became profitable on the last earnings report, several weeks ago they announced partnership
+$MBAI [CATALYST: MERGER] 
+  Mentions: 8.6 | Sentiment: +0.621 | Score: +0.761
+  Context: MBAI looks like a good swing trade opportunity here and recently ran to $4 a few months back and now
 
-$AMS [NO CATALYST] 
-  Mentions: 6.3 | Sentiment: +0.644 | Score: +0.617
-  Context: $AMS Afterhours/Premarket Movement With Bullish Swing Structure Just noticed some nice price action 
+$MVIS [CATALYST: EARNINGS] 
+  Mentions: 16.6 | Sentiment: +0.650 | Score: +0.753
+  Context: MVIS - At $0.67, MicroVision is a high-convexity investment opportunity transitioning from a pre-rev
 
 $CTM [CATALYST: EARNINGS] 
-  Mentions: 15.2 | Sentiment: +0.442 | Score: +0.541
-  Context: I took some profit when it was up close to $1. I bought in again in the $0.60s and Im going to let i
+  Mentions: 13.0 | Sentiment: +0.453 | Score: +0.530
+  Context: CTM is an order of magnitude bigger than them if you look at employee count over 250 more and in a m
 
-$XRX [CATALYST: SHORT SQUEEZE] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 81.1 | Sentiment: +0.549 | Score: +0.374
-  Context: u/Cabininthewoodsdude made an update on XRX btw. He basically said he wants to see $3.00+. He said w
+$SST [CATALYST: SHORT SQUEEZE] 
+  Mentions: 6.9 | Sentiment: +0.448 | Score: +0.500
+  Context: SST All In System1 - I bought 500 shares of SST. I believe tomorrow is the Catalyst based on a) arti
 
-$VEEE [CATALYST: EARNINGS] 
-  Mentions: 7.3 | Sentiment: +0.429 | Score: +0.364
-  Context: Thinking VEEE shares for Monday. Holding for at least a couple months. Twin Veee. Power Cats Co. Rec
+$GDC [CATALYST: CAPITAL RAISE] 
+  Mentions: 16.7 | Sentiment: +0.398 | Score: +0.422
+  Context: GDC about to explode GDC has recently fallen 95%. It is .22 a share and they have an offer to take t
+
+$AUUD [CATALYST: MERGER] 
+  Mentions: 6.9 | Sentiment: +0.458 | Score: +0.469
+  Context: $AUUD: All systems go for launch Not financial advice, but I’m still very bullish on $AUUD here, and
+
+$GCTS [CATALYST: PARTNERSHIP] 
+  Mentions: 16.1 | Sentiment: +0.378 | Score: +0.468
+  Context: "GCT Semiconductor: A Small Cap with Global Potential" The world is entering the era of **Global Con
 
 $SRXH [CATALYST: MERGER] 
-  Mentions: 28.3 | Sentiment: +0.275 | Score: +0.360
-  Context: Will probably trade the range it's at now, maybe +/- 10%, until the merger is completed. After that 
+  Mentions: 23.4 | Sentiment: +0.316 | Score: +0.386
+  Context: SRXH ! Merger coming very fast ! $SRXH!   Two new 13F filings just dropped today (5/11): Citigroup a
 
-$GCTS [CATALYST: PRODUCTION] 
-  Mentions: 11.3 | Sentiment: +0.275 | Score: +0.344
-  Context: What do you think about the timeline for the stock? I think the SpaceX IPO will do wonders for GCTS 
+$MEHA [CATALYST: PARTNERSHIP] 
+  Mentions: 34.7 | Sentiment: +0.258 | Score: +0.344
+  Context: MEHA- it became profitable on the last earnings report, several weeks ago they announced partnership
 
-$INO [CATALYST: CLINICAL] 
-  Mentions: 5.0 | Sentiment: +0.301 | Score: +0.301
-  Context: $INO: HANTAVIRUS OPPORTUNITY ANALYSIS - Only Public Company with Direct Hantavirus Vaccine Experienc
-
-$SAFX [CATALYST: PRODUCTION] 
-  Mentions: 7.2 | Sentiment: +0.264 | Score: +0.299
-  Context: Can’t speak for SAFX, but loaded 5mil of ECOX below .001 and holding for .03 which is reasonable bas
-
-$FABC [CATALYST: PRODUCTION] 
-  Mentions: 5.1 | Sentiment: +0.252 | Score: +0.298
-  Context: I was very heavily positioned last year when it dropped to 3.50 because of Liberation Day tariffs, h
+$GPRO [CATALYST: MERGER] 
+  Mentions: 5.3 | Sentiment: +0.331 | Score: +0.333
+  Context: GPRO Stock Genuine question here, don’t know what I’m missing.  The overall news for GPRO didn’t see
 
