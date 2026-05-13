@@ -1,40 +1,40 @@
 $MBAI [CATALYST: MERGER] 
-  Mentions: 8.6 | Sentiment: +0.621 | Score: +0.761
+  Mentions: 13.3 | Sentiment: +0.705 | Score: +0.893
   Context: MBAI looks like a good swing trade opportunity here and recently ran to $4 a few months back and now
 
 $MVIS [CATALYST: EARNINGS] 
-  Mentions: 16.6 | Sentiment: +0.650 | Score: +0.753
+  Mentions: 11.4 | Sentiment: +0.564 | Score: +0.659
   Context: MVIS - At $0.67, MicroVision is a high-convexity investment opportunity transitioning from a pre-rev
 
-$CTM [CATALYST: EARNINGS] 
-  Mentions: 13.0 | Sentiment: +0.453 | Score: +0.530
-  Context: CTM is an order of magnitude bigger than them if you look at employee count over 250 more and in a m
+$SST [CATALYST: EARNINGS] 
+  Mentions: 5.0 | Sentiment: +0.450 | Score: +0.467
+  Context: Thanks for the shoutout! Luckily I got out of $SST with profit too because that one dropped like a r
 
-$SST [CATALYST: SHORT SQUEEZE] 
-  Mentions: 6.9 | Sentiment: +0.448 | Score: +0.500
-  Context: SST All In System1 - I bought 500 shares of SST. I believe tomorrow is the Catalyst based on a) arti
-
-$GDC [CATALYST: CAPITAL RAISE] 
-  Mentions: 16.7 | Sentiment: +0.398 | Score: +0.422
-  Context: GDC about to explode GDC has recently fallen 95%. It is .22 a share and they have an offer to take t
-
-$AUUD [CATALYST: MERGER] 
-  Mentions: 6.9 | Sentiment: +0.458 | Score: +0.469
-  Context: $AUUD: All systems go for launch Not financial advice, but I’m still very bullish on $AUUD here, and
+$ODYS [CATALYST: PARTNERSHIP] 
+  Mentions: 6.0 | Sentiment: +0.613 | Score: +0.440
+  Context: $ODYS +48% — government AI partnership drove the premarket move Odysight (ODYS) had a sharp premarke
 
 $GCTS [CATALYST: PARTNERSHIP] 
-  Mentions: 16.1 | Sentiment: +0.378 | Score: +0.468
-  Context: "GCT Semiconductor: A Small Cap with Global Potential" The world is entering the era of **Global Con
-
-$SRXH [CATALYST: MERGER] 
-  Mentions: 23.4 | Sentiment: +0.316 | Score: +0.386
-  Context: SRXH ! Merger coming very fast ! $SRXH!   Two new 13F filings just dropped today (5/11): Citigroup a
+  Mentions: 13.7 | Sentiment: +0.289 | Score: +0.367
+  Context: 5G chipset market is dominated by Qualcomm, MediaTek, and Samsung. GCTS is a late entrant with no di
 
 $MEHA [CATALYST: PARTNERSHIP] 
-  Mentions: 34.7 | Sentiment: +0.258 | Score: +0.344
+  Mentions: 28.9 | Sentiment: +0.263 | Score: +0.338
   Context: MEHA- it became profitable on the last earnings report, several weeks ago they announced partnership
 
-$GPRO [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.331 | Score: +0.333
-  Context: GPRO Stock Genuine question here, don’t know what I’m missing.  The overall news for GPRO didn’t see
+$GSIT [CATALYST: PRODUCTION] 
+  Mentions: 6.2 | Sentiment: +0.266 | Score: +0.319
+  Context: It all boils down to energy, AI demand is correlated to energy demand and its peaking rn. In the sim
+
+$SRXH [CATALYST: MERGER] 
+  Mentions: 36.7 | Sentiment: +0.208 | Score: +0.266
+  Context: SRXH ! Merger coming very fast ! $SRXH!   Two new 13F filings just dropped today (5/11): Citigroup a
+
+$AIIO [NO CATALYST] 
+  Mentions: 9.0 | Sentiment: +0.121 | Score: +0.149
+  Context: It surged to 1.49 pullback is normal and expected. Im still holding my position
+
+$LFVN [CATALYST: FDA] [MOD FLAG: COMMUNITY_CALL]
+  Mentions: 34.6 | Sentiment: +0.059 | Score: +0.033
+  Context: LFVN Gamma Short Squeeze Check The Numbers!!! The juicer is out and ready on this one.  Small cap(70
 
