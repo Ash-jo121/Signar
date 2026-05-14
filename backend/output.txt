@@ -1,40 +1,40 @@
+$SNAL [CATALYST: EARNINGS] 
+  Mentions: 7.1 | Sentiment: +0.603 | Score: +0.674
+  Context: That one was all good technicals and positive ER.  Hope you got in before it shot up. 👍
+
+$DXF [NO CATALYST] 
+  Mentions: 11.8 | Sentiment: +0.475 | Score: +0.551
+  Context: DXF DXF might actually be one of the most overlooked low-float plays right now. 👀 Still sitting chea
+
 $MBAI [CATALYST: MERGER] 
-  Mentions: 13.3 | Sentiment: +0.705 | Score: +0.893
-  Context: MBAI looks like a good swing trade opportunity here and recently ran to $4 a few months back and now
+  Mentions: 5.3 | Sentiment: +0.420 | Score: +0.498
+  Context: Another I feel comfortable buying in the morning, selling in the afternoon. But not holding overnigh
 
-$MVIS [CATALYST: EARNINGS] 
-  Mentions: 11.4 | Sentiment: +0.564 | Score: +0.659
-  Context: MVIS - At $0.67, MicroVision is a high-convexity investment opportunity transitioning from a pre-rev
+$OSRH [CATALYST: CONTRACT] 
+  Mentions: 7.1 | Sentiment: +0.372 | Score: +0.396
+  Context: Gotta be something to the $OSRH then, $CAPS is the same way, literally kept in the dark seemingly al
 
-$SST [CATALYST: EARNINGS] 
-  Mentions: 5.0 | Sentiment: +0.450 | Score: +0.467
-  Context: Thanks for the shoutout! Luckily I got out of $SST with profit too because that one dropped like a r
+$AMZE [CATALYST: CAPITAL RAISE] 
+  Mentions: 9.7 | Sentiment: +0.326 | Score: +0.381
+  Context: Not discussing my sale targets as it creates unfair price anchoring. but there are two obvious targe
 
-$ODYS [CATALYST: PARTNERSHIP] 
-  Mentions: 6.0 | Sentiment: +0.613 | Score: +0.440
-  Context: $ODYS +48% — government AI partnership drove the premarket move Odysight (ODYS) had a sharp premarke
+$ALP [CATALYST: REVENUE] 
+  Mentions: 38.3 | Sentiment: +0.272 | Score: +0.352
+  Context: Alpha Compute Corp., a British Virgin Islands–incorporated AI infrastructure provider listed on Nasd
 
-$GCTS [CATALYST: PARTNERSHIP] 
-  Mentions: 13.7 | Sentiment: +0.289 | Score: +0.367
-  Context: 5G chipset market is dominated by Qualcomm, MediaTek, and Samsung. GCTS is a late entrant with no di
+$MVIS [CATALYST: PARTNERSHIP] 
+  Mentions: 17.4 | Sentiment: +0.268 | Score: +0.346
+  Context: What’s the projection looking like after earnings? Are you thinking longer term or just a quick vola
 
-$MEHA [CATALYST: PARTNERSHIP] 
-  Mentions: 28.9 | Sentiment: +0.263 | Score: +0.338
-  Context: MEHA- it became profitable on the last earnings report, several weeks ago they announced partnership
+$SAFX [NO CATALYST] 
+  Mentions: 5.2 | Sentiment: +0.273 | Score: +0.322
+  Context: I get it, but this is different. Srxh is literally being priced just to be an avoidance of spac/ipo 
 
-$GSIT [CATALYST: PRODUCTION] 
-  Mentions: 6.2 | Sentiment: +0.266 | Score: +0.319
-  Context: It all boils down to energy, AI demand is correlated to energy demand and its peaking rn. In the sim
+$SRXH [CATALYST: PARTNERSHIP] 
+  Mentions: 115.8 | Sentiment: +0.197 | Score: +0.280
+  Context: SRXH Short? After a couple weeks of constant spamming it seems the mods took down the dude pushing s
 
-$SRXH [CATALYST: MERGER] 
-  Mentions: 36.7 | Sentiment: +0.208 | Score: +0.266
-  Context: SRXH ! Merger coming very fast ! $SRXH!   Two new 13F filings just dropped today (5/11): Citigroup a
-
-$AIIO [NO CATALYST] 
-  Mentions: 9.0 | Sentiment: +0.121 | Score: +0.149
-  Context: It surged to 1.49 pullback is normal and expected. Im still holding my position
-
-$LFVN [CATALYST: FDA] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 34.6 | Sentiment: +0.059 | Score: +0.033
-  Context: LFVN Gamma Short Squeeze Check The Numbers!!! The juicer is out and ready on this one.  Small cap(70
+$CXAI [CATALYST: CONTRACT] 
+  Mentions: 8.3 | Sentiment: +0.220 | Score: +0.261
+  Context: CXApp Inc. (Nasdaq:CXAI) Reports Q1 2026 Financial Results, Announces Over $5 Million Total Contract
 
