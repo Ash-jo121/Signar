@@ -1,40 +1,40 @@
-$SNAL [CATALYST: EARNINGS] 
-  Mentions: 7.1 | Sentiment: +0.603 | Score: +0.674
-  Context: That one was all good technicals and positive ER.  Hope you got in before it shot up. 👍
+$MVIS [CATALYST: EARNINGS] 
+  Mentions: 10.5 | Sentiment: +0.567 | Score: +0.599
+  Context: MVIS vamos a ponerle ganas!!! Que tiene buen precio Vamos muchachos, en esta compañía tenemos buen p
 
-$DXF [NO CATALYST] 
-  Mentions: 11.8 | Sentiment: +0.475 | Score: +0.551
-  Context: DXF DXF might actually be one of the most overlooked low-float plays right now. 👀 Still sitting chea
+$CYCU [CATALYST: CONTRACT] 
+  Mentions: 11.4 | Sentiment: +0.582 | Score: +0.569
+  Context: CYCU ready for 🌝🌝🌝🌝 Cycurion, Inc. (NASDAQ:CYCU) ("Cycurion" or the "Company"), a leader in AI-drive
 
-$MBAI [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.420 | Score: +0.498
-  Context: Another I feel comfortable buying in the morning, selling in the afternoon. But not holding overnigh
-
-$OSRH [CATALYST: CONTRACT] 
-  Mentions: 7.1 | Sentiment: +0.372 | Score: +0.396
-  Context: Gotta be something to the $OSRH then, $CAPS is the same way, literally kept in the dark seemingly al
-
-$AMZE [CATALYST: CAPITAL RAISE] 
-  Mentions: 9.7 | Sentiment: +0.326 | Score: +0.381
-  Context: Not discussing my sale targets as it creates unfair price anchoring. but there are two obvious targe
-
-$ALP [CATALYST: REVENUE] 
-  Mentions: 38.3 | Sentiment: +0.272 | Score: +0.352
+$ALP [NO CATALYST] 
+  Mentions: 35.4 | Sentiment: +0.424 | Score: +0.550
   Context: Alpha Compute Corp., a British Virgin Islands–incorporated AI infrastructure provider listed on Nasd
 
-$MVIS [CATALYST: PARTNERSHIP] 
-  Mentions: 17.4 | Sentiment: +0.268 | Score: +0.346
-  Context: What’s the projection looking like after earnings? Are you thinking longer term or just a quick vola
+$GCTS [CATALYST: PARTNERSHIP] 
+  Mentions: 15.8 | Sentiment: +0.396 | Score: +0.467
+  Context: Don't buy the warrants unless you get a good understanding - you can easily lose everything. At a hi
 
-$SAFX [NO CATALYST] 
-  Mentions: 5.2 | Sentiment: +0.273 | Score: +0.322
-  Context: I get it, but this is different. Srxh is literally being priced just to be an avoidance of spac/ipo 
+$XRX [NO CATALYST] 
+  Mentions: 9.0 | Sentiment: +0.471 | Score: +0.441
+  Context: Xerox (XRX): Beyond the Restructuring Noise – A Fundamental Analysis Hello People This study is pres
 
-$SRXH [CATALYST: PARTNERSHIP] 
-  Mentions: 115.8 | Sentiment: +0.197 | Score: +0.280
-  Context: SRXH Short? After a couple weeks of constant spamming it seems the mods took down the dude pushing s
+$OSRH [CATALYST: CONTRACT] 
+  Mentions: 6.1 | Sentiment: +0.426 | Score: +0.433
+  Context: Gotta be something to the $OSRH then, $CAPS is the same way, literally kept in the dark seemingly al
 
-$CXAI [CATALYST: CONTRACT] 
-  Mentions: 8.3 | Sentiment: +0.220 | Score: +0.261
-  Context: CXApp Inc. (Nasdaq:CXAI) Reports Q1 2026 Financial Results, Announces Over $5 Million Total Contract
+$AMZE [CATALYST: EARNINGS] 
+  Mentions: 11.6 | Sentiment: +0.318 | Score: +0.376
+  Context: AMAZE - TikTok Shop meets Shopify, at 1/20,000th of the Price I wanted to make a final post about Am
+
+$ANNA [CATALYST: EARNINGS] 
+  Mentions: 8.5 | Sentiment: +0.297 | Score: +0.309
+  Context: ANNA is finally starting to climb in the overnight. I figured the earnings report would see a delay,
+
+$MEHA [CATALYST: REGULATORY] 
+  Mentions: 12.6 | Sentiment: +0.278 | Score: +0.350
+  Context: $Functional Brands Inc (MEHA) -alright imma break this down for everyone. Imma cover a few things. T
+
+$ITP [NO CATALYST] 
+  Mentions: 8.5 | Sentiment: +0.265 | Score: +0.297
+  Context: ITP 16m float speculative play high risk high reward DD inside IT Packaging Inc (ITP) .19 HIGH RISK 
 
