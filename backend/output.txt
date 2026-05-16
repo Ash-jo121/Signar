@@ -1,40 +1,40 @@
-$MVIS [CATALYST: EARNINGS] 
-  Mentions: 10.5 | Sentiment: +0.567 | Score: +0.599
+$GCTS [CATALYST: MERGER] 
+  Mentions: 21.7 | Sentiment: +0.499 | Score: +0.641
+  Context: From AI tools :: While not officially announced, market speculation suggests Amazon could potentiall
+
+$SPCE [CATALYST: EARNINGS] 
+  Mentions: 5.2 | Sentiment: +0.531 | Score: +0.534
+  Context: the real play here isn't just the SpaceX IPO hype, it's whether SPCE earnings tomorrow shift the nar
+
+$SEGG [CATALYST: CAPITAL RAISE] 
+  Mentions: 8.4 | Sentiment: +0.534 | Score: +0.605
+  Context: It is definitely a gamble but it won't necessarily crash after the world cup. They can easily pivot 
+
+$MVIS [CATALYST: PARTNERSHIP] 
+  Mentions: 8.0 | Sentiment: +0.398 | Score: +0.449
   Context: MVIS vamos a ponerle ganas!!! Que tiene buen precio Vamos muchachos, en esta compañía tenemos buen p
 
-$CYCU [CATALYST: CONTRACT] 
-  Mentions: 11.4 | Sentiment: +0.582 | Score: +0.569
-  Context: CYCU ready for 🌝🌝🌝🌝 Cycurion, Inc. (NASDAQ:CYCU) ("Cycurion" or the "Company"), a leader in AI-drive
+$SRXH [CATALYST: MERGER] 
+  Mentions: 55.1 | Sentiment: +0.304 | Score: +0.407
+  Context: The market is going to spend the next few weeks just trying to figure out how to adjust the pricing 
 
-$ALP [NO CATALYST] 
-  Mentions: 35.4 | Sentiment: +0.424 | Score: +0.550
-  Context: Alpha Compute Corp., a British Virgin Islands–incorporated AI infrastructure provider listed on Nasd
+$QUCY [CATALYST: PARTNERSHIP] 
+  Mentions: 33.4 | Sentiment: +0.313 | Score: +0.396
+  Context: So I did a little digging and an Israeli billionaire named David Lazar has 477,000,000 shares of QUC
 
-$GCTS [CATALYST: PARTNERSHIP] 
-  Mentions: 15.8 | Sentiment: +0.396 | Score: +0.467
-  Context: Don't buy the warrants unless you get a good understanding - you can easily lose everything. At a hi
-
-$XRX [NO CATALYST] 
-  Mentions: 9.0 | Sentiment: +0.471 | Score: +0.441
-  Context: Xerox (XRX): Beyond the Restructuring Noise – A Fundamental Analysis Hello People This study is pres
-
-$OSRH [CATALYST: CONTRACT] 
-  Mentions: 6.1 | Sentiment: +0.426 | Score: +0.433
-  Context: Gotta be something to the $OSRH then, $CAPS is the same way, literally kept in the dark seemingly al
-
-$AMZE [CATALYST: EARNINGS] 
-  Mentions: 11.6 | Sentiment: +0.318 | Score: +0.376
-  Context: AMAZE - TikTok Shop meets Shopify, at 1/20,000th of the Price I wanted to make a final post about Am
+$DVLT [CATALYST: EARNINGS] 
+  Mentions: 12.5 | Sentiment: +0.325 | Score: +0.365
+  Context: $DVLT Purchase Decided to purchase a few thousand shares of $DVLT at 0.62 pre-market.  I have the fe
 
 $ANNA [CATALYST: EARNINGS] 
-  Mentions: 8.5 | Sentiment: +0.297 | Score: +0.309
+  Mentions: 8.4 | Sentiment: +0.285 | Score: +0.349
   Context: ANNA is finally starting to climb in the overnight. I figured the earnings report would see a delay,
 
-$MEHA [CATALYST: REGULATORY] 
-  Mentions: 12.6 | Sentiment: +0.278 | Score: +0.350
-  Context: $Functional Brands Inc (MEHA) -alright imma break this down for everyone. Imma cover a few things. T
+$ALP [CATALYST: CONTRACT] 
+  Mentions: 14.7 | Sentiment: +0.351 | Score: +0.313
+  Context: ALP working with NVIDIA!?!? get in early - 30X profits ALP Alpha Computer Corp an AI stock is workin
 
-$ITP [NO CATALYST] 
-  Mentions: 8.5 | Sentiment: +0.265 | Score: +0.297
-  Context: ITP 16m float speculative play high risk high reward DD inside IT Packaging Inc (ITP) .19 HIGH RISK 
+$MEHA [CATALYST: REGULATORY] 
+  Mentions: 11.3 | Sentiment: +0.200 | Score: +0.250
+  Context: $Functional Brands Inc (MEHA) -alright imma break this down for everyone. Imma cover a few things. T
 
