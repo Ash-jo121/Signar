@@ -1,40 +1,40 @@
 $GCTS [CATALYST: MERGER] 
-  Mentions: 21.7 | Sentiment: +0.499 | Score: +0.641
+  Mentions: 25.7 | Sentiment: +0.494 | Score: +0.631
   Context: From AI tools :: While not officially announced, market speculation suggests Amazon could potentiall
 
-$SPCE [CATALYST: EARNINGS] 
-  Mentions: 5.2 | Sentiment: +0.531 | Score: +0.534
-  Context: the real play here isn't just the SpaceX IPO hype, it's whether SPCE earnings tomorrow shift the nar
-
-$SEGG [CATALYST: CAPITAL RAISE] 
-  Mentions: 8.4 | Sentiment: +0.534 | Score: +0.605
+$SEGG [CATALYST: PARTNERSHIP] 
+  Mentions: 13.4 | Sentiment: +0.537 | Score: +0.587
   Context: It is definitely a gamble but it won't necessarily crash after the world cup. They can easily pivot 
 
-$MVIS [CATALYST: PARTNERSHIP] 
-  Mentions: 8.0 | Sentiment: +0.398 | Score: +0.449
+$MVIS [CATALYST: EARNINGS] 
+  Mentions: 6.5 | Sentiment: +0.375 | Score: +0.396
   Context: MVIS vamos a ponerle ganas!!! Que tiene buen precio Vamos muchachos, en esta compañía tenemos buen p
 
-$SRXH [CATALYST: MERGER] 
-  Mentions: 55.1 | Sentiment: +0.304 | Score: +0.407
-  Context: The market is going to spend the next few weeks just trying to figure out how to adjust the pricing 
-
 $QUCY [CATALYST: PARTNERSHIP] 
-  Mentions: 33.4 | Sentiment: +0.313 | Score: +0.396
-  Context: So I did a little digging and an Israeli billionaire named David Lazar has 477,000,000 shares of QUC
+  Mentions: 28.3 | Sentiment: +0.295 | Score: +0.365
+  Context: I went crazy and think I found a fucking glitch in the market… saw the news on stock titan in the mo
 
-$DVLT [CATALYST: EARNINGS] 
-  Mentions: 12.5 | Sentiment: +0.325 | Score: +0.365
-  Context: $DVLT Purchase Decided to purchase a few thousand shares of $DVLT at 0.62 pre-market.  I have the fe
+$AIIO [NO CATALYST] 
+  Mentions: 10.2 | Sentiment: +0.314 | Score: +0.351
+  Context: 230% $AIIO GROWTH IN 24 hours. $AIIO THIS ONE IS NOT STOPPING Gave this at 1.8  free yesterday and t
 
 $ANNA [CATALYST: EARNINGS] 
-  Mentions: 8.4 | Sentiment: +0.285 | Score: +0.349
+  Mentions: 8.4 | Sentiment: +0.268 | Score: +0.328
   Context: ANNA is finally starting to climb in the overnight. I figured the earnings report would see a delay,
 
-$ALP [CATALYST: CONTRACT] 
-  Mentions: 14.7 | Sentiment: +0.351 | Score: +0.313
-  Context: ALP working with NVIDIA!?!? get in early - 30X profits ALP Alpha Computer Corp an AI stock is workin
+$SRXH [CATALYST: MERGER] 
+  Mentions: 55.2 | Sentiment: +0.252 | Score: +0.325
+  Context: How the Dividend is Structured (The "Box Within a Box") ​SpaceX is a private company and does not pa
 
-$MEHA [CATALYST: REGULATORY] 
-  Mentions: 11.3 | Sentiment: +0.200 | Score: +0.250
-  Context: $Functional Brands Inc (MEHA) -alright imma break this down for everyone. Imma cover a few things. T
+$GDC [CATALYST: MERGER] 
+  Mentions: 13.0 | Sentiment: +0.280 | Score: +0.324
+  Context: Attention! squeez possibility GDC has no shares to cover, last week went crazy... The recent data co
+
+$AEHL [CATALYST: CONTRACT] 
+  Mentions: 5.1 | Sentiment: +0.268 | Score: +0.317
+  Context: Yes but a lot of moves happen over an hour or hours, you don’t have to get in right at the bottom, y
+
+$EMBC [CATALYST: CONTRACT/PARTNERSHIP] 
+  Mentions: 5.0 | Sentiment: +0.469 | Score: +0.304
+  Context: I think many people underestimate that EMBC is no longer just an insulin needle company. They are gr
 
