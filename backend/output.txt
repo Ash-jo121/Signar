@@ -1,40 +1,40 @@
-$GCTS [CATALYST: MERGER] 
-  Mentions: 25.7 | Sentiment: +0.494 | Score: +0.631
-  Context: From AI tools :: While not officially announced, market speculation suggests Amazon could potentiall
+$GCTS [CATALYST: PARTNERSHIP] 
+  Mentions: 34.4 | Sentiment: +0.583 | Score: +0.767
+  Context: $GCTS $152m public float 64m shares. GCT is finally moving from development into early commercial sc
 
-$SEGG [CATALYST: PARTNERSHIP] 
-  Mentions: 13.4 | Sentiment: +0.537 | Score: +0.587
-  Context: It is definitely a gamble but it won't necessarily crash after the world cup. They can easily pivot 
+$HMR [CATALYST: EARNINGS] 
+  Mentions: 7.0 | Sentiment: +0.758 | Score: +0.695
+  Context: HMR – The Most Undervalued Stock on NASDAQ Right Now? Benefits from Strait of Hormuz Shipping Too Le
 
-$MVIS [CATALYST: EARNINGS] 
-  Mentions: 6.5 | Sentiment: +0.375 | Score: +0.396
+$SES [CATALYST: PARTNERSHIP] 
+  Mentions: 5.0 | Sentiment: +0.733 | Score: +0.691
+  Context: SES AI Corporation (SES) Can AI truly replace scientists? SES AI is already proving it can. \- Power
+
+$MVIS [CATALYST: PATENT] 
+  Mentions: 6.7 | Sentiment: +0.629 | Score: +0.666
   Context: MVIS vamos a ponerle ganas!!! Que tiene buen precio Vamos muchachos, en esta compañía tenemos buen p
 
-$QUCY [CATALYST: PARTNERSHIP] 
-  Mentions: 28.3 | Sentiment: +0.295 | Score: +0.365
-  Context: I went crazy and think I found a fucking glitch in the market… saw the news on stock titan in the mo
+$SEGG [CATALYST: CAPITAL RAISE] 
+  Mentions: 22.9 | Sentiment: +0.522 | Score: +0.591
+  Context: Second-leg setups like this live or die on whether volume holds above that breakout level, so watchi
 
-$AIIO [NO CATALYST] 
-  Mentions: 10.2 | Sentiment: +0.314 | Score: +0.351
-  Context: 230% $AIIO GROWTH IN 24 hours. $AIIO THIS ONE IS NOT STOPPING Gave this at 1.8  free yesterday and t
-
-$ANNA [CATALYST: EARNINGS] 
-  Mentions: 8.4 | Sentiment: +0.268 | Score: +0.328
-  Context: ANNA is finally starting to climb in the overnight. I figured the earnings report would see a delay,
-
-$SRXH [CATALYST: MERGER] 
-  Mentions: 55.2 | Sentiment: +0.252 | Score: +0.325
-  Context: How the Dividend is Structured (The "Box Within a Box") ​SpaceX is a private company and does not pa
-
-$GDC [CATALYST: MERGER] 
-  Mentions: 13.0 | Sentiment: +0.280 | Score: +0.324
-  Context: Attention! squeez possibility GDC has no shares to cover, last week went crazy... The recent data co
-
-$AEHL [CATALYST: CONTRACT] 
-  Mentions: 5.1 | Sentiment: +0.268 | Score: +0.317
-  Context: Yes but a lot of moves happen over an hour or hours, you don’t have to get in right at the bottom, y
+$FGL [CATALYST: CONTRACT] 
+  Mentions: 6.0 | Sentiment: +0.434 | Score: +0.440
+  Context: $FGL - trading well below cash, revenues, and billions in contracts. A 100x runner, undiscovered. $F
 
 $EMBC [CATALYST: CONTRACT/PARTNERSHIP] 
-  Mentions: 5.0 | Sentiment: +0.469 | Score: +0.304
+  Mentions: 6.0 | Sentiment: +0.452 | Score: +0.281
   Context: I think many people underestimate that EMBC is no longer just an insulin needle company. They are gr
+
+$ALP [CATALYST: CONTRACT] 
+  Mentions: 6.0 | Sentiment: +0.533 | Score: +0.255
+  Context: ALP working with NVIDIA!?!? get in early - 30X profits ALP Alpha Computer Corp an AI stock is workin
+
+$AIIO [CATALYST: PRODUCTION] 
+  Mentions: 10.7 | Sentiment: +0.272 | Score: +0.252
+  Context: It just might... Robo.ai (NASDAQ: AIIO) announced that subsidiary Neurovia AI will debut at the 9th 
+
+$SRXH [CATALYST: REGULATORY] 
+  Mentions: 43.2 | Sentiment: +0.153 | Score: +0.194
+  Context: 1. Frantic Authorized Share Expansion and Dilution Hazards ​According to its financial disclosures f
 
