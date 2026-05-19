@@ -60,6 +60,7 @@ def check_mod_intervention(comment_body, comment_score):
 
 def extract_from_post(post):
     found = {}
+    subreddit = post.get("subreddit", "unknown")
 
     # Skip post body for refreshed posts — already analyzed on first fetch
     if not post.get("is_refresh", False):
@@ -76,13 +77,27 @@ def extract_from_post(post):
                     "mod_flagged": False,
                     "mod_flag_type": None,
                     "mod_flag_score": 0,
+                    "subreddit_mentions": {},
+                    "author_scores": [],
+                    "context_lengths": [],
                 }
             found[ticker]["mentions"] += 1
+            # Keep lightweight source metadata so scoring can reason about spread,
+            # author diversity, and context depth without another extraction pass.
+            found[ticker]["subreddit_mentions"][subreddit] = (
+                found[ticker]["subreddit_mentions"].get(subreddit, 0) + 1
+            )
+            found[ticker]["author_scores"].append(
+                {"author": post.get("author", "unknown"), "score": post["score"]}
+            )
+            found[ticker]["context_lengths"].append(len(text))
             found[ticker]["contexts"].append(
                 {
                     "text": text[:300],
                     "source": "post",
                     "score": post["score"],
+                    "subreddit": subreddit,
+                    "author": post.get("author", "unknown"),
                 }
             )
 
@@ -106,16 +121,29 @@ def extract_from_post(post):
                     "mod_flagged": False,
                     "mod_flag_type": None,
                     "mod_flag_score": 0,
+                    "subreddit_mentions": {},
+                    "author_scores": [],
+                    "context_lengths": [],
                 }
 
             mention_weight = comment.get("mention_weight", 1.0)
             found[ticker]["mentions"] += mention_weight
             found[ticker]["scores"].append(comment["score"])
+            found[ticker]["subreddit_mentions"][subreddit] = (
+                found[ticker]["subreddit_mentions"].get(subreddit, 0)
+                + mention_weight
+            )
+            found[ticker]["author_scores"].append(
+                {"author": comment.get("author", "unknown"), "score": comment["score"]}
+            )
+            found[ticker]["context_lengths"].append(len(comment["body"]))
             found[ticker]["contexts"].append(
                 {
                     "text": comment["body"][:300],
                     "source": "comment",
                     "score": comment["score"],
+                    "subreddit": subreddit,
+                    "author": comment.get("author", "unknown"),
                 }
             )
 

@@ -106,6 +106,7 @@ def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
                 {
                     "body": body,
                     "score": data["score"],
+                    "author": data.get("author", "unknown"),
                     "tickers": effective_tickers,
                     "inherited": inherited,
                     "mention_weight": mention_weight,

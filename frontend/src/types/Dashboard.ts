@@ -3,6 +3,16 @@ export interface TickerData {
   mentions: number;
   averageSentiment: number;
   finalScore: number;
+  baseFinalScore?: number;
+  preMultiplierScore?: number;
+  catalystMultiplier?: number;
+  crossSubredditMultiplier?: number;
+  subredditMultiplier?: number;
+  userCredibilityMultiplier?: number;
+  postQualityMultiplier?: number;
+  combinedSignalMultiplier?: number;
+  subredditsMentioningTicker?: number;
+  subredditMentions?: Record<string, number>;
   topContexts: TopContext[];
   price: number;
   changePercent: number;
@@ -50,4 +60,7 @@ export interface TopContext {
   text: string;
   sentiment: string;
   score: number;
+  source?: string;
+  subreddit?: string;
+  author?: string;
 }

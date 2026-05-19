@@ -21,6 +21,169 @@ from tqdm import tqdm
 import traceback
 
 
+CATALYST_MULTIPLIERS = {
+    "merger": 1.3,
+    "clinical": 1.25,
+    "fda": 1.4,
+    "contract": 1.2,
+    "capital raise": 0.85,
+    "production": 1.15,
+    "earnings": 1.1,
+    "partnership": 1.1,
+    "patent": 1.15,
+    "none": 1.0,
+}
+
+CATALYST_ALIASES = {
+    "regulatory": "fda",
+    "approval": "fda",
+    "trial": "clinical",
+    "clinical trial": "clinical",
+    "contract/partnership": "contract",
+    "licensing": "contract",
+    "offering": "capital raise",
+    "atm": "capital raise",
+    "dilution": "capital raise",
+    "product launch": "production",
+}
+
+SUBREDDIT_MULTIPLIERS = {
+    "pennystocks": 1.0,
+    "pennystock": 1.0,
+    "smallstreetbets": 0.95,
+    "robinhoodpennystocks": 0.85,
+    "10xpennystocks": 0.9,
+    "shortsqueeze": 0.7,
+    "squeezeplays": 0.75,
+    "wallstreetbets": 0.75,
+    "stocks": 1.1,
+    "investing": 1.15,
+}
+
+
+def normalize_catalyst_type(catalyst_type):
+    normalized = (catalyst_type or "none").strip().lower()
+    return CATALYST_ALIASES.get(normalized, normalized)
+
+
+def get_catalyst_multiplier(catalyst_type):
+    normalized = normalize_catalyst_type(catalyst_type)
+    return CATALYST_MULTIPLIERS.get(normalized, 1.0)
+
+
+def calculate_cross_subreddit_multiplier(subreddit_count):
+    return {1: 1.0, 2: 1.15, 3: 1.25, 4: 1.3}.get(
+        min(max(subreddit_count, 1), 4), 1.3
+    )
+
+
+def calculate_subreddit_multiplier(subreddit_mentions):
+    """Weight ticker mentions by the historical signal quality of each subreddit."""
+    if not subreddit_mentions:
+        return 1.0
+
+    positive_mentions = {
+        subreddit: mentions
+        for subreddit, mentions in subreddit_mentions.items()
+        if mentions > 0
+    }
+    total_mentions = sum(positive_mentions.values())
+    if total_mentions == 0:
+        return 1.0
+
+    weighted_total = 0
+    for subreddit, mentions in positive_mentions.items():
+        multiplier = SUBREDDIT_MULTIPLIERS.get(str(subreddit).lower(), 1.0)
+        weighted_total += multiplier * mentions
+
+    return weighted_total / total_mentions
+
+
+def calculate_user_credibility_multiplier(author_scores):
+    """
+    Approximate credibility from observable engagement.
+
+    Reddit listing APIs do not include author account karma or account age. Those
+    would be better signals, but require a separate profile request per author.
+    """
+    if not author_scores:
+        return 1.0
+
+    known_authors = {
+        item["author"]
+        for item in author_scores
+        if item.get("author") and item.get("author") not in {"unknown", "[deleted]"}
+    }
+    avg_score = sum(item.get("score", 0) for item in author_scores) / len(
+        author_scores
+    )
+
+    if avg_score >= 0:
+        score_component = min(0.18, math.log1p(avg_score) * 0.04)
+    else:
+        score_component = max(-0.12, avg_score * 0.03)
+    author_component = min(0.07, len(known_authors) * 0.01)
+
+    return min(1.25, max(0.85, 1.0 + score_component + author_component))
+
+
+def calculate_post_quality_multiplier(context_lengths):
+    """Reward fuller ticker contexts and penalize very thin mentions."""
+    if not context_lengths:
+        return 1.0
+
+    avg_length = sum(context_lengths) / len(context_lengths)
+    if avg_length < 80:
+        return 0.9
+    if avg_length < 160:
+        return 1.0
+    if avg_length < 320:
+        return 1.08
+    if avg_length < 700:
+        return 1.15
+    return 1.2
+
+
+def calculate_social_signal_multipliers(data):
+    subreddit_mentions = data.get("subreddit_mentions", {})
+    subreddit_count = len(
+        [mentions for mentions in subreddit_mentions.values() if mentions > 0]
+    )
+    cross_subreddit_multiplier = calculate_cross_subreddit_multiplier(subreddit_count)
+    subreddit_multiplier = calculate_subreddit_multiplier(subreddit_mentions)
+    user_credibility_multiplier = calculate_user_credibility_multiplier(
+        data.get("author_scores", [])
+    )
+    post_quality_multiplier = calculate_post_quality_multiplier(
+        data.get("context_lengths", [])
+    )
+
+    return {
+        "cross_subreddit_multiplier": cross_subreddit_multiplier,
+        "subreddit_multiplier": subreddit_multiplier,
+        "user_credibility_multiplier": user_credibility_multiplier,
+        "post_quality_multiplier": post_quality_multiplier,
+        "subreddits_mentioning_ticker": subreddit_count,
+    }
+
+
+def apply_catalyst_multiplier(result):
+    catalyst_multiplier = get_catalyst_multiplier(result.get("catalyst_type", "none"))
+    result["catalyst_multiplier"] = round(catalyst_multiplier, 3)
+    original = result["final_score"]
+    result["final_score"] = round(original * catalyst_multiplier, 3)
+    result["combined_signal_multiplier"] = round(
+        result.get("combined_signal_multiplier", 1.0) * catalyst_multiplier, 3
+    )
+
+    if catalyst_multiplier != 1.0:
+        print(
+            f"  {result['ticker']}: catalyst multiplier "
+            f"({result.get('catalyst_type', 'none')}) "
+            f"{original:.3f} x {catalyst_multiplier:.2f} = {result['final_score']:.3f}"
+        )
+
+
 def has_diverse_contexts(contexts, min_unique_patterns=3):
     patterns = set(c["full"][:30] for c in contexts)
     return len(patterns) >= min_unique_patterns
@@ -125,10 +288,19 @@ def analyze_ticker_sentiment(all_posts):
                     "mod_flagged": False,
                     "mod_flag_type": None,
                     "mod_flag_score": 0,
+                    "subreddit_mentions": {},
+                    "author_scores": [],
+                    "context_lengths": [],
                 }
 
             master[ticker]["mentions"] += data["mentions"]
             master[ticker]["post_scores"].append(post["score"])
+            for subreddit, mentions in data.get("subreddit_mentions", {}).items():
+                master[ticker]["subreddit_mentions"][subreddit] = (
+                    master[ticker]["subreddit_mentions"].get(subreddit, 0) + mentions
+                )
+            master[ticker]["author_scores"].extend(data.get("author_scores", []))
+            master[ticker]["context_lengths"].extend(data.get("context_lengths", []))
 
             # Propagate mod flags — upgrade if stronger signal
             if data.get("mod_flagged"):
@@ -163,6 +335,10 @@ def analyze_ticker_sentiment(all_posts):
                             "short": cleaned[:300],
                             "score": context["score"],
                             "source": context["source"],
+                            "subreddit": context.get(
+                                "subreddit", post.get("subreddit", "unknown")
+                            ),
+                            "author": context.get("author", "unknown"),
                         }
                     )
 
@@ -206,11 +382,15 @@ def analyze_ticker_sentiment(all_posts):
                 short_to_full = {}
                 short_to_score = {}
                 short_to_source = {}
+                short_to_subreddit = {}
+                short_to_author = {}
 
                 for c in data["contexts"]:
                     short_to_full[c["short"]] = c["full"]
                     short_to_score[c["short"]] = c["score"]
                     short_to_source[c["short"]] = c["source"]
+                    short_to_subreddit[c["short"]] = c.get("subreddit", "unknown")
+                    short_to_author[c["short"]] = c.get("author", "unknown")
 
                 post_scores = []
                 comment_scores = []
@@ -241,6 +421,11 @@ def analyze_ticker_sentiment(all_posts):
                             "text": full_text[:300],
                             "sentiment": sentiment["label"],
                             "score": sentiment["score"],
+                            "source": source,
+                            "subreddit": short_to_subreddit.get(
+                                context_short, "unknown"
+                            ),
+                            "author": short_to_author.get(context_short, "unknown"),
                         }
                     )
 
@@ -298,17 +483,45 @@ def analyze_ticker_sentiment(all_posts):
                 * (1 + math.log(1 + data["mentions"]) * 0.1)
                 * engagement_multiplier
             )
+            base_final_score = final_score
+            signal_multipliers = calculate_social_signal_multipliers(data)
+            combined_signal_multiplier = (
+                signal_multipliers["cross_subreddit_multiplier"]
+                * signal_multipliers["subreddit_multiplier"]
+                * signal_multipliers["user_credibility_multiplier"]
+                * signal_multipliers["post_quality_multiplier"]
+            )
+            final_score *= combined_signal_multiplier
 
             result = {
                 "ticker": ticker,
                 "mentions": round(data["mentions"], 1),
                 "avg_sentiment": round(avg_sentiment, 3),
                 "final_score": round(final_score, 3),
+                "base_final_score": round(base_final_score, 3),
                 "top_contexts": top_contexts[:7],
                 "mod_flagged": data["mod_flagged"],
                 "mod_flag_type": data["mod_flag_type"],
                 "mod_flag_score": data["mod_flag_score"],
                 "engagement_ratio": round(engagement_ratio, 3),
+                "cross_subreddit_multiplier": round(
+                    signal_multipliers["cross_subreddit_multiplier"], 3
+                ),
+                "subreddit_multiplier": round(
+                    signal_multipliers["subreddit_multiplier"], 3
+                ),
+                "user_credibility_multiplier": round(
+                    signal_multipliers["user_credibility_multiplier"], 3
+                ),
+                "post_quality_multiplier": round(
+                    signal_multipliers["post_quality_multiplier"], 3
+                ),
+                "catalyst_multiplier": 1.0,
+                "combined_signal_multiplier": round(combined_signal_multiplier, 3),
+                "subreddits_mentioning_ticker": signal_multipliers[
+                    "subreddits_mentioning_ticker"
+                ],
+                "subreddit_mentions": data.get("subreddit_mentions", {}),
             }
 
             # Apply mod penalty immediately after score computation
@@ -494,6 +707,7 @@ if __name__ == "__main__":
         result["has_catalyst"] = catalyst["has_catalyst"]
         result["catalyst_type"] = catalyst["catalyst_type"]
         result["catalyst_confidence"] = catalyst["confidence"]
+        apply_catalyst_multiplier(result)
         catalyst_calls += 1
         print(
             f"  {result['ticker']}: has_catalyst={catalyst['has_catalyst']} "
@@ -503,6 +717,7 @@ if __name__ == "__main__":
         )
 
     print(f"  Catalyst assessment: {catalyst_calls} Groq calls used")
+    results.sort(key=lambda x: x["final_score"], reverse=True)
 
     print("\nStep 5.5: Updating catalyst data in database...")
     conn = get_connection()
@@ -512,12 +727,30 @@ if __name__ == "__main__":
             """
             UPDATE daily_sentiment
             SET has_catalyst = ?,
-                catalyst_type = ?
+                catalyst_type = ?,
+                final_score = ?
             WHERE date = ? AND ticker = ?
             """,
             (
                 1 if result.get("has_catalyst") else 0,
                 result.get("catalyst_type"),
+                result.get("final_score", 0),
+                today,
+                result["ticker"],
+            ),
+        )
+        conn.execute(
+            """
+            UPDATE performance_tracking
+            SET has_catalyst = ?,
+                catalyst_type = ?,
+                final_score = ?
+            WHERE flagged_date = ? AND ticker = ?
+            """,
+            (
+                1 if result.get("has_catalyst") else 0,
+                result.get("catalyst_type", "none"),
+                result.get("final_score", 0),
                 today,
                 result["ticker"],
             ),
