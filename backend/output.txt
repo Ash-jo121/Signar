@@ -1,40 +1,40 @@
-$GCTS [CATALYST: PARTNERSHIP] 
-  Mentions: 34.4 | Sentiment: +0.583 | Score: +0.767
-  Context: $GCTS $152m public float 64m shares. GCT is finally moving from development into early commercial sc
-
 $HMR [CATALYST: EARNINGS] 
-  Mentions: 7.0 | Sentiment: +0.758 | Score: +0.695
-  Context: HMR – The Most Undervalued Stock on NASDAQ Right Now? Benefits from Strait of Hormuz Shipping Too Le
+  Mentions: 10.5 | Sentiment: +0.692 | Score: +0.797
+  Context: The Strait of Hormuz closure hikes vessel daily rates, which HMR takes a portion of as management fe
 
-$SES [CATALYST: PARTNERSHIP] 
-  Mentions: 5.0 | Sentiment: +0.733 | Score: +0.691
-  Context: SES AI Corporation (SES) Can AI truly replace scientists? SES AI is already proving it can. \- Power
+$MVIS [CATALYST: EARNINGS] 
+  Mentions: 10.4 | Sentiment: +0.654 | Score: +0.691
+  Context: They’re involved with developing LiDAR sensor technology for commercial application such as automoti
 
-$MVIS [CATALYST: PATENT] 
-  Mentions: 6.7 | Sentiment: +0.629 | Score: +0.666
-  Context: MVIS vamos a ponerle ganas!!! Que tiene buen precio Vamos muchachos, en esta compañía tenemos buen p
-
-$SEGG [CATALYST: CAPITAL RAISE] 
-  Mentions: 22.9 | Sentiment: +0.522 | Score: +0.591
+$SEGG [NO CATALYST] 
+  Mentions: 27.0 | Sentiment: +0.643 | Score: +0.574
   Context: Second-leg setups like this live or die on whether volume holds above that breakout level, so watchi
 
-$FGL [CATALYST: CONTRACT] 
-  Mentions: 6.0 | Sentiment: +0.434 | Score: +0.440
-  Context: $FGL - trading well below cash, revenues, and billions in contracts. A 100x runner, undiscovered. $F
+$TNYA [CATALYST: CLINICAL] 
+  Mentions: 5.0 | Sentiment: +0.781 | Score: +0.506
+  Context: $TNYA had a win this week! Phase 1 trails show positive results! Tenaya Therapeutics presented gene 
 
-$EMBC [CATALYST: CONTRACT/PARTNERSHIP] 
-  Mentions: 6.0 | Sentiment: +0.452 | Score: +0.281
-  Context: I think many people underestimate that EMBC is no longer just an insulin needle company. They are gr
+$HCWB [CATALYST: EARNINGS] 
+  Mentions: 5.0 | Sentiment: +0.602 | Score: +0.362
+  Context: $HCWB +50% — Q1 earnings blowout and pipeline data on a sub-$3M biotech HCW Biologics (HCWB) ripped 
 
-$ALP [CATALYST: CONTRACT] 
-  Mentions: 6.0 | Sentiment: +0.533 | Score: +0.255
-  Context: ALP working with NVIDIA!?!? get in early - 30X profits ALP Alpha Computer Corp an AI stock is workin
+$EMBC [CATALYST: MERGER] 
+  Mentions: 6.0 | Sentiment: +0.511 | Score: +0.366
+  Context: EMBC- Narrative is Starting To Shift ✅ Embecta acquires Owen Mumford for $172.6m   The transaction s
 
-$AIIO [CATALYST: PRODUCTION] 
-  Mentions: 10.7 | Sentiment: +0.272 | Score: +0.252
-  Context: It just might... Robo.ai (NASDAQ: AIIO) announced that subsidiary Neurovia AI will debut at the 9th 
+$GMEX [NO CATALYST] 
+  Mentions: 9.4 | Sentiment: +0.188 | Score: +0.232
+  Context: I see the writing on the wall, that I should stop pushing my luck after doubling down on a losing $T
 
-$SRXH [CATALYST: REGULATORY] 
-  Mentions: 43.2 | Sentiment: +0.153 | Score: +0.194
-  Context: 1. Frantic Authorized Share Expansion and Dilution Hazards ​According to its financial disclosures f
+$AUUD [CATALYST: MERGER] 
+  Mentions: 45.7 | Sentiment: +0.156 | Score: +0.209
+  Context: That was true before. Now they are effectively a shell for Thramann Holdings to get Nasdaq listing t
+
+$AMST [CATALYST: PARTNERSHIP] 
+  Mentions: 15.0 | Sentiment: +0.150 | Score: +0.176
+  Context: $AMST Look at the big picture: they shifted their business structure to maximize profit and just lan
+
+$QUCY [CATALYST: PARTNERSHIP] 
+  Mentions: 22.7 | Sentiment: +0.108 | Score: +0.122
+  Context: $$QUCY Quantum Cyber Secures Exclusive Perpetual IP License From BP United for $5M Plus 20M Shares T
 
