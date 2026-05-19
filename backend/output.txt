@@ -1,40 +1,40 @@
-$GCTS [CATALYST: MERGER] 
-  Mentions: 25.7 | Sentiment: +0.494 | Score: +0.631
-  Context: From AI tools :: While not officially announced, market speculation suggests Amazon could potentiall
-
-$SEGG [CATALYST: PARTNERSHIP] 
-  Mentions: 13.4 | Sentiment: +0.537 | Score: +0.587
-  Context: It is definitely a gamble but it won't necessarily crash after the world cup. They can easily pivot 
+$HMR [CATALYST: EARNINGS] 
+  Mentions: 10.5 | Sentiment: +0.692 | Score: +0.797
+  Context: The Strait of Hormuz closure hikes vessel daily rates, which HMR takes a portion of as management fe
 
 $MVIS [CATALYST: EARNINGS] 
-  Mentions: 6.5 | Sentiment: +0.375 | Score: +0.396
-  Context: MVIS vamos a ponerle ganas!!! Que tiene buen precio Vamos muchachos, en esta compañía tenemos buen p
+  Mentions: 10.4 | Sentiment: +0.654 | Score: +0.691
+  Context: They’re involved with developing LiDAR sensor technology for commercial application such as automoti
+
+$SEGG [NO CATALYST] 
+  Mentions: 27.0 | Sentiment: +0.643 | Score: +0.574
+  Context: Second-leg setups like this live or die on whether volume holds above that breakout level, so watchi
+
+$TNYA [CATALYST: CLINICAL] 
+  Mentions: 5.0 | Sentiment: +0.781 | Score: +0.506
+  Context: $TNYA had a win this week! Phase 1 trails show positive results! Tenaya Therapeutics presented gene 
+
+$HCWB [CATALYST: EARNINGS] 
+  Mentions: 5.0 | Sentiment: +0.602 | Score: +0.362
+  Context: $HCWB +50% — Q1 earnings blowout and pipeline data on a sub-$3M biotech HCW Biologics (HCWB) ripped 
+
+$EMBC [CATALYST: MERGER] 
+  Mentions: 6.0 | Sentiment: +0.511 | Score: +0.366
+  Context: EMBC- Narrative is Starting To Shift ✅ Embecta acquires Owen Mumford for $172.6m   The transaction s
+
+$GMEX [NO CATALYST] 
+  Mentions: 9.4 | Sentiment: +0.188 | Score: +0.232
+  Context: I see the writing on the wall, that I should stop pushing my luck after doubling down on a losing $T
+
+$AUUD [CATALYST: MERGER] 
+  Mentions: 45.7 | Sentiment: +0.156 | Score: +0.209
+  Context: That was true before. Now they are effectively a shell for Thramann Holdings to get Nasdaq listing t
+
+$AMST [CATALYST: PARTNERSHIP] 
+  Mentions: 15.0 | Sentiment: +0.150 | Score: +0.176
+  Context: $AMST Look at the big picture: they shifted their business structure to maximize profit and just lan
 
 $QUCY [CATALYST: PARTNERSHIP] 
-  Mentions: 28.3 | Sentiment: +0.295 | Score: +0.365
-  Context: I went crazy and think I found a fucking glitch in the market… saw the news on stock titan in the mo
-
-$AIIO [NO CATALYST] 
-  Mentions: 10.2 | Sentiment: +0.314 | Score: +0.351
-  Context: 230% $AIIO GROWTH IN 24 hours. $AIIO THIS ONE IS NOT STOPPING Gave this at 1.8  free yesterday and t
-
-$ANNA [CATALYST: EARNINGS] 
-  Mentions: 8.4 | Sentiment: +0.268 | Score: +0.328
-  Context: ANNA is finally starting to climb in the overnight. I figured the earnings report would see a delay,
-
-$SRXH [CATALYST: MERGER] 
-  Mentions: 55.2 | Sentiment: +0.252 | Score: +0.325
-  Context: How the Dividend is Structured (The "Box Within a Box") ​SpaceX is a private company and does not pa
-
-$GDC [CATALYST: MERGER] 
-  Mentions: 13.0 | Sentiment: +0.280 | Score: +0.324
-  Context: Attention! squeez possibility GDC has no shares to cover, last week went crazy... The recent data co
-
-$AEHL [CATALYST: CONTRACT] 
-  Mentions: 5.1 | Sentiment: +0.268 | Score: +0.317
-  Context: Yes but a lot of moves happen over an hour or hours, you don’t have to get in right at the bottom, y
-
-$EMBC [CATALYST: CONTRACT/PARTNERSHIP] 
-  Mentions: 5.0 | Sentiment: +0.469 | Score: +0.304
-  Context: I think many people underestimate that EMBC is no longer just an insulin needle company. They are gr
+  Mentions: 22.7 | Sentiment: +0.108 | Score: +0.122
+  Context: $$QUCY Quantum Cyber Secures Exclusive Perpetual IP License From BP United for $5M Plus 20M Shares T
 

@@ -188,9 +188,9 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 - [x] Scheduler
 - [x] Performance tracking — did the picks actually move?
 - [x] Pump-and-dump detection (sudden mention spikes)
+- [x] Reddit OAuth for higher rate limits
 - [ ] Search functionality for past picks
 - [ ] Subreddit weighting (r/pennystocks > r/smallstreetbets)
-- [ ] Reddit OAuth for higher rate limits
 - [ ] Stock specific subreddit to be analyzed for more data
 
 ---
