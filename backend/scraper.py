@@ -4,6 +4,7 @@ import re
 import requests
 import time
 from datetime import timezone, datetime
+from urllib.parse import quote
 from constants.config import LOOKBACK_SECONDS, VAMPIRE_LOOKBACK_SECONDS
 from sentiment import classify_vampire_post
 from constants.subreddits import BEARISH_SUBREDDITS, SUBREDDITS
@@ -42,6 +43,62 @@ def get_proxies():
 
 
 PROXIES = get_proxies()
+AUTHOR_PROFILE_CACHE = {}
+AUTHOR_PROFILE_LOOKUPS = 0
+AUTHOR_PROFILE_LOOKUP_LIMIT = int(os.getenv("AUTHOR_PROFILE_LOOKUP_LIMIT", "75"))
+
+
+def fetch_author_profile(author):
+    """
+    Fetch lightweight author credibility metadata with an in-process cap.
+
+    Missing, deleted, suspended, or rate-limited profiles return neutral metadata.
+    """
+    global AUTHOR_PROFILE_LOOKUPS
+
+    if not author or author in {"unknown", "[deleted]", "AutoModerator"}:
+        return {}
+
+    if author in AUTHOR_PROFILE_CACHE:
+        return AUTHOR_PROFILE_CACHE[author]
+
+    if AUTHOR_PROFILE_LOOKUPS >= AUTHOR_PROFILE_LOOKUP_LIMIT:
+        AUTHOR_PROFILE_CACHE[author] = {}
+        return {}
+
+    AUTHOR_PROFILE_LOOKUPS += 1
+    url = f"https://www.reddit.com/user/{quote(author)}/about.json"
+
+    try:
+        response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=20)
+        if response.status_code != 200:
+            AUTHOR_PROFILE_CACHE[author] = {}
+            return {}
+
+        data = response.json().get("data", {})
+        created_utc = data.get("created_utc")
+        profile = {
+            "author_created_utc": created_utc,
+            "author_account_age_days": (
+                max(0, int((time.time() - created_utc) / 86400))
+                if created_utc
+                else None
+            ),
+            "author_link_karma": data.get("link_karma"),
+            "author_comment_karma": data.get("comment_karma"),
+        }
+        AUTHOR_PROFILE_CACHE[author] = profile
+        return profile
+
+    except Exception as e:
+        print(f"    Author profile fetch failed for u/{author}: {str(e)[:60]}")
+        AUTHOR_PROFILE_CACHE[author] = {}
+        return {}
+
+
+def attach_author_profile(item):
+    item.update(fetch_author_profile(item.get("author", "unknown")))
+    return item
 
 
 def extract_tickers_simple(text):
@@ -72,7 +129,7 @@ def extract_tickers_simple(text):
 
 def parse_post(p):
     """Normalize raw Reddit post data into our format"""
-    return {
+    post = {
         "id": p["data"]["id"],
         "title": p["data"]["title"],
         "body": p["data"].get("selftext", ""),
@@ -83,6 +140,9 @@ def parse_post(p):
         "num_comments": p["data"]["num_comments"],
         "author": p["data"].get("author", "unknown"),
     }
+    if extract_tickers_simple(post["title"] + " " + post["body"]):
+        attach_author_profile(post)
+    return post
 
 
 def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
@@ -102,16 +162,17 @@ def parse_comments_recursive(comments_list, parent_tickers=None, depth=0):
                 inherited = True
                 mention_weight = max(0.1, 0.5 - (depth * 0.2))
 
-            comments.append(
-                {
-                    "body": body,
-                    "score": data["score"],
-                    "author": data.get("author", "unknown"),
-                    "tickers": effective_tickers,
-                    "inherited": inherited,
-                    "mention_weight": mention_weight,
-                }
-            )
+            comment = {
+                "body": body,
+                "score": data["score"],
+                "author": data.get("author", "unknown"),
+                "tickers": effective_tickers,
+                "inherited": inherited,
+                "mention_weight": mention_weight,
+            }
+            if effective_tickers:
+                attach_author_profile(comment)
+            comments.append(comment)
 
             replies = data.get("replies", "")
             if replies and isinstance(replies, dict):

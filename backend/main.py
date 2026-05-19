@@ -50,15 +50,19 @@ CATALYST_ALIASES = {
 SUBREDDIT_MULTIPLIERS = {
     "pennystocks": 1.0,
     "pennystock": 1.0,
-    "smallstreetbets": 0.95,
-    "robinhoodpennystocks": 0.85,
-    "10xpennystocks": 0.9,
-    "shortsqueeze": 0.7,
-    "squeezeplays": 0.75,
-    "wallstreetbets": 0.75,
-    "stocks": 1.1,
-    "investing": 1.15,
+    "smallstreetbets": 0.98,
+    "robinhoodpennystocks": 0.95,
+    "10xpennystocks": 0.95,
+    "shortsqueeze": 0.9,
+    "squeezeplays": 0.92,
+    "wallstreetbets": 0.94,
+    "stocks": 1.03,
+    "investing": 1.05,
 }
+
+
+def clamp(value, minimum, maximum):
+    return min(max(value, minimum), maximum)
 
 
 def normalize_catalyst_type(catalyst_type):
@@ -72,8 +76,8 @@ def get_catalyst_multiplier(catalyst_type):
 
 
 def calculate_cross_subreddit_multiplier(subreddit_count):
-    return {1: 1.0, 2: 1.15, 3: 1.25, 4: 1.3}.get(
-        min(max(subreddit_count, 1), 4), 1.3
+    return {1: 1.0, 2: 1.1, 3: 1.18, 4: 1.25}.get(
+        min(max(subreddit_count, 1), 4), 1.25
     )
 
 
@@ -99,32 +103,114 @@ def calculate_subreddit_multiplier(subreddit_mentions):
     return weighted_total / total_mentions
 
 
-def calculate_user_credibility_multiplier(author_scores):
-    """
-    Approximate credibility from observable engagement.
+def calculate_mention_density_multiplier(mentions, context_count):
+    """Reward tickers that are repeatedly discussed inside their sampled contexts."""
+    if context_count <= 0:
+        return 1.0
 
-    Reddit listing APIs do not include author account karma or account age. Those
-    would be better signals, but require a separate profile request per author.
-    """
+    density = mentions / context_count
+    if density < 0.5:
+        return 0.9
+    if density < 1.0:
+        return 1.0
+    if density < 1.5:
+        return 1.08
+    if density < 2.5:
+        return 1.15
+    return 1.2
+
+
+def calculate_engagement_multiplier(engagement_ratio):
+    """Engagement is useful, but noisy, so keep it in a narrow band."""
+    return 0.9 + (clamp(engagement_ratio, 0, 1) * 0.15)
+
+
+def calculate_account_age_multiplier(author_scores):
+    """Use account age when scraper metadata is available; stay neutral otherwise."""
     if not author_scores:
         return 1.0
+
+    age_multipliers = []
+    for item in author_scores:
+        age_days = item.get("account_age_days")
+        if age_days is None:
+            continue
+        if age_days < 30:
+            age_multipliers.append(0.6)
+        elif age_days < 90:
+            age_multipliers.append(0.75)
+        elif age_days < 365:
+            age_multipliers.append(0.9)
+        elif age_days < 365 * 3:
+            age_multipliers.append(1.0)
+        else:
+            age_multipliers.append(1.05)
+
+    if not age_multipliers:
+        return 1.0
+
+    return sum(age_multipliers) / len(age_multipliers)
+
+
+def calculate_karma_multiplier(author_scores):
+    """Small credibility nudge from known Reddit karma; neutral when unavailable."""
+    known_karma = []
+    for item in author_scores:
+        link_karma = item.get("link_karma")
+        comment_karma = item.get("comment_karma")
+        if link_karma is None and comment_karma is None:
+            continue
+        known_karma.append(max(0, (link_karma or 0) + (comment_karma or 0)))
+
+    if not known_karma:
+        return 1.0
+
+    avg_log_karma = sum(math.log10(karma + 1) for karma in known_karma) / len(
+        known_karma
+    )
+    if avg_log_karma < 2:
+        return 0.9
+    if avg_log_karma < 3:
+        return 0.97
+    if avg_log_karma < 4:
+        return 1.0
+    return 1.03
+
+
+def calculate_user_credibility_multiplier(author_scores):
+    """
+    Combine account-age and karma signals conservatively.
+
+    Missing profile metadata is neutral. This avoids treating unavailable account
+    data as a bearish signal and limits overfitting to one day's author mix.
+    """
+    if not author_scores:
+        return {
+            "account_age_multiplier": 1.0,
+            "karma_multiplier": 1.0,
+            "user_credibility_multiplier": 1.0,
+        }
 
     known_authors = {
         item["author"]
         for item in author_scores
         if item.get("author") and item.get("author") not in {"unknown", "[deleted]"}
     }
-    avg_score = sum(item.get("score", 0) for item in author_scores) / len(
-        author_scores
+    account_age_multiplier = calculate_account_age_multiplier(author_scores)
+    karma_multiplier = calculate_karma_multiplier(author_scores)
+    author_diversity_multiplier = min(1.05, 1.0 + (len(known_authors) * 0.005))
+    user_credibility_multiplier = clamp(
+        account_age_multiplier * karma_multiplier * author_diversity_multiplier,
+        0.65,
+        1.1,
     )
 
-    if avg_score >= 0:
-        score_component = min(0.18, math.log1p(avg_score) * 0.04)
-    else:
-        score_component = max(-0.12, avg_score * 0.03)
-    author_component = min(0.07, len(known_authors) * 0.01)
-
-    return min(1.25, max(0.85, 1.0 + score_component + author_component))
+    return {
+        "account_age_multiplier": account_age_multiplier,
+        "karma_multiplier": karma_multiplier,
+        "author_diversity_multiplier": author_diversity_multiplier,
+        "user_credibility_multiplier": user_credibility_multiplier,
+    }
 
 
 def calculate_post_quality_multiplier(context_lengths):
@@ -133,35 +219,68 @@ def calculate_post_quality_multiplier(context_lengths):
         return 1.0
 
     avg_length = sum(context_lengths) / len(context_lengths)
-    if avg_length < 80:
+    if avg_length < 50:
+        return 0.8
+    if avg_length < 150:
         return 0.9
-    if avg_length < 160:
+    if avg_length < 300:
         return 1.0
-    if avg_length < 320:
-        return 1.08
-    if avg_length < 700:
-        return 1.15
-    return 1.2
+    return 1.05
 
 
-def calculate_social_signal_multipliers(data):
+def calculate_signal_multipliers(data, engagement_ratio):
+    """
+    Group signals by reliability before multiplying.
+
+    High-quality social conviction gets the most room. Medium-quality credibility,
+    subreddit, and post-quality signals are kept in tighter bands so they can
+    refine rankings without drowning out sentiment or catalysts.
+    """
     subreddit_mentions = data.get("subreddit_mentions", {})
     subreddit_count = len(
         [mentions for mentions in subreddit_mentions.values() if mentions > 0]
     )
+    context_count = len(data.get("contexts", []))
     cross_subreddit_multiplier = calculate_cross_subreddit_multiplier(subreddit_count)
-    subreddit_multiplier = calculate_subreddit_multiplier(subreddit_mentions)
-    user_credibility_multiplier = calculate_user_credibility_multiplier(
-        data.get("author_scores", [])
+    mention_density_multiplier = calculate_mention_density_multiplier(
+        data.get("mentions", 0), context_count
     )
+    engagement_multiplier = calculate_engagement_multiplier(engagement_ratio)
+    subreddit_multiplier = calculate_subreddit_multiplier(subreddit_mentions)
+    credibility = calculate_user_credibility_multiplier(data.get("author_scores", []))
     post_quality_multiplier = calculate_post_quality_multiplier(
         data.get("context_lengths", [])
     )
+    social_conviction_multiplier = clamp(
+        cross_subreddit_multiplier * mention_density_multiplier * engagement_multiplier,
+        0.8,
+        1.45,
+    )
+    evidence_quality_multiplier = post_quality_multiplier
+    pre_catalyst_signal_multiplier = clamp(
+        social_conviction_multiplier
+        * evidence_quality_multiplier
+        * credibility["user_credibility_multiplier"]
+        * subreddit_multiplier,
+        0.5,
+        1.65,
+    )
 
     return {
+        "social_conviction_multiplier": social_conviction_multiplier,
+        "credibility_multiplier": credibility["user_credibility_multiplier"],
+        "evidence_quality_multiplier": evidence_quality_multiplier,
+        "pre_catalyst_signal_multiplier": pre_catalyst_signal_multiplier,
         "cross_subreddit_multiplier": cross_subreddit_multiplier,
+        "ticker_mention_density_multiplier": mention_density_multiplier,
+        "engagement_multiplier": engagement_multiplier,
         "subreddit_multiplier": subreddit_multiplier,
-        "user_credibility_multiplier": user_credibility_multiplier,
+        "user_credibility_multiplier": credibility["user_credibility_multiplier"],
+        "account_age_multiplier": credibility["account_age_multiplier"],
+        "karma_multiplier": credibility["karma_multiplier"],
+        "author_diversity_multiplier": credibility.get(
+            "author_diversity_multiplier", 1.0
+        ),
         "post_quality_multiplier": post_quality_multiplier,
         "subreddits_mentioning_ticker": subreddit_count,
     }
@@ -476,21 +595,15 @@ def analyze_ticker_sentiment(all_posts):
             else:
                 engagement_ratio = 0
 
-            engagement_multiplier = 0.4 + (0.6 * engagement_ratio)
-
             final_score = (
                 avg_sentiment
                 * (1 + math.log(1 + data["mentions"]) * 0.1)
-                * engagement_multiplier
             )
             base_final_score = final_score
-            signal_multipliers = calculate_social_signal_multipliers(data)
-            combined_signal_multiplier = (
-                signal_multipliers["cross_subreddit_multiplier"]
-                * signal_multipliers["subreddit_multiplier"]
-                * signal_multipliers["user_credibility_multiplier"]
-                * signal_multipliers["post_quality_multiplier"]
-            )
+            signal_multipliers = calculate_signal_multipliers(data, engagement_ratio)
+            combined_signal_multiplier = signal_multipliers[
+                "pre_catalyst_signal_multiplier"
+            ]
             final_score *= combined_signal_multiplier
 
             result = {
@@ -517,6 +630,28 @@ def analyze_ticker_sentiment(all_posts):
                     signal_multipliers["post_quality_multiplier"], 3
                 ),
                 "catalyst_multiplier": 1.0,
+                "social_conviction_multiplier": round(
+                    signal_multipliers["social_conviction_multiplier"], 3
+                ),
+                "credibility_multiplier": round(
+                    signal_multipliers["credibility_multiplier"], 3
+                ),
+                "evidence_quality_multiplier": round(
+                    signal_multipliers["evidence_quality_multiplier"], 3
+                ),
+                "ticker_mention_density_multiplier": round(
+                    signal_multipliers["ticker_mention_density_multiplier"], 3
+                ),
+                "engagement_multiplier": round(
+                    signal_multipliers["engagement_multiplier"], 3
+                ),
+                "account_age_multiplier": round(
+                    signal_multipliers["account_age_multiplier"], 3
+                ),
+                "karma_multiplier": round(signal_multipliers["karma_multiplier"], 3),
+                "author_diversity_multiplier": round(
+                    signal_multipliers["author_diversity_multiplier"], 3
+                ),
                 "combined_signal_multiplier": round(combined_signal_multiplier, 3),
                 "subreddits_mentioning_ticker": signal_multipliers[
                     "subreddits_mentioning_ticker"

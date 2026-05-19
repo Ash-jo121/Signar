@@ -7,6 +7,16 @@ print(f"Extractor loaded, VALID_TICKERS size: {len(VALID_TICKERS)}")
 print(f"AND in VALID_TICKERS: {'AND' in VALID_TICKERS}")
 
 
+def build_author_signal(source):
+    return {
+        "author": source.get("author", "unknown"),
+        "score": source.get("score", 0),
+        "account_age_days": source.get("author_account_age_days"),
+        "link_karma": source.get("author_link_karma"),
+        "comment_karma": source.get("author_comment_karma"),
+    }
+
+
 def extract_tickers(text):
     tickers = set()
 
@@ -87,9 +97,7 @@ def extract_from_post(post):
             found[ticker]["subreddit_mentions"][subreddit] = (
                 found[ticker]["subreddit_mentions"].get(subreddit, 0) + 1
             )
-            found[ticker]["author_scores"].append(
-                {"author": post.get("author", "unknown"), "score": post["score"]}
-            )
+            found[ticker]["author_scores"].append(build_author_signal(post))
             found[ticker]["context_lengths"].append(len(text))
             found[ticker]["contexts"].append(
                 {
@@ -133,9 +141,7 @@ def extract_from_post(post):
                 found[ticker]["subreddit_mentions"].get(subreddit, 0)
                 + mention_weight
             )
-            found[ticker]["author_scores"].append(
-                {"author": comment.get("author", "unknown"), "score": comment["score"]}
-            )
+            found[ticker]["author_scores"].append(build_author_signal(comment))
             found[ticker]["context_lengths"].append(len(comment["body"]))
             found[ticker]["contexts"].append(
                 {

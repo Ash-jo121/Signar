@@ -10,6 +10,14 @@ export interface TickerData {
   subredditMultiplier?: number;
   userCredibilityMultiplier?: number;
   postQualityMultiplier?: number;
+  socialConvictionMultiplier?: number;
+  credibilityMultiplier?: number;
+  evidenceQualityMultiplier?: number;
+  tickerMentionDensityMultiplier?: number;
+  engagementMultiplier?: number;
+  accountAgeMultiplier?: number;
+  karmaMultiplier?: number;
+  authorDiversityMultiplier?: number;
   combinedSignalMultiplier?: number;
   subredditsMentioningTicker?: number;
   subredditMentions?: Record<string, number>;
