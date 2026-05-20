@@ -7,7 +7,12 @@ from datetime import date
 from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
-from database import get_connection, init_db, record_flagged_stocks
+from database import (
+    get_connection,
+    init_db,
+    record_flagged_stocks,
+    save_score_metadata,
+)
 from database import save_daily_results
 from scraper import fetch_all
 from extractor import extract_from_post
@@ -64,6 +69,28 @@ SUBREDDIT_MULTIPLIERS = {
     "stocks": 1.03,
     "investing": 1.05,
 }
+
+PROMOTION_RISK_PATTERNS = [
+    r"\bmo+on\b",
+    r"\b10x\b",
+    r"\b100x\b",
+    r"\bloaded\b",
+    r"\bdon'?t miss\b",
+    r"\beasy money\b",
+    r"\bsqueeze is real\b",
+    r"\bgoing parabolic\b",
+    r"\bnext runner\b",
+    r"\bready to explode\b",
+    r"\blotto\b",
+    r"\blottery ticket\b",
+    r"\bsend it\b",
+]
+
+UNREALISTIC_TARGET_PATTERNS = [
+    r"\bfrom\s+\$?\d+(?:\.\d+)?\s+to\s+\$?\d+(?:\.\d+)?\b",
+    r"\b\d{3,}%\s+upside\b",
+    r"\bguaranteed\b",
+]
 
 
 def clamp(value, minimum, maximum):
@@ -269,6 +296,72 @@ def calculate_post_quality_multiplier(context_lengths):
     return 1.05
 
 
+def calculate_author_concentration(contexts):
+    authors = [
+        context.get("author") or "unknown"
+        for context in contexts
+        if context.get("author") not in {None, ""}
+    ]
+    total_mentions = len(contexts)
+    if not authors or total_mentions == 0:
+        return {
+            "unique_authors": 0,
+            "top_author_mentions": 0,
+            "top_author_share": 0.0,
+            "author_concentration_multiplier": 1.0,
+        }
+
+    count_by_author = {}
+    for author in authors:
+        count_by_author[author] = count_by_author.get(author, 0) + 1
+
+    unique_authors = len(count_by_author)
+    top_author_mentions = max(count_by_author.values())
+    top_author_share = top_author_mentions / total_mentions
+
+    if top_author_share >= 0.60:
+        multiplier = 0.70
+    elif top_author_share >= 0.40:
+        multiplier = 0.85
+    elif unique_authors <= 2 and total_mentions >= 5:
+        multiplier = 0.80
+    else:
+        multiplier = 1.0
+
+    return {
+        "unique_authors": unique_authors,
+        "top_author_mentions": top_author_mentions,
+        "top_author_share": top_author_share,
+        "author_concentration_multiplier": multiplier,
+    }
+
+
+def calculate_promotion_risk(contexts):
+    total_contexts = len(contexts)
+    if total_contexts == 0:
+        return {
+            "promotion_risk_score": 0.0,
+            "promotion_terms_count": 0,
+            "unrealistic_target_count": 0,
+        }
+
+    promotion_hits = 0
+    unrealistic_hits = 0
+    for context in contexts:
+        text = context.get("text") or context.get("full") or context.get("short", "")
+        for pattern in PROMOTION_RISK_PATTERNS:
+            promotion_hits += len(re.findall(pattern, text, re.IGNORECASE))
+        for pattern in UNREALISTIC_TARGET_PATTERNS:
+            unrealistic_hits += len(re.findall(pattern, text, re.IGNORECASE))
+
+    risk_score = min(1.0, (promotion_hits + unrealistic_hits) / total_contexts)
+    return {
+        "promotion_risk_score": risk_score,
+        "promotion_terms_count": promotion_hits,
+        "unrealistic_target_count": unrealistic_hits,
+    }
+
+
 def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
     """
     Group signals by reliability before multiplying.
@@ -295,6 +388,7 @@ def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
     post_quality_multiplier = calculate_post_quality_multiplier(
         data.get("context_lengths", [])
     )
+    author_concentration = calculate_author_concentration(data.get("contexts", []))
     social_conviction_multiplier = clamp(
         cross_subreddit_multiplier
         * mention_density_multiplier
@@ -310,6 +404,7 @@ def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
         * timing_multiplier
         * evidence_quality_multiplier
         * credibility["user_credibility_multiplier"]
+        * author_concentration["author_concentration_multiplier"]
         * subreddit_multiplier,
         0.5,
         1.65,
@@ -333,9 +428,202 @@ def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
         "author_diversity_multiplier": credibility.get(
             "author_diversity_multiplier", 1.0
         ),
+        "author_concentration_multiplier": author_concentration[
+            "author_concentration_multiplier"
+        ],
+        "unique_authors": author_concentration["unique_authors"],
+        "top_author_mentions": author_concentration["top_author_mentions"],
+        "top_author_share": author_concentration["top_author_share"],
         "post_quality_multiplier": post_quality_multiplier,
         "subreddits_mentioning_ticker": subreddit_count,
     }
+
+
+def calculate_risk_score(result):
+    """Estimate how dangerous/chase-like the setup is on a 0-100 scale."""
+    change_percent = result.get("change_percent", 0) or 0
+    mentions = result.get("mentions", 0) or 0
+    avg_sentiment = result.get("avg_sentiment", 0) or 0
+    catalyst_type = normalize_catalyst_type(result.get("catalyst_type", "none"))
+    days_seen = result.get("persistence_days_seen", 1) or 1
+
+    if change_percent > 30:
+        chase_risk = 1.0
+    elif change_percent > 20:
+        chase_risk = 0.75
+    elif change_percent > 10:
+        chase_risk = 0.45
+    elif change_percent > 5:
+        chase_risk = 0.25
+    else:
+        chase_risk = 0.05
+
+    if mentions > 35:
+        mention_risk = 0.5
+    elif mentions > 20:
+        mention_risk = 0.3
+    elif mentions >= 10:
+        mention_risk = 0.1
+    else:
+        mention_risk = 0.05
+
+    if avg_sentiment > 0.55:
+        sentiment_risk = 0.5
+    elif avg_sentiment > 0.35:
+        sentiment_risk = 0.3
+    elif avg_sentiment > 0.2:
+        sentiment_risk = 0.15
+    else:
+        sentiment_risk = 0.05
+
+    catalyst_risk_map = {
+        "capital raise": 0.75,
+        "fda": 0.45,
+        "contract": 0.4,
+        "short squeeze": 0.6,
+        "government contract": 0.35,
+        "production": 0.25,
+        "partnership": 0.2,
+        "earnings": 0.25,
+        "merger": 0.2,
+        "regulatory": 0.18,
+        "none": 0.1,
+    }
+    catalyst_risk = catalyst_risk_map.get(catalyst_type, 0.25)
+
+    if days_seen > 7:
+        persistence_risk = 0.45
+    elif days_seen > 4:
+        persistence_risk = 0.25
+    else:
+        persistence_risk = 0.05
+
+    flag_risk = 0
+    if result.get("vampire_flagged"):
+        flag_risk = max(flag_risk, 1.0)
+    if result.get("mod_flagged"):
+        flag_risk = max(flag_risk, 0.65)
+    if result.get("stale_repetition_multiplier", 1.0) < 1.0:
+        flag_risk = max(flag_risk, 0.35)
+
+    promotion_risk = result.get("promotion_risk_score", 0) or 0
+    concentration_risk = 0
+    if result.get("top_author_share", 0) >= 0.6:
+        concentration_risk = 0.7
+    elif result.get("top_author_share", 0) >= 0.4:
+        concentration_risk = 0.4
+    elif (
+        result.get("unique_authors", 0) <= 2
+        and len(result.get("top_contexts", [])) >= 5
+    ):
+        concentration_risk = 0.45
+
+    risk = (
+        chase_risk * 30
+        + mention_risk * 15
+        + sentiment_risk * 15
+        + catalyst_risk * 15
+        + persistence_risk * 10
+        + flag_risk * 25
+        + promotion_risk * 25
+        + concentration_risk * 15
+    )
+    return round(clamp(risk, 0, 100), 1)
+
+
+def risk_level(risk_score):
+    if risk_score >= 70:
+        return "extreme"
+    if risk_score >= 45:
+        return "high"
+    if risk_score >= 25:
+        return "medium"
+    return "low"
+
+
+def calculate_radar_score(result):
+    """
+    Score unusual Reddit attention, independent of whether the setup is tradable.
+
+    This intentionally ignores price-action risk, promotion risk, and catalyst
+    danger. A ticker can have a high radar score while still having a low trade
+    score if the discussion looks crowded, promotional, or late.
+    """
+    mentions = result.get("mentions", 0) or 0
+    return (
+        math.log1p(max(mentions, 0))
+        * result.get("social_conviction_multiplier", 1.0)
+        * result.get("subreddit_multiplier", 1.0)
+    )
+
+
+def classify_setup(result):
+    risk = result.get("risk_score", 0) or 0
+    promotion_risk = result.get("promotion_risk_score", 0) or 0
+    top_author_share = result.get("top_author_share", 0) or 0
+    catalyst_type = normalize_catalyst_type(result.get("catalyst_type", "none"))
+    change_percent = result.get("change_percent", 0) or 0
+    avg_sentiment = result.get("avg_sentiment", 0) or 0
+    mentions = result.get("mentions", 0) or 0
+    days_since_first_seen = result.get("days_since_first_seen", 0) or 0
+    days_trending = result.get("days_trending", 1) or 1
+    post_quality = result.get("post_quality_multiplier", 1.0) or 1.0
+    trade_score = result.get("trade_score", result.get("final_score", 0)) or 0
+
+    if catalyst_type == "capital raise":
+        return "dilution_risk"
+    if result.get("vampire_flagged") or result.get("mod_flagged"):
+        return "promotion_risk"
+    if promotion_risk >= 0.55 and (top_author_share >= 0.4 or risk >= 45):
+        return "promotion_risk"
+    if promotion_risk >= 0.35 and post_quality < 0.95:
+        return "low_quality_hype"
+    if change_percent > 15 or result.get("anti_chase_multiplier", 1.0) < 1.0:
+        return "anti_chase"
+    if change_percent < -5 and days_since_first_seen <= 3 and mentions >= 5:
+        return "post_spike_pullback"
+    if days_trending >= 6 and mentions >= 10:
+        return "stale_squeeze"
+    if days_trending >= 4 and avg_sentiment < 0:
+        return "bagholder_chatter"
+    if days_since_first_seen == 0 and 5 <= mentions <= 20 and risk < 45:
+        return "early_discovery"
+    if trade_score > 0 and risk < 35 and 5 <= mentions <= 20:
+        return "clean_momentum"
+    if promotion_risk > 0:
+        return "low_quality_hype"
+    return "early_discovery" if days_since_first_seen <= 2 else "clean_momentum"
+
+
+def apply_rank_scores(result):
+    """
+    Split the blended score into discovery, tradability, and risk views.
+
+    final_score remains as a backward-compatible alias for trade_score.
+    """
+    if "signal_score" not in result:
+        result["signal_score"] = round(result.get("final_score", 0), 3)
+
+    radar_score = calculate_radar_score(result)
+    risk = calculate_risk_score(result)
+    signal_score = result.get("signal_score", result.get("final_score", 0)) or 0
+    risk_dampener = risk / 100 * 0.4
+    promotion_risk = result.get("promotion_risk_score", 0) or 0
+    promotion_trade_multiplier = 0.75 if promotion_risk > 0.5 else 1.0
+
+    if signal_score >= 0:
+        trade_score = signal_score * (1 - risk_dampener)
+    else:
+        trade_score = signal_score * (1 + risk_dampener)
+    trade_score *= promotion_trade_multiplier
+
+    result["radar_score"] = round(radar_score, 3)
+    result["trade_score"] = round(trade_score, 3)
+    result["risk_score"] = risk
+    result["risk_level"] = risk_level(risk)
+    result["promotion_trade_multiplier"] = promotion_trade_multiplier
+    result["setup_type"] = classify_setup(result)
+    result["final_score"] = result["trade_score"]
 
 
 def apply_catalyst_multiplier(result):
@@ -344,17 +632,20 @@ def apply_catalyst_multiplier(result):
         result.get("catalyst_confidence", 1.0),
     )
     result["catalyst_multiplier"] = round(catalyst_multiplier, 3)
-    original = result["final_score"]
-    result["final_score"] = round(original * catalyst_multiplier, 3)
+    score_field = "signal_score" if "signal_score" in result else "final_score"
+    original = result[score_field]
+    result[score_field] = round(original * catalyst_multiplier, 3)
     result["combined_signal_multiplier"] = round(
         result.get("combined_signal_multiplier", 1.0) * catalyst_multiplier, 3
     )
+    apply_rank_scores(result)
 
     if catalyst_multiplier != 1.0:
         print(
             f"  {result['ticker']}: catalyst multiplier "
             f"({result.get('catalyst_type', 'none')}) "
-            f"{original:.3f} x {catalyst_multiplier:.2f} = {result['final_score']:.3f}"
+            f"{original:.3f} x {catalyst_multiplier:.2f} = "
+            f"{result[score_field]:.3f} signal / {result['trade_score']:.3f} trade"
         )
 
 
@@ -687,6 +978,7 @@ def analyze_ticker_sentiment(all_posts):
             signal_multipliers = calculate_signal_multipliers(
                 data, engagement_ratio, avg_sentiment
             )
+            promotion_risk = calculate_promotion_risk(data["contexts"])
             combined_signal_multiplier = signal_multipliers[
                 "pre_catalyst_signal_multiplier"
             ]
@@ -745,6 +1037,19 @@ def analyze_ticker_sentiment(all_posts):
                 "author_diversity_multiplier": round(
                     signal_multipliers["author_diversity_multiplier"], 3
                 ),
+                "author_concentration_multiplier": round(
+                    signal_multipliers["author_concentration_multiplier"], 3
+                ),
+                "unique_authors": signal_multipliers["unique_authors"],
+                "top_author_mentions": signal_multipliers["top_author_mentions"],
+                "top_author_share": round(signal_multipliers["top_author_share"], 3),
+                "promotion_risk_score": round(
+                    promotion_risk["promotion_risk_score"], 3
+                ),
+                "promotion_terms_count": promotion_risk["promotion_terms_count"],
+                "unrealistic_target_count": promotion_risk[
+                    "unrealistic_target_count"
+                ],
                 "combined_signal_multiplier": round(combined_signal_multiplier, 3),
                 "subreddits_mentioning_ticker": signal_multipliers[
                     "subreddits_mentioning_ticker"
@@ -773,8 +1078,63 @@ def apply_repetition_decay(results):
     while longer streaks are more likely to be crowded or late.
     """
     conn = get_connection()
+    today_date = date.today()
+    today_iso = today_date.strftime("%Y-%m-%d")
     for result in results:
         ticker = result["ticker"]
+
+        historical_rows = conn.execute(
+            """
+            SELECT date, mentions
+            FROM daily_sentiment
+            WHERE ticker = ?
+            ORDER BY date ASC
+            """,
+            (ticker,),
+        ).fetchall()
+
+        previous_day_mentions = None
+        if historical_rows:
+            first_seen_date = historical_rows[0]["date"]
+            previous_day_mentions = historical_rows[-1]["mentions"]
+            try:
+                days_since_first_seen = (
+                    today_date - date.fromisoformat(first_seen_date)
+                ).days
+            except ValueError:
+                days_since_first_seen = 0
+        else:
+            first_seen_date = today_iso
+            days_since_first_seen = 0
+
+        days_trending = len({row["date"] for row in historical_rows}) + 1
+        if days_since_first_seen == 0:
+            earlyness_multiplier = 1.15
+        elif days_since_first_seen <= 2:
+            earlyness_multiplier = 1.0
+        elif days_since_first_seen <= 5:
+            earlyness_multiplier = 0.85
+        else:
+            earlyness_multiplier = 0.70
+
+        if previous_day_mentions and previous_day_mentions > 0:
+            mention_change_pct = (
+                (result.get("mentions", 0) - previous_day_mentions)
+                / previous_day_mentions
+                * 100
+            )
+        else:
+            mention_change_pct = None
+
+        result["first_seen_date"] = first_seen_date
+        result["first_seen_datetime"] = f"{first_seen_date}T00:00:00"
+        result["days_since_first_seen"] = max(days_since_first_seen, 0)
+        result["days_trending"] = days_trending
+        result["previous_day_mentions"] = previous_day_mentions
+        result["mention_change_pct"] = (
+            round(mention_change_pct, 2) if mention_change_pct is not None else None
+        )
+        result["earlyness_multiplier"] = earlyness_multiplier
 
         # Check consecutive appearances in last 7 days
         rows = conn.execute(
@@ -927,6 +1287,8 @@ if __name__ == "__main__":
         r["raw_final_score"] = r["final_score"]
 
     results = apply_repetition_decay(results)
+    for result in results:
+        apply_rank_scores(result)
 
     trackable = [
         r
@@ -996,7 +1358,7 @@ if __name__ == "__main__":
         )
 
     print(f"  Catalyst assessment: {catalyst_calls} Groq calls used")
-    results.sort(key=lambda x: x["final_score"], reverse=True)
+    results.sort(key=lambda x: x.get("trade_score", x["final_score"]), reverse=True)
 
     print("\nStep 5.5: Updating catalyst data in database...")
     conn = get_connection()
@@ -1034,6 +1396,7 @@ if __name__ == "__main__":
                 result["ticker"],
             ),
         )
+        save_score_metadata(conn, result, today)
     conn.commit()
     conn.close()
     print(f"  Updated catalyst data for {len(results)} stocks")
@@ -1071,10 +1434,13 @@ if __name__ == "__main__":
                 if r.get("mod_flagged")
                 else ""
             )
-            file.write(f"${r['ticker']} {catalyst_str} {mod_str}\n")
+            setup_str = f"[SETUP: {r.get('setup_type', 'unknown').upper()}]"
+            file.write(f"${r['ticker']} {setup_str} {catalyst_str} {mod_str}\n")
             file.write(
                 f"  Mentions: {r['mentions']} | Sentiment: {r['avg_sentiment']:+.3f} "
-                f"| Score: {r['final_score']:+.3f}\n"
+                f"| Radar: {r.get('radar_score', 0):+.3f} "
+                f"| Trade: {r.get('trade_score', r['final_score']):+.3f} "
+                f"| Risk: {r.get('risk_score', 0):.1f} ({r.get('risk_level', 'n/a')})\n"
             )
             file.write(
                 f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"

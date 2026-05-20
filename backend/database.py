@@ -8,6 +8,77 @@ DB_PATH = "threadradar.db"
 _SQLITE_TIMEOUT_S = 30.0
 _BUSY_TIMEOUT_MS = 30_000
 
+SCORE_METADATA_COLUMNS = [
+    ("radar_score", "REAL DEFAULT 0.0"),
+    ("trade_score", "REAL DEFAULT 0.0"),
+    ("risk_score", "REAL DEFAULT 0.0"),
+    ("signal_score", "REAL DEFAULT 0.0"),
+    ("risk_level", "TEXT"),
+    ("setup_type", "TEXT"),
+    ("promotion_risk_score", "REAL DEFAULT 0.0"),
+    ("promotion_terms_count", "INTEGER DEFAULT 0"),
+    ("unrealistic_target_count", "INTEGER DEFAULT 0"),
+    ("promotion_trade_multiplier", "REAL DEFAULT 1.0"),
+    ("author_concentration_multiplier", "REAL DEFAULT 1.0"),
+    ("unique_authors", "INTEGER DEFAULT 0"),
+    ("top_author_mentions", "INTEGER DEFAULT 0"),
+    ("top_author_share", "REAL DEFAULT 0.0"),
+    ("first_seen_date", "TEXT"),
+    ("first_seen_datetime", "TEXT"),
+    ("days_since_first_seen", "INTEGER DEFAULT 0"),
+    ("days_trending", "INTEGER DEFAULT 1"),
+    ("previous_day_mentions", "REAL"),
+    ("mention_change_pct", "REAL"),
+    ("earlyness_multiplier", "REAL DEFAULT 1.0"),
+]
+
+
+def ensure_column(conn, table, column, definition):
+    existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
+    if column not in existing:
+        conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+
+
+def score_metadata_values(result):
+    return (
+        result.get("radar_score", 0),
+        result.get("trade_score", result.get("final_score", 0)),
+        result.get("risk_score", 0),
+        result.get("signal_score", result.get("final_score", 0)),
+        result.get("risk_level"),
+        result.get("setup_type"),
+        result.get("promotion_risk_score", 0),
+        result.get("promotion_terms_count", 0),
+        result.get("unrealistic_target_count", 0),
+        result.get("promotion_trade_multiplier", 1.0),
+        result.get("author_concentration_multiplier", 1.0),
+        result.get("unique_authors", 0),
+        result.get("top_author_mentions", 0),
+        result.get("top_author_share", 0),
+        result.get("first_seen_date"),
+        result.get("first_seen_datetime"),
+        result.get("days_since_first_seen", 0),
+        result.get("days_trending", 1),
+        result.get("previous_day_mentions"),
+        result.get("mention_change_pct"),
+        result.get("earlyness_multiplier", 1.0),
+    )
+
+
+def save_score_metadata(conn, result, date):
+    columns = [column for column, _ in SCORE_METADATA_COLUMNS]
+    assignments = ", ".join(f"{column} = excluded.{column}" for column in columns)
+    placeholders = ", ".join("?" for _ in columns)
+    conn.execute(
+        f"""
+        INSERT INTO score_metadata
+        (date, ticker, {", ".join(columns)})
+        VALUES (?, ?, {placeholders})
+        ON CONFLICT(date, ticker) DO UPDATE SET {assignments}
+        """,
+        (date, result["ticker"]) + score_metadata_values(result),
+    )
+
 
 def get_connection():
     conn = sqlite3.connect(DB_PATH, timeout=_SQLITE_TIMEOUT_S)
@@ -20,6 +91,9 @@ def get_connection():
 
 def init_db():
     conn = get_connection()
+    score_column_defs = ",\n            ".join(
+        f"{column} {definition}" for column, definition in SCORE_METADATA_COLUMNS
+    )
 
     conn.executescript("""-- Core table: one row per stock per day
         CREATE TABLE IF NOT EXISTS daily_sentiment (
@@ -114,6 +188,21 @@ def init_db():
             UNIQUE(ticker, flagged_date)
         );
         """)
+    conn.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS score_metadata (
+            date TEXT NOT NULL,
+            ticker TEXT NOT NULL,
+            {score_column_defs},
+            PRIMARY KEY(date, ticker),
+            FOREIGN KEY (date, ticker)
+                REFERENCES daily_sentiment(date, ticker)
+                ON DELETE CASCADE
+        )
+        """
+    )
+    for column, definition in SCORE_METADATA_COLUMNS:
+        ensure_column(conn, "score_metadata", column, definition)
     conn.commit()
     conn.close()
     print("Database initialized successfully")
@@ -160,6 +249,7 @@ def save_daily_results(results, date=None):
                     result.get("raw_final_score", result.get("final_score", 0)),
                 ),
             )
+            save_score_metadata(conn, result, date)
 
             for ctx in result.get("top_contexts", []):
                 conn.execute(
@@ -359,7 +449,7 @@ def record_flagged_stocks(results, date=None):
                 (ticker, flagged_date, flagged_price, flagged_score,
                  flagged_sentiment, flagged_mentions, float_shares,
                  has_catalyst, catalyst_type, mod_flagged, vampire_flagged,
-                 final_score,engagement_ratio)
+                 final_score, engagement_ratio)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
