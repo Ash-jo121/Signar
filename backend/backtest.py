@@ -11,19 +11,86 @@ Data notes:
 
 import os
 import sqlite3
+import argparse
 from datetime import datetime
 
-DB_PATH = os.path.join(
-    os.path.dirname(__file__), "db-backup", "threadradar_2026-04-29.db"
-)
+BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
+
+
+def latest_backup_db():
+    backups = [
+        os.path.join(BACKUP_DIR, name)
+        for name in os.listdir(BACKUP_DIR)
+        if name.startswith("threadradar_") and name.endswith(".db")
+    ]
+    return max(backups, key=os.path.getmtime)
+
+
+DB_PATH = latest_backup_db()
+START_DATE = None
 
 # Catalyst data is only reliable from this date onwards
 CLEAN_CATALYST_DATE = "2026-04-27"
 
 
+def date_clause(column="flagged_date", prefix="WHERE"):
+    if not START_DATE:
+        return ""
+    return f"{prefix} {column} >= :start_date"
+
+
+def params(**extra):
+    values = dict(extra)
+    if START_DATE:
+        values["start_date"] = START_DATE
+    return values
+
+
+def catalyst_start_date():
+    if START_DATE and START_DATE > CLEAN_CATALYST_DATE:
+        return START_DATE
+    return CLEAN_CATALYST_DATE
+
+
 def get_conn():
-    conn = sqlite3.connect(DB_PATH)
+    source = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(":memory:")
+    source.backup(conn)
+    source.close()
     conn.row_factory = sqlite3.Row
+    if START_DATE:
+        conn.execute(
+            "DELETE FROM performance_tracking WHERE flagged_date < ?",
+            (START_DATE,),
+        )
+        conn.execute("DELETE FROM daily_sentiment WHERE date < ?", (START_DATE,))
+        conn.execute("DELETE FROM daily_contexts WHERE date < ?", (START_DATE,))
+    conn.execute(
+        """
+        DELETE FROM performance_tracking
+        WHERE return_1d <= -100
+           OR return_3d <= -100
+           OR return_7d <= -100
+        """
+    )
+    conn.execute(
+        """
+        UPDATE performance_tracking
+        SET has_catalyst = COALESCE((
+                SELECT ds.has_catalyst
+                FROM daily_sentiment ds
+                WHERE ds.ticker = performance_tracking.ticker
+                  AND ds.date = performance_tracking.flagged_date
+            ), has_catalyst),
+            catalyst_type = COALESCE((
+                SELECT ds.catalyst_type
+                FROM daily_sentiment ds
+                WHERE ds.ticker = performance_tracking.ticker
+                  AND ds.date = performance_tracking.flagged_date
+                  AND ds.catalyst_type IS NOT NULL
+            ), catalyst_type)
+        """
+    )
     return conn
 
 
@@ -31,6 +98,12 @@ def fmt(val):
     if val is None:
         return "   N/A  "
     return f"{val:+.2f}%"
+
+
+def pct(val):
+    if val is None:
+        return "  N/A"
+    return f"{val:>5.1f}%"
 
 
 def divider(char="─", width=68):
@@ -50,7 +123,7 @@ def section(title, note=None):
 def summary(conn):
     section("DATASET SUMMARY")
 
-    row = conn.execute("""
+    row = conn.execute(f"""
         SELECT
             COUNT(*)                    AS total_flags,
             COUNT(DISTINCT ticker)      AS unique_tickers,
@@ -61,15 +134,17 @@ def summary(conn):
             SUM(updated_3d)             AS resolved_3d,
             SUM(updated_7d)             AS resolved_7d
         FROM performance_tracking
-    """).fetchone()
+        {date_clause()}
+    """, params()).fetchone()
 
     clean_row = conn.execute(
-        """
+        f"""
         SELECT COUNT(*) AS clean_flags
         FROM performance_tracking
-        WHERE flagged_date >= ?
+        WHERE flagged_date >= :catalyst_date
+        {date_clause(prefix="AND")}
     """,
-        (CLEAN_CATALYST_DATE,),
+        params(catalyst_date=catalyst_start_date()),
     ).fetchone()
 
     print(f"  Period              : {row['first_date']} → {row['last_date']}")
@@ -80,7 +155,7 @@ def summary(conn):
     print(f"  T+3 resolved        : {row['resolved_3d']}")
     print(f"  T+7 resolved        : {row['resolved_7d']}")
     print(
-        f"  Clean catalyst flags: {clean_row['clean_flags']}  (from {CLEAN_CATALYST_DATE})"
+        f"  Clean catalyst flags: {clean_row['clean_flags']}  (from {catalyst_start_date()})"
     )
 
 
@@ -88,7 +163,7 @@ def summary(conn):
 def hit_rate(conn):
     section("OVERALL HIT RATE", "Full dataset — no catalyst filter applied here")
 
-    row = conn.execute("""
+    row = conn.execute(f"""
         SELECT
             COUNT(*)                                                AS n,
             AVG(return_1d)                                          AS avg_t1,
@@ -102,7 +177,8 @@ def hit_rate(conn):
                   / COUNT(*)                                        AS bad_loss
         FROM performance_tracking
         WHERE updated_1d = 1
-    """).fetchone()
+        {date_clause(prefix="AND")}
+    """, params()).fetchone()
 
     print(f"  Sample size         : {row['n']}")
     print(f"  Avg T+1 return      : {fmt(row['avg_t1'])}")
@@ -120,7 +196,7 @@ def score_buckets(conn):
         "Full dataset",
     )
 
-    rows = conn.execute("""
+    rows = conn.execute(f"""
         SELECT
             CASE
                 WHEN final_score >= 0.8 THEN '1. High  (≥0.8)'
@@ -135,16 +211,17 @@ def score_buckets(conn):
                   / COUNT(*)            AS win_rate
         FROM performance_tracking
         WHERE updated_1d = 1
+        {date_clause(prefix="AND")}
         GROUP BY bucket
         ORDER BY bucket
-    """).fetchall()
+    """, params()).fetchall()
 
     print(f"  {'Bucket':<22} {'N':>4}  {'Avg T+1':>9}  {'Avg T+7':>9}  {'Win%':>6}")
     divider()
     for r in rows:
         print(
             f"  {r['bucket']:<22} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
-            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+            f"  {fmt(r['avg_t7']):>9}  {pct(r['win_rate']):>6}"
         )
 
 
@@ -190,7 +267,7 @@ def catalyst_split(conn):
         print(
             f"  {r['grp']:<18} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
             f"  {fmt(r['avg_t3']):>9}  {fmt(r['avg_t7']):>9}"
-            f"  {r['win_rate']:>5.1f}%"
+            f"  {pct(r['win_rate']):>6}"
         )
 
 
@@ -229,7 +306,7 @@ def catalyst_types(conn):
     for r in rows:
         print(
             f"  {r['ctype']:<22} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
-            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+            f"  {fmt(r['avg_t7']):>9}  {pct(r['win_rate']):>6}"
         )
 
 
@@ -261,7 +338,7 @@ def mod_impact(conn):
     for r in rows:
         print(
             f"  {r['grp']:<14} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
-            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+            f"  {fmt(r['avg_t7']):>9}  {pct(r['win_rate']):>6}"
         )
 
 
@@ -291,7 +368,7 @@ def vampire_impact(conn):
     for r in rows:
         print(
             f"  {r['grp']:<18} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
-            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+            f"  {fmt(r['avg_t7']):>9}  {pct(r['win_rate']):>6}"
         )
 
 
@@ -417,7 +494,7 @@ def mentions_analysis(conn):
     for r in rows:
         print(
             f"  {r['bucket']:<22} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
-            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+            f"  {fmt(r['avg_t7']):>9}  {pct(r['win_rate']):>6}"
         )
 
 
@@ -447,12 +524,27 @@ def sentiment_buckets(conn):
     for r in rows:
         print(
             f"  {r['bucket']:<22} {r['n']:>4}  {fmt(r['avg_t1']):>9}"
-            f"  {fmt(r['avg_t7']):>9}  {r['win_rate']:>5.1f}%"
+            f"  {fmt(r['avg_t7']):>9}  {pct(r['win_rate']):>6}"
         )
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run ThreadRadar backtest analysis")
+    parser.add_argument(
+        "--db",
+        default=DB_PATH,
+        help="SQLite database path. Defaults to the latest db-backup/threadradar_*.db",
+    )
+    parser.add_argument(
+        "--start-date",
+        default=None,
+        help="Only include rows on or after this YYYY-MM-DD date",
+    )
+    args = parser.parse_args()
+    DB_PATH = args.db
+    START_DATE = args.start_date
+
     print()
     print("  ╔══════════════════════════════════════════════════════════════════╗")
     print("  ║           ThreadRadar — Backtesting Analysis  v1.0              ║")
