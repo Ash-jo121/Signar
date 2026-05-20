@@ -22,30 +22,35 @@ import traceback
 
 
 CATALYST_MULTIPLIERS = {
-    "merger": 1.3,
-    "clinical": 1.25,
-    "fda": 1.4,
-    "contract": 1.2,
-    "capital raise": 0.85,
-    "production": 1.15,
-    "earnings": 1.1,
-    "partnership": 1.1,
-    "patent": 1.15,
-    "none": 1.0,
+    "none": 1.05,
+    "merger": 1.08,
+    "regulatory": 1.05,
+    "clinical": 1.0,
+    "fda": 0.9,
+    "contract": 0.88,
+    "capital raise": 0.75,
+    "production": 0.95,
+    "earnings": 0.98,
+    "partnership": 0.95,
+    "patent": 1.0,
+    "short squeeze": 0.9,
+    "sec filing": 0.95,
+    "government contract": 0.92,
 }
 
 CATALYST_ALIASES = {
-    "regulatory": "fda",
-    "approval": "fda",
+    "approval": "regulatory",
     "trial": "clinical",
     "clinical trial": "clinical",
-    "contract/partnership": "contract",
+    "contract/partnership": "partnership",
     "licensing": "contract",
     "offering": "capital raise",
     "atm": "capital raise",
     "dilution": "capital raise",
     "product launch": "production",
 }
+
+CATALYST_CONFIDENCE_BLEND = 0.7
 
 SUBREDDIT_MULTIPLIERS = {
     "pennystocks": 1.0,
@@ -70,9 +75,14 @@ def normalize_catalyst_type(catalyst_type):
     return CATALYST_ALIASES.get(normalized, normalized)
 
 
-def get_catalyst_multiplier(catalyst_type):
+def get_catalyst_multiplier(catalyst_type, confidence=1.0):
     normalized = normalize_catalyst_type(catalyst_type)
-    return CATALYST_MULTIPLIERS.get(normalized, 1.0)
+    raw_multiplier = CATALYST_MULTIPLIERS.get(normalized, 0.95)
+    confidence = clamp(confidence or 0, 0, 1)
+    blended_confidence = CATALYST_CONFIDENCE_BLEND + (
+        (1 - CATALYST_CONFIDENCE_BLEND) * confidence
+    )
+    return 1.0 + ((raw_multiplier - 1.0) * blended_confidence)
 
 
 def calculate_cross_subreddit_multiplier(subreddit_count):
@@ -118,6 +128,37 @@ def calculate_mention_density_multiplier(mentions, context_count):
     if density < 2.5:
         return 1.15
     return 1.2
+
+
+def calculate_mention_sweet_spot_multiplier(mentions):
+    """
+    Favor sustained interest over viral spikes.
+
+    Backtests showed 10-20 mentions behaved better than very high mention counts,
+    which often reflect Reddit arriving after the price move.
+    """
+    if mentions < 5:
+        return 0.85
+    if mentions < 10:
+        return 1.0
+    if mentions <= 20:
+        return 1.18
+    if mentions <= 35:
+        return 0.95
+    return 0.8
+
+
+def calculate_sentiment_timing_multiplier(avg_sentiment):
+    """Reward calm curiosity and penalize euphoric late-cycle excitement."""
+    if avg_sentiment < -0.2:
+        return 0.75
+    if avg_sentiment < 0:
+        return 0.95
+    if avg_sentiment <= 0.2:
+        return 1.15
+    if avg_sentiment <= 0.4:
+        return 1.0
+    return 0.85
 
 
 def calculate_engagement_multiplier(engagement_ratio):
@@ -228,7 +269,7 @@ def calculate_post_quality_multiplier(context_lengths):
     return 1.05
 
 
-def calculate_signal_multipliers(data, engagement_ratio):
+def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
     """
     Group signals by reliability before multiplying.
 
@@ -241,10 +282,13 @@ def calculate_signal_multipliers(data, engagement_ratio):
         [mentions for mentions in subreddit_mentions.values() if mentions > 0]
     )
     context_count = len(data.get("contexts", []))
+    mentions = data.get("mentions", 0)
     cross_subreddit_multiplier = calculate_cross_subreddit_multiplier(subreddit_count)
     mention_density_multiplier = calculate_mention_density_multiplier(
-        data.get("mentions", 0), context_count
+        mentions, context_count
     )
+    mention_sweet_spot_multiplier = calculate_mention_sweet_spot_multiplier(mentions)
+    sentiment_timing_multiplier = calculate_sentiment_timing_multiplier(avg_sentiment)
     engagement_multiplier = calculate_engagement_multiplier(engagement_ratio)
     subreddit_multiplier = calculate_subreddit_multiplier(subreddit_mentions)
     credibility = calculate_user_credibility_multiplier(data.get("author_scores", []))
@@ -252,13 +296,18 @@ def calculate_signal_multipliers(data, engagement_ratio):
         data.get("context_lengths", [])
     )
     social_conviction_multiplier = clamp(
-        cross_subreddit_multiplier * mention_density_multiplier * engagement_multiplier,
+        cross_subreddit_multiplier
+        * mention_density_multiplier
+        * mention_sweet_spot_multiplier
+        * engagement_multiplier,
         0.8,
         1.45,
     )
     evidence_quality_multiplier = post_quality_multiplier
+    timing_multiplier = sentiment_timing_multiplier
     pre_catalyst_signal_multiplier = clamp(
         social_conviction_multiplier
+        * timing_multiplier
         * evidence_quality_multiplier
         * credibility["user_credibility_multiplier"]
         * subreddit_multiplier,
@@ -270,9 +319,12 @@ def calculate_signal_multipliers(data, engagement_ratio):
         "social_conviction_multiplier": social_conviction_multiplier,
         "credibility_multiplier": credibility["user_credibility_multiplier"],
         "evidence_quality_multiplier": evidence_quality_multiplier,
+        "timing_multiplier": timing_multiplier,
         "pre_catalyst_signal_multiplier": pre_catalyst_signal_multiplier,
         "cross_subreddit_multiplier": cross_subreddit_multiplier,
         "ticker_mention_density_multiplier": mention_density_multiplier,
+        "mention_sweet_spot_multiplier": mention_sweet_spot_multiplier,
+        "sentiment_timing_multiplier": sentiment_timing_multiplier,
         "engagement_multiplier": engagement_multiplier,
         "subreddit_multiplier": subreddit_multiplier,
         "user_credibility_multiplier": credibility["user_credibility_multiplier"],
@@ -287,7 +339,10 @@ def calculate_signal_multipliers(data, engagement_ratio):
 
 
 def apply_catalyst_multiplier(result):
-    catalyst_multiplier = get_catalyst_multiplier(result.get("catalyst_type", "none"))
+    catalyst_multiplier = get_catalyst_multiplier(
+        result.get("catalyst_type", "none"),
+        result.get("catalyst_confidence", 1.0),
+    )
     result["catalyst_multiplier"] = round(catalyst_multiplier, 3)
     original = result["final_score"]
     result["final_score"] = round(original * catalyst_multiplier, 3)
@@ -384,6 +439,35 @@ def apply_mod_penalty(result):
         return original
 
     return round(original * multiplier, 3)
+
+
+def apply_anti_chase_penalty(result):
+    """
+    Penalize stocks that already made a large same-day move.
+
+    This turns price action into a timing signal: strong Reddit attention after
+    a large move is more likely late-cycle excitement than early discovery.
+    """
+    change_percent = result.get("change_percent", 0) or 0
+    if change_percent > 15:
+        multiplier = 0.75
+    elif change_percent > 8:
+        multiplier = 0.9
+    else:
+        multiplier = 1.0
+
+    result["anti_chase_multiplier"] = multiplier
+    if multiplier != 1.0:
+        original = result["final_score"]
+        result["final_score"] = round(original * multiplier, 3)
+        result["combined_signal_multiplier"] = round(
+            result.get("combined_signal_multiplier", 1.0) * multiplier,
+            3,
+        )
+        print(
+            f"  {result['ticker']}: anti-chase penalty "
+            f"({change_percent:+.1f}% same-day) -> score {original} x {multiplier:.2f}"
+        )
 
 
 def analyze_ticker_sentiment(all_posts):
@@ -600,7 +684,9 @@ def analyze_ticker_sentiment(all_posts):
                 * (1 + math.log(1 + data["mentions"]) * 0.1)
             )
             base_final_score = final_score
-            signal_multipliers = calculate_signal_multipliers(data, engagement_ratio)
+            signal_multipliers = calculate_signal_multipliers(
+                data, engagement_ratio, avg_sentiment
+            )
             combined_signal_multiplier = signal_multipliers[
                 "pre_catalyst_signal_multiplier"
             ]
@@ -639,8 +725,15 @@ def analyze_ticker_sentiment(all_posts):
                 "evidence_quality_multiplier": round(
                     signal_multipliers["evidence_quality_multiplier"], 3
                 ),
+                "timing_multiplier": round(signal_multipliers["timing_multiplier"], 3),
                 "ticker_mention_density_multiplier": round(
                     signal_multipliers["ticker_mention_density_multiplier"], 3
+                ),
+                "mention_sweet_spot_multiplier": round(
+                    signal_multipliers["mention_sweet_spot_multiplier"], 3
+                ),
+                "sentiment_timing_multiplier": round(
+                    signal_multipliers["sentiment_timing_multiplier"], 3
                 ),
                 "engagement_multiplier": round(
                     signal_multipliers["engagement_multiplier"], 3
@@ -674,8 +767,10 @@ def analyze_ticker_sentiment(all_posts):
 
 def apply_repetition_decay(results):
     """
-    Penalize tickers that have appeared consistently for 3+ days
-    without a meaningful price move (indicating artificial inflation).
+    Reward early persistence and penalize stale repetition.
+
+    Backtests suggest 2-4 appearances can indicate early-cycle sustained interest,
+    while longer streaks are more likely to be crowded or late.
     """
     conn = get_connection()
     for result in results:
@@ -694,6 +789,35 @@ def apply_repetition_decay(results):
             (ticker,),
         ).fetchall()
 
+        historical_days = len(rows)
+        days_seen = historical_days + 1
+        if days_seen == 1:
+            persistence_multiplier = 1.0
+        elif days_seen <= 4:
+            persistence_multiplier = 1.15
+        elif days_seen <= 7:
+            persistence_multiplier = 0.95
+        else:
+            persistence_multiplier = 0.75
+
+        result["historical_days_seen"] = historical_days
+        result["persistence_days_seen"] = days_seen
+        result["persistence_multiplier"] = round(persistence_multiplier, 3)
+        result["stale_repetition_multiplier"] = 1.0
+
+        if persistence_multiplier != 1.0:
+            original = result["final_score"]
+            result["final_score"] = round(original * persistence_multiplier, 3)
+            result["combined_signal_multiplier"] = round(
+                result.get("combined_signal_multiplier", 1.0)
+                * persistence_multiplier,
+                3,
+            )
+            print(
+                f"  {ticker}: persistence timing ({days_seen} days) "
+                f"-> score {original} x {persistence_multiplier:.2f}"
+            )
+
         if len(rows) < 3:
             continue
 
@@ -709,6 +833,11 @@ def apply_repetition_decay(results):
                 )  # 0.85 at 3d, 0.70 at 4d, 0.55 at 5d, 0.40 at 6d, 0.30 at 7d+
                 original = result["final_score"]
                 result["final_score"] = round(original * decay, 3)
+                result["stale_repetition_multiplier"] = round(decay, 3)
+                result["combined_signal_multiplier"] = round(
+                    result.get("combined_signal_multiplier", 1.0) * decay,
+                    3,
+                )
                 print(
                     f"  {ticker}: repetition decay ({days} days, {price_range:.1%} price move) → score {original} × {decay:.2f}"
                 )
@@ -730,6 +859,10 @@ if __name__ == "__main__":
 
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(results)
+
+    print("\nStep 3.25: Applying anti-chase price action penalties...")
+    for result in results:
+        apply_anti_chase_penalty(result)
 
     print("\nStep 3.5: Checking bearish stock flags...")
     conn = get_connection()
@@ -753,13 +886,23 @@ if __name__ == "__main__":
                 original = result["final_score"]
 
                 if flag_type == "confirmed_dump":
-                    result["final_score"] = round(original * 0.1, 3)
+                    vampire_multiplier = 0.05
                 elif flag_type == "scam_group":
-                    result["final_score"] = round(original * 0.15, 3)
+                    vampire_multiplier = 0.08
                 elif flag_type == "pump_warning":
-                    result["final_score"] = round(original * 0.3, 3)
+                    vampire_multiplier = 0.15
                 elif flag_type == "investigation":
-                    result["final_score"] = round(original * 0.7, 3)
+                    vampire_multiplier = 0.35
+                else:
+                    vampire_multiplier = 0.15
+
+                result["final_score"] = round(original * vampire_multiplier, 3)
+                result["vampire_multiplier"] = vampire_multiplier
+                result["combined_signal_multiplier"] = round(
+                    result.get("combined_signal_multiplier", 1.0)
+                    * vampire_multiplier,
+                    3,
+                )
 
                 result["vampire_flagged"] = True
                 result["vampire_flag_type"] = flag_type
@@ -773,6 +916,7 @@ if __name__ == "__main__":
                 result["vampire_flagged"] = False
                 result["vampire_flag_type"] = None
                 result["vampire_confidence"] = 0.0
+                result["vampire_multiplier"] = 1.0
     except Exception as e:
         print(f"Error checking bearish stock flags: {e}")
         traceback.print_exc()

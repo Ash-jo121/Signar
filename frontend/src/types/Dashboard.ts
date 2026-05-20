@@ -13,8 +13,15 @@ export interface TickerData {
   socialConvictionMultiplier?: number;
   credibilityMultiplier?: number;
   evidenceQualityMultiplier?: number;
+  timingMultiplier?: number;
   tickerMentionDensityMultiplier?: number;
+  mentionSweetSpotMultiplier?: number;
+  sentimentTimingMultiplier?: number;
   engagementMultiplier?: number;
+  antiChaseMultiplier?: number;
+  persistenceMultiplier?: number;
+  staleRepetitionMultiplier?: number;
+  vampireMultiplier?: number;
   accountAgeMultiplier?: number;
   karmaMultiplier?: number;
   authorDiversityMultiplier?: number;
