@@ -1,40 +1,40 @@
-$HMR [CATALYST: EARNINGS] 
-  Mentions: 10.5 | Sentiment: +0.692 | Score: +0.797
-  Context: The Strait of Hormuz closure hikes vessel daily rates, which HMR takes a portion of as management fe
-
-$MVIS [CATALYST: EARNINGS] 
-  Mentions: 10.4 | Sentiment: +0.654 | Score: +0.691
-  Context: They’re involved with developing LiDAR sensor technology for commercial application such as automoti
-
 $SEGG [NO CATALYST] 
-  Mentions: 27.0 | Sentiment: +0.643 | Score: +0.574
-  Context: Second-leg setups like this live or die on whether volume holds above that breakout level, so watchi
+  Mentions: 13.0 | Sentiment: +0.548 | Score: +0.868
+  Context: $SEGG Just Reclaimed $2 And Momentum Is Building 🚨‼️‼️ Attention everyone, $SEGG is starting to show
 
-$TNYA [CATALYST: CLINICAL] 
-  Mentions: 5.0 | Sentiment: +0.781 | Score: +0.506
-  Context: $TNYA had a win this week! Phase 1 trails show positive results! Tenaya Therapeutics presented gene 
+$HMR [CATALYST: EARNINGS] 
+  Mentions: 6.1 | Sentiment: +0.691 | Score: +0.837
+  Context: PART 3 - $HMR Most undervalued stock on NASDAQ – “Uber of Ships” UPDATE: Fleet Risk, Record Rates, R
 
-$HCWB [CATALYST: EARNINGS] 
-  Mentions: 5.0 | Sentiment: +0.602 | Score: +0.362
-  Context: $HCWB +50% — Q1 earnings blowout and pipeline data on a sub-$3M biotech HCW Biologics (HCWB) ripped 
+$QNCX [NO CATALYST] 
+  Mentions: 5.5 | Sentiment: +0.425 | Score: +0.600
+  Context: But why not apply to the stock price on Monday and Tuesday??!!! Dilution but it’s not now it takes t
 
 $EMBC [CATALYST: MERGER] 
-  Mentions: 6.0 | Sentiment: +0.511 | Score: +0.366
+  Mentions: 6.3 | Sentiment: +0.447 | Score: +0.589
   Context: EMBC- Narrative is Starting To Shift ✅ Embecta acquires Owen Mumford for $172.6m   The transaction s
 
-$GMEX [NO CATALYST] 
-  Mentions: 9.4 | Sentiment: +0.188 | Score: +0.232
-  Context: I see the writing on the wall, that I should stop pushing my luck after doubling down on a losing $T
-
-$AUUD [CATALYST: MERGER] 
-  Mentions: 45.7 | Sentiment: +0.156 | Score: +0.209
-  Context: That was true before. Now they are effectively a shell for Thramann Holdings to get Nasdaq listing t
-
-$AMST [CATALYST: PARTNERSHIP] 
-  Mentions: 15.0 | Sentiment: +0.150 | Score: +0.176
-  Context: $AMST Look at the big picture: they shifted their business structure to maximize profit and just lan
-
 $QUCY [CATALYST: PARTNERSHIP] 
-  Mentions: 22.7 | Sentiment: +0.108 | Score: +0.122
+  Mentions: 12.6 | Sentiment: +0.307 | Score: +0.576
   Context: $$QUCY Quantum Cyber Secures Exclusive Perpetual IP License From BP United for $5M Plus 20M Shares T
+
+$GOVX [CATALYST: CLINICAL] 
+  Mentions: 5.5 | Sentiment: +0.303 | Score: +0.465
+  Context: $GOVX +87% — micro-cap biotech rips on mpox vaccine momentum GeoVax Labs (GOVX) ran hard premarket o
+
+$STAK [NO CATALYST] 
+  Mentions: 5.2 | Sentiment: +0.264 | Score: +0.291
+  Context: Having glanced over STAK financiancials, Jadestone is in significantly better operating shape imo. J
+
+$CXAI [CATALYST: PARTNERSHIP] 
+  Mentions: 18.3 | Sentiment: +0.108 | Score: +0.190
+  Context: $CXAI: The 14-Cent AI Sleeper Nobody is Talking About (83% Gross Margins, $12.3M Cash, and major Ent
+
+$MEHA [CATALYST: MERGER] 
+  Mentions: 7.6 | Sentiment: +0.123 | Score: +0.164
+  Context: Your thesis reflects typical early semiconductor speculation; MEHA similarly attracts forward-lookin
+
+$LFVN [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
+  Mentions: 16.2 | Sentiment: +0.134 | Score: +0.023
+  Context: It's good that we do not squeeze too soon. Those shares are borrowed but they are not all necessaril
 
