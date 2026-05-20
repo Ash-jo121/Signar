@@ -16,7 +16,7 @@ ThreadRadar automates the entire pipeline and surfaces the top picks in seconds.
 
 ## How It Works
 
-<img width="1819" height="795" alt="image" src="https://github.com/user-attachments/assets/baead758-a788-442a-a4e4-7d444a222d60" />
+<!-- <img width="1819" height="795" alt="image" src="https://github.com/user-attachments/assets/baead758-a788-442a-a4e4-7d444a222d60" /> -->
 
 
 The sentiment score reflects the **full conversation** — not just the original post. A bullish post with bearish comments will score lower than a bullish post with supporting comments. This is the key insight: Reddit counters matter along with the upvote score for the comment. We take the aggregate sentiment of the reddit comment tree to get the full score for a stock pick. Context inheritance is also considered, whenever a comment is taken it need not mention a ticker or stock. 
@@ -140,15 +140,15 @@ Create a basic task that runs `python main.py` from the backend directory daily.
 
 ---
 
-## Scoring Algorithm
+<!-- ## Scoring Algorithm
 
 Each ticker's final score is calculated as:
 
 ```
 final_score = avg_sentiment × (1 + log(1 + mentions) * 0.3) × engagement_multiplier | This formula is development in progress |
-```
+``` -->
 
-Where:
+<!-- Where:
 
 - `avg_sentiment` — weighted average FinBERT score across all mentions (-1 to +1)
 - `mentions` — total number of times the ticker appeared across posts and comments
@@ -156,7 +156,7 @@ Where:
 
 Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
----
+--- -->
 
 ## Known Limitations
 
@@ -189,6 +189,8 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 - [x] Performance tracking — did the picks actually move?
 - [x] Pump-and-dump detection (sudden mention spikes)
 - [x] Reddit OAuth for higher rate limits
+- [x] Integrate diverse multipliers for final_score
+- [ ] Integrate SEC, News sentiments
 - [ ] Search functionality for past picks
 - [ ] Subreddit weighting (r/pennystocks > r/smallstreetbets)
 - [ ] Stock specific subreddit to be analyzed for more data
@@ -203,7 +205,7 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
 ## Author
 
-Built by Ashish — a project to automate a manual workflow for discovering penny stock opportunities from Reddit sentiment.
+Built by Ashish — a project to automate a manual workflow for discovering penny stock opportunities from social media sentiment.
 
 ---
 
