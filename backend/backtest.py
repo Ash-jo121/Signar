@@ -12,6 +12,9 @@ Data notes:
 import os
 import sqlite3
 import argparse
+import math
+import random
+from statistics import median
 from datetime import datetime
 
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
@@ -104,6 +107,271 @@ def pct(val):
     if val is None:
         return "  N/A"
     return f"{val:>5.1f}%"
+
+
+def safe_avg(values):
+    values = [value for value in values if value is not None]
+    if not values:
+        return None
+    return sum(values) / len(values)
+
+
+def safe_median(values):
+    values = [value for value in values if value is not None]
+    if not values:
+        return None
+    return median(values)
+
+
+def profit_factor(values):
+    values = [value for value in values if value is not None]
+    gains = sum(value for value in values if value > 0)
+    losses = abs(sum(value for value in values if value < 0))
+    if gains == 0 and losses == 0:
+        return None
+    if losses == 0:
+        return float("inf")
+    return gains / losses
+
+
+def fmt_profit_factor(value):
+    if value is None:
+        return "  N/A"
+    if value == float("inf"):
+        return "  inf"
+    return f"{value:>5.2f}"
+
+
+def value_stats(values):
+    values = [value for value in values if value is not None]
+    if not values:
+        return {
+            "n": 0,
+            "avg": None,
+            "median": None,
+            "win_rate": None,
+            "profit_factor": None,
+            "worst": None,
+        }
+
+    return {
+        "n": len(values),
+        "avg": safe_avg(values),
+        "median": safe_median(values),
+        "win_rate": 100.0 * sum(1 for value in values if value > 0) / len(values),
+        "profit_factor": profit_factor(values),
+        "worst": min(values),
+    }
+
+
+def robust_return_stats(rows, return_col, updated_col):
+    values = [
+        row[return_col]
+        for row in rows
+        if row.get(updated_col) == 1 and row.get(return_col) is not None
+    ]
+    return value_stats(values)
+
+
+def print_robust_group_table(title, note, groups):
+    section(title, note)
+    print(
+        f"  {'Group':<24} {'Hor':<4} {'N':>5}  {'Avg':>9}  {'Median':>9}"
+        f"  {'Win%':>6}  {'PF':>5}  {'Worst':>9}"
+    )
+    divider()
+
+    horizons = [
+        ("T+1", "return_1d", "updated_1d"),
+        ("T+3", "return_3d", "updated_3d"),
+        ("T+7", "return_7d", "updated_7d"),
+    ]
+    for group_name in sorted(groups):
+        rows = groups[group_name]
+        for horizon, return_col, updated_col in horizons:
+            stats = robust_return_stats(rows, return_col, updated_col)
+            print(
+                f"  {group_name:<24} {horizon:<4} {stats['n']:>5}"
+                f"  {fmt(stats['avg']):>9}  {fmt(stats['median']):>9}"
+                f"  {pct(stats['win_rate']):>6}"
+                f"  {fmt_profit_factor(stats['profit_factor']):>5}"
+                f"  {fmt(stats['worst']):>9}"
+            )
+
+
+def fetch_backtest_rows(conn):
+    rows = conn.execute(
+        f"""
+        SELECT
+            pt.*,
+            ds.change_percent,
+            ds.avg_sentiment AS daily_avg_sentiment,
+            ds.mentions AS daily_mentions,
+            ds.final_score AS daily_final_score
+        FROM performance_tracking pt
+        LEFT JOIN daily_sentiment ds
+          ON ds.ticker = pt.ticker
+         AND ds.date = pt.flagged_date
+        {date_clause("pt.flagged_date")}
+        ORDER BY pt.flagged_date, pt.ticker
+    """,
+        params(),
+    ).fetchall()
+    return [dict(row) for row in rows]
+
+
+def bucketize(rows, bucket_func):
+    groups = {}
+    for row in rows:
+        bucket = bucket_func(row)
+        groups.setdefault(bucket, []).append(row)
+    return groups
+
+
+def clamp(value, low, high):
+    return max(low, min(value, high))
+
+
+def normalize_catalyst_type(catalyst_type):
+    normalized = (catalyst_type or "none").strip().lower()
+    aliases = {
+        "approval": "regulatory",
+        "contract/partnership": "partnership",
+        "licensing": "contract",
+        "offering": "capital raise",
+        "atm": "capital raise",
+        "dilution": "capital raise",
+        "product launch": "production",
+    }
+    return aliases.get(normalized, normalized)
+
+
+def catalyst_bucket_name(catalyst_type):
+    normalized = normalize_catalyst_type(catalyst_type)
+    known_types = {
+        "none",
+        "merger",
+        "regulatory",
+        "clinical",
+        "fda",
+        "contract",
+        "capital raise",
+        "production",
+        "earnings",
+        "partnership",
+        "patent",
+        "short squeeze",
+        "sec filing",
+        "government contract",
+    }
+    if normalized in known_types:
+        return normalized
+    return "other"
+
+
+def calculate_mention_sweet_spot_multiplier(mentions):
+    if mentions < 5:
+        return 0.85
+    if mentions < 10:
+        return 1.0
+    if mentions <= 20:
+        return 1.18
+    if mentions <= 35:
+        return 0.95
+    return 0.8
+
+
+def calculate_sentiment_timing_multiplier(sentiment):
+    if sentiment < -0.2:
+        return 0.75
+    if sentiment < 0:
+        return 0.95
+    if sentiment <= 0.2:
+        return 1.15
+    if sentiment <= 0.4:
+        return 1.0
+    return 0.85
+
+
+def calculate_anti_chase_multiplier(change_percent):
+    if change_percent is None:
+        return 1.0
+    if change_percent <= 8:
+        return 1.0
+    if change_percent <= 15:
+        return 0.9
+    return 0.75
+
+
+def calculate_backtest_catalyst_multiplier(catalyst_type):
+    multipliers = {
+        "none": 1.05,
+        "merger": 1.08,
+        "regulatory": 1.05,
+        "clinical": 1.0,
+        "fda": 0.9,
+        "contract": 0.88,
+        "capital raise": 0.75,
+        "production": 0.95,
+        "earnings": 0.98,
+        "partnership": 0.95,
+        "patent": 1.0,
+        "short squeeze": 0.9,
+        "sec filing": 0.95,
+        "government contract": 0.92,
+    }
+    return multipliers.get(normalize_catalyst_type(catalyst_type), 0.95)
+
+
+def calculate_persistence_multiplier(days_seen):
+    if days_seen <= 1:
+        return 1.0
+    if days_seen <= 4:
+        return 1.15
+    if days_seen <= 7:
+        return 0.95
+    return 0.75
+
+
+def add_shadow_scores(rows):
+    seen_counts = {}
+    scored_rows = []
+
+    for row in sorted(rows, key=lambda item: (item["flagged_date"], item["ticker"])):
+        ticker = row["ticker"]
+        seen_counts[ticker] = seen_counts.get(ticker, 0) + 1
+
+        mentions = row.get("flagged_mentions")
+        if mentions is None:
+            mentions = row.get("daily_mentions") or 0
+        sentiment = row.get("flagged_sentiment")
+        if sentiment is None:
+            sentiment = row.get("daily_avg_sentiment") or 0
+        engagement_ratio = row.get("engagement_ratio") or 0
+
+        social_score = (
+            math.log1p(max(mentions, 0))
+            * calculate_mention_sweet_spot_multiplier(mentions)
+            * (0.9 + clamp(engagement_ratio, 0, 1) * 0.15)
+        )
+        timing_score = (
+            calculate_sentiment_timing_multiplier(sentiment)
+            * calculate_anti_chase_multiplier(row.get("change_percent"))
+            * calculate_persistence_multiplier(seen_counts[ticker])
+        )
+        catalyst_score = calculate_backtest_catalyst_multiplier(
+            row.get("catalyst_type")
+        )
+        vampire_multiplier = 0.15 if row.get("vampire_flagged") == 1 else 1.0
+
+        enriched = dict(row)
+        enriched["shadow_days_seen"] = seen_counts[ticker]
+        enriched["shadow_score"] = (
+            social_score * timing_score * catalyst_score * vampire_multiplier
+        )
+        scored_rows.append(enriched)
+
+    return scored_rows
 
 
 def divider(char="─", width=68):
@@ -528,6 +796,197 @@ def sentiment_buckets(conn):
         )
 
 
+# ── Robust backtest sections ──────────────────────────────────────────────────
+def robust_bucket_analysis(conn):
+    rows = add_shadow_scores(fetch_backtest_rows(conn))
+
+    print_robust_group_table(
+        "ROBUST SCORE BUCKETS",
+        "Avg, median, win rate, profit factor, and worst return by horizon",
+        bucketize(
+            rows,
+            lambda row: (
+                "1. High (>=0.8)"
+                if (row.get("final_score") or 0) >= 0.8
+                else "2. Mid (0.5-0.8)"
+                if (row.get("final_score") or 0) >= 0.5
+                else "3. Low (0.3-0.5)"
+                if (row.get("final_score") or 0) >= 0.3
+                else "4. Poor (<0.3)"
+            ),
+        ),
+    )
+
+    print_robust_group_table(
+        "ROBUST MENTION BUCKETS",
+        "Validates the 10-20 mention sweet spot against higher viral mention counts",
+        bucketize(
+            rows,
+            lambda row: (
+                "1. Viral (>20)"
+                if (row.get("flagged_mentions") or 0) > 20
+                else "2. Sweet (10-20)"
+                if (row.get("flagged_mentions") or 0) >= 10
+                else "3. Low (5-10)"
+                if (row.get("flagged_mentions") or 0) >= 5
+                else "4. Minimal (<5)"
+            ),
+        ),
+    )
+
+    print_robust_group_table(
+        "ROBUST SENTIMENT BUCKETS",
+        "Checks whether neutral discussion keeps outperforming euphoric discussion",
+        bucketize(
+            rows,
+            lambda row: (
+                "1. Strong (>=0.4)"
+                if (row.get("flagged_sentiment") or 0) >= 0.4
+                else "2. Mild (0.2-0.4)"
+                if (row.get("flagged_sentiment") or 0) >= 0.2
+                else "3. Neutral (0-0.2)"
+                if (row.get("flagged_sentiment") or 0) >= 0
+                else "4. Negative (<0)"
+            ),
+        ),
+    )
+
+    print_robust_group_table(
+        "ROBUST CATALYST TYPE BUCKETS",
+        "Catalyst buckets use the hydrated catalyst type captured for each flag",
+        bucketize(
+            rows,
+            lambda row: catalyst_bucket_name(row.get("catalyst_type")),
+        ),
+    )
+
+
+def anti_chase_validation(conn):
+    rows = fetch_backtest_rows(conn)
+    print_robust_group_table(
+        "ANTI-CHASE VALIDATION",
+        "Buckets by same-day price move when the ticker was flagged",
+        bucketize(
+            rows,
+            lambda row: (
+                "0. Unknown"
+                if row.get("change_percent") is None
+                else "1. Down/flat (<0%)"
+                if row["change_percent"] < 0
+                else "2. Up 0-5%"
+                if row["change_percent"] < 5
+                else "3. Up 5-10%"
+                if row["change_percent"] < 10
+                else "4. Up 10-20%"
+                if row["change_percent"] < 20
+                else "5. Up >20%"
+            ),
+        ),
+    )
+
+
+def top_n_portfolio_backtest(conn, score_col, label):
+    rows = add_shadow_scores(fetch_backtest_rows(conn))
+    rows_by_date = {}
+    for row in rows:
+        rows_by_date.setdefault(row["flagged_date"], []).append(row)
+
+    section(
+        f"TOP-N PORTFOLIO BACKTEST - {label}",
+        "Daily equal-weight top baskets compared with same-day random candidates",
+    )
+    print(
+        f"  {'N':>3} {'Hor':<4} {'Days':>5}  {'Avg':>9}  {'Median':>9}"
+        f"  {'Win%':>6}  {'PF':>5}  {'Worst':>9}  {'RandAvg':>9}  {'Edge':>9}"
+    )
+    divider()
+
+    rng = random.Random(42)
+    horizons = [
+        ("T+1", "return_1d", "updated_1d"),
+        ("T+3", "return_3d", "updated_3d"),
+        ("T+7", "return_7d", "updated_7d"),
+    ]
+
+    for basket_size in (3, 5, 10):
+        for horizon, return_col, updated_col in horizons:
+            top_basket_returns = []
+            random_basket_returns = []
+
+            for day_rows in rows_by_date.values():
+                universe = [
+                    row
+                    for row in day_rows
+                    if row.get(updated_col) == 1
+                    and row.get(return_col) is not None
+                    and row.get(score_col) is not None
+                ]
+                if len(universe) < basket_size:
+                    continue
+
+                top_rows = sorted(
+                    universe,
+                    key=lambda row: row[score_col],
+                    reverse=True,
+                )[:basket_size]
+                top_basket_returns.append(
+                    safe_avg([row[return_col] for row in top_rows])
+                )
+
+                daily_random_returns = []
+                for _ in range(200):
+                    sample = rng.sample(universe, basket_size)
+                    daily_random_returns.append(
+                        safe_avg([row[return_col] for row in sample])
+                    )
+                random_basket_returns.append(safe_avg(daily_random_returns))
+
+            stats = value_stats(top_basket_returns)
+            random_avg = safe_avg(random_basket_returns)
+            edge = None
+            if stats["avg"] is not None and random_avg is not None:
+                edge = stats["avg"] - random_avg
+
+            print(
+                f"  {basket_size:>3} {horizon:<4} {stats['n']:>5}"
+                f"  {fmt(stats['avg']):>9}  {fmt(stats['median']):>9}"
+                f"  {pct(stats['win_rate']):>6}"
+                f"  {fmt_profit_factor(stats['profit_factor']):>5}"
+                f"  {fmt(stats['worst']):>9}"
+                f"  {fmt(random_avg):>9}  {fmt(edge):>9}"
+            )
+
+
+def shadow_score_bucket_analysis(conn):
+    rows = add_shadow_scores(fetch_backtest_rows(conn))
+    scores = [
+        row["shadow_score"] for row in rows if row.get("shadow_score") is not None
+    ]
+    if not scores:
+        return
+
+    sorted_scores = sorted(scores)
+    q25 = sorted_scores[int(len(sorted_scores) * 0.25)]
+    q50 = sorted_scores[int(len(sorted_scores) * 0.50)]
+    q75 = sorted_scores[int(len(sorted_scores) * 0.75)]
+
+    def shadow_bucket(row):
+        score = row["shadow_score"]
+        if score >= q75:
+            return "1. Top quartile"
+        if score >= q50:
+            return "2. Upper-middle"
+        if score >= q25:
+            return "3. Lower-middle"
+        return "4. Bottom quartile"
+
+    print_robust_group_table(
+        "SHADOW ATTENTION SCORE BUCKETS",
+        "Tests attention/timing/quality/catalyst components without changing production score",
+        bucketize(rows, shadow_bucket),
+    )
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run ThreadRadar backtest analysis")
@@ -560,21 +1019,23 @@ if __name__ == "__main__":
 
     summary(conn)
     hit_rate(conn)
-    score_buckets(conn)
-    mentions_analysis(conn)
+    robust_bucket_analysis(conn)
+    anti_chase_validation(conn)
+    top_n_portfolio_backtest(conn, "final_score", "Stored final_score")
+    shadow_score_bucket_analysis(conn)
+    top_n_portfolio_backtest(conn, "shadow_score", "Shadow attention score")
     mod_impact(conn)
     vampire_impact(conn)
     catalyst_split(conn)
     catalyst_types(conn)
     consistency_signal(conn)
     extremes(conn)
-    sentiment_buckets(conn)
 
     conn.close()
 
     print()
     divider("═")
-    print("  Note: catalyst sections use Apr 27+ data only (3 days, small sample).")
+    print("  Note: catalyst sections use Apr 27+ data only.")
     print("  Re-run in 4 weeks for statistically meaningful catalyst results.")
     divider("═")
     print()
