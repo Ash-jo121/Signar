@@ -507,6 +507,13 @@ def calculate_risk_score(result):
         flag_risk = max(flag_risk, 0.35)
 
     promotion_risk = result.get("promotion_risk_score", 0) or 0
+    velocity_risk = 0.35 if result.get("mention_velocity_label") == "stale" else 0
+    volume_risk = (
+        0.25
+        if result.get("relative_volume") is not None
+        and result.get("relative_volume") < 0.8
+        else 0
+    )
     concentration_risk = 0
     if result.get("top_author_share", 0) >= 0.6:
         concentration_risk = 0.7
@@ -526,6 +533,8 @@ def calculate_risk_score(result):
         + persistence_risk * 10
         + flag_risk * 25
         + promotion_risk * 25
+        + velocity_risk * 10
+        + volume_risk * 10
         + concentration_risk * 15
     )
     return round(clamp(risk, 0, 100), 1)
@@ -557,6 +566,22 @@ def calculate_radar_score(result):
     )
 
 
+def calculate_volume_confirmation_multiplier(relative_volume, price_change_1d):
+    if relative_volume is None:
+        return 1.0
+    if relative_volume >= 3 and (price_change_1d or 0) < 20:
+        return 1.10
+    if relative_volume < 0.8:
+        return 0.85
+    return 1.0
+
+
+def pct_change(current, previous):
+    if current is None or previous is None or previous <= 0:
+        return None
+    return ((current - previous) / previous) * 100
+
+
 def classify_setup(result):
     risk = result.get("risk_score", 0) or 0
     promotion_risk = result.get("promotion_risk_score", 0) or 0
@@ -567,6 +592,7 @@ def classify_setup(result):
     mentions = result.get("mentions", 0) or 0
     days_since_first_seen = result.get("days_since_first_seen", 0) or 0
     days_trending = result.get("days_trending", 1) or 1
+    mention_velocity = result.get("mention_velocity_label")
     post_quality = result.get("post_quality_multiplier", 1.0) or 1.0
     trade_score = result.get("trade_score", result.get("final_score", 0)) or 0
 
@@ -580,9 +606,11 @@ def classify_setup(result):
         return "low_quality_hype"
     if change_percent > 15 or result.get("anti_chase_multiplier", 1.0) < 1.0:
         return "anti_chase"
+    if mention_velocity == "emerging" and risk < 45:
+        return "early_discovery"
     if change_percent < -5 and days_since_first_seen <= 3 and mentions >= 5:
         return "post_spike_pullback"
-    if days_trending >= 6 and mentions >= 10:
+    if mention_velocity == "stale" or (days_trending >= 6 and mentions >= 10):
         return "stale_squeeze"
     if days_trending >= 4 and avg_sentiment < 0:
         return "bagholder_chatter"
@@ -610,12 +638,13 @@ def apply_rank_scores(result):
     risk_dampener = risk / 100 * 0.4
     promotion_risk = result.get("promotion_risk_score", 0) or 0
     promotion_trade_multiplier = 0.75 if promotion_risk > 0.5 else 1.0
+    volume_confirmation_multiplier = result.get("volume_confirmation_multiplier", 1.0)
 
     if signal_score >= 0:
         trade_score = signal_score * (1 - risk_dampener)
     else:
         trade_score = signal_score * (1 + risk_dampener)
-    trade_score *= promotion_trade_multiplier
+    trade_score *= promotion_trade_multiplier * volume_confirmation_multiplier
 
     result["radar_score"] = round(radar_score, 3)
     result["trade_score"] = round(trade_score, 3)
@@ -740,13 +769,16 @@ def apply_anti_chase_penalty(result):
     a large move is more likely late-cycle excitement than early discovery.
     """
     change_percent = result.get("change_percent", 0) or 0
-    if change_percent > 15:
-        multiplier = 0.75
-    elif change_percent > 8:
-        multiplier = 0.9
+    if change_percent > 30:
+        multiplier = 0.65
+    elif change_percent > 15:
+        multiplier = 0.80
+    elif change_percent > 5:
+        multiplier = 0.95
     else:
         multiplier = 1.0
 
+    result["price_change_1d"] = change_percent
     result["anti_chase_multiplier"] = multiplier
     if multiplier != 1.0:
         original = result["final_score"]
@@ -759,6 +791,16 @@ def apply_anti_chase_penalty(result):
             f"  {result['ticker']}: anti-chase penalty "
             f"({change_percent:+.1f}% same-day) -> score {original} x {multiplier:.2f}"
         )
+
+
+def apply_price_volume_confirmation(result):
+    price_change_1d = result.get("price_change_1d", result.get("change_percent"))
+    result["price_change_1d"] = price_change_1d
+    multiplier = calculate_volume_confirmation_multiplier(
+        result.get("relative_volume"),
+        price_change_1d,
+    )
+    result["volume_confirmation_multiplier"] = round(multiplier, 3)
 
 
 def analyze_ticker_sentiment(all_posts):
@@ -1082,10 +1124,11 @@ def apply_repetition_decay(results):
     today_iso = today_date.strftime("%Y-%m-%d")
     for result in results:
         ticker = result["ticker"]
+        mentions_today = result.get("mentions", 0) or 0
 
         historical_rows = conn.execute(
             """
-            SELECT date, mentions
+            SELECT date, mentions, price, volume
             FROM daily_sentiment
             WHERE ticker = ?
             ORDER BY date ASC
@@ -1126,15 +1169,70 @@ def apply_repetition_decay(results):
         else:
             mention_change_pct = None
 
+        recent_mentions = [
+            row["mentions"]
+            for row in historical_rows[-3:]
+            if row["mentions"] is not None
+        ]
+        mentions_3d_avg = (
+            sum(recent_mentions) / len(recent_mentions) if recent_mentions else 0
+        )
+        mention_acceleration = mentions_today / max(mentions_3d_avg, 1)
+        if mentions_today >= 5 and mention_acceleration >= 2:
+            mention_velocity_label = "emerging"
+        elif (
+            len(recent_mentions) >= 2
+            and mentions_today < recent_mentions[-1] < recent_mentions[-2]
+        ):
+            mention_velocity_label = "stale"
+        else:
+            mention_velocity_label = "steady"
+
+        current_price = result.get("price")
+        historical_prices = [
+            row["price"] for row in historical_rows if row["price"] and row["price"] > 0
+        ]
+        price_change_3d = (
+            pct_change(current_price, historical_prices[-3])
+            if len(historical_prices) >= 3
+            else None
+        )
+        price_change_7d = (
+            pct_change(current_price, historical_prices[-7])
+            if len(historical_prices) >= 7
+            else None
+        )
+        price_change_1d = result.get("price_change_1d", result.get("change_percent"))
+        volume_confirmation_multiplier = calculate_volume_confirmation_multiplier(
+            result.get("relative_volume"),
+            price_change_1d,
+        )
+
         result["first_seen_date"] = first_seen_date
         result["first_seen_datetime"] = f"{first_seen_date}T00:00:00"
         result["days_since_first_seen"] = max(days_since_first_seen, 0)
         result["days_trending"] = days_trending
+        result["mentions_today"] = round(mentions_today, 3)
+        result["mentions_yesterday"] = previous_day_mentions
+        result["mentions_3d_avg"] = round(mentions_3d_avg, 3)
+        result["mention_acceleration"] = round(mention_acceleration, 3)
+        result["mention_velocity_label"] = mention_velocity_label
+        result["mention_declining_2d"] = mention_velocity_label == "stale"
         result["previous_day_mentions"] = previous_day_mentions
         result["mention_change_pct"] = (
             round(mention_change_pct, 2) if mention_change_pct is not None else None
         )
         result["earlyness_multiplier"] = earlyness_multiplier
+        result["price_change_1d"] = price_change_1d
+        result["price_change_3d"] = (
+            round(price_change_3d, 2) if price_change_3d is not None else None
+        )
+        result["price_change_7d"] = (
+            round(price_change_7d, 2) if price_change_7d is not None else None
+        )
+        result["volume_confirmation_multiplier"] = round(
+            volume_confirmation_multiplier, 3
+        )
 
         # Check consecutive appearances in last 7 days
         rows = conn.execute(
@@ -1223,6 +1321,7 @@ if __name__ == "__main__":
     print("\nStep 3.25: Applying anti-chase price action penalties...")
     for result in results:
         apply_anti_chase_penalty(result)
+        apply_price_volume_confirmation(result)
 
     print("\nStep 3.5: Checking bearish stock flags...")
     conn = get_connection()

@@ -17,6 +17,8 @@ import random
 from statistics import median
 from datetime import datetime
 
+from database import SCORE_METADATA_COLUMNS
+
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
 
 
@@ -49,6 +51,33 @@ def params(**extra):
     return values
 
 
+def get_columns(conn, table):
+    return [row[1] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()]
+
+
+def ensure_column(conn, table, column, definition):
+    if column not in get_columns(conn, table):
+        conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+
+
+def ensure_score_metadata_table(conn):
+    score_column_defs = ",\n            ".join(
+        f"{column} {definition}" for column, definition in SCORE_METADATA_COLUMNS
+    )
+    conn.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS score_metadata (
+            date TEXT NOT NULL,
+            ticker TEXT NOT NULL,
+            {score_column_defs},
+            PRIMARY KEY(date, ticker)
+        )
+        """
+    )
+    for column, definition in SCORE_METADATA_COLUMNS:
+        ensure_column(conn, "score_metadata", column, definition)
+
+
 def catalyst_start_date():
     if START_DATE and START_DATE > CLEAN_CATALYST_DATE:
         return START_DATE
@@ -61,6 +90,7 @@ def get_conn():
     source.backup(conn)
     source.close()
     conn.row_factory = sqlite3.Row
+    ensure_score_metadata_table(conn)
     if START_DATE:
         conn.execute(
             "DELETE FROM performance_tracking WHERE flagged_date < ?",
@@ -200,6 +230,9 @@ def print_robust_group_table(title, note, groups):
 
 
 def fetch_backtest_rows(conn):
+    metadata_select = ",\n            ".join(
+        f"sm.{column} AS meta_{column}" for column, _ in SCORE_METADATA_COLUMNS
+    )
     rows = conn.execute(
         f"""
         SELECT
@@ -207,17 +240,30 @@ def fetch_backtest_rows(conn):
             ds.change_percent,
             ds.avg_sentiment AS daily_avg_sentiment,
             ds.mentions AS daily_mentions,
-            ds.final_score AS daily_final_score
+            ds.final_score AS daily_final_score,
+            ds.volume AS daily_volume,
+            {metadata_select}
         FROM performance_tracking pt
         LEFT JOIN daily_sentiment ds
           ON ds.ticker = pt.ticker
          AND ds.date = pt.flagged_date
+        LEFT JOIN score_metadata sm
+          ON sm.ticker = pt.ticker
+         AND sm.date = pt.flagged_date
         {date_clause("pt.flagged_date")}
         ORDER BY pt.flagged_date, pt.ticker
     """,
         params(),
     ).fetchall()
-    return [dict(row) for row in rows]
+    hydrated_rows = []
+    for row in rows:
+        item = dict(row)
+        for column, _ in SCORE_METADATA_COLUMNS:
+            metadata_value = item.pop(f"meta_{column}", None)
+            if metadata_value is not None:
+                item[column] = metadata_value
+        hydrated_rows.append(item)
+    return hydrated_rows
 
 
 def bucketize(rows, bucket_func):
@@ -296,11 +342,13 @@ def calculate_sentiment_timing_multiplier(sentiment):
 def calculate_anti_chase_multiplier(change_percent):
     if change_percent is None:
         return 1.0
-    if change_percent <= 8:
-        return 1.0
-    if change_percent <= 15:
-        return 0.9
-    return 0.75
+    if change_percent > 30:
+        return 0.65
+    if change_percent > 15:
+        return 0.8
+    if change_percent > 5:
+        return 0.95
+    return 1.0
 
 
 def calculate_backtest_catalyst_multiplier(catalyst_type):
@@ -372,6 +420,81 @@ def add_shadow_scores(rows):
         scored_rows.append(enriched)
 
     return scored_rows
+
+
+def calculate_baseline_score(row):
+    mentions = row.get("flagged_mentions")
+    if mentions is None:
+        mentions = row.get("daily_mentions") or 0
+    sentiment = row.get("flagged_sentiment")
+    if sentiment is None:
+        sentiment = row.get("daily_avg_sentiment") or 0
+    engagement_ratio = row.get("engagement_ratio") or 0
+
+    attention_score = math.log1p(max(mentions, 0))
+    engagement_multiplier = 1 + clamp(engagement_ratio, 0, 1) * 0.1
+    sentiment_anchor = 1 + clamp(sentiment, -0.5, 0.5)
+    return attention_score * sentiment_anchor * engagement_multiplier
+
+
+def add_ablation_scores(rows):
+    scored_rows = []
+    for row in add_shadow_scores(rows):
+        mentions = row.get("flagged_mentions")
+        if mentions is None:
+            mentions = row.get("daily_mentions") or 0
+
+        baseline = calculate_baseline_score(row)
+        mention_sweet = baseline * calculate_mention_sweet_spot_multiplier(mentions)
+        vampire_adjusted = mention_sweet * (
+            0.15 if row.get("vampire_flagged") == 1 else 1.0
+        )
+        catalyst_adjusted = vampire_adjusted * calculate_backtest_catalyst_multiplier(
+            row.get("catalyst_type")
+        )
+        concentration_adjusted = catalyst_adjusted * (
+            row.get("author_concentration_multiplier") or 1.0
+        )
+        promotion_adjusted = concentration_adjusted * (
+            0.75 if (row.get("promotion_risk_score") or 0) > 0.5 else 1.0
+        )
+
+        enriched = dict(row)
+        enriched["ablation_baseline"] = baseline
+        enriched["ablation_mention_sweet_spot"] = mention_sweet
+        enriched["ablation_vampire_penalty"] = vampire_adjusted
+        enriched["ablation_catalyst"] = catalyst_adjusted
+        enriched["ablation_author_concentration"] = concentration_adjusted
+        enriched["ablation_promotion_risk"] = promotion_adjusted
+        enriched["ablation_full_model"] = row.get("trade_score")
+        if enriched["ablation_full_model"] is None:
+            enriched["ablation_full_model"] = row.get("final_score")
+        scored_rows.append(enriched)
+
+    return scored_rows
+
+
+def daily_basket_returns(rows, score_col, basket_size, return_col, updated_col):
+    rows_by_date = {}
+    for row in rows:
+        rows_by_date.setdefault(row["flagged_date"], []).append(row)
+
+    returns = []
+    for day_rows in rows_by_date.values():
+        universe = [
+            row
+            for row in day_rows
+            if row.get(updated_col) == 1
+            and row.get(return_col) is not None
+            and row.get(score_col) is not None
+        ]
+        if len(universe) < basket_size:
+            continue
+        top_rows = sorted(universe, key=lambda row: row[score_col], reverse=True)[
+            :basket_size
+        ]
+        returns.append(safe_avg([row[return_col] for row in top_rows]))
+    return returns
 
 
 def divider(char="─", width=68):
@@ -885,6 +1008,46 @@ def anti_chase_validation(conn):
     )
 
 
+def mention_velocity_validation(conn):
+    rows = fetch_backtest_rows(conn)
+    print_robust_group_table(
+        "MENTION VELOCITY VALIDATION",
+        "Emerging/stale labels based on today's mentions versus recent history",
+        bucketize(
+            rows,
+            lambda row: (
+                f"1. {row['mention_velocity_label']}"
+                if row.get("mention_velocity_label") == "emerging"
+                else f"3. {row['mention_velocity_label']}"
+                if row.get("mention_velocity_label") == "stale"
+                else "2. steady/unknown"
+            ),
+        ),
+    )
+
+
+def volume_confirmation_validation(conn):
+    rows = fetch_backtest_rows(conn)
+    print_robust_group_table(
+        "VOLUME CONFIRMATION VALIDATION",
+        "Checks whether relative volume confirms social signal without overextension",
+        bucketize(
+            rows,
+            lambda row: (
+                "0. Unknown"
+                if row.get("relative_volume") is None
+                else "1. Confirmed RVOL >=3"
+                if row["relative_volume"] >= 3
+                and (row.get("price_change_1d") or row.get("change_percent") or 0)
+                < 20
+                else "2. Thin RVOL <0.8"
+                if row["relative_volume"] < 0.8
+                else "3. Normal volume"
+            ),
+        ),
+    )
+
+
 def top_n_portfolio_backtest(conn, score_col, label):
     rows = add_shadow_scores(fetch_backtest_rows(conn))
     rows_by_date = {}
@@ -957,6 +1120,128 @@ def top_n_portfolio_backtest(conn, score_col, label):
             )
 
 
+def model_ablation_comparison(conn):
+    rows = add_ablation_scores(fetch_backtest_rows(conn))
+    models = [
+        ("baseline_score", "ablation_baseline"),
+        ("+ mention_sweet_spot", "ablation_mention_sweet_spot"),
+        ("+ vampire penalty", "ablation_vampire_penalty"),
+        ("+ catalyst", "ablation_catalyst"),
+        ("+ author concentration", "ablation_author_concentration"),
+        ("+ promotion risk", "ablation_promotion_risk"),
+        ("full model", "ablation_full_model"),
+    ]
+    horizons = [
+        ("T+1", "return_1d", "updated_1d"),
+        ("T+3", "return_3d", "updated_3d"),
+        ("T+7", "return_7d", "updated_7d"),
+    ]
+
+    section(
+        "MODEL ABLATION COMPARISON",
+        "Each row adds one feature block so weak multipliers cannot hide inside the full score",
+    )
+    print(
+        f"  {'Model':<24} {'N':>3} {'Hor':<4} {'Days':>5}"
+        f"  {'Avg':>9}  {'Median':>9}  {'Win%':>6}  {'PF':>5}  {'Worst':>9}"
+    )
+    divider()
+
+    for label, score_col in models:
+        for basket_size in (3, 5, 10):
+            for horizon, return_col, updated_col in horizons:
+                returns = daily_basket_returns(
+                    rows,
+                    score_col,
+                    basket_size,
+                    return_col,
+                    updated_col,
+                )
+                stats = value_stats(returns)
+                print(
+                    f"  {label:<24} {basket_size:>3} {horizon:<4}"
+                    f" {stats['n']:>5}  {fmt(stats['avg']):>9}"
+                    f"  {fmt(stats['median']):>9}  {pct(stats['win_rate']):>6}"
+                    f"  {fmt_profit_factor(stats['profit_factor']):>5}"
+                    f"  {fmt(stats['worst']):>9}"
+                )
+
+
+def random_baseline_comparison(
+    conn,
+    score_col="final_score",
+    label="Stored final_score",
+):
+    rows = add_ablation_scores(fetch_backtest_rows(conn))
+    rows_by_date = {}
+    for row in rows:
+        rows_by_date.setdefault(row["flagged_date"], []).append(row)
+
+    rng = random.Random(42)
+    basket_size = 5
+    samples = 500
+    horizons = [
+        ("T+1", "return_1d", "updated_1d"),
+        ("T+3", "return_3d", "updated_3d"),
+        ("T+7", "return_7d", "updated_7d"),
+    ]
+
+    section(
+        f"RANDOM BASELINE COMPARISON - {label}",
+        f"Top 5 by score versus {samples} random same-day baskets",
+    )
+    print(
+        f"  {'Hor':<4} {'Days':>5}  {'TopAvg':>9}  {'TopMed':>9}"
+        f"  {'Win%':>6}  {'PF':>5}  {'Worst':>9}  {'RandAvg':>9}  {'Pctile':>7}"
+    )
+    divider()
+
+    for horizon, return_col, updated_col in horizons:
+        top_returns = []
+        random_day_avgs = []
+        percentiles = []
+
+        for day_rows in rows_by_date.values():
+            universe = [
+                row
+                for row in day_rows
+                if row.get(updated_col) == 1
+                and row.get(return_col) is not None
+                and row.get(score_col) is not None
+            ]
+            if len(universe) < basket_size:
+                continue
+
+            top_rows = sorted(universe, key=lambda row: row[score_col], reverse=True)[
+                :basket_size
+            ]
+            top_return = safe_avg([row[return_col] for row in top_rows])
+            random_returns = []
+            for _ in range(samples):
+                sample = rng.sample(universe, basket_size)
+                random_returns.append(safe_avg([row[return_col] for row in sample]))
+
+            top_returns.append(top_return)
+            random_day_avgs.append(safe_avg(random_returns))
+            percentiles.append(
+                100.0
+                * sum(
+                    1 for random_return in random_returns if random_return <= top_return
+                )
+                / len(random_returns)
+            )
+
+        stats = value_stats(top_returns)
+        print(
+            f"  {horizon:<4} {stats['n']:>5}  {fmt(stats['avg']):>9}"
+            f"  {fmt(stats['median']):>9}  {pct(stats['win_rate']):>6}"
+            f"  {fmt_profit_factor(stats['profit_factor']):>5}"
+            f"  {fmt(stats['worst']):>9}"
+            f"  {fmt(safe_avg(random_day_avgs)):>9}"
+            f"  {pct(safe_avg(percentiles)):>7}"
+        )
+
+
 def shadow_score_bucket_analysis(conn):
     rows = add_shadow_scores(fetch_backtest_rows(conn))
     scores = [
@@ -1021,7 +1306,11 @@ if __name__ == "__main__":
     hit_rate(conn)
     robust_bucket_analysis(conn)
     anti_chase_validation(conn)
+    mention_velocity_validation(conn)
+    volume_confirmation_validation(conn)
     top_n_portfolio_backtest(conn, "final_score", "Stored final_score")
+    model_ablation_comparison(conn)
+    random_baseline_comparison(conn, "ablation_full_model", "Full model")
     shadow_score_bucket_analysis(conn)
     top_n_portfolio_backtest(conn, "shadow_score", "Shadow attention score")
     mod_impact(conn)

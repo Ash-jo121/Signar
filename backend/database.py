@@ -30,6 +30,20 @@ SCORE_METADATA_COLUMNS = [
     ("previous_day_mentions", "REAL"),
     ("mention_change_pct", "REAL"),
     ("earlyness_multiplier", "REAL DEFAULT 1.0"),
+    ("mentions_today", "REAL DEFAULT 0.0"),
+    ("mentions_yesterday", "REAL"),
+    ("mentions_3d_avg", "REAL"),
+    ("mention_acceleration", "REAL DEFAULT 0.0"),
+    ("mention_velocity_label", "TEXT"),
+    ("mention_declining_2d", "INTEGER DEFAULT 0"),
+    ("price_change_1d", "REAL"),
+    ("price_change_3d", "REAL"),
+    ("price_change_7d", "REAL"),
+    ("average_volume", "REAL"),
+    ("relative_volume", "REAL"),
+    ("dollar_volume", "REAL"),
+    ("volume_change_vs_avg", "REAL"),
+    ("volume_confirmation_multiplier", "REAL DEFAULT 1.0"),
 ]
 
 
@@ -62,6 +76,20 @@ def score_metadata_values(result):
         result.get("previous_day_mentions"),
         result.get("mention_change_pct"),
         result.get("earlyness_multiplier", 1.0),
+        result.get("mentions_today", result.get("mentions", 0)),
+        result.get("mentions_yesterday"),
+        result.get("mentions_3d_avg"),
+        result.get("mention_acceleration", 0),
+        result.get("mention_velocity_label"),
+        1 if result.get("mention_declining_2d") else 0,
+        result.get("price_change_1d"),
+        result.get("price_change_3d"),
+        result.get("price_change_7d"),
+        result.get("average_volume"),
+        result.get("relative_volume"),
+        result.get("dollar_volume"),
+        result.get("volume_change_vs_avg"),
+        result.get("volume_confirmation_multiplier", 1.0),
     )
 
 

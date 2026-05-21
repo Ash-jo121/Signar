@@ -14,6 +14,22 @@ def enrich_with_price(results):
             r["fifty_two_week_high"] = info.get("fiftyTwoWeekHigh", 0)
             r["fifty_two_week_low"] = info.get("fiftyTwoWeekLow", 0)
             r["volume"] = info.get("regularMarketVolume", 0)
+            average_volume = (
+                info.get("averageVolume")
+                or info.get("averageDailyVolume10Day")
+                or info.get("averageVolume10days")
+                or 0
+            )
+            r["average_volume"] = average_volume
+            r["relative_volume"] = (
+                round(r["volume"] / average_volume, 3) if average_volume else None
+            )
+            r["dollar_volume"] = round(r["price"] * r["volume"], 2)
+            r["volume_change_vs_avg"] = (
+                round(((r["volume"] - average_volume) / average_volume) * 100, 2)
+                if average_volume
+                else None
+            )
             r["analyst_target"] = info.get("targetMeanPrice", 0)
             r["recommendation"] = info.get("recommendationKey", "none")
             r["sector"] = info.get("sector", "Unknown")
@@ -77,6 +93,10 @@ def enrich_with_price(results):
             r["fifty_two_week_high"] = 0
             r["fifty_two_week_low"] = 0
             r["volume"] = 0
+            r["average_volume"] = 0
+            r["relative_volume"] = None
+            r["dollar_volume"] = 0
+            r["volume_change_vs_avg"] = None
             r["analyst_target"] = 0
             r["recommendation"] = "none"
             r["sector"] = "Unknown"
