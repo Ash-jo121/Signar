@@ -1,40 +1,40 @@
-$SEGG [NO CATALYST] 
-  Mentions: 13.0 | Sentiment: +0.548 | Score: +0.868
-  Context: $SEGG Just Reclaimed $2 And Momentum Is Building 🚨‼️‼️ Attention everyone, $SEGG is starting to show
+$GCTS [SETUP: STALE_SQUEEZE] [CATALYST: PRODUCTION] 
+  Mentions: 15.1 | Sentiment: +0.443 | Radar: +4.001 | Trade: +0.722 | Risk: 17.2 (low)
+  Context: Early DD'er here, GCTS still has moves to make but yall are a bit late on the initial strike.   I st
 
-$HMR [CATALYST: EARNINGS] 
-  Mentions: 6.1 | Sentiment: +0.691 | Score: +0.837
-  Context: PART 3 - $HMR Most undervalued stock on NASDAQ – “Uber of Ships” UPDATE: Fleet Risk, Record Rates, R
+$NXXT [SETUP: CLEAN_MOMENTUM] [CATALYST: EARNINGS] 
+  Mentions: 6 | Sentiment: +0.608 | Radar: +2.367 | Trade: +0.642 | Risk: 22.0 (low)
+  Context: $NXXT - Q1 revenue exploded + Trump catalyst is next. +105% AH was just the start. Check out my full
 
-$QNCX [NO CATALYST] 
-  Mentions: 5.5 | Sentiment: +0.425 | Score: +0.600
-  Context: But why not apply to the stock price on Monday and Tuesday??!!! Dilution but it’s not now it takes t
+$AUUD [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
+  Mentions: 15.1 | Sentiment: +0.353 | Radar: +3.876 | Trade: +0.453 | Risk: 19.0 (low)
+  Context: Yes. 5 million share offering @ $2.36 was closed. 5 million warrants are still active and can be exe
 
-$EMBC [CATALYST: MERGER] 
-  Mentions: 6.3 | Sentiment: +0.447 | Score: +0.589
-  Context: EMBC- Narrative is Starting To Shift ✅ Embecta acquires Owen Mumford for $172.6m   The transaction s
+$SEGG [SETUP: STALE_SQUEEZE] [NO CATALYST] 
+  Mentions: 12.6 | Sentiment: +0.535 | Radar: +3.694 | Trade: +0.406 | Risk: 28.0 (medium)
+  Context: Check out BRCC. It has been performing well. It didn’t pull a SEGG but it’s done well, and is in a s
 
-$QUCY [CATALYST: PARTNERSHIP] 
-  Mentions: 12.6 | Sentiment: +0.307 | Score: +0.576
-  Context: $$QUCY Quantum Cyber Secures Exclusive Perpetual IP License From BP United for $5M Plus 20M Shares T
+$GDC [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
+  Mentions: 13.5 | Sentiment: +0.149 | Radar: +3.850 | Trade: +0.338 | Risk: 9.2 (low)
+  Context: $GDC is my top watch right now. This thing got completely destroyed after the ATM filing, reverse sp
 
-$GOVX [CATALYST: CLINICAL] 
-  Mentions: 5.5 | Sentiment: +0.303 | Score: +0.465
-  Context: $GOVX +87% — micro-cap biotech rips on mpox vaccine momentum GeoVax Labs (GOVX) ran hard premarket o
-
-$STAK [NO CATALYST] 
-  Mentions: 5.2 | Sentiment: +0.264 | Score: +0.291
-  Context: Having glanced over STAK financiancials, Jadestone is in significantly better operating shape imo. J
-
-$CXAI [CATALYST: PARTNERSHIP] 
-  Mentions: 18.3 | Sentiment: +0.108 | Score: +0.190
+$CXAI [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 33.4 | Sentiment: +0.166 | Radar: +4.262 | Trade: +0.327 | Risk: 16.9 (low)
   Context: $CXAI: The 14-Cent AI Sleeper Nobody is Talking About (83% Gross Margins, $12.3M Cash, and major Ent
 
-$MEHA [CATALYST: MERGER] 
-  Mentions: 7.6 | Sentiment: +0.123 | Score: +0.164
-  Context: Your thesis reflects typical early semiconductor speculation; MEHA similarly attracts forward-lookin
+$MEHA [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
+  Mentions: 9.3 | Sentiment: +0.378 | Radar: +3.202 | Trade: +0.240 | Risk: 42.0 (medium)
+  Context: Some decent setups here today, momentum names rotating. MEHA keeps popping up for me around asset ba
 
-$LFVN [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 16.2 | Sentiment: +0.134 | Score: +0.023
-  Context: It's good that we do not squeeze too soon. Those shares are borrowed but they are not all necessaril
+$GPUS [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 22.1 | Sentiment: +0.113 | Radar: +3.916 | Trade: +0.123 | Risk: 32.8 (medium)
+  Context: GPUS CEO just bought half million stock. The common stock was purchased by the reporting person in o
+
+$LFVN [SETUP: PROMOTION_RISK] [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
+  Mentions: 17.2 | Sentiment: -0.240 | Radar: +3.306 | Trade: -0.025 | Risk: 32.3 (medium)
+  Context: I feel I not enough mentions about $LFVN. It’s been running up and down daily, not sure if the short
+
+$TACO [SETUP: STALE_SQUEEZE] [NO CATALYST] 
+  Mentions: 5.0 | Sentiment: -0.339 | Radar: +2.035 | Trade: -0.057 | Risk: 23.8 (low)
+  Context: TACO: We, as a supreme nation, are not interested in storageing nuclear dust TRASH, anyway. Just tel
 
