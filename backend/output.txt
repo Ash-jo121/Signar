@@ -1,40 +1,40 @@
-$GCTS [SETUP: STALE_SQUEEZE] [CATALYST: PRODUCTION] 
-  Mentions: 15.1 | Sentiment: +0.443 | Radar: +4.001 | Trade: +0.722 | Risk: 17.2 (low)
-  Context: Early DD'er here, GCTS still has moves to make but yall are a bit late on the initial strike.   I st
+$CXAI [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 26.3 | Sentiment: +0.511 | Radar: +4.000 | Trade: +0.863 | Risk: 24.5 (low)
+  Context: CXAI - Fast RECAP | Growing Organically Back Up To $1 Fortune 500:   The company has confirmed that 
 
-$NXXT [SETUP: CLEAN_MOMENTUM] [CATALYST: EARNINGS] 
-  Mentions: 6 | Sentiment: +0.608 | Radar: +2.367 | Trade: +0.642 | Risk: 22.0 (low)
-  Context: $NXXT - Q1 revenue exploded + Trump catalyst is next. +105% AH was just the start. Check out my full
+$GDC [SETUP: STALE_SQUEEZE] [CATALYST: SEC FILING] 
+  Mentions: 12.1 | Sentiment: +0.345 | Radar: +3.704 | Trade: +0.550 | Risk: 13.8 (low)
+  Context: I believe this stock is very undervalued ($GDC) This stock is unbelievably interesting to me. Im ext
 
-$AUUD [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
-  Mentions: 15.1 | Sentiment: +0.353 | Radar: +3.876 | Trade: +0.453 | Risk: 19.0 (low)
-  Context: Yes. 5 million share offering @ $2.36 was closed. 5 million warrants are still active and can be exe
+$SRXH [SETUP: ANTI_CHASE] [CATALYST: MERGER] 
+  Mentions: 30.4 | Sentiment: +0.312 | Radar: +4.719 | Trade: +0.500 | Risk: 19.8 (low)
+  Context: SRXH/EMJX with SpaceX as a catalyst? With the valuation of SpaceX seemingly going up everyday, doesn
 
-$SEGG [SETUP: STALE_SQUEEZE] [NO CATALYST] 
-  Mentions: 12.6 | Sentiment: +0.535 | Radar: +3.694 | Trade: +0.406 | Risk: 28.0 (medium)
-  Context: Check out BRCC. It has been performing well. It didn’t pull a SEGG but it’s done well, and is in a s
+$NXXT [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
+  Mentions: 6 | Sentiment: +0.526 | Radar: +2.204 | Trade: +0.493 | Risk: 21.8 (low)
+  Context: NXXT’s smart pivot: Zero extra capital, massive TAM expansion via Gopuff (EzShop DD) NextNRG just ex
 
-$GDC [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
-  Mentions: 13.5 | Sentiment: +0.149 | Radar: +3.850 | Trade: +0.338 | Risk: 9.2 (low)
-  Context: $GDC is my top watch right now. This thing got completely destroyed after the ATM filing, reverse sp
+$ALP [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 14.3 | Sentiment: +0.362 | Radar: +3.924 | Trade: +0.476 | Risk: 32.2 (medium)
+  Context: Alpha Compute Corp. Provides Mid-Q2 2026 Update Alpha Compute Corp. Provides Mid-Q2 2026 Update By: 
 
-$CXAI [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 33.4 | Sentiment: +0.166 | Radar: +4.262 | Trade: +0.327 | Risk: 16.9 (low)
-  Context: $CXAI: The 14-Cent AI Sleeper Nobody is Talking About (83% Gross Margins, $12.3M Cash, and major Ent
+$FLYX [SETUP: EARLY_DISCOVERY] [CATALYST: MERGER] 
+  Mentions: 5.3 | Sentiment: +0.362 | Radar: +2.245 | Trade: +0.439 | Risk: 18.8 (low)
+  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
 
-$MEHA [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 9.3 | Sentiment: +0.378 | Radar: +3.202 | Trade: +0.240 | Risk: 42.0 (medium)
-  Context: Some decent setups here today, momentum names rotating. MEHA keeps popping up for me around asset ba
+$SEGG [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
+  Mentions: 6.3 | Sentiment: +0.433 | Radar: +2.546 | Trade: +0.384 | Risk: 24.2 (low)
+  Context: Honestly, I have three and they are my top 3 holdings.   1. SEGG: Extremely tight on cash, so defini
+
+$GCTS [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
+  Mentions: 29.7 | Sentiment: +0.376 | Radar: +4.503 | Trade: +0.336 | Risk: 40.8 (medium)
+  Context: I just yeet'ed 420 dollars in the GCTS So I just wanted to let everybody here know that this semicon
 
 $GPUS [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 22.1 | Sentiment: +0.113 | Radar: +3.916 | Trade: +0.123 | Risk: 32.8 (medium)
+  Mentions: 19.9 | Sentiment: +0.286 | Radar: +4.333 | Trade: +0.305 | Risk: 27.2 (medium)
   Context: GPUS CEO just bought half million stock. The common stock was purchased by the reporting person in o
 
-$LFVN [SETUP: PROMOTION_RISK] [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 17.2 | Sentiment: -0.240 | Radar: +3.306 | Trade: -0.025 | Risk: 32.3 (medium)
-  Context: I feel I not enough mentions about $LFVN. It’s been running up and down daily, not sure if the short
-
-$TACO [SETUP: STALE_SQUEEZE] [NO CATALYST] 
-  Mentions: 5.0 | Sentiment: -0.339 | Radar: +2.035 | Trade: -0.057 | Risk: 23.8 (low)
-  Context: TACO: We, as a supreme nation, are not interested in storageing nuclear dust TRASH, anyway. Just tel
+$BZAI [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.0 | Sentiment: +0.334 | Radar: +1.958 | Trade: +0.297 | Risk: 24.5 (low)
+  Context: Wow, this is a super thorough breakdown, man. You've hit on some really critical points with BZAI. T
 
