@@ -588,6 +588,16 @@ def calculate_promotion_trade_multiplier(promotion_risk_score):
     return 1.0
 
 
+def calculate_freshness_multiplier(persistence_days_seen):
+    if persistence_days_seen >= 7:
+        return 0.65
+    if persistence_days_seen >= 5:
+        return 0.75
+    if persistence_days_seen >= 3:
+        return 0.9
+    return 1.05
+
+
 def calculate_volume_confirmation_multiplier(relative_volume, price_change_1d):
     if relative_volume is None:
         return 1.0
@@ -662,7 +672,9 @@ def apply_rank_scores(result):
     setup_type = classify_setup(result)
     setup_trade_multiplier = SETUP_TRADE_MULTIPLIER.get(setup_type, 0.75)
     risk_score_multiplier = calculate_risk_score_multiplier(risk)
-    freshness_multiplier = result.get("earlyness_multiplier", 1.0) or 1.0
+    freshness_multiplier = calculate_freshness_multiplier(
+        result.get("persistence_days_seen", 1) or 1
+    )
     promotion_trade_multiplier = calculate_promotion_trade_multiplier(promotion_risk)
     volume_confirmation_multiplier = result.get("volume_confirmation_multiplier", 1.0)
 
