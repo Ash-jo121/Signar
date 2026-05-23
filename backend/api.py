@@ -20,9 +20,20 @@ DATA_PATH = "/data/output.json"
 
 def load_data():
     if not os.path.exists(DATA_PATH):
-        return []
+        return {}
     with open(DATA_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def iter_tickers(data):
+    if isinstance(data, list):
+        yield from data
+        return
+
+    if isinstance(data, dict):
+        for key in ("best_trade_candidates", "radar_watchlist", "avoid_high_risk"):
+            for item in data.get(key, []):
+                yield item
 
 
 @app.get("/api/tickers")
@@ -33,7 +44,10 @@ def get_tickers():
 @app.get("/api/tickers/{symbol}")  # pyright: ignore[reportUndefinedVariable]
 def get_ticker(symbol: str):
     data = load_data()
-    result = next((r for r in data if r["ticker"] == symbol.upper()), None)
+    result = next(
+        (r for r in iter_tickers(data) if r["ticker"] == symbol.upper()),
+        None,
+    )
     if not result:
         return {"error": "Ticker not found"}
     return result

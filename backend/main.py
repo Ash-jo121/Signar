@@ -712,6 +712,60 @@ def apply_catalyst_multiplier(result):
         )
 
 
+def is_best_trade_candidate(result):
+    setup_type = result.get("setup_type")
+    days_trending = result.get("days_trending", 1) or 1
+    if result.get("risk_score", 0) > 35:
+        return False
+    if setup_type in {"promotion_risk", "anti_chase", "bagholder_chatter"}:
+        return False
+    if setup_type == "stale_squeeze" and days_trending > 5:
+        return False
+    return True
+
+
+def is_high_risk_candidate(result):
+    setup_type = result.get("setup_type")
+    days_trending = result.get("days_trending", 1) or 1
+    return (
+        result.get("risk_score", 0) > 35
+        or result.get("promotion_risk_score", 0) >= 0.25
+        or setup_type
+        in {
+            "promotion_risk",
+            "anti_chase",
+            "bagholder_chatter",
+            "low_quality_hype",
+            "dilution_risk",
+        }
+        or (setup_type == "stale_squeeze" and days_trending > 5)
+    )
+
+
+def build_output_lists(results, limit=10):
+    best_trade_candidates = sorted(
+        [result for result in results if is_best_trade_candidate(result)],
+        key=lambda result: result.get("trade_score", result.get("final_score", 0)),
+        reverse=True,
+    )[:limit]
+    radar_watchlist = sorted(
+        results,
+        key=lambda result: result.get("radar_score", result.get("final_score", 0)),
+        reverse=True,
+    )[:limit]
+    avoid_high_risk = sorted(
+        [result for result in results if is_high_risk_candidate(result)],
+        key=lambda result: result.get("risk_score", 0),
+        reverse=True,
+    )[:limit]
+
+    return {
+        "best_trade_candidates": best_trade_candidates,
+        "radar_watchlist": radar_watchlist,
+        "avoid_high_risk": avoid_high_risk,
+    }
+
+
 def has_diverse_contexts(contexts, min_unique_patterns=3):
     patterns = set(c["full"][:30] for c in contexts)
     return len(patterns) >= min_unique_patterns
@@ -1536,8 +1590,9 @@ if __name__ == "__main__":
 
     print("\nStep 6: Writing output to files...\n")
 
+    output_lists = build_output_lists(results)
     with open("output.json", "w", encoding="utf-8") as file:
-        json.dump(results[:10], file, indent=2, ensure_ascii=False)
+        json.dump(output_lists, file, indent=2, ensure_ascii=False)
 
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
@@ -1545,30 +1600,39 @@ if __name__ == "__main__":
         output_dir, f"output_{date.today().strftime('%Y-%m-%d')}.json"
     )
     with open(dated_file, "w", encoding="utf-8") as file:
-        json.dump(results[:10], file, indent=2, ensure_ascii=False)
+        json.dump(output_lists, file, indent=2, ensure_ascii=False)
     print(f"Output written to {dated_file}")
 
+    output_sections = [
+        ("Best Trade Candidates", output_lists["best_trade_candidates"]),
+        ("Radar Watchlist", output_lists["radar_watchlist"]),
+        ("Avoid / High-Risk", output_lists["avoid_high_risk"]),
+    ]
     with open("output.txt", "w", encoding="utf-8") as file:
-        for r in results[:10]:
-            catalyst_str = (
-                f"[CATALYST: {r.get('catalyst_type', 'none').upper()}]"
-                if r.get("has_catalyst")
-                else "[NO CATALYST]"
-            )
-            mod_str = (
-                f"[MOD FLAG: {r.get('mod_flag_type', '').upper()}]"
-                if r.get("mod_flagged")
-                else ""
-            )
-            setup_str = f"[SETUP: {r.get('setup_type', 'unknown').upper()}]"
-            file.write(f"${r['ticker']} {setup_str} {catalyst_str} {mod_str}\n")
-            file.write(
-                f"  Mentions: {r['mentions']} | Sentiment: {r['avg_sentiment']:+.3f} "
-                f"| Radar: {r.get('radar_score', 0):+.3f} "
-                f"| Trade: {r.get('trade_score', r['final_score']):+.3f} "
-                f"| Risk: {r.get('risk_score', 0):.1f} ({r.get('risk_level', 'n/a')})\n"
-            )
-            file.write(
-                f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
-            )
+        for section_name, section_results in output_sections:
+            file.write(f"{section_name}\n")
+            file.write("=" * len(section_name) + "\n\n")
+            for r in section_results:
+                catalyst_str = (
+                    f"[CATALYST: {r.get('catalyst_type', 'none').upper()}]"
+                    if r.get("has_catalyst")
+                    else "[NO CATALYST]"
+                )
+                mod_str = (
+                    f"[MOD FLAG: {r.get('mod_flag_type', '').upper()}]"
+                    if r.get("mod_flagged")
+                    else ""
+                )
+                setup_str = f"[SETUP: {r.get('setup_type', 'unknown').upper()}]"
+                file.write(f"${r['ticker']} {setup_str} {catalyst_str} {mod_str}\n")
+                file.write(
+                    f"  Mentions: {r['mentions']} | Sentiment: {r['avg_sentiment']:+.3f} "
+                    f"| Radar: {r.get('radar_score', 0):+.3f} "
+                    f"| Trade: {r.get('trade_score', r['final_score']):+.3f} "
+                    f"| Risk: {r.get('risk_score', 0):.1f} ({r.get('risk_level', 'n/a')})\n"
+                )
+                file.write(
+                    f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
+                )
+                file.write("\n")
             file.write("\n")
