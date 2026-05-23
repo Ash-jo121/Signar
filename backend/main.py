@@ -25,7 +25,6 @@ from sentiment import (
 from tqdm import tqdm
 import traceback
 
-
 CATALYST_MULTIPLIERS = {
     "none": 1.05,
     "merger": 1.08,
@@ -113,9 +112,7 @@ def get_catalyst_multiplier(catalyst_type, confidence=1.0):
 
 
 def calculate_cross_subreddit_multiplier(subreddit_count):
-    return {1: 1.0, 2: 1.1, 3: 1.18, 4: 1.25}.get(
-        min(max(subreddit_count, 1), 4), 1.25
-    )
+    return {1: 1.0, 2: 1.1, 3: 1.18, 4: 1.25}.get(min(max(subreddit_count, 1), 4), 1.25)
 
 
 def calculate_subreddit_multiplier(subreddit_mentions):
@@ -1012,10 +1009,7 @@ def analyze_ticker_sentiment(all_posts):
             else:
                 engagement_ratio = 0
 
-            final_score = (
-                avg_sentiment
-                * (1 + math.log(1 + data["mentions"]) * 0.1)
-            )
+            final_score = avg_sentiment * (1 + math.log(1 + data["mentions"]) * 0.1)
             base_final_score = final_score
             signal_multipliers = calculate_signal_multipliers(
                 data, engagement_ratio, avg_sentiment
@@ -1089,9 +1083,7 @@ def analyze_ticker_sentiment(all_posts):
                     promotion_risk["promotion_risk_score"], 3
                 ),
                 "promotion_terms_count": promotion_risk["promotion_terms_count"],
-                "unrealistic_target_count": promotion_risk[
-                    "unrealistic_target_count"
-                ],
+                "unrealistic_target_count": promotion_risk["unrealistic_target_count"],
                 "combined_signal_multiplier": round(combined_signal_multiplier, 3),
                 "subreddits_mentioning_ticker": signal_multipliers[
                     "subreddits_mentioning_ticker"
@@ -1267,8 +1259,7 @@ def apply_repetition_decay(results):
             original = result["final_score"]
             result["final_score"] = round(original * persistence_multiplier, 3)
             result["combined_signal_multiplier"] = round(
-                result.get("combined_signal_multiplier", 1.0)
-                * persistence_multiplier,
+                result.get("combined_signal_multiplier", 1.0) * persistence_multiplier,
                 3,
             )
             print(
@@ -1358,8 +1349,7 @@ if __name__ == "__main__":
                 result["final_score"] = round(original * vampire_multiplier, 3)
                 result["vampire_multiplier"] = vampire_multiplier
                 result["combined_signal_multiplier"] = round(
-                    result.get("combined_signal_multiplier", 1.0)
-                    * vampire_multiplier,
+                    result.get("combined_signal_multiplier", 1.0) * vampire_multiplier,
                     3,
                 )
 
@@ -1545,10 +1535,3 @@ if __name__ == "__main__":
                 f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
             )
             file.write("\n")
-
-    print("\nStep 7: Updating Google Sheet...")
-    try:
-        update_spreadsheet(results)
-    except Exception as e:
-        print(f"Google Sheets update failed: {e}")
-        print("output.json was already saved — data is not lost")
