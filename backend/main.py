@@ -549,18 +549,43 @@ def risk_level(risk_score):
 
 def calculate_radar_score(result):
     """
-    Score unusual Reddit attention, independent of whether the setup is tradable.
+    Preserve the blended signal before trade-specific risk compression.
 
-    This intentionally ignores price-action risk, promotion risk, and catalyst
-    danger. A ticker can have a high radar score while still having a low trade
-    score if the discussion looks crowded, promotional, or late.
+    A ticker can have a high radar score while still having a low trade score if
+    the setup is crowded, promotional, stale, or already extended.
     """
-    mentions = result.get("mentions", 0) or 0
-    return (
-        math.log1p(max(mentions, 0))
-        * result.get("social_conviction_multiplier", 1.0)
-        * result.get("subreddit_multiplier", 1.0)
-    )
+    return result.get("signal_score", result.get("final_score", 0)) or 0
+
+
+SETUP_TRADE_MULTIPLIER = {
+    "clean_momentum": 1.10,
+    "early_discovery": 1.15,
+    "post_spike_pullback": 0.85,
+    "stale_squeeze": 0.70,
+    "anti_chase": 0.60,
+    "promotion_risk": 0.50,
+    "bagholder_chatter": 0.45,
+    "low_quality_hype": 0.40,
+    "dilution_risk": 0.35,
+}
+
+
+def calculate_risk_score_multiplier(risk_score):
+    if risk_score >= 40:
+        return 0.45
+    if risk_score >= 30:
+        return 0.65
+    if risk_score >= 20:
+        return 0.85
+    return 1.0
+
+
+def calculate_promotion_trade_multiplier(promotion_risk_score):
+    if promotion_risk_score >= 0.5:
+        return 0.65
+    if promotion_risk_score >= 0.25:
+        return 0.8
+    return 1.0
 
 
 def calculate_volume_confirmation_multiplier(relative_volume, price_change_1d):
@@ -591,7 +616,7 @@ def classify_setup(result):
     days_trending = result.get("days_trending", 1) or 1
     mention_velocity = result.get("mention_velocity_label")
     post_quality = result.get("post_quality_multiplier", 1.0) or 1.0
-    trade_score = result.get("trade_score", result.get("final_score", 0)) or 0
+    radar_score = result.get("radar_score", result.get("final_score", 0)) or 0
 
     if catalyst_type == "capital raise":
         return "dilution_risk"
@@ -613,7 +638,7 @@ def classify_setup(result):
         return "bagholder_chatter"
     if days_since_first_seen == 0 and 5 <= mentions <= 20 and risk < 45:
         return "early_discovery"
-    if trade_score > 0 and risk < 35 and 5 <= mentions <= 20:
+    if radar_score > 0 and risk < 35 and 5 <= mentions <= 20:
         return "clean_momentum"
     if promotion_risk > 0:
         return "low_quality_hype"
@@ -630,25 +655,37 @@ def apply_rank_scores(result):
         result["signal_score"] = round(result.get("final_score", 0), 3)
 
     radar_score = calculate_radar_score(result)
+    result["radar_score"] = round(radar_score, 3)
+
     risk = calculate_risk_score(result)
-    signal_score = result.get("signal_score", result.get("final_score", 0)) or 0
-    risk_dampener = risk / 100 * 0.4
     promotion_risk = result.get("promotion_risk_score", 0) or 0
-    promotion_trade_multiplier = 0.75 if promotion_risk > 0.5 else 1.0
+    setup_type = classify_setup(result)
+    setup_trade_multiplier = SETUP_TRADE_MULTIPLIER.get(setup_type, 0.75)
+    risk_score_multiplier = calculate_risk_score_multiplier(risk)
+    freshness_multiplier = result.get("earlyness_multiplier", 1.0) or 1.0
+    promotion_trade_multiplier = calculate_promotion_trade_multiplier(promotion_risk)
     volume_confirmation_multiplier = result.get("volume_confirmation_multiplier", 1.0)
 
-    if signal_score >= 0:
-        trade_score = signal_score * (1 - risk_dampener)
+    combined_trade_multiplier = (
+        setup_trade_multiplier
+        * risk_score_multiplier
+        * freshness_multiplier
+        * promotion_trade_multiplier
+        * volume_confirmation_multiplier
+    )
+    if radar_score >= 0:
+        trade_score = radar_score * combined_trade_multiplier
     else:
-        trade_score = signal_score * (1 + risk_dampener)
-    trade_score *= promotion_trade_multiplier * volume_confirmation_multiplier
+        trade_score = radar_score * (2 - min(combined_trade_multiplier, 1.0))
 
-    result["radar_score"] = round(radar_score, 3)
     result["trade_score"] = round(trade_score, 3)
     result["risk_score"] = risk
     result["risk_level"] = risk_level(risk)
+    result["setup_trade_multiplier"] = round(setup_trade_multiplier, 3)
+    result["risk_score_multiplier"] = round(risk_score_multiplier, 3)
+    result["freshness_multiplier"] = round(freshness_multiplier, 3)
     result["promotion_trade_multiplier"] = promotion_trade_multiplier
-    result["setup_type"] = classify_setup(result)
+    result["setup_type"] = setup_type
     result["final_score"] = result["trade_score"]
 
 
