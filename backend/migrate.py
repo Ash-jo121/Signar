@@ -8,6 +8,10 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "threadradar.db")
 # Keep derived scoring/explanation fields out of the core daily/performance tables.
 # The app can join score_metadata by (date, ticker), while backtests can join it
 # with performance_tracking using flagged_date = date.
+#
+# New score metadata columns should be added to database.SCORE_METADATA_COLUMNS.
+# This migration imports that list and idempotently adds any missing columns to
+# score_metadata, so we do not need to duplicate the column list here.
 
 
 def get_columns(conn, table):
@@ -25,7 +29,12 @@ def ensure_column(conn, table, column, definition):
 
 
 def ensure_score_metadata_table(conn):
-    """Create the normalized daily score metadata table if it is missing."""
+    """
+    Create or update the normalized daily score metadata table.
+
+    SCORE_METADATA_COLUMNS is the source of truth. The loop below is what
+    migrates newly added columns such as setup/risk/freshness multipliers.
+    """
     score_column_defs = ",\n            ".join(
         f"{column} {definition}" for column, definition in SCORE_METADATA_COLUMNS
     )
