@@ -1,40 +1,40 @@
-$CXAI [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 26.3 | Sentiment: +0.511 | Radar: +4.000 | Trade: +0.863 | Risk: 24.5 (low)
+$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
+  Mentions: 5.3 | Sentiment: +0.701 | Radar: +2.248 | Trade: +0.889 | Risk: 31.8 (medium)
+  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+
+$QNCX [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
+  Mentions: 5.0 | Sentiment: +0.804 | Radar: +1.958 | Trade: +0.608 | Risk: 29.8 (medium)
+  Context: Current QNCX squeeze AI data readout. HUGE if we came together. But only for a short time. Not a shi
+
+$CXAI [SETUP: STALE_SQUEEZE] [CATALYST: CONTRACT] 
+  Mentions: 28.5 | Sentiment: +0.460 | Radar: +3.894 | Trade: +0.593 | Risk: 18.6 (low)
   Context: CXAI - Fast RECAP | Growing Organically Back Up To $1 Fortune 500:   The company has confirmed that 
 
-$GDC [SETUP: STALE_SQUEEZE] [CATALYST: SEC FILING] 
-  Mentions: 12.1 | Sentiment: +0.345 | Radar: +3.704 | Trade: +0.550 | Risk: 13.8 (low)
-  Context: I believe this stock is very undervalued ($GDC) This stock is unbelievably interesting to me. Im ext
+$XRX [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.4 | Sentiment: +0.824 | Radar: +2.621 | Trade: +0.556 | Risk: 34.2 (medium)
+  Context: XRX up 15% I know a lot of you hate seeing this ticker but some of us are still in this play. It’s l
 
-$SRXH [SETUP: ANTI_CHASE] [CATALYST: MERGER] 
-  Mentions: 30.4 | Sentiment: +0.312 | Radar: +4.719 | Trade: +0.500 | Risk: 19.8 (low)
-  Context: SRXH/EMJX with SpaceX as a catalyst? With the valuation of SpaceX seemingly going up everyday, doesn
+$QUCY [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
+  Mentions: 14.1 | Sentiment: +0.433 | Radar: +3.901 | Trade: +0.488 | Risk: 21.0 (low)
+  Context: 21 MAY 2026 , WHAT ARE THE BIGGEST WINNERS AND WHY BIGGEST WINNERS TODAY PRE-MARKET  |Company|Ticker
 
-$NXXT [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 6 | Sentiment: +0.526 | Radar: +2.204 | Trade: +0.493 | Risk: 21.8 (low)
-  Context: NXXT’s smart pivot: Zero extra capital, massive TAM expansion via Gopuff (EzShop DD) NextNRG just ex
-
-$ALP [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 14.3 | Sentiment: +0.362 | Radar: +3.924 | Trade: +0.476 | Risk: 32.2 (medium)
+$ALP [SETUP: STALE_SQUEEZE] [CATALYST: PARTNERSHIP] 
+  Mentions: 17.9 | Sentiment: +0.275 | Radar: +4.232 | Trade: +0.488 | Risk: 10.8 (low)
   Context: Alpha Compute Corp. Provides Mid-Q2 2026 Update Alpha Compute Corp. Provides Mid-Q2 2026 Update By: 
 
-$FLYX [SETUP: EARLY_DISCOVERY] [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.362 | Radar: +2.245 | Trade: +0.439 | Risk: 18.8 (low)
-  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
+$FEMY [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.9 | Sentiment: +0.581 | Radar: +2.565 | Trade: +0.462 | Risk: 32.8 (medium)
+  Context: I been bag holding this for months, hoping Tuesday can provide me an offramp
 
-$SEGG [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
-  Mentions: 6.3 | Sentiment: +0.433 | Radar: +2.546 | Trade: +0.384 | Risk: 24.2 (low)
-  Context: Honestly, I have three and they are my top 3 holdings.   1. SEGG: Extremely tight on cash, so defini
-
-$GCTS [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 29.7 | Sentiment: +0.376 | Radar: +4.503 | Trade: +0.336 | Risk: 40.8 (medium)
+$GCTS [SETUP: STALE_SQUEEZE] [CATALYST: PRODUCTION] 
+  Mentions: 29.0 | Sentiment: +0.290 | Radar: +4.678 | Trade: +0.410 | Risk: 17.9 (low)
   Context: I just yeet'ed 420 dollars in the GCTS So I just wanted to let everybody here know that this semicon
 
-$GPUS [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 19.9 | Sentiment: +0.286 | Radar: +4.333 | Trade: +0.305 | Risk: 27.2 (medium)
-  Context: GPUS CEO just bought half million stock. The common stock was purchased by the reporting person in o
+$HCWB [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 6.4 | Sentiment: +0.316 | Radar: +2.399 | Trade: +0.410 | Risk: 20.5 (low)
+  Context: HVWB looking like a possible good play this morning. HCWB\*\*. Who’s watching this one? If it contin
 
-$BZAI [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 5.0 | Sentiment: +0.334 | Radar: +1.958 | Trade: +0.297 | Risk: 24.5 (low)
-  Context: Wow, this is a super thorough breakdown, man. You've hit on some really critical points with BZAI. T
+$HMR [SETUP: ANTI_CHASE] [CATALYST: EARNINGS] 
+  Mentions: 5.0 | Sentiment: +0.512 | Radar: +2.426 | Trade: +0.403 | Risk: 37.5 (medium)
+  Context: Trusted you with HMR - wondering if I should try again? If we can continue to make small gains I’m d
 
