@@ -185,6 +185,12 @@ REAL catalysts (has_catalyst = true):
 - Capital raise with specific dollar amount
 - Production milestone with specific numbers (e.g. doubling output)
 
+Only mark has_catalyst=true when the comments include a concrete event for {ticker}
+such as an SEC filing, press release, named news/event wording, exact date, named
+counterparty, dollar amount, approval/result, or production/earnings number.
+If the discussion is plausible but unverified, classify it as has_catalyst=false
+with catalyst_type="none" and explain that it is rumor/discussion.
+
 NOT catalysts (has_catalyst = false):
 - Short squeeze setup, float/short interest discussion
 - Cost to borrow (CTB) spikes
@@ -200,6 +206,7 @@ NOT catalysts (has_catalyst = false):
 - Reverse stock split announcement
 - Share dilution or offering announcement
 - Insider ownership percentage without named event
+- Rumors, speculation, "could announce", "might partner", or unsourced Reddit claims
 
 Return ONLY the JSON object. No explanation. No array. No markdown.""",
                 }

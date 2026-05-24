@@ -92,6 +92,40 @@ UNREALISTIC_TARGET_PATTERNS = [
     r"\bguaranteed\b",
 ]
 
+CATALYST_CONFIDENCE_THRESHOLD = 0.75
+
+CONCRETE_CATALYST_PATTERNS = [
+    r"\bsec filing\b",
+    r"\b8-k\b",
+    r"\b10-q\b",
+    r"\b10-k\b",
+    r"\bs-1\b",
+    r"\bform 4\b",
+    r"\bpress release\b",
+    r"\bnews release\b",
+    r"\bglobenewswire\b",
+    r"\bpr newswire\b",
+    r"\bannounced\b",
+    r"\bapproval\b",
+    r"\bpdufa\b",
+    r"\bphase\s+[123]\b",
+    r"\btrial results?\b",
+    r"\bclinical data\b",
+    r"\bawarded\b",
+    r"\bcontract\b",
+    r"\bagreement\b",
+    r"\bpartnership with\b",
+    r"\bmerger agreement\b",
+    r"\bacquisition\b",
+    r"\bearnings\b",
+    r"\brevenue\b",
+    r"\bguidance\b",
+    r"\bproduction milestone\b",
+    r"\$\s?\d+(?:\.\d+)?\s?(?:m|mn|million|b|bn|billion)\b",
+    r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b",
+    r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\s+\d{1,2}\b",
+]
+
 
 def clamp(value, minimum, maximum):
     return min(max(value, minimum), maximum)
@@ -110,6 +144,53 @@ def get_catalyst_multiplier(catalyst_type, confidence=1.0):
         (1 - CATALYST_CONFIDENCE_BLEND) * confidence
     )
     return 1.0 + ((raw_multiplier - 1.0) * blended_confidence)
+
+
+def has_concrete_catalyst_evidence(reasoning, contexts):
+    evidence_text = " ".join([reasoning or "", *contexts[:5]]).lower()
+    return any(
+        re.search(pattern, evidence_text, re.IGNORECASE)
+        for pattern in CONCRETE_CATALYST_PATTERNS
+    )
+
+
+def validate_catalyst_signal(catalyst, contexts):
+    confidence = catalyst.get("confidence", 0.0) or 0.0
+    has_catalyst = bool(catalyst.get("has_catalyst"))
+    catalyst_type = normalize_catalyst_type(catalyst.get("catalyst_type", "none"))
+    has_concrete_event = has_concrete_catalyst_evidence(
+        catalyst.get("reasoning", ""),
+        contexts,
+    )
+    multiplier_eligible = (
+        has_catalyst
+        and catalyst_type != "none"
+        and confidence >= CATALYST_CONFIDENCE_THRESHOLD
+        and has_concrete_event
+    )
+
+    validated = dict(catalyst)
+    validated["catalyst_type"] = catalyst_type if multiplier_eligible else "none"
+    validated["has_catalyst"] = multiplier_eligible
+    validated["confidence"] = round(confidence, 2)
+    validated["catalyst_multiplier_eligible"] = multiplier_eligible
+    validated["catalyst_has_concrete_event"] = has_concrete_event
+    validated["catalyst_gate_reason"] = None
+
+    if not multiplier_eligible:
+        if not has_catalyst or catalyst_type == "none":
+            gate_reason = "no_catalyst"
+        elif confidence < CATALYST_CONFIDENCE_THRESHOLD:
+            gate_reason = "low_confidence"
+        elif not has_concrete_event:
+            gate_reason = "no_concrete_event"
+        else:
+            gate_reason = "not_multiplier_eligible"
+        validated["catalyst_gate_reason"] = gate_reason
+        validated["catalyst_type"] = "none"
+        validated["has_catalyst"] = False
+
+    return validated
 
 
 def calculate_cross_subreddit_multiplier(subreddit_count):
@@ -703,6 +784,15 @@ def apply_rank_scores(result):
 
 
 def apply_catalyst_multiplier(result):
+    if not result.get("catalyst_multiplier_eligible", False):
+        result["catalyst_multiplier"] = 1.0
+        apply_rank_scores(result)
+        print(
+            f"  {result['ticker']}: catalyst neutral "
+            f"({result.get('catalyst_gate_reason', 'not_eligible')})"
+        )
+        return
+
     catalyst_multiplier = get_catalyst_multiplier(
         result.get("catalyst_type", "none"),
         result.get("catalyst_confidence", 1.0),
@@ -1569,16 +1659,28 @@ if __name__ == "__main__":
         if not context_texts:
             context_texts = [ctx["text"] for ctx in result.get("top_contexts", [])]
 
-        catalyst = assess_catalyst_quality(result["ticker"], context_texts)
+        catalyst = validate_catalyst_signal(
+            assess_catalyst_quality(result["ticker"], context_texts),
+            context_texts,
+        )
         result["has_catalyst"] = catalyst["has_catalyst"]
         result["catalyst_type"] = catalyst["catalyst_type"]
         result["catalyst_confidence"] = catalyst["confidence"]
+        result["catalyst_reasoning"] = catalyst.get("reasoning", "")
+        result["catalyst_multiplier_eligible"] = catalyst[
+            "catalyst_multiplier_eligible"
+        ]
+        result["catalyst_has_concrete_event"] = catalyst[
+            "catalyst_has_concrete_event"
+        ]
+        result["catalyst_gate_reason"] = catalyst["catalyst_gate_reason"]
         apply_catalyst_multiplier(result)
         catalyst_calls += 1
         print(
             f"  {result['ticker']}: has_catalyst={catalyst['has_catalyst']} "
             f"type={catalyst['catalyst_type']} "
             f"confidence={catalyst['confidence']} "
+            f"gate={catalyst['catalyst_gate_reason'] or 'eligible'} "
             f"| {catalyst['reasoning']}"
         )
 
