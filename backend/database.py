@@ -46,11 +46,30 @@ SCORE_METADATA_COLUMNS = [
     ("price_change_1d", "REAL"),
     ("price_change_3d", "REAL"),
     ("price_change_7d", "REAL"),
+    ("previous_close", "REAL"),
+    ("open_price", "REAL"),
+    ("high_price", "REAL"),
+    ("low_price", "REAL"),
+    ("close_price", "REAL"),
+    ("adjusted_close", "REAL"),
     ("average_volume", "REAL"),
+    ("avg_volume_10d", "REAL"),
+    ("avg_volume_30d", "REAL"),
     ("relative_volume", "REAL"),
+    ("relative_volume_10d", "REAL"),
+    ("relative_volume_30d", "REAL"),
     ("dollar_volume", "REAL"),
     ("volume_change_vs_avg", "REAL"),
+    ("gap_pct", "REAL"),
+    ("intraday_range_pct", "REAL"),
+    ("distance_from_20dma_pct", "REAL"),
+    ("market_data_as_of", "TEXT"),
+    ("market_data_source", "TEXT"),
+    ("market_data_timestamp", "TEXT"),
+    ("liquidity_multiplier", "REAL DEFAULT 1.0"),
     ("volume_confirmation_multiplier", "REAL DEFAULT 1.0"),
+    ("anti_chase_multiplier", "REAL DEFAULT 1.0"),
+    ("market_confirmation_status", "TEXT"),
 ]
 
 RUN_METADATA_COLUMNS = [
@@ -107,11 +126,30 @@ def score_metadata_values(result):
         result.get("price_change_1d"),
         result.get("price_change_3d"),
         result.get("price_change_7d"),
+        result.get("previous_close"),
+        result.get("open_price"),
+        result.get("high_price"),
+        result.get("low_price"),
+        result.get("close_price"),
+        result.get("adjusted_close"),
         result.get("average_volume"),
+        result.get("avg_volume_10d"),
+        result.get("avg_volume_30d"),
         result.get("relative_volume"),
+        result.get("relative_volume_10d"),
+        result.get("relative_volume_30d"),
         result.get("dollar_volume"),
         result.get("volume_change_vs_avg"),
+        result.get("gap_pct"),
+        result.get("intraday_range_pct"),
+        result.get("distance_from_20dma_pct"),
+        result.get("market_data_as_of"),
+        result.get("market_data_source"),
+        result.get("market_data_timestamp"),
+        result.get("liquidity_multiplier", 1.0),
         result.get("volume_confirmation_multiplier", 1.0),
+        result.get("anti_chase_multiplier", 1.0),
+        result.get("market_confirmation_status"),
     )
 
 
@@ -151,6 +189,42 @@ def save_run_metadata(conn, metadata):
             metadata["price_update_status"],
             1 if metadata["eligible_for_backtest"] else 0,
             1 if metadata["next_trading_session_signal"] else 0,
+        ),
+    )
+
+
+def save_market_data_snapshot(conn, result):
+    market_date = result.get("market_data_as_of")
+    if not market_date:
+        return
+
+    conn.execute(
+        """
+        INSERT INTO ticker_daily_market_data
+        (ticker, date, open_price, high_price, low_price, close_price,
+         adjusted_close, volume, source, fetched_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(ticker, date) DO UPDATE SET
+            open_price = excluded.open_price,
+            high_price = excluded.high_price,
+            low_price = excluded.low_price,
+            close_price = excluded.close_price,
+            adjusted_close = excluded.adjusted_close,
+            volume = excluded.volume,
+            source = excluded.source,
+            fetched_at = excluded.fetched_at
+        """,
+        (
+            result["ticker"],
+            market_date,
+            result.get("open_price"),
+            result.get("high_price"),
+            result.get("low_price"),
+            result.get("close_price", result.get("price")),
+            result.get("adjusted_close"),
+            result.get("volume"),
+            result.get("market_data_source", "yfinance"),
+            result.get("market_data_timestamp"),
         ),
     )
 
@@ -271,6 +345,20 @@ def init_db():
             eligible_for_backtest INTEGER DEFAULT 1,
             next_trading_session_signal INTEGER DEFAULT 0
         );
+
+        CREATE TABLE IF NOT EXISTS ticker_daily_market_data (
+            ticker TEXT NOT NULL,
+            date TEXT NOT NULL,
+            open_price REAL,
+            high_price REAL,
+            low_price REAL,
+            close_price REAL,
+            adjusted_close REAL,
+            volume REAL,
+            source TEXT,
+            fetched_at TEXT,
+            PRIMARY KEY(ticker, date)
+        );
         """)
     conn.execute(
         f"""
@@ -339,6 +427,7 @@ def save_daily_results(results, date=None, run_metadata=None):
                 ),
             )
             save_score_metadata(conn, result, date)
+            save_market_data_snapshot(conn, result)
 
             for ctx in result.get("top_contexts", []):
                 conn.execute(

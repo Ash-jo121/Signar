@@ -521,6 +521,8 @@ def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
 def calculate_risk_score(result):
     """Estimate how dangerous/chase-like the setup is on a 0-100 scale."""
     change_percent = result.get("change_percent", 0) or 0
+    change_3d = result.get("price_change_3d")
+    change_7d = result.get("price_change_7d")
     mentions = result.get("mentions", 0) or 0
     avg_sentiment = result.get("avg_sentiment", 0) or 0
     catalyst_type = normalize_catalyst_type(result.get("catalyst_type", "none"))
@@ -536,6 +538,12 @@ def calculate_risk_score(result):
         chase_risk = 0.25
     else:
         chase_risk = 0.05
+    if change_3d is not None and change_3d > 75:
+        chase_risk = max(chase_risk, 0.85)
+    elif change_3d is not None and change_3d > 40:
+        chase_risk = max(chase_risk, 0.55)
+    if change_7d is not None and change_7d > 100:
+        chase_risk = max(chase_risk, 0.85)
 
     if mentions > 35:
         mention_risk = 0.5
@@ -593,6 +601,13 @@ def calculate_risk_score(result):
         and result.get("relative_volume") < 0.8
         else 0
     )
+    if result.get("market_confirmation_status") in {
+        "confirmed_but_extended",
+        "price_without_volume",
+        "illiquid",
+        "post_spike_reversal",
+    }:
+        volume_risk = max(volume_risk, 0.45)
     concentration_risk = 0
     if result.get("top_author_share", 0) >= 0.6:
         concentration_risk = 0.7
@@ -693,13 +708,60 @@ def calculate_freshness_multiplier(persistence_days_seen):
     return 1.05
 
 
+def calculate_liquidity_multiplier(dollar_volume):
+    if dollar_volume is None:
+        return 0.90
+    if dollar_volume < 100_000:
+        return 0.40
+    if dollar_volume < 500_000:
+        return 0.65
+    if dollar_volume < 1_000_000:
+        return 0.80
+    if dollar_volume < 5_000_000:
+        return 1.00
+    return 1.05
+
+
+def calculate_anti_chase_multiplier(change_1d, change_3d=None, change_7d=None):
+    penalty = 1.0
+    if change_1d is not None:
+        if change_1d > 75:
+            penalty *= 0.45
+        elif change_1d > 50:
+            penalty *= 0.55
+        elif change_1d > 30:
+            penalty *= 0.70
+        elif change_1d > 15:
+            penalty *= 0.85
+
+    if change_3d is not None:
+        if change_3d > 120:
+            penalty *= 0.55
+        elif change_3d > 75:
+            penalty *= 0.70
+        elif change_3d > 40:
+            penalty *= 0.85
+
+    if change_7d is not None:
+        if change_7d > 200:
+            penalty *= 0.55
+        elif change_7d > 100:
+            penalty *= 0.75
+
+    return max(penalty, 0.25)
+
+
 def calculate_volume_confirmation_multiplier(relative_volume, price_change_1d):
     if relative_volume is None:
         return 1.0
-    if relative_volume >= 3 and (price_change_1d or 0) < 20:
-        return 1.10
     if relative_volume < 0.8:
         return 0.85
+    if 2 <= relative_volume <= 5 and (price_change_1d or 0) < 15:
+        return 1.10
+    if 5 < relative_volume <= 12 and (price_change_1d or 0) < 20:
+        return 1.15
+    if relative_volume > 15 and (price_change_1d or 0) > 30:
+        return 0.75
     return 1.0
 
 
@@ -707,6 +769,31 @@ def pct_change(current, previous):
     if current is None or previous is None or previous <= 0:
         return None
     return ((current - previous) / previous) * 100
+
+
+def classify_market_confirmation(
+    relative_volume,
+    change_1d,
+    change_3d=None,
+    dollar_volume=None,
+):
+    if dollar_volume is not None and dollar_volume < 500_000:
+        return "illiquid"
+    if relative_volume is None or change_1d is None:
+        return "unknown"
+    if change_1d < -20 and relative_volume >= 3:
+        return "post_spike_reversal"
+    if relative_volume >= 2 and 0 <= change_1d <= 15:
+        return "confirmed_early"
+    if relative_volume >= 5 and change_1d > 30:
+        return "confirmed_but_extended"
+    if relative_volume >= 3 and change_1d < 0:
+        return "volume_without_price"
+    if relative_volume < 1 and change_1d > 10:
+        return "price_without_volume"
+    if relative_volume < 1:
+        return "no_confirmation"
+    return "neutral"
 
 
 def classify_setup(result):
@@ -771,14 +858,18 @@ def apply_rank_scores(result):
         result.get("persistence_days_seen", 1) or 1
     )
     promotion_trade_multiplier = calculate_promotion_trade_multiplier(promotion_risk)
+    liquidity_multiplier = result.get("liquidity_multiplier", 1.0)
     volume_confirmation_multiplier = result.get("volume_confirmation_multiplier", 1.0)
+    anti_chase_multiplier = result.get("anti_chase_multiplier", 1.0)
 
     combined_trade_multiplier = (
         setup_trade_multiplier
         * risk_score_multiplier
         * freshness_multiplier
         * promotion_trade_multiplier
+        * liquidity_multiplier
         * volume_confirmation_multiplier
+        * anti_chase_multiplier
     )
     if radar_score >= 0:
         trade_score = radar_score * combined_trade_multiplier
@@ -792,6 +883,9 @@ def apply_rank_scores(result):
     result["risk_score_multiplier"] = round(risk_score_multiplier, 3)
     result["freshness_multiplier"] = round(freshness_multiplier, 3)
     result["promotion_trade_multiplier"] = promotion_trade_multiplier
+    result["liquidity_multiplier"] = round(liquidity_multiplier, 3)
+    result["volume_confirmation_multiplier"] = round(volume_confirmation_multiplier, 3)
+    result["anti_chase_multiplier"] = round(anti_chase_multiplier, 3)
     result["setup_type"] = setup_type
     result["final_score"] = result["trade_score"]
     apply_risk_adjusted_recommendation(result)
@@ -831,6 +925,7 @@ def apply_catalyst_multiplier(result):
 
 def is_best_trade_candidate(result):
     setup_type = result.get("setup_type")
+    market_status = result.get("market_confirmation_status")
     days_trending = result.get("days_trending", 1) or 1
     if result.get("risk_score", 0) > 35:
         return False
@@ -838,11 +933,19 @@ def is_best_trade_candidate(result):
         return False
     if setup_type == "stale_squeeze" and days_trending > 5:
         return False
+    if market_status in {
+        "confirmed_but_extended",
+        "price_without_volume",
+        "illiquid",
+        "post_spike_reversal",
+    }:
+        return False
     return True
 
 
 def is_high_risk_candidate(result):
     setup_type = result.get("setup_type")
+    market_status = result.get("market_confirmation_status")
     days_trending = result.get("days_trending", 1) or 1
     return (
         result.get("risk_score", 0) > 35
@@ -856,6 +959,13 @@ def is_high_risk_candidate(result):
             "dilution_risk",
         }
         or (setup_type == "stale_squeeze" and days_trending > 5)
+        or market_status
+        in {
+            "confirmed_but_extended",
+            "price_without_volume",
+            "illiquid",
+            "post_spike_reversal",
+        }
     )
 
 
@@ -867,6 +977,7 @@ def build_ranking_reason(result):
     avg_sentiment = result.get("avg_sentiment", 0) or 0
     risk_level_value = result.get("risk_level", "unknown")
     setup_type = result.get("setup_type")
+    market_status = result.get("market_confirmation_status")
 
     if 10 <= mentions <= 20:
         positive.append("mention sweet spot")
@@ -921,6 +1032,16 @@ def build_ranking_reason(result):
     elif result.get("unique_authors", 0) >= 4:
         positive.append("multiple authors discussing")
 
+    if market_status == "confirmed_early":
+        positive.append("volume confirmed early")
+    elif market_status in {
+        "confirmed_but_extended",
+        "price_without_volume",
+        "illiquid",
+        "post_spike_reversal",
+    }:
+        negative.append(market_status.replace("_", " "))
+
     return {
         "positive": positive[:5],
         "negative": negative[:5],
@@ -965,6 +1086,12 @@ def attach_run_metadata(results, metadata):
         ]
         if metadata.get("market_closed_reason"):
             result["market_closed_reason"] = metadata["market_closed_reason"]
+        if isinstance(result.get("market_data"), dict):
+            result["market_data"]["market_session"] = metadata["market_session"]
+            result["market_data"]["signal_date"] = metadata["run_date"]
+            result["market_data"]["market_data_as_of"] = result.get(
+                "market_data_as_of"
+            )
 
 
 def has_diverse_contexts(contexts, min_unique_patterns=3):
@@ -1052,44 +1179,42 @@ def apply_mod_penalty(result):
 
 def apply_anti_chase_penalty(result):
     """
-    Penalize stocks that already made a large same-day move.
+    Mark stocks that already made a large move across 1d/3d/7d windows.
 
-    This turns price action into a timing signal: strong Reddit attention after
-    a large move is more likely late-cycle excitement than early discovery.
+    Price action is a trade timing signal, so this stores the multiplier for
+    trade_score instead of compressing radar_score.
     """
-    change_percent = result.get("change_percent", 0) or 0
-    if change_percent > 30:
-        multiplier = 0.65
-    elif change_percent > 15:
-        multiplier = 0.80
-    elif change_percent > 5:
-        multiplier = 0.95
-    else:
-        multiplier = 1.0
+    change_1d = result.get("price_change_1d", result.get("change_percent"))
+    change_3d = result.get("price_change_3d")
+    change_7d = result.get("price_change_7d")
+    multiplier = calculate_anti_chase_multiplier(change_1d, change_3d, change_7d)
 
-    result["price_change_1d"] = change_percent
+    result["price_change_1d"] = change_1d
     result["anti_chase_multiplier"] = multiplier
     if multiplier != 1.0:
-        original = result["final_score"]
-        result["final_score"] = round(original * multiplier, 3)
-        result["combined_signal_multiplier"] = round(
-            result.get("combined_signal_multiplier", 1.0) * multiplier,
-            3,
-        )
         print(
             f"  {result['ticker']}: anti-chase penalty "
-            f"({change_percent:+.1f}% same-day) -> score {original} x {multiplier:.2f}"
+            f"(1d={change_1d}, 3d={change_3d}, 7d={change_7d}) "
+            f"-> trade multiplier {multiplier:.2f}"
         )
 
 
 def apply_price_volume_confirmation(result):
     price_change_1d = result.get("price_change_1d", result.get("change_percent"))
     result["price_change_1d"] = price_change_1d
-    multiplier = calculate_volume_confirmation_multiplier(
+    volume_multiplier = calculate_volume_confirmation_multiplier(
         result.get("relative_volume"),
         price_change_1d,
     )
-    result["volume_confirmation_multiplier"] = round(multiplier, 3)
+    liquidity_multiplier = calculate_liquidity_multiplier(result.get("dollar_volume"))
+    result["volume_confirmation_multiplier"] = round(volume_multiplier, 3)
+    result["liquidity_multiplier"] = round(liquidity_multiplier, 3)
+    result["market_confirmation_status"] = classify_market_confirmation(
+        result.get("relative_volume"),
+        price_change_1d,
+        result.get("price_change_3d"),
+        result.get("dollar_volume"),
+    )
 
 
 def analyze_ticker_sentiment(all_posts):
@@ -1476,20 +1601,28 @@ def apply_repetition_decay(results):
         historical_prices = [
             row["price"] for row in historical_rows if row["price"] and row["price"] > 0
         ]
-        price_change_3d = (
-            pct_change(current_price, historical_prices[-3])
-            if len(historical_prices) >= 3
-            else None
-        )
-        price_change_7d = (
-            pct_change(current_price, historical_prices[-7])
-            if len(historical_prices) >= 7
-            else None
-        )
+        price_change_3d = result.get("price_change_3d")
+        if price_change_3d is None and len(historical_prices) >= 3:
+            price_change_3d = pct_change(current_price, historical_prices[-3])
+        price_change_7d = result.get("price_change_7d")
+        if price_change_7d is None and len(historical_prices) >= 7:
+            price_change_7d = pct_change(current_price, historical_prices[-7])
         price_change_1d = result.get("price_change_1d", result.get("change_percent"))
         volume_confirmation_multiplier = calculate_volume_confirmation_multiplier(
             result.get("relative_volume"),
             price_change_1d,
+        )
+        anti_chase_multiplier = calculate_anti_chase_multiplier(
+            price_change_1d,
+            price_change_3d,
+            price_change_7d,
+        )
+        liquidity_multiplier = calculate_liquidity_multiplier(result.get("dollar_volume"))
+        market_confirmation_status = classify_market_confirmation(
+            result.get("relative_volume"),
+            price_change_1d,
+            price_change_3d,
+            result.get("dollar_volume"),
         )
 
         result["first_seen_date"] = first_seen_date
@@ -1517,6 +1650,9 @@ def apply_repetition_decay(results):
         result["volume_confirmation_multiplier"] = round(
             volume_confirmation_multiplier, 3
         )
+        result["anti_chase_multiplier"] = round(anti_chase_multiplier, 3)
+        result["liquidity_multiplier"] = round(liquidity_multiplier, 3)
+        result["market_confirmation_status"] = market_confirmation_status
 
         # Check consecutive appearances in last 7 days
         rows = conn.execute(
@@ -1709,7 +1845,7 @@ if __name__ == "__main__":
                 f"  Warning: {r['ticker']} has no float data — including with caution!"
             )
 
-    filtered_out = [
+    overextended = [
         r
         for r in results
         if abs(r.get("change_percent", 0)) > 30
@@ -1726,7 +1862,6 @@ if __name__ == "__main__":
         and (r.get("float_shares") is None or r.get("float_shares", 0) <= 50000000)
         and r["mentions"] >= 5
         and len(r["top_contexts"]) >= 3
-        and abs(r.get("change_percent", 0)) <= 30  # ← ADD THIS
     ]
 
     print("\nStep 5: Catalyst assessment for filtered results...")
@@ -1813,9 +1948,9 @@ if __name__ == "__main__":
     conn.close()
     print(f"  Updated catalyst data for {len(results)} stocks")
 
-    if filtered_out:
-        print(f"\nFiltered out {len(filtered_out)} already-moved stocks:")
-        for r in filtered_out:
+    if overextended:
+        print(f"\nMarked {len(overextended)} already-moved stocks as high-risk:")
+        for r in overextended:
             print(
                 f"  {r['ticker']}: {r['change_percent']:+.1f}% same-day move (score={r['final_score']})"
             )

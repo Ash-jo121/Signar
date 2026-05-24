@@ -77,6 +77,25 @@ def ensure_run_metadata_table(conn):
         ensure_column(conn, "run_metadata", column, definition)
 
 
+def ensure_market_data_table(conn):
+    print("Ensuring ticker_daily_market_data table exists...")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS ticker_daily_market_data (
+            ticker TEXT NOT NULL,
+            date TEXT NOT NULL,
+            open_price REAL,
+            high_price REAL,
+            low_price REAL,
+            close_price REAL,
+            adjusted_close REAL,
+            volume REAL,
+            source TEXT,
+            fetched_at TEXT,
+            PRIMARY KEY(ticker, date)
+        )
+        """)
+
+
 def backfill_score_metadata_from_daily_sentiment(conn):
     """
     Move score metadata into the normalized table if a previous run stored it wide.
@@ -108,6 +127,7 @@ def migrate():
 
     ensure_score_metadata_table(conn)
     ensure_run_metadata_table(conn)
+    ensure_market_data_table(conn)
     backfill_score_metadata_from_daily_sentiment(conn)
     conn.commit()
 

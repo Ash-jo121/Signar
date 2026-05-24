@@ -367,16 +367,61 @@ def calculate_sentiment_timing_multiplier(sentiment):
     return 0.85
 
 
-def calculate_anti_chase_multiplier(change_percent):
-    if change_percent is None:
+def calculate_anti_chase_multiplier(change_1d, change_3d=None, change_7d=None):
+    penalty = 1.0
+    if change_1d is not None:
+        if change_1d > 75:
+            penalty *= 0.45
+        elif change_1d > 50:
+            penalty *= 0.55
+        elif change_1d > 30:
+            penalty *= 0.70
+        elif change_1d > 15:
+            penalty *= 0.85
+
+    if change_3d is not None:
+        if change_3d > 120:
+            penalty *= 0.55
+        elif change_3d > 75:
+            penalty *= 0.70
+        elif change_3d > 40:
+            penalty *= 0.85
+
+    if change_7d is not None:
+        if change_7d > 200:
+            penalty *= 0.55
+        elif change_7d > 100:
+            penalty *= 0.75
+
+    return max(penalty, 0.25)
+
+
+def calculate_volume_confirmation_multiplier(relative_volume, price_change_1d):
+    if relative_volume is None:
         return 1.0
-    if change_percent > 30:
-        return 0.65
-    if change_percent > 15:
-        return 0.8
-    if change_percent > 5:
-        return 0.95
+    if relative_volume < 0.8:
+        return 0.85
+    if 2 <= relative_volume <= 5 and (price_change_1d or 0) < 15:
+        return 1.10
+    if 5 < relative_volume <= 12 and (price_change_1d or 0) < 20:
+        return 1.15
+    if relative_volume > 15 and (price_change_1d or 0) > 30:
+        return 0.75
     return 1.0
+
+
+def calculate_liquidity_multiplier(dollar_volume):
+    if dollar_volume is None:
+        return 0.90
+    if dollar_volume < 100_000:
+        return 0.40
+    if dollar_volume < 500_000:
+        return 0.65
+    if dollar_volume < 1_000_000:
+        return 0.80
+    if dollar_volume < 5_000_000:
+        return 1.00
+    return 1.05
 
 
 def calculate_backtest_catalyst_multiplier(catalyst_type):
@@ -432,7 +477,11 @@ def add_shadow_scores(rows):
         )
         timing_score = (
             calculate_sentiment_timing_multiplier(sentiment)
-            * calculate_anti_chase_multiplier(row.get("change_percent"))
+            * calculate_anti_chase_multiplier(
+                row.get("price_change_1d") or row.get("change_percent"),
+                row.get("price_change_3d"),
+                row.get("price_change_7d"),
+            )
             * calculate_persistence_multiplier(seen_counts[ticker])
         )
         catalyst_score = calculate_backtest_catalyst_multiplier(
@@ -486,6 +535,18 @@ def add_ablation_scores(rows):
         promotion_adjusted = concentration_adjusted * (
             0.75 if (row.get("promotion_risk_score") or 0) > 0.5 else 1.0
         )
+        anti_chase_adjusted = promotion_adjusted * calculate_anti_chase_multiplier(
+            row.get("price_change_1d") or row.get("change_percent"),
+            row.get("price_change_3d"),
+            row.get("price_change_7d"),
+        )
+        volume_adjusted = anti_chase_adjusted * calculate_volume_confirmation_multiplier(
+            row.get("relative_volume"),
+            row.get("price_change_1d") or row.get("change_percent"),
+        )
+        liquidity_adjusted = volume_adjusted * calculate_liquidity_multiplier(
+            row.get("dollar_volume")
+        )
 
         enriched = dict(row)
         enriched["ablation_baseline"] = baseline
@@ -494,6 +555,10 @@ def add_ablation_scores(rows):
         enriched["ablation_catalyst"] = catalyst_adjusted
         enriched["ablation_author_concentration"] = concentration_adjusted
         enriched["ablation_promotion_risk"] = promotion_adjusted
+        enriched["ablation_anti_chase"] = anti_chase_adjusted
+        enriched["ablation_rvol"] = volume_adjusted
+        enriched["ablation_liquidity"] = liquidity_adjusted
+        enriched["ablation_market_confirmation"] = liquidity_adjusted
         enriched["ablation_full_model"] = row.get("trade_score")
         if enriched["ablation_full_model"] is None:
             enriched["ablation_full_model"] = row.get("final_score")
@@ -1157,6 +1222,10 @@ def model_ablation_comparison(conn):
         ("+ catalyst", "ablation_catalyst"),
         ("+ author concentration", "ablation_author_concentration"),
         ("+ promotion risk", "ablation_promotion_risk"),
+        ("+ anti-chase", "ablation_anti_chase"),
+        ("+ RVOL", "ablation_rvol"),
+        ("+ liquidity", "ablation_liquidity"),
+        ("+ market confirmation", "ablation_market_confirmation"),
         ("full model", "ablation_full_model"),
     ]
     horizons = [
