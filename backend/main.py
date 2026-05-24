@@ -670,6 +670,19 @@ def calculate_promotion_trade_multiplier(promotion_risk_score):
     return 1.0
 
 
+def apply_risk_adjusted_recommendation(result):
+    recommendation = result.get("recommendation", "none") or "none"
+    result.setdefault("analyst_recommendation", recommendation)
+
+    risk_level_value = result.get("risk_level")
+    if risk_level_value in {"high", "extreme"}:
+        result["recommendation"] = "avoid_or_watch"
+    elif risk_level_value == "medium" and recommendation == "strong_buy":
+        result["recommendation"] = "speculative_watch"
+    else:
+        result["recommendation"] = recommendation
+
+
 def calculate_freshness_multiplier(persistence_days_seen):
     if persistence_days_seen >= 7:
         return 0.65
@@ -781,6 +794,7 @@ def apply_rank_scores(result):
     result["promotion_trade_multiplier"] = promotion_trade_multiplier
     result["setup_type"] = setup_type
     result["final_score"] = result["trade_score"]
+    apply_risk_adjusted_recommendation(result)
 
 
 def apply_catalyst_multiplier(result):
