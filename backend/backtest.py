@@ -17,7 +17,7 @@ import random
 from statistics import median
 from datetime import datetime
 
-from database import SCORE_METADATA_COLUMNS
+from database import RUN_METADATA_COLUMNS, SCORE_METADATA_COLUMNS
 
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
 
@@ -78,6 +78,23 @@ def ensure_score_metadata_table(conn):
         ensure_column(conn, "score_metadata", column, definition)
 
 
+def ensure_run_metadata_table(conn):
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS run_metadata (
+            run_date TEXT PRIMARY KEY,
+            market_session TEXT NOT NULL DEFAULT 'open',
+            market_closed_reason TEXT,
+            price_update_status TEXT NOT NULL DEFAULT 'eligible',
+            eligible_for_backtest INTEGER DEFAULT 1,
+            next_trading_session_signal INTEGER DEFAULT 0
+        )
+        """
+    )
+    for column, definition in RUN_METADATA_COLUMNS:
+        ensure_column(conn, "run_metadata", column, definition)
+
+
 def catalyst_start_date():
     if START_DATE and START_DATE > CLEAN_CATALYST_DATE:
         return START_DATE
@@ -91,6 +108,7 @@ def get_conn():
     source.close()
     conn.row_factory = sqlite3.Row
     ensure_score_metadata_table(conn)
+    ensure_run_metadata_table(conn)
     if START_DATE:
         conn.execute(
             "DELETE FROM performance_tracking WHERE flagged_date < ?",
@@ -104,6 +122,16 @@ def get_conn():
         WHERE return_1d <= -100
            OR return_3d <= -100
            OR return_7d <= -100
+        """
+    )
+    conn.execute(
+        """
+        DELETE FROM performance_tracking
+        WHERE flagged_date IN (
+            SELECT run_date
+            FROM run_metadata
+            WHERE eligible_for_backtest = 0
+        )
         """
     )
     conn.execute(

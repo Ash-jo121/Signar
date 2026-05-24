@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-from database import SCORE_METADATA_COLUMNS
+from database import RUN_METADATA_COLUMNS, SCORE_METADATA_COLUMNS
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "threadradar.db")
 
@@ -61,6 +61,22 @@ def ensure_score_metadata_table(conn):
         """)
 
 
+def ensure_run_metadata_table(conn):
+    print("Ensuring run_metadata table exists...")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS run_metadata (
+            run_date TEXT PRIMARY KEY,
+            market_session TEXT NOT NULL,
+            market_closed_reason TEXT,
+            price_update_status TEXT NOT NULL,
+            eligible_for_backtest INTEGER DEFAULT 1,
+            next_trading_session_signal INTEGER DEFAULT 0
+        )
+        """)
+    for column, definition in RUN_METADATA_COLUMNS:
+        ensure_column(conn, "run_metadata", column, definition)
+
+
 def backfill_score_metadata_from_daily_sentiment(conn):
     """
     Move score metadata into the normalized table if a previous run stored it wide.
@@ -91,6 +107,7 @@ def migrate():
     conn.execute("PRAGMA foreign_keys = ON")
 
     ensure_score_metadata_table(conn)
+    ensure_run_metadata_table(conn)
     backfill_score_metadata_from_daily_sentiment(conn)
     conn.commit()
 

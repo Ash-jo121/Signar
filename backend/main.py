@@ -14,6 +14,7 @@ from database import (
     save_score_metadata,
 )
 from database import save_daily_results
+from market_calendar import get_market_session
 from scraper import fetch_all
 from extractor import extract_from_post
 from sentiment import (
@@ -778,6 +779,19 @@ def build_output_lists(results, limit=10):
     }
 
 
+def attach_run_metadata(results, metadata):
+    for result in results:
+        result["run_date"] = metadata["run_date"]
+        result["market_session"] = metadata["market_session"]
+        result["price_update_status"] = metadata["price_update_status"]
+        result["eligible_for_backtest"] = metadata["eligible_for_backtest"]
+        result["next_trading_session_signal"] = metadata[
+            "next_trading_session_signal"
+        ]
+        if metadata.get("market_closed_reason"):
+            result["market_closed_reason"] = metadata["market_closed_reason"]
+
+
 def has_diverse_contexts(contexts, min_unique_patterns=3):
     patterns = set(c["full"][:30] for c in contexts)
     return len(patterns) >= min_unique_patterns
@@ -1402,6 +1416,18 @@ if __name__ == "__main__":
     print("=== ThreadRadar ===\n")
 
     init_db()
+    run_metadata = get_market_session()
+    if run_metadata["market_session"] == "closed":
+        print(
+            f"Market closed for {run_metadata['run_date']} "
+            f"({run_metadata['market_closed_reason']}). "
+            "Skipping price updater and marking run as non-trading-day."
+        )
+    else:
+        print(
+            f"Market open for {run_metadata['run_date']}. "
+            "Run is eligible for same-day / T+1 backtest."
+        )
 
     print("Step 1: Fetching posts...")
     posts = fetch_all()
@@ -1492,8 +1518,15 @@ if __name__ == "__main__":
     ]
 
     print("\nStep 4: Saving results to database...")
-    save_daily_results(trackable)
-    record_flagged_stocks(trackable)
+    attach_run_metadata(trackable, run_metadata)
+    save_daily_results(trackable, run_metadata=run_metadata)
+    if run_metadata["eligible_for_backtest"]:
+        record_flagged_stocks(trackable)
+    else:
+        print(
+            "Performance tracking skipped: non-trading-day run "
+            f"({run_metadata['market_closed_reason']})"
+        )
 
     for r in results:
         if r.get("float_shares") is None:
@@ -1602,9 +1635,11 @@ if __name__ == "__main__":
 
     print("\nStep 6: Writing output to files...\n")
 
+    attach_run_metadata(results, run_metadata)
     output_lists = build_output_lists(results)
+    output_payload = {**run_metadata, "run_metadata": run_metadata, **output_lists}
     with open("output.json", "w", encoding="utf-8") as file:
-        json.dump(output_lists, file, indent=2, ensure_ascii=False)
+        json.dump(output_payload, file, indent=2, ensure_ascii=False)
 
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
@@ -1612,7 +1647,7 @@ if __name__ == "__main__":
         output_dir, f"output_{date.today().strftime('%Y-%m-%d')}.json"
     )
     with open(dated_file, "w", encoding="utf-8") as file:
-        json.dump(output_lists, file, indent=2, ensure_ascii=False)
+        json.dump(output_payload, file, indent=2, ensure_ascii=False)
     print(f"Output written to {dated_file}")
 
     output_sections = [

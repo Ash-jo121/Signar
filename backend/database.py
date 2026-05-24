@@ -49,6 +49,14 @@ SCORE_METADATA_COLUMNS = [
     ("volume_confirmation_multiplier", "REAL DEFAULT 1.0"),
 ]
 
+RUN_METADATA_COLUMNS = [
+    ("market_session", "TEXT NOT NULL DEFAULT 'open'"),
+    ("market_closed_reason", "TEXT"),
+    ("price_update_status", "TEXT NOT NULL DEFAULT 'eligible'"),
+    ("eligible_for_backtest", "INTEGER DEFAULT 1"),
+    ("next_trading_session_signal", "INTEGER DEFAULT 0"),
+]
+
 
 def ensure_column(conn, table, column, definition):
     existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
@@ -111,6 +119,31 @@ def save_score_metadata(conn, result, date):
         ON CONFLICT(date, ticker) DO UPDATE SET {assignments}
         """,
         (date, result["ticker"]) + score_metadata_values(result),
+    )
+
+
+def save_run_metadata(conn, metadata):
+    conn.execute(
+        """
+        INSERT INTO run_metadata
+        (run_date, market_session, market_closed_reason, price_update_status,
+         eligible_for_backtest, next_trading_session_signal)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT(run_date) DO UPDATE SET
+            market_session = excluded.market_session,
+            market_closed_reason = excluded.market_closed_reason,
+            price_update_status = excluded.price_update_status,
+            eligible_for_backtest = excluded.eligible_for_backtest,
+            next_trading_session_signal = excluded.next_trading_session_signal
+        """,
+        (
+            metadata["run_date"],
+            metadata["market_session"],
+            metadata.get("market_closed_reason"),
+            metadata["price_update_status"],
+            1 if metadata["eligible_for_backtest"] else 0,
+            1 if metadata["next_trading_session_signal"] else 0,
+        ),
     )
 
 
@@ -221,6 +254,15 @@ def init_db():
             post_url TEXT,
             UNIQUE(ticker, flagged_date)
         );
+
+        CREATE TABLE IF NOT EXISTS run_metadata (
+            run_date TEXT PRIMARY KEY,
+            market_session TEXT NOT NULL,
+            market_closed_reason TEXT,
+            price_update_status TEXT NOT NULL,
+            eligible_for_backtest INTEGER DEFAULT 1,
+            next_trading_session_signal INTEGER DEFAULT 0
+        );
         """)
     conn.execute(
         f"""
@@ -237,6 +279,8 @@ def init_db():
     )
     for column, definition in SCORE_METADATA_COLUMNS:
         ensure_column(conn, "score_metadata", column, definition)
+    for column, definition in RUN_METADATA_COLUMNS:
+        ensure_column(conn, "run_metadata", column, definition)
     conn.commit()
     conn.close()
     print("Database initialized successfully")
@@ -246,13 +290,16 @@ if __name__ == "__main__":
     init_db()
 
 
-def save_daily_results(results, date=None):
+def save_daily_results(results, date=None, run_metadata=None):
     if date is None:
         date = datetime.now().strftime("%Y-%m-%d")
 
     conn = get_connection()
     saved = 0
     skipped = 0
+
+    if run_metadata:
+        save_run_metadata(conn, run_metadata)
 
     for result in results:
         try:

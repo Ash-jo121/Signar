@@ -1,13 +1,23 @@
 import sqlite3
 import time
 from datetime import datetime
-import pandas as pd
 from database import get_connection
-import yfinance as yf
-import holidays
+from market_calendar import get_market_session
 
-US_HOLIDAYS = holidays.US()
 today_dt = datetime.now()
+
+if __name__ == "__main__":
+    market_session = get_market_session(today_dt.date())
+    if market_session["market_session"] == "closed":
+        print(
+            f"Market closed for {market_session['run_date']} "
+            f"({market_session['market_closed_reason']}). "
+            "Skipping price updater and marking run as non-trading-day."
+        )
+        exit(0)
+
+import pandas as pd
+import yfinance as yf
 
 # Tickers to skip in performance tracking
 # These are exclusions that were added after some records were already created
@@ -276,8 +286,4 @@ def update_performance_prices():
 
 
 if __name__ == "__main__":
-    if today_dt.weekday() in [5, 6] or today_dt.strftime("%Y-%m-%d") in US_HOLIDAYS:
-        print(f"  Today is a weekend or holiday — skipping price updater")
-        exit(0)
-
     update_performance_prices()
