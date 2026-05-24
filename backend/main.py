@@ -859,7 +859,78 @@ def is_high_risk_candidate(result):
     )
 
 
+def build_ranking_reason(result):
+    positive = []
+    negative = []
+
+    mentions = result.get("mentions", 0) or 0
+    avg_sentiment = result.get("avg_sentiment", 0) or 0
+    risk_level_value = result.get("risk_level", "unknown")
+    setup_type = result.get("setup_type")
+
+    if 10 <= mentions <= 20:
+        positive.append("mention sweet spot")
+    elif 5 <= mentions < 10:
+        positive.append("early mention count")
+    elif mentions > 35:
+        negative.append("viral mention spike")
+    elif mentions > 20:
+        negative.append("elevated mention count")
+
+    if 0 <= avg_sentiment <= 0.2:
+        positive.append("calm positive sentiment")
+    elif 0.2 < avg_sentiment <= 0.4:
+        positive.append("moderate positive sentiment")
+    elif avg_sentiment > 0.55:
+        negative.append("euphoric sentiment")
+    elif avg_sentiment < 0:
+        negative.append("negative sentiment")
+
+    if risk_level_value == "low":
+        positive.append("low risk")
+    elif risk_level_value in {"high", "extreme"}:
+        negative.append(f"{risk_level_value} risk")
+    elif risk_level_value == "medium":
+        negative.append("medium risk")
+
+    if not result.get("vampire_flagged"):
+        positive.append("not vampire flagged")
+    else:
+        negative.append("vampire flagged")
+
+    if result.get("catalyst_multiplier_eligible"):
+        positive.append(f"verified {result.get('catalyst_type', 'catalyst')} catalyst")
+    elif result.get("catalyst_gate_reason"):
+        negative.append("no verified catalyst")
+
+    if setup_type in {"clean_momentum", "early_discovery"}:
+        positive.append(setup_type.replace("_", " "))
+    elif setup_type:
+        negative.append(setup_type.replace("_", " "))
+
+    if result.get("persistence_days_seen", 1) <= 2:
+        positive.append("fresh signal")
+    elif result.get("persistence_days_seen", 1) >= 5:
+        negative.append("stale repeated signal")
+
+    if result.get("promotion_risk_score", 0) >= 0.25:
+        negative.append("promotion language risk")
+
+    if result.get("top_author_share", 0) >= 0.4:
+        negative.append("author concentration risk")
+    elif result.get("unique_authors", 0) >= 4:
+        positive.append("multiple authors discussing")
+
+    return {
+        "positive": positive[:5],
+        "negative": negative[:5],
+    }
+
+
 def build_output_lists(results, limit=10):
+    for result in results:
+        result["ranking_reason"] = build_ranking_reason(result)
+
     best_trade_candidates = sorted(
         [result for result in results if is_best_trade_candidate(result)],
         key=lambda result: result.get("trade_score", result.get("final_score", 0)),
