@@ -124,6 +124,12 @@ CONCRETE_CATALYST_PATTERNS = [
     r"\$\s?\d+(?:\.\d+)?\s?(?:m|mn|million|b|bn|billion)\b",
     r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b",
     r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\s+\d{1,2}\b",
+    r"\b13g\b",
+    r"\b13d\b",
+    r"\bsc 13g\b",
+    r"\bsc 13d\b",
+    r"\bschedule 13g\b",
+    r"\bschedule 13d\b",
 ]
 
 
@@ -1081,17 +1087,13 @@ def attach_run_metadata(results, metadata):
         result["market_session"] = metadata["market_session"]
         result["price_update_status"] = metadata["price_update_status"]
         result["eligible_for_backtest"] = metadata["eligible_for_backtest"]
-        result["next_trading_session_signal"] = metadata[
-            "next_trading_session_signal"
-        ]
+        result["next_trading_session_signal"] = metadata["next_trading_session_signal"]
         if metadata.get("market_closed_reason"):
             result["market_closed_reason"] = metadata["market_closed_reason"]
         if isinstance(result.get("market_data"), dict):
             result["market_data"]["market_session"] = metadata["market_session"]
             result["market_data"]["signal_date"] = metadata["run_date"]
-            result["market_data"]["market_data_as_of"] = result.get(
-                "market_data_as_of"
-            )
+            result["market_data"]["market_data_as_of"] = result.get("market_data_as_of")
 
 
 def has_diverse_contexts(contexts, min_unique_patterns=3):
@@ -1617,7 +1619,9 @@ def apply_repetition_decay(results):
             price_change_3d,
             price_change_7d,
         )
-        liquidity_multiplier = calculate_liquidity_multiplier(result.get("dollar_volume"))
+        liquidity_multiplier = calculate_liquidity_multiplier(
+            result.get("dollar_volume")
+        )
         market_confirmation_status = classify_market_confirmation(
             result.get("relative_volume"),
             price_change_1d,
@@ -1890,9 +1894,7 @@ if __name__ == "__main__":
         result["catalyst_multiplier_eligible"] = catalyst[
             "catalyst_multiplier_eligible"
         ]
-        result["catalyst_has_concrete_event"] = catalyst[
-            "catalyst_has_concrete_event"
-        ]
+        result["catalyst_has_concrete_event"] = catalyst["catalyst_has_concrete_event"]
         result["catalyst_gate_reason"] = catalyst["catalyst_gate_reason"]
         apply_catalyst_multiplier(result)
         catalyst_calls += 1
