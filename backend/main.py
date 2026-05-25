@@ -939,6 +939,11 @@ def is_best_trade_candidate(result):
         return False
     if setup_type == "stale_squeeze" and days_trending > 5:
         return False
+    if (
+        result.get("promotion_risk_score", 0) >= 0.20
+        and result.get("avg_sentiment", 0) > 0.55
+    ):
+        return False
     if market_status in {
         "confirmed_but_extended",
         "price_without_volume",
