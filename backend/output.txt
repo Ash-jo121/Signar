@@ -2,131 +2,119 @@ Best Trade Candidates
 =====================
 
 $AMPG [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 6.4 | Sentiment: +0.750 | Radar: +1.133 | Trade: +0.979 | Risk: 20.1 (low)
+  Mentions: 6.4 | Sentiment: +0.750 | Radar: +1.053 | Trade: +0.744 | Risk: 20.1 (low)
   Context: Nice ! I loaded up too! This is a longer hold for me. I’m going to keep adding the next few months. 
 
-$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 7.2 | Sentiment: +0.502 | Radar: +0.740 | Trade: +0.733 | Risk: 15.8 (low)
-  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+$MDAI [SETUP: CLEAN_MOMENTUM] [CATALYST: FDA] 
+  Mentions: 6.4 | Sentiment: +0.628 | Radar: +0.740 | Trade: +0.733 | Risk: 17.0 (low)
+  Context: MDAI is going to get the commercialization ball rolling hard and fast, they already have a back log 
 
-$BZAI [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 9.1 | Sentiment: +0.402 | Radar: +0.670 | Trade: +0.564 | Risk: 11.2 (low)
-  Context: Wow, this is a super thorough breakdown, man. You've hit on some really critical points with BZAI. T
+$GPUS [SETUP: CLEAN_MOMENTUM] [CATALYST: PARTNERSHIP] 
+  Mentions: 9.9 | Sentiment: +0.539 | Radar: +0.552 | Trade: +0.414 | Risk: 14.2 (low)
+  Context: GPUS partner tie with AGIBOT robotics company. GPUS  partner tier with AGIBOT PTE. LTD. ("AGIBOT"), 
 
-$FLYX [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.537 | Radar: +0.617 | Trade: +0.441 | Risk: 23.2 (low)
-  Context: Big deal. The majority of the stocks being talked about on here daily have reverse split in the past
-
-$QNCX [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.704 | Radar: +0.595 | Trade: +0.355 | Risk: 28.2 (medium)
-  Context: Current QNCX squeeze AI data readout. HUGE if we came together. But only for a short time. Not a shi
-
-$ROLR [SETUP: CLEAN_MOMENTUM] [CATALYST: CLINICAL] 
-  Mentions: 7.3 | Sentiment: +0.256 | Radar: +0.402 | Trade: +0.338 | Risk: 17.2 (low)
-  Context: Honestly, I have three and they are my top 3 holdings.   1. SEGG: Extremely tight on cash, so defini
-
-$GDC [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 8.9 | Sentiment: +0.377 | Radar: +0.391 | Trade: +0.280 | Risk: 16.9 (low)
-  Context: I believe this stock is very undervalued ($GDC) This stock is unbelievably interesting to me. Im ext
-
-$JTAI [SETUP: CLEAN_MOMENTUM] [CATALYST: PARTNERSHIP] 
-  Mentions: 6.6 | Sentiment: +0.070 | Radar: +0.117 | Trade: +0.082 | Risk: 11.0 (low)
-  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
-
-$SDEV [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 5.1 | Sentiment: +0.306 | Radar: +0.206 | Trade: +0.064 | Risk: 26.8 (medium)
+$SDEV [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
+  Mentions: 5.1 | Sentiment: +0.306 | Radar: +0.294 | Trade: +0.335 | Risk: 17.0 (low)
   Context: Float is pretty small on this one with the amount of insiders and institutional holdings. There are 
 
-$SPCE [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 29.8 | Sentiment: +0.234 | Radar: +0.234 | Trade: +0.044 | Risk: 34.0 (medium)
-  Context: I also like it. So easy and seamless. Did a personal loan. No hassle. I also bought Sofi at $18 and 
+$SQNS [SETUP: CLEAN_MOMENTUM] [CATALYST: PRODUCTION] 
+  Mentions: 9.5 | Sentiment: +0.164 | Radar: +0.227 | Trade: +0.225 | Risk: 13.2 (low)
+  Context: Awesome! Aside from the shift in sentiment towards SQNS now that they are commited to their core bus
+
+$FRGT [SETUP: EARLY_DISCOVERY] [NO CATALYST] 
+  Mentions: 15.6 | Sentiment: -0.070 | Radar: -0.067 | Trade: -0.067 | Risk: 11.8 (low)
+  Context: That stock is nothing to rave about. He's looking for an exit and no one's buying into it.
+
+$HOLO [SETUP: EARLY_DISCOVERY] [NO CATALYST] 
+  Mentions: 6.7 | Sentiment: -0.358 | Radar: -0.260 | Trade: -0.260 | Risk: 11.0 (low)
+  Context: Exactly. This is now an official SEC TCR submission, not just a Reddit discussion. If the reverse sp
 
 
 Radar Watchlist
 ===============
 
 $AMPG [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 6.4 | Sentiment: +0.750 | Radar: +1.133 | Trade: +0.979 | Risk: 20.1 (low)
+  Mentions: 6.4 | Sentiment: +0.750 | Radar: +1.053 | Trade: +0.744 | Risk: 20.1 (low)
   Context: Nice ! I loaded up too! This is a longer hold for me. I’m going to keep adding the next few months. 
 
-$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 7.2 | Sentiment: +0.502 | Radar: +0.740 | Trade: +0.733 | Risk: 15.8 (low)
-  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+$MDAI [SETUP: CLEAN_MOMENTUM] [CATALYST: FDA] 
+  Mentions: 6.4 | Sentiment: +0.628 | Radar: +0.740 | Trade: +0.733 | Risk: 17.0 (low)
+  Context: MDAI is going to get the commercialization ball rolling hard and fast, they already have a back log 
 
-$BZAI [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 9.1 | Sentiment: +0.402 | Radar: +0.670 | Trade: +0.564 | Risk: 11.2 (low)
-  Context: Wow, this is a super thorough breakdown, man. You've hit on some really critical points with BZAI. T
+$CXAI [SETUP: STALE_SQUEEZE] [NO CATALYST] 
+  Mentions: 17.9 | Sentiment: +0.358 | Radar: +0.693 | Trade: +0.382 | Risk: 15.2 (low)
+  Context: CXAI — waiting on the big names of the recent contracts, and the release of CXAI2.0 on Google cloud 
 
-$FLYX [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.537 | Radar: +0.617 | Trade: +0.441 | Risk: 23.2 (low)
-  Context: Big deal. The majority of the stocks being talked about on here daily have reverse split in the past
-
-$GPUS [SETUP: STALE_SQUEEZE] [CATALYST: PARTNERSHIP] 
-  Mentions: 10.6 | Sentiment: +0.555 | Radar: +0.616 | Trade: +0.280 | Risk: 18.0 (low)
-  Context: GPUS partner tie with AGIBOT robotics company. GPUS  partner tier with AGIBOT PTE. LTD. ("AGIBOT"), 
-
-$QNCX [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 5.3 | Sentiment: +0.704 | Radar: +0.595 | Trade: +0.355 | Risk: 28.2 (medium)
-  Context: Current QNCX squeeze AI data readout. HUGE if we came together. But only for a short time. Not a shi
-
-$HCWB [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 7.4 | Sentiment: +0.397 | Radar: +0.571 | Trade: +0.189 | Risk: 22.8 (low)
-  Context: NGEN will probably get FDA approval in 2 years time. It's just starting phase 3. They just  did a pu
-
-$FABC [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 8.9 | Sentiment: +0.648 | Radar: +0.570 | Trade: +0.200 | Risk: 36.5 (medium)
+$FABC [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 7.6 | Sentiment: +0.555 | Radar: +0.624 | Trade: +0.195 | Risk: 37.8 (medium)
   Context: That’s part of it yes. KOPN will be the distributor from what I understand. They have exclusive righ
 
-$CXAI [SETUP: STALE_SQUEEZE] [CATALYST: CONTRACT] 
-  Mentions: 29.3 | Sentiment: +0.450 | Radar: +0.531 | Trade: +0.237 | Risk: 21.1 (low)
-  Context: CXAI - Fast RECAP | Growing Organically Back Up To $1 Fortune 500:   The company has confirmed that 
+$GETY [SETUP: PROMOTION_RISK] [CATALYST: MERGER] 
+  Mentions: 6.2 | Sentiment: +0.651 | Radar: +0.617 | Trade: +0.069 | Risk: 51.7 (high)
+  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
 
-$NXXT [SETUP: ANTI_CHASE] [CATALYST: SHORT SQUEEZE] 
-  Mentions: 10.7 | Sentiment: +0.556 | Radar: +0.509 | Trade: +0.089 | Risk: 48.6 (high)
-  Context: NXXT’s smart pivot: Zero extra capital, massive TAM expansion via Gopuff (EzShop DD) NextNRG just ex
+$GCTS [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 16.1 | Sentiment: +0.507 | Radar: +0.575 | Trade: +0.115 | Risk: 37.5 (medium)
+  Context: I just yeet'ed 420 dollars in the GCTS So I just wanted to let everybody here know that this semicon
+
+$GPUS [SETUP: CLEAN_MOMENTUM] [CATALYST: PARTNERSHIP] 
+  Mentions: 9.9 | Sentiment: +0.539 | Radar: +0.552 | Trade: +0.414 | Risk: 14.2 (low)
+  Context: GPUS partner tie with AGIBOT robotics company. GPUS  partner tier with AGIBOT PTE. LTD. ("AGIBOT"), 
+
+$BIYA [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
+  Mentions: 5.7 | Sentiment: +0.513 | Radar: +0.527 | Trade: +0.030 | Risk: 57.5 (high)
+  Context: Yes but momentum can change very fast, without an established trend it becomes risk, all your gains 
+
+$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 34.0 | Sentiment: +0.264 | Radar: +0.518 | Trade: +0.042 | Risk: 45.5 (high)
+  Context: Got in and out of QTEX on Friday with 300 shares ,from $0.60 to $0.80, for a small profit. The risks
+
+$BZAI [SETUP: STALE_SQUEEZE] [CATALYST: PARTNERSHIP] 
+  Mentions: 10.1 | Sentiment: +0.294 | Radar: +0.510 | Trade: +0.244 | Risk: 20.0 (low)
+  Context: Yeah, that’s lame when that happens. I lost out a bit on plug. I got tired of waiting and got out wi
 
 
 Avoid / High-Risk
 =================
 
-$NXXT [SETUP: ANTI_CHASE] [CATALYST: SHORT SQUEEZE] 
-  Mentions: 10.7 | Sentiment: +0.556 | Radar: +0.509 | Trade: +0.089 | Risk: 48.6 (high)
+$BIYA [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
+  Mentions: 5.7 | Sentiment: +0.513 | Radar: +0.527 | Trade: +0.030 | Risk: 57.5 (high)
+  Context: Yes but momentum can change very fast, without an established trend it becomes risk, all your gains 
+
+$GETY [SETUP: PROMOTION_RISK] [CATALYST: MERGER] 
+  Mentions: 6.2 | Sentiment: +0.651 | Radar: +0.617 | Trade: +0.069 | Risk: 51.7 (high)
+  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+
+$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 34.0 | Sentiment: +0.264 | Radar: +0.518 | Trade: +0.042 | Risk: 45.5 (high)
+  Context: Got in and out of QTEX on Friday with 300 shares ,from $0.60 to $0.80, for a small profit. The risks
+
+$NXXT [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 9.7 | Sentiment: +0.430 | Radar: +0.494 | Trade: +0.049 | Risk: 45.4 (high)
   Context: NXXT’s smart pivot: Zero extra capital, massive TAM expansion via Gopuff (EzShop DD) NextNRG just ex
 
-$FABC [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 8.9 | Sentiment: +0.648 | Radar: +0.570 | Trade: +0.200 | Risk: 36.5 (medium)
-  Context: That’s part of it yes. KOPN will be the distributor from what I understand. They have exclusive righ
+$MEHA [SETUP: ANTI_CHASE] [CATALYST: MERGER] 
+  Mentions: 9.0 | Sentiment: +0.323 | Radar: +0.399 | Trade: +0.051 | Risk: 44.0 (medium)
+  Context: I'm keeping an eye on a few setups, but MEHA stands out after that Alchemy acquisition news. A full 
 
-$SPCE [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 29.8 | Sentiment: +0.234 | Radar: +0.234 | Trade: +0.044 | Risk: 34.0 (medium)
-  Context: I also like it. So easy and seamless. Did a personal loan. No hassle. I also bought Sofi at $18 and 
-
-$LFVN [SETUP: PROMOTION_RISK] [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 17.2 | Sentiment: +0.282 | Radar: +0.195 | Trade: +0.035 | Risk: 32.2 (medium)
-  Context: I feel I not enough mentions about $LFVN. It’s been running up and down daily, not sure if the short
-
-$KIDZ [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 7.3 | Sentiment: +0.423 | Radar: +0.448 | Trade: +0.157 | Risk: 32.0 (medium)
+$KIDZ [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
+  Mentions: 7.3 | Sentiment: +0.125 | Radar: +0.157 | Trade: +0.020 | Risk: 41.8 (medium)
   Context: Theres no news of harvard being involved in this and blackrock didnt buy in it directly they own a b
 
-$HMR [SETUP: ANTI_CHASE] [CATALYST: EARNINGS] 
-  Mentions: 5.0 | Sentiment: +0.218 | Radar: +0.237 | Trade: +0.069 | Risk: 31.8 (medium)
-  Context: Trusted you with HMR - wondering if I should try again? If we can continue to make small gains I’m d
+$CMPX [SETUP: PROMOTION_RISK] [NO CATALYST] 
+  Mentions: 7.0 | Sentiment: +0.411 | Radar: +0.372 | Trade: +0.060 | Risk: 40.2 (medium)
+  Context: CMPX is a stock to watch!!!!!! CMPX is projected by analysts to hit at a minimum 4$ within a year wi
 
-$HOVR [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 15.0 | Sentiment: +0.223 | Radar: +0.368 | Trade: +0.197 | Risk: 28.2 (medium)
-  Context: HOVR is gathering the same cult following as RKLB had. I went deep then and I’m trying to go even de
+$FABC [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 7.6 | Sentiment: +0.555 | Radar: +0.624 | Trade: +0.195 | Risk: 37.8 (medium)
+  Context: That’s part of it yes. KOPN will be the distributor from what I understand. They have exclusive righ
 
-$SDEV [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 5.1 | Sentiment: +0.306 | Radar: +0.206 | Trade: +0.064 | Risk: 26.8 (medium)
-  Context: Float is pretty small on this one with the amount of insiders and institutional holdings. There are 
+$GCTS [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 16.1 | Sentiment: +0.507 | Radar: +0.575 | Trade: +0.115 | Risk: 37.5 (medium)
+  Context: I just yeet'ed 420 dollars in the GCTS So I just wanted to let everybody here know that this semicon
 
-$FEMY [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 5.9 | Sentiment: +0.173 | Radar: +0.260 | Trade: +0.139 | Risk: 26.0 (medium)
-  Context: I been bag holding this for months, hoping Tuesday can provide me an offramp
-
-$DVLT [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 19.9 | Sentiment: -0.300 | Radar: -0.274 | Trade: -0.457 | Risk: 24.0 (low)
-  Context: Dvlt is a loss as far as I’m concerned. I just hold it like gpus because you never know. But gold I 
+$HCWB [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.4 | Sentiment: +0.296 | Radar: +0.367 | Trade: +0.046 | Risk: 37.0 (medium)
+  Context: HVWB looking like a possible good play this morning. HCWB\*\*. Who’s watching this one? If it contin
 
 
