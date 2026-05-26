@@ -933,11 +933,23 @@ def is_best_trade_candidate(result):
     setup_type = result.get("setup_type")
     market_status = result.get("market_confirmation_status")
     days_trending = result.get("days_trending", 1) or 1
+    recommendation = result.get("recommendation", "none") or "none"
+
+    if result.get("trade_score", result.get("final_score", 0)) <= 0.35:
+        return False
+    if recommendation in {"none", "avoid_or_watch"}:
+        return False
+    if result.get("avg_sentiment", 0) <= 0:
+        return False
+    if (result.get("dollar_volume") or 0) < 1_000_000:
+        return False
     if result.get("risk_score", 0) > 35:
         return False
     if setup_type in {"promotion_risk", "anti_chase", "bagholder_chatter"}:
         return False
     if setup_type == "stale_squeeze" and days_trending > 5:
+        return False
+    if market_status == "no_confirmation":
         return False
     if (
         result.get("promotion_risk_score", 0) >= 0.20
