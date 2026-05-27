@@ -1,116 +1,92 @@
 Best Trade Candidates
 =====================
 
-$XRX [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 8.7 | Sentiment: +0.718 | Radar: +1.256 | Trade: +1.110 | Risk: 14.2 (low)
-  Context: XRX -still $7 billion in revenue. It could make a comeback. Does Xerox stay involved with 3d printer
-
-$MDAI [SETUP: EARLY_DISCOVERY] [CATALYST: FDA] 
-  Mentions: 30.1 | Sentiment: +0.438 | Radar: +0.731 | Trade: +0.874 | Risk: 18.6 (low)
-  Context: MDAI is going to get the commercialization ball rolling hard and fast, they already have a back log 
-
-$FUBO [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 7.3 | Sentiment: +0.629 | Radar: +0.657 | Trade: +0.548 | Risk: 24.9 (low)
-  Context: Fubo Value and Squeeze $FUBO has elite potential however you look at it. $6B revenue, pacing for $10
-
-$GPUS [SETUP: EARLY_DISCOVERY] [CATALYST: EARNINGS] 
-  Mentions: 23.0 | Sentiment: +0.511 | Radar: +0.494 | Trade: +0.252 | Risk: 30.8 (medium)
-  Context: Hyperscale Data Launches Tender Offer To Buy Back $5M Of Stock At $0.21 Per Share Hyperscale Data, I
-
-$KIDZ [SETUP: CLEAN_MOMENTUM] [CATALYST: PARTNERSHIP] 
-  Mentions: 7.3 | Sentiment: +0.190 | Radar: +0.330 | Trade: +0.236 | Risk: 23.8 (low)
-  Context: Theres no news of harvard being involved in this and blackrock didnt buy in it directly they own a b
-
-$HOLO [SETUP: EARLY_DISCOVERY] [NO CATALYST] 
-  Mentions: 6.7 | Sentiment: -0.357 | Radar: -0.347 | Trade: -0.409 | Risk: 19.5 (low)
-  Context: Exactly. This is now an official SEC TCR submission, not just a Reddit discussion. If the reverse sp
-
 
 Radar Watchlist
 ===============
 
-$XRX [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 8.7 | Sentiment: +0.718 | Radar: +1.256 | Trade: +1.110 | Risk: 14.2 (low)
-  Context: XRX -still $7 billion in revenue. It could make a comeback. Does Xerox stay involved with 3d printer
-
-$MDAI [SETUP: EARLY_DISCOVERY] [CATALYST: FDA] 
-  Mentions: 30.1 | Sentiment: +0.438 | Radar: +0.731 | Trade: +0.874 | Risk: 18.6 (low)
-  Context: MDAI is going to get the commercialization ball rolling hard and fast, they already have a back log 
-
-$FUBO [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 7.3 | Sentiment: +0.629 | Radar: +0.657 | Trade: +0.548 | Risk: 24.9 (low)
-  Context: Fubo Value and Squeeze $FUBO has elite potential however you look at it. $6B revenue, pacing for $10
-
-$SRXH [SETUP: STALE_SQUEEZE] [NO CATALYST] 
-  Mentions: 15.9 | Sentiment: +0.320 | Radar: +0.594 | Trade: +0.230 | Risk: 15.2 (low)
-  Context: SRXH/EMJX with SpaceX as a catalyst? With the valuation of SpaceX seemingly going up everyday, doesn
-
-$GCTS [SETUP: STALE_SQUEEZE] [NO CATALYST] 
-  Mentions: 16.4 | Sentiment: +0.476 | Radar: +0.591 | Trade: +0.240 | Risk: 16.0 (low)
-  Context: Early DD'er here, GCTS still has moves to make but yall are a bit late on the initial strike.   I st
-
-$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 61.4 | Sentiment: +0.447 | Radar: +0.577 | Trade: +0.037 | Risk: 54.7 (high)
-  Context: NFA QTEX is being hyped all over reddit and just not in this sub and across other channels too. Appa
-
-$CMPX [SETUP: PROMOTION_RISK] [NO CATALYST] 
-  Mentions: 9.0 | Sentiment: +0.463 | Radar: +0.520 | Trade: +0.098 | Risk: 36.8 (medium)
+$CMPX [SETUP: LOW_QUALITY_HYPE] [NO CATALYST] 
+  Mentions: 5.0 | Sentiment: +0.715 | Radar: +0.879 | Trade: +0.140 | Risk: 36.2 (medium)
   Context: CMPX is a stock to watch!!!!!! CMPX is projected by analysts to hit at a minimum 4$ within a year wi
 
-$GETY [SETUP: PROMOTION_RISK] [CATALYST: MERGER] 
-  Mentions: 7.2 | Sentiment: +0.654 | Radar: +0.510 | Trade: +0.048 | Risk: 59.7 (high)
+$XRX [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
+  Mentions: 8.4 | Sentiment: +0.470 | Radar: +0.711 | Trade: +0.739 | Risk: 17.5 (low)
+  Context: XRX -still $7 billion in revenue. It could make a comeback. Does Xerox stay involved with 3d printer
+
+$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
+  Mentions: 7.6 | Sentiment: +0.578 | Radar: +0.692 | Trade: +0.297 | Risk: 31.2 (medium)
   Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
 
-$GPUS [SETUP: EARLY_DISCOVERY] [CATALYST: EARNINGS] 
-  Mentions: 23.0 | Sentiment: +0.511 | Radar: +0.494 | Trade: +0.252 | Risk: 30.8 (medium)
-  Context: Hyperscale Data Launches Tender Offer To Buy Back $5M Of Stock At $0.21 Per Share Hyperscale Data, I
+$CTM [SETUP: ANTI_CHASE] [CATALYST: EARNINGS] 
+  Mentions: 14.7 | Sentiment: +0.326 | Radar: +0.671 | Trade: +0.305 | Risk: 21.5 (low)
+  Context: $CTM Castellum Inc - The Penny Stock version of Palantir $CTM Castellum Inc - a fast growing micro c
 
-$BIYA [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 6.3 | Sentiment: +0.545 | Radar: +0.454 | Trade: +0.017 | Risk: 68.8 (high)
-  Context: Yes but momentum can change very fast, without an established trend it becomes risk, all your gains 
+$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 36.3 | Sentiment: +0.529 | Radar: +0.639 | Trade: +0.034 | Risk: 47.5 (high)
+  Context: Missing something. The CEO of Inspira was also a coinventor and former CEO of NNDM, QTEX (formerly I
+
+$OTLK [SETUP: ANTI_CHASE] [CATALYST: REGULATORY] 
+  Mentions: 29.8 | Sentiment: +0.325 | Radar: +0.572 | Trade: +0.209 | Risk: 33.7 (medium)
+  Context: Might be an unpopular opinion but my PT for OTLK over next few days is 1 or slightly over. It's been
+
+$MDAI [SETUP: STALE_SQUEEZE] [CATALYST: FDA] 
+  Mentions: 16.9 | Sentiment: +0.258 | Radar: +0.517 | Trade: +0.376 | Risk: 14.1 (low)
+  Context: MDAI at $2.40: The FDA Clearance Nobody Is Talking About Properly MDAI (SpectralAI) has just officia
+
+$NRXP [SETUP: ANTI_CHASE] [CATALYST: FDA] 
+  Mentions: 9.3 | Sentiment: +0.688 | Radar: +0.508 | Trade: +0.090 | Risk: 56.0 (high)
+  Context: Bullish on $NRXP 🚨 ✅ Commercial ketamine manufacturing initiated ✅ FDA feedback reportedly only “min
+
+$MWC [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.3 | Sentiment: +0.514 | Radar: +0.474 | Trade: +0.084 | Risk: 47.8 (high)
+  Context: $MWC squeeze,  7.5 $, 2.85 mln float, 838 % ctb,  hit 24.6 last Wednesday,  could see 10 +. Needs a 
+
+$FABC [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
+  Mentions: 7.9 | Sentiment: +0.410 | Radar: +0.440 | Trade: +0.381 | Risk: 16.8 (low)
+  Context: I was an early investor in quantum stocks. I was buying RGTI and QBTS around $1.50-$2.50 p/share. I 
 
 
 Avoid / High-Risk
 =================
 
-$BIYA [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 6.3 | Sentiment: +0.545 | Radar: +0.454 | Trade: +0.017 | Risk: 68.8 (high)
-  Context: Yes but momentum can change very fast, without an established trend it becomes risk, all your gains 
+$NRXP [SETUP: ANTI_CHASE] [CATALYST: FDA] 
+  Mentions: 9.3 | Sentiment: +0.688 | Radar: +0.508 | Trade: +0.090 | Risk: 56.0 (high)
+  Context: Bullish on $NRXP 🚨 ✅ Commercial ketamine manufacturing initiated ✅ FDA feedback reportedly only “min
 
-$GETY [SETUP: PROMOTION_RISK] [CATALYST: MERGER] 
-  Mentions: 7.2 | Sentiment: +0.654 | Radar: +0.510 | Trade: +0.048 | Risk: 59.7 (high)
-  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+$LFVN [SETUP: PROMOTION_RISK] [CATALYST: DIVIDEND/STOCK REPURCHASE] [MOD FLAG: COMMUNITY_CALL]
+  Mentions: 43.3 | Sentiment: +0.082 | Radar: +0.049 | Trade: +0.006 | Risk: 55.9 (high)
+  Context: LFVN - this may be the time! Over $6 This things a powder keg waiting to blow. I’ve been holding cal
 
-$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 61.4 | Sentiment: +0.447 | Radar: +0.577 | Trade: +0.037 | Risk: 54.7 (high)
-  Context: NFA QTEX is being hyped all over reddit and just not in this sub and across other channels too. Appa
+$SNGX [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 9.9 | Sentiment: +0.283 | Radar: +0.234 | Trade: +0.049 | Risk: 50.0 (high)
+  Context: its very volatile right now its normal. Earlier it went from .72 back down to .52, but then it went 
 
 $NXXT [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 14.0 | Sentiment: +0.304 | Radar: +0.364 | Trade: +0.031 | Risk: 50.2 (high)
-  Context: Do You All Agree These 4 Small-Cap Stocks Entering Major Catalyst Windows Are Should Be Back on Trad
+  Mentions: 12.0 | Sentiment: +0.042 | Radar: +0.056 | Trade: +0.007 | Risk: 48.8 (high)
+  Context: NXXT’s smart pivot: Zero extra capital, massive TAM expansion via Gopuff (EzShop DD) NextNRG just ex
 
-$LFVN [SETUP: PROMOTION_RISK] [CATALYST: EARNINGS] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 21.3 | Sentiment: -0.088 | Radar: -0.049 | Trade: -0.092 | Risk: 47.8 (high)
-  Context: I feel I not enough mentions about $LFVN. It’s been running up and down daily, not sure if the short
+$CXAI [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 29.6 | Sentiment: +0.513 | Radar: +0.415 | Trade: +0.065 | Risk: 48.0 (high)
+  Context: Finishing Strong Today for CXAI SQUEEZE $CXAI volume is already massively elevated today and the sto
 
-$HOVR [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 8.3 | Sentiment: +0.135 | Radar: +0.173 | Trade: +0.038 | Risk: 47.2 (high)
-  Context: Penny stocks like HOVR need tight risk management. I copy live traders on markets xyz to see real en
+$MWC [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.3 | Sentiment: +0.514 | Radar: +0.474 | Trade: +0.084 | Risk: 47.8 (high)
+  Context: $MWC squeeze,  7.5 $, 2.85 mln float, 838 % ctb,  hit 24.6 last Wednesday,  could see 10 +. Needs a 
 
-$LINK [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 16.1 | Sentiment: -0.298 | Radar: -0.220 | Trade: -0.419 | Risk: 45.8 (high)
-  Context: What’s crazier is they could’ve cut their token usage by 75% by simply using THESE SIX PROMPTS TO OP
+$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 36.3 | Sentiment: +0.529 | Radar: +0.639 | Trade: +0.034 | Risk: 47.5 (high)
+  Context: Missing something. The CEO of Inspira was also a coinventor and former CEO of NNDM, QTEX (formerly I
 
-$CXAI [SETUP: ANTI_CHASE] [CATALYST: PRODUCTION] 
-  Mentions: 12.4 | Sentiment: +0.245 | Radar: +0.350 | Trade: +0.055 | Risk: 43.8 (medium)
-  Context: $CXAI Short Squeeze DD — The Squeeze Already Started, And This Week Could Get Violent Most people wa
+$ALP [SETUP: ANTI_CHASE] [CATALYST: CONTRACT] 
+  Mentions: 23.2 | Sentiment: +0.004 | Radar: +0.006 | Trade: +0.001 | Risk: 40.8 (medium)
+  Context: Just shows how much people know about stocks that buy into these micro caps - so important to always
 
-$JTAI [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 5.6 | Sentiment: +0.528 | Radar: +0.351 | Trade: +0.046 | Risk: 43.0 (medium)
-  Context: JTAI, just invested $5m in an SPV for the spacex ipo, also has a deal to finalise with FLYX where ea
+$ARAY [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 5.2 | Sentiment: -0.055 | Radar: -0.041 | Trade: -0.068 | Risk: 36.5 (medium)
+  Context: ARAY being pumped - robotics play. Like FEMY yesterday, go where the hype is
 
-$SDEV [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
-  Mentions: 6.1 | Sentiment: +0.271 | Radar: +0.177 | Trade: +0.014 | Risk: 40.0 (medium)
-  Context: Float is pretty small on this one with the amount of insiders and institutional holdings. There are 
+$CMPX [SETUP: LOW_QUALITY_HYPE] [NO CATALYST] 
+  Mentions: 5.0 | Sentiment: +0.715 | Radar: +0.879 | Trade: +0.140 | Risk: 36.2 (medium)
+  Context: CMPX is a stock to watch!!!!!! CMPX is projected by analysts to hit at a minimum 4$ within a year wi
 
 
