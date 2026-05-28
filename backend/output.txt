@@ -5,88 +5,88 @@ Best Trade Candidates
 Radar Watchlist
 ===============
 
-$CMPX [SETUP: LOW_QUALITY_HYPE] [NO CATALYST] 
-  Mentions: 5.0 | Sentiment: +0.715 | Radar: +0.879 | Trade: +0.140 | Risk: 36.2 (medium)
-  Context: CMPX is a stock to watch!!!!!! CMPX is projected by analysts to hit at a minimum 4$ within a year wi
+$BRTX [SETUP: ANTI_CHASE] [CATALYST: CLINICAL] 
+  Mentions: 12.0 | Sentiment: +0.587 | Radar: +0.847 | Trade: +0.107 | Risk: 52.2 (high)
+  Context: Why BRTX moved +172% today \*\*What moved it\*\* A real catalyst this time: BioRestorative said it d
 
-$XRX [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 8.4 | Sentiment: +0.470 | Radar: +0.711 | Trade: +0.739 | Risk: 17.5 (low)
-  Context: XRX -still $7 billion in revenue. It could make a comeback. Does Xerox stay involved with 3d printer
+$SNGX [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 18.5 | Sentiment: +0.348 | Radar: +0.816 | Trade: +0.190 | Risk: 35.3 (medium)
+  Context: Life time oppertunity when Old player come back to game . SNGX Stock back with Ebola vaccine.
 
-$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
-  Mentions: 7.6 | Sentiment: +0.578 | Radar: +0.692 | Trade: +0.297 | Risk: 31.2 (medium)
-  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
-
-$CTM [SETUP: ANTI_CHASE] [CATALYST: EARNINGS] 
-  Mentions: 14.7 | Sentiment: +0.326 | Radar: +0.671 | Trade: +0.305 | Risk: 21.5 (low)
-  Context: $CTM Castellum Inc - The Penny Stock version of Palantir $CTM Castellum Inc - a fast growing micro c
-
-$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 36.3 | Sentiment: +0.529 | Radar: +0.639 | Trade: +0.034 | Risk: 47.5 (high)
-  Context: Missing something. The CEO of Inspira was also a coinventor and former CEO of NNDM, QTEX (formerly I
+$ALP [SETUP: STALE_SQUEEZE] [CATALYST: MERGER] 
+  Mentions: 24.2 | Sentiment: +0.366 | Radar: +0.657 | Trade: +0.293 | Risk: 18.5 (low)
+  Context: Alpha Compute shares to be valued at USD 1 per share at closing for equity component of consideratio
 
 $OTLK [SETUP: ANTI_CHASE] [CATALYST: REGULATORY] 
-  Mentions: 29.8 | Sentiment: +0.325 | Radar: +0.572 | Trade: +0.209 | Risk: 33.7 (medium)
+  Mentions: 40.3 | Sentiment: +0.513 | Radar: +0.605 | Trade: +0.098 | Risk: 44.3 (medium)
   Context: Might be an unpopular opinion but my PT for OTLK over next few days is 1 or slightly over. It's been
 
+$GNS [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 13.5 | Sentiment: +0.361 | Radar: +0.603 | Trade: +0.220 | Risk: 30.5 (medium)
+  Context: Not really but it was a late runner yesterday too. News came early but it didn't start running until
+
+$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
+  Mentions: 6.6 | Sentiment: +0.578 | Radar: +0.596 | Trade: +0.122 | Risk: 35.8 (medium)
+  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+
+$OSRH [SETUP: EARLY_DISCOVERY] [CATALYST: PARTNERSHIP] 
+  Mentions: 8.3 | Sentiment: +0.371 | Radar: +0.562 | Trade: +0.168 | Risk: 23.5 (low)
+  Context: I reduced my size way down and was way more careful about what I bought recently. I’m like 10-2 on t
+
+$QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
+  Mentions: 31.8 | Sentiment: +0.416 | Radar: +0.501 | Trade: +0.042 | Risk: 50.1 (high)
+  Context: $QTEX +108% — quantum rebrand + top-5 partner talks \*\*Catalyst\*\* Inspira Technologies rebranded 
+
 $MDAI [SETUP: STALE_SQUEEZE] [CATALYST: FDA] 
-  Mentions: 16.9 | Sentiment: +0.258 | Radar: +0.517 | Trade: +0.376 | Risk: 14.1 (low)
-  Context: MDAI at $2.40: The FDA Clearance Nobody Is Talking About Properly MDAI (SpectralAI) has just officia
+  Mentions: 6.0 | Sentiment: +0.344 | Radar: +0.487 | Trade: +0.120 | Risk: 21.8 (low)
+  Context: The fact that the FDA’s General & Plastic Surgery Advisory Committee reviewed this and granted clear
 
-$NRXP [SETUP: ANTI_CHASE] [CATALYST: FDA] 
-  Mentions: 9.3 | Sentiment: +0.688 | Radar: +0.508 | Trade: +0.090 | Risk: 56.0 (high)
-  Context: Bullish on $NRXP 🚨 ✅ Commercial ketamine manufacturing initiated ✅ FDA feedback reportedly only “min
-
-$MWC [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 5.3 | Sentiment: +0.514 | Radar: +0.474 | Trade: +0.084 | Risk: 47.8 (high)
-  Context: $MWC squeeze,  7.5 $, 2.85 mln float, 838 % ctb,  hit 24.6 last Wednesday,  could see 10 +. Needs a 
-
-$FABC [SETUP: CLEAN_MOMENTUM] [NO CATALYST] 
-  Mentions: 7.9 | Sentiment: +0.410 | Radar: +0.440 | Trade: +0.381 | Risk: 16.8 (low)
-  Context: I was an early investor in quantum stocks. I was buying RGTI and QBTS around $1.50-$2.50 p/share. I 
+$SEGG [SETUP: CLEAN_MOMENTUM] [CATALYST: EARNINGS] 
+  Mentions: 6.3 | Sentiment: +0.603 | Radar: +0.430 | Trade: +0.127 | Risk: 31.0 (medium)
+  Context: Jane Street Group just filed a 13G on $SEGG. They now hold 698,188 shares (\~5.5% ownership). For an
 
 
 Avoid / High-Risk
 =================
 
-$NRXP [SETUP: ANTI_CHASE] [CATALYST: FDA] 
-  Mentions: 9.3 | Sentiment: +0.688 | Radar: +0.508 | Trade: +0.090 | Risk: 56.0 (high)
-  Context: Bullish on $NRXP 🚨 ✅ Commercial ketamine manufacturing initiated ✅ FDA feedback reportedly only “min
+$CODX [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 7.1 | Sentiment: +0.284 | Radar: +0.354 | Trade: +0.025 | Risk: 52.5 (high)
+  Context: 🚨 Ebola Virus Alert 🌍 As global health concerns rise again, biotech and diagnostic companies could s
 
-$LFVN [SETUP: PROMOTION_RISK] [CATALYST: DIVIDEND/STOCK REPURCHASE] [MOD FLAG: COMMUNITY_CALL]
-  Mentions: 43.3 | Sentiment: +0.082 | Radar: +0.049 | Trade: +0.006 | Risk: 55.9 (high)
-  Context: LFVN - this may be the time! Over $6 This things a powder keg waiting to blow. I’ve been holding cal
-
-$SNGX [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 9.9 | Sentiment: +0.283 | Radar: +0.234 | Trade: +0.049 | Risk: 50.0 (high)
-  Context: its very volatile right now its normal. Earlier it went from .72 back down to .52, but then it went 
-
-$NXXT [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 12.0 | Sentiment: +0.042 | Radar: +0.056 | Trade: +0.007 | Risk: 48.8 (high)
-  Context: NXXT’s smart pivot: Zero extra capital, massive TAM expansion via Gopuff (EzShop DD) NextNRG just ex
-
-$CXAI [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 29.6 | Sentiment: +0.513 | Radar: +0.415 | Trade: +0.065 | Risk: 48.0 (high)
-  Context: Finishing Strong Today for CXAI SQUEEZE $CXAI volume is already massively elevated today and the sto
-
-$MWC [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 5.3 | Sentiment: +0.514 | Radar: +0.474 | Trade: +0.084 | Risk: 47.8 (high)
-  Context: $MWC squeeze,  7.5 $, 2.85 mln float, 838 % ctb,  hit 24.6 last Wednesday,  could see 10 +. Needs a 
+$BRTX [SETUP: ANTI_CHASE] [CATALYST: CLINICAL] 
+  Mentions: 12.0 | Sentiment: +0.587 | Radar: +0.847 | Trade: +0.107 | Risk: 52.2 (high)
+  Context: Why BRTX moved +172% today \*\*What moved it\*\* A real catalyst this time: BioRestorative said it d
 
 $QTEX [SETUP: ANTI_CHASE] [CATALYST: PARTNERSHIP] 
-  Mentions: 36.3 | Sentiment: +0.529 | Radar: +0.639 | Trade: +0.034 | Risk: 47.5 (high)
-  Context: Missing something. The CEO of Inspira was also a coinventor and former CEO of NNDM, QTEX (formerly I
+  Mentions: 31.8 | Sentiment: +0.416 | Radar: +0.501 | Trade: +0.042 | Risk: 50.1 (high)
+  Context: $QTEX +108% — quantum rebrand + top-5 partner talks \*\*Catalyst\*\* Inspira Technologies rebranded 
 
-$ALP [SETUP: ANTI_CHASE] [CATALYST: CONTRACT] 
-  Mentions: 23.2 | Sentiment: +0.004 | Radar: +0.006 | Trade: +0.001 | Risk: 40.8 (medium)
-  Context: Just shows how much people know about stocks that buy into these micro caps - so important to always
+$OTLK [SETUP: ANTI_CHASE] [CATALYST: REGULATORY] 
+  Mentions: 40.3 | Sentiment: +0.513 | Radar: +0.605 | Trade: +0.098 | Risk: 44.3 (medium)
+  Context: Might be an unpopular opinion but my PT for OTLK over next few days is 1 or slightly over. It's been
 
-$ARAY [SETUP: ANTI_CHASE] [NO CATALYST] 
-  Mentions: 5.2 | Sentiment: -0.055 | Radar: -0.041 | Trade: -0.068 | Risk: 36.5 (medium)
-  Context: ARAY being pumped - robotics play. Like FEMY yesterday, go where the hype is
+$LFVN [SETUP: PROMOTION_RISK] [CATALYST: DIVIDEND/PRODUCTION] [MOD FLAG: COMMUNITY_CALL]
+  Mentions: 47.0 | Sentiment: +0.629 | Radar: +0.281 | Trade: +0.035 | Risk: 44.0 (medium)
+  Context: I've sold my LFVN calls. It may well be too early. This thing like the OP says is a banger but I cou
 
-$CMPX [SETUP: LOW_QUALITY_HYPE] [NO CATALYST] 
-  Mentions: 5.0 | Sentiment: +0.715 | Radar: +0.879 | Trade: +0.140 | Risk: 36.2 (medium)
-  Context: CMPX is a stock to watch!!!!!! CMPX is projected by analysts to hit at a minimum 4$ within a year wi
+$ATPC [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 6.9 | Sentiment: -0.170 | Radar: -0.153 | Trade: -0.295 | Risk: 44.0 (medium)
+  Context: oh how penny stock traders scurry like rats to their next slice of cheese (i’m a fucking rat)
+
+$YYGH [SETUP: DILUTION_RISK] [CATALYST: CAPITAL RAISE] 
+  Mentions: 21.5 | Sentiment: +0.096 | Radar: +0.109 | Trade: +0.030 | Risk: 37.5 (medium)
+  Context: $YYGH - New News Catalyst + Low Float This stock has a new price catalyst.  Some highlights: * Tradi
+
+$GETY [SETUP: CLEAN_MOMENTUM] [CATALYST: MERGER] 
+  Mentions: 6.6 | Sentiment: +0.578 | Radar: +0.596 | Trade: +0.122 | Risk: 35.8 (medium)
+  Context: $GETY actually looks kinda slept on here imo. Not saying it’s some guaranteed moon mission, but the 
+
+$SNGX [SETUP: ANTI_CHASE] [NO CATALYST] 
+  Mentions: 18.5 | Sentiment: +0.348 | Radar: +0.816 | Trade: +0.190 | Risk: 35.3 (medium)
+  Context: Life time oppertunity when Old player come back to game . SNGX Stock back with Ebola vaccine.
+
+$SEGG [SETUP: CLEAN_MOMENTUM] [CATALYST: EARNINGS] 
+  Mentions: 6.3 | Sentiment: +0.603 | Radar: +0.430 | Trade: +0.127 | Risk: 31.0 (medium)
+  Context: Jane Street Group just filed a 13G on $SEGG. They now hold 698,188 shares (\~5.5% ownership). For an
 
 
