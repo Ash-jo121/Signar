@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import time
 from datetime import datetime
@@ -76,6 +77,14 @@ SCORE_METADATA_COLUMNS = [
     ("threadradar_risk_action", "TEXT"),
     ("trade_action", "TEXT"),
     ("trade_reason", "TEXT"),
+    ("cohort", "TEXT"),
+    ("trade_gate_passed", "INTEGER DEFAULT 0"),
+    ("ranking_bucket", "TEXT"),
+    ("failed_reasons", "TEXT"),
+    ("is_near_miss", "INTEGER DEFAULT 0"),
+    ("near_miss_rank", "INTEGER"),
+    ("entry_decision", "TEXT"),
+    ("no_trade_day", "INTEGER DEFAULT 0"),
 ]
 
 RUN_METADATA_COLUMNS = [
@@ -162,6 +171,14 @@ def score_metadata_values(result):
         result.get("threadradar_risk_action"),
         result.get("trade_action"),
         result.get("trade_reason"),
+        result.get("cohort"),
+        1 if result.get("trade_gate_passed") else 0,
+        result.get("ranking_bucket"),
+        json.dumps(result.get("failed_reasons", [])),
+        1 if result.get("is_near_miss") else 0,
+        result.get("near_miss_rank"),
+        result.get("entry_decision"),
+        1 if result.get("no_trade_day") else 0,
     )
 
 

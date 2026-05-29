@@ -1033,6 +1033,63 @@ def is_high_risk_candidate(result):
     )
 
 
+def annotate_output_cohorts(
+    results,
+    best_trade_candidates,
+    radar_watchlist,
+    avoid_high_risk,
+    near_miss_candidates,
+):
+    best_ids = {id(result) for result in best_trade_candidates}
+    radar_ids = {id(result) for result in radar_watchlist}
+    avoid_ids = {id(result) for result in avoid_high_risk}
+    near_miss_ranks = {
+        id(result): rank for rank, result in enumerate(near_miss_candidates, start=1)
+    }
+    no_trade_day = not best_trade_candidates
+
+    for result in results:
+        result_id = id(result)
+        failed_reasons = trade_gate_failure_reasons(result)
+        memberships = []
+
+        if result_id in best_ids:
+            memberships.append("best_trade_candidate")
+        if result_id in radar_ids:
+            memberships.append("radar_watchlist")
+        if result_id in avoid_ids:
+            memberships.append("avoid_high_risk")
+        if result_id in near_miss_ranks:
+            memberships.append("near_miss_candidate")
+        if not memberships:
+            memberships.append("scored_not_selected")
+
+        if result_id in best_ids:
+            cohort = "best_trade_candidate"
+            entry_decision = "trade"
+        elif result_id in avoid_ids:
+            cohort = "avoid_high_risk"
+            entry_decision = "avoid"
+        elif result_id in near_miss_ranks:
+            cohort = "near_miss_candidate"
+            entry_decision = "no_trade_day" if no_trade_day else "watch"
+        elif result_id in radar_ids:
+            cohort = "radar_watchlist"
+            entry_decision = "no_trade_day" if no_trade_day else "watch"
+        else:
+            cohort = "scored_not_selected"
+            entry_decision = "ignore"
+
+        result["cohort"] = cohort
+        result["trade_gate_passed"] = not failed_reasons
+        result["ranking_bucket"] = ",".join(memberships)
+        result["failed_reasons"] = failed_reasons
+        result["is_near_miss"] = result_id in near_miss_ranks
+        result["near_miss_rank"] = near_miss_ranks.get(result_id)
+        result["entry_decision"] = entry_decision
+        result["no_trade_day"] = no_trade_day
+
+
 def build_ranking_reason(result):
     positive = []
     negative = []
@@ -1131,11 +1188,34 @@ def build_output_lists(results, limit=10):
         key=lambda result: result.get("risk_score", 0),
         reverse=True,
     )[:limit]
+    best_ids = {id(result) for result in best_trade_candidates}
+    near_miss_candidates = sorted(
+        [
+            result
+            for result in results
+            if id(result) not in best_ids and trade_gate_failure_reasons(result)
+        ],
+        key=lambda result: (
+            result.get("trade_score", result.get("final_score", 0)),
+            result.get("radar_score", 0),
+            -(result.get("risk_score", 0) or 0),
+        ),
+        reverse=True,
+    )[:limit]
+
+    annotate_output_cohorts(
+        results,
+        best_trade_candidates,
+        radar_watchlist,
+        avoid_high_risk,
+        near_miss_candidates,
+    )
 
     return {
         "best_trade_candidates": best_trade_candidates,
         "radar_watchlist": radar_watchlist,
         "avoid_high_risk": avoid_high_risk,
+        "near_miss_candidates": near_miss_candidates,
     }
 
 
@@ -1966,6 +2046,8 @@ if __name__ == "__main__":
 
     print(f"  Catalyst assessment: {catalyst_calls} Groq calls used")
     results.sort(key=lambda x: x.get("trade_score", x["final_score"]), reverse=True)
+    attach_run_metadata(results, run_metadata)
+    output_lists = build_output_lists(results)
 
     print("\nStep 5.5: Updating catalyst data in database...")
     conn = get_connection()
@@ -2017,8 +2099,6 @@ if __name__ == "__main__":
 
     print("\nStep 6: Writing output to files...\n")
 
-    attach_run_metadata(results, run_metadata)
-    output_lists = build_output_lists(results)
     output_payload = {**run_metadata, "run_metadata": run_metadata, **output_lists}
     with open("output.json", "w", encoding="utf-8") as file:
         json.dump(output_payload, file, indent=2, ensure_ascii=False)
@@ -2036,6 +2116,7 @@ if __name__ == "__main__":
         ("Best Trade Candidates", output_lists["best_trade_candidates"]),
         ("Radar Watchlist", output_lists["radar_watchlist"]),
         ("Avoid / High-Risk", output_lists["avoid_high_risk"]),
+        ("Near-Miss Candidates", output_lists["near_miss_candidates"]),
     ]
     with open("output.txt", "w", encoding="utf-8") as file:
         for section_name, section_results in output_sections:

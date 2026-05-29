@@ -12,14 +12,19 @@ Data notes:
 import os
 import sqlite3
 import argparse
+import json
 import math
 import random
+import sys
 from statistics import median
 from datetime import datetime
 
 from database import RUN_METADATA_COLUMNS, SCORE_METADATA_COLUMNS
 
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 
 def latest_backup_db():
@@ -210,6 +215,7 @@ def value_stats(values):
             "win_rate": None,
             "profit_factor": None,
             "worst": None,
+            "best": None,
         }
 
     return {
@@ -219,6 +225,7 @@ def value_stats(values):
         "win_rate": 100.0 * sum(1 for value in values if value > 0) / len(values),
         "profit_factor": profit_factor(values),
         "worst": min(values),
+        "best": max(values),
     }
 
 
@@ -235,7 +242,7 @@ def print_robust_group_table(title, note, groups):
     section(title, note)
     print(
         f"  {'Group':<24} {'Hor':<4} {'N':>5}  {'Avg':>9}  {'Median':>9}"
-        f"  {'Win%':>6}  {'PF':>5}  {'Worst':>9}"
+        f"  {'Win%':>6}  {'PF':>5}  {'Worst':>9}  {'Best':>9}"
     )
     divider()
 
@@ -253,7 +260,7 @@ def print_robust_group_table(title, note, groups):
                 f"  {fmt(stats['avg']):>9}  {fmt(stats['median']):>9}"
                 f"  {pct(stats['win_rate']):>6}"
                 f"  {fmt_profit_factor(stats['profit_factor']):>5}"
-                f"  {fmt(stats['worst']):>9}"
+                f"  {fmt(stats['worst']):>9}  {fmt(stats['best']):>9}"
             )
 
 
@@ -1369,6 +1376,258 @@ def shadow_score_bucket_analysis(conn):
     )
 
 
+# ── Cohort backtesting ────────────────────────────────────────────────────────
+def parse_failed_reasons(row):
+    raw_reasons = row.get("failed_reasons")
+    if not raw_reasons:
+        return []
+    if isinstance(raw_reasons, list):
+        return raw_reasons
+    try:
+        parsed = json.loads(raw_reasons)
+    except (TypeError, json.JSONDecodeError):
+        return [
+            reason.strip()
+            for reason in str(raw_reasons).split(",")
+            if reason.strip()
+        ]
+    if isinstance(parsed, list):
+        return [str(reason) for reason in parsed if reason]
+    return []
+
+
+def normalized_cohort(row):
+    cohort = row.get("cohort")
+    if cohort:
+        return cohort
+    if (
+        row.get("trade_gate_passed") == 1
+        or row.get("threadradar_signal") == "trade_candidate"
+    ):
+        return "best_trade_candidate"
+    if (
+        row.get("threadradar_signal") == "avoid"
+        or row.get("threadradar_risk_action") == "avoid_or_watch"
+    ):
+        return "avoid_high_risk"
+    if row.get("is_near_miss") == 1:
+        return "near_miss_candidate"
+    if row.get("radar_score") is not None:
+        return "radar_watchlist"
+    return "scored_not_selected"
+
+
+def cohort_performance(conn):
+    rows = fetch_backtest_rows(conn)
+    print_robust_group_table(
+        "COHORT PERFORMANCE",
+        "Compares best trades, radar names, avoided names, near misses, and other scored rows",
+        bucketize(rows, normalized_cohort),
+    )
+
+
+def gate_outcome_performance(conn):
+    rows = fetch_backtest_rows(conn)
+    print_robust_group_table(
+        "GATE OUTCOME PERFORMANCE",
+        "Tests whether the final trade gate is adding value versus rejected candidates",
+        bucketize(
+            rows,
+            lambda row: (
+                "1. gate_passed"
+                if normalized_cohort(row) == "best_trade_candidate"
+                or row.get("trade_gate_passed") == 1
+                else "2. gate_failed"
+            ),
+        ),
+    )
+    print_robust_group_table(
+        "ENTRY DECISION PERFORMANCE",
+        "Breaks outcomes down by the stored trade/watch/avoid/no-trade decision",
+        bucketize(rows, lambda row: row.get("entry_decision") or normalized_cohort(row)),
+    )
+
+
+def near_miss_performance(conn):
+    rows = fetch_backtest_rows(conn)
+    near_miss_rows = [
+        row
+        for row in rows
+        if row.get("is_near_miss") == 1
+        or normalized_cohort(row) == "near_miss_candidate"
+    ]
+    if not near_miss_rows:
+        section(
+            "NEAR-MISS PERFORMANCE",
+            "No near-miss cohort rows yet. Future runs will populate is_near_miss.",
+        )
+        return
+    print_robust_group_table(
+        "NEAR-MISS PERFORMANCE",
+        "Checks whether rejected high trade_score names later became hidden winners",
+        bucketize(
+            [
+                row
+                for row in rows
+                if normalized_cohort(row)
+                in {"best_trade_candidate", "radar_watchlist", "avoid_high_risk"}
+                or row in near_miss_rows
+            ],
+            lambda row: (
+                "near_miss_candidate"
+                if row.get("is_near_miss") == 1
+                else normalized_cohort(row)
+            ),
+        ),
+    )
+
+
+def reason_groups(rows, fallback_for_missing=False):
+    groups = {}
+    for row in rows:
+        reasons = parse_failed_reasons(row)
+        if fallback_for_missing and not reasons:
+            if row.get("setup_type"):
+                reasons.append(f"setup_type:{row['setup_type']}")
+            if row.get("market_confirmation_status"):
+                reasons.append(f"market_status:{row['market_confirmation_status']}")
+            if row.get("risk_score") is not None and row.get("risk_score", 0) > 35:
+                reasons.append("risk_score_too_high")
+            if (
+                row.get("promotion_risk_score") is not None
+                and row.get("promotion_risk_score", 0) >= 0.25
+            ):
+                reasons.append("promotion_risk")
+        for reason in reasons:
+            groups.setdefault(reason, []).append(row)
+    return groups
+
+
+def avoid_reason_performance(conn):
+    rows = [
+        row
+        for row in fetch_backtest_rows(conn)
+        if normalized_cohort(row) == "avoid_high_risk"
+    ]
+    groups = reason_groups(rows, fallback_for_missing=True)
+    if not groups:
+        section(
+            "AVOID REASON PERFORMANCE",
+            "No avoid reason metadata yet. Future runs will populate failed_reasons.",
+        )
+        return
+    print_robust_group_table(
+        "AVOID REASON PERFORMANCE",
+        "If an avoid reason performs well, it may belong in watchlist sizing instead of hard avoid",
+        groups,
+    )
+
+
+def failed_reason_performance(conn):
+    rows = fetch_backtest_rows(conn)
+    groups = reason_groups(rows, fallback_for_missing=False)
+    if not groups:
+        section(
+            "FAILED REASON PERFORMANCE",
+            "No failed_reasons metadata yet. Future runs will populate this section.",
+        )
+        return
+    print_robust_group_table(
+        "FAILED REASON PERFORMANCE",
+        "Explodes each failed gate reason so we can see which filters help or hurt",
+        groups,
+    )
+
+
+def no_trade_day_analysis(conn):
+    rows = fetch_backtest_rows(conn)
+    rows_by_date = {}
+    for row in rows:
+        rows_by_date.setdefault(row["flagged_date"], []).append(row)
+
+    horizons = [
+        ("T+1", "return_1d", "updated_1d"),
+        ("T+3", "return_3d", "updated_3d"),
+        ("T+7", "return_7d", "updated_7d"),
+    ]
+    groups = {
+        "top_radar_no_trade_day": {horizon: [] for horizon, _, _ in horizons},
+        "near_miss_no_trade_day": {horizon: [] for horizon, _, _ in horizons},
+        "avoid_no_trade_day": {horizon: [] for horizon, _, _ in horizons},
+    }
+
+    no_trade_days = 0
+    for day_rows in rows_by_date.values():
+        has_trade = any(
+            normalized_cohort(row) == "best_trade_candidate"
+            or row.get("trade_gate_passed") == 1
+            for row in day_rows
+        )
+        if has_trade:
+            continue
+        no_trade_days += 1
+
+        for horizon, return_col, updated_col in horizons:
+            resolved = [
+                row
+                for row in day_rows
+                if row.get(updated_col) == 1 and row.get(return_col) is not None
+            ]
+            if not resolved:
+                continue
+
+            top_radar = sorted(
+                [row for row in resolved if row.get("radar_score") is not None],
+                key=lambda row: row.get("radar_score") or 0,
+                reverse=True,
+            )[:5]
+            near_miss = sorted(
+                [
+                    row
+                    for row in resolved
+                    if row.get("is_near_miss") == 1
+                    or normalized_cohort(row) == "near_miss_candidate"
+                ],
+                key=lambda row: row.get("near_miss_rank") or 999,
+            )[:5]
+            avoid = [
+                row for row in resolved if normalized_cohort(row) == "avoid_high_risk"
+            ]
+
+            if top_radar:
+                groups["top_radar_no_trade_day"][horizon].append(
+                    safe_avg([row[return_col] for row in top_radar])
+                )
+            if near_miss:
+                groups["near_miss_no_trade_day"][horizon].append(
+                    safe_avg([row[return_col] for row in near_miss])
+                )
+            if avoid:
+                groups["avoid_no_trade_day"][horizon].append(
+                    safe_avg([row[return_col] for row in avoid])
+                )
+
+    section(
+        "NO-TRADE DAY ANALYSIS",
+        f"Checks whether days with zero trade candidates were correctly skipped ({no_trade_days} days)",
+    )
+    print(
+        f"  {'Basket':<26} {'Hor':<4} {'Days':>5}  {'Avg':>9}  {'Median':>9}"
+        f"  {'Win%':>6}  {'PF':>5}  {'Worst':>9}  {'Best':>9}"
+    )
+    divider()
+    for basket_name, horizon_values in groups.items():
+        for horizon, _, _ in horizons:
+            stats = value_stats(horizon_values[horizon])
+            print(
+                f"  {basket_name:<26} {horizon:<4} {stats['n']:>5}"
+                f"  {fmt(stats['avg']):>9}  {fmt(stats['median']):>9}"
+                f"  {pct(stats['win_rate']):>6}"
+                f"  {fmt_profit_factor(stats['profit_factor']):>5}"
+                f"  {fmt(stats['worst']):>9}  {fmt(stats['best']):>9}"
+            )
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run ThreadRadar backtest analysis")
@@ -1402,6 +1661,12 @@ if __name__ == "__main__":
     summary(conn)
     hit_rate(conn)
     robust_bucket_analysis(conn)
+    cohort_performance(conn)
+    gate_outcome_performance(conn)
+    no_trade_day_analysis(conn)
+    near_miss_performance(conn)
+    avoid_reason_performance(conn)
+    failed_reason_performance(conn)
     anti_chase_validation(conn)
     mention_velocity_validation(conn)
     volume_confirmation_validation(conn)
