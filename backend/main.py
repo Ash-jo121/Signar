@@ -691,17 +691,50 @@ def calculate_promotion_trade_multiplier(promotion_risk_score):
     return 1.0
 
 
-def apply_risk_adjusted_recommendation(result):
-    recommendation = result.get("recommendation", "none") or "none"
-    result.setdefault("analyst_recommendation", recommendation)
+def apply_threadradar_trade_decision(result):
+    """
+    Keep Yahoo analyst opinion as metadata and publish ThreadRadar's own action.
 
-    risk_level_value = result.get("risk_level")
-    if risk_level_value in {"high", "extreme"}:
-        result["recommendation"] = "avoid_or_watch"
-    elif risk_level_value == "medium" and recommendation == "strong_buy":
-        result["recommendation"] = "speculative_watch"
+    Penny-stock tradeability should come from our Reddit/market/risk gates, not
+    from Yahoo recommendationKey. The legacy recommendation field is left empty
+    so consumers do not mistake external analyst metadata for our trade call.
+    """
+    result.setdefault("analyst_recommendation", result.get("recommendation") or "none")
+    result["recommendation"] = None
+
+    failed_gates = trade_gate_failure_reasons(result)
+    high_risk = is_high_risk_candidate(result)
+    radar_score = result.get("radar_score", result.get("final_score", 0)) or 0
+
+    if not failed_gates:
+        signal = "trade_candidate"
+        trade_action = "candidate"
+        risk_action = "tradeable"
+        trade_reason = "Passed ThreadRadar trade gates"
+    elif high_risk:
+        signal = "avoid"
+        trade_action = "avoid"
+        risk_action = "avoid_or_watch"
+        trade_reason = "Failed ThreadRadar risk gates: " + ", ".join(failed_gates[:3])
+    elif radar_score > 0:
+        signal = "radar_watchlist"
+        trade_action = "watch"
+        risk_action = "watch"
+        trade_reason = "Radar signal present but trade gates failed: " + ", ".join(
+            failed_gates[:3]
+        )
     else:
-        result["recommendation"] = recommendation
+        signal = "ignore"
+        trade_action = "no_trade"
+        risk_action = "ignore"
+        trade_reason = "No actionable ThreadRadar signal"
+
+    result["threadradar_signal"] = signal
+    result["threadradar_recommendation"] = signal
+    result["threadradar_trade_status"] = signal
+    result["threadradar_risk_action"] = risk_action
+    result["trade_action"] = trade_action
+    result["trade_reason"] = trade_reason
 
 
 def calculate_freshness_multiplier(persistence_days_seen):
@@ -894,7 +927,7 @@ def apply_rank_scores(result):
     result["anti_chase_multiplier"] = round(anti_chase_multiplier, 3)
     result["setup_type"] = setup_type
     result["final_score"] = result["trade_score"]
-    apply_risk_adjusted_recommendation(result)
+    apply_threadradar_trade_decision(result)
 
 
 def apply_catalyst_multiplier(result):
@@ -929,41 +962,49 @@ def apply_catalyst_multiplier(result):
         )
 
 
-def is_best_trade_candidate(result):
+def trade_gate_failure_reasons(result):
     setup_type = result.get("setup_type")
     market_status = result.get("market_confirmation_status")
     days_trending = result.get("days_trending", 1) or 1
-    recommendation = result.get("recommendation", "none") or "none"
+    reasons = []
 
     if result.get("trade_score", result.get("final_score", 0)) <= 0.35:
-        return False
-    if recommendation in {"none", "avoid_or_watch"}:
-        return False
+        reasons.append("trade_score_too_low")
     if result.get("avg_sentiment", 0) <= 0:
-        return False
+        reasons.append("non_positive_sentiment")
     if (result.get("dollar_volume") or 0) < 1_000_000:
-        return False
+        reasons.append("insufficient_dollar_volume")
     if result.get("risk_score", 0) > 35:
-        return False
-    if setup_type in {"promotion_risk", "anti_chase", "bagholder_chatter"}:
-        return False
+        reasons.append("risk_score_too_high")
+    if setup_type in {
+        "promotion_risk",
+        "anti_chase",
+        "bagholder_chatter",
+        "dilution_risk",
+        "low_quality_hype",
+    }:
+        reasons.append(f"blocked_setup_type:{setup_type}")
     if setup_type == "stale_squeeze" and days_trending > 5:
-        return False
-    if market_status == "no_confirmation":
-        return False
+        reasons.append("stale_squeeze_too_old")
     if (
         result.get("promotion_risk_score", 0) >= 0.20
         and result.get("avg_sentiment", 0) > 0.55
     ):
-        return False
+        reasons.append("euphoric_promotion_risk")
     if market_status in {
+        "no_confirmation",
         "confirmed_but_extended",
         "price_without_volume",
         "illiquid",
         "post_spike_reversal",
+        "unknown",
     }:
-        return False
-    return True
+        reasons.append(f"bad_market_confirmation:{market_status}")
+    return reasons
+
+
+def is_best_trade_candidate(result):
+    return not trade_gate_failure_reasons(result)
 
 
 def is_high_risk_candidate(result):
