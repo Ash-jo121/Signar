@@ -70,6 +70,12 @@ SCORE_METADATA_COLUMNS = [
     ("volume_confirmation_multiplier", "REAL DEFAULT 1.0"),
     ("anti_chase_multiplier", "REAL DEFAULT 1.0"),
     ("market_confirmation_status", "TEXT"),
+    ("threadradar_signal", "TEXT"),
+    ("threadradar_recommendation", "TEXT"),
+    ("threadradar_trade_status", "TEXT"),
+    ("threadradar_risk_action", "TEXT"),
+    ("trade_action", "TEXT"),
+    ("trade_reason", "TEXT"),
 ]
 
 RUN_METADATA_COLUMNS = [
@@ -150,6 +156,12 @@ def score_metadata_values(result):
         result.get("volume_confirmation_multiplier", 1.0),
         result.get("anti_chase_multiplier", 1.0),
         result.get("market_confirmation_status"),
+        result.get("threadradar_signal"),
+        result.get("threadradar_recommendation"),
+        result.get("threadradar_trade_status"),
+        result.get("threadradar_risk_action"),
+        result.get("trade_action"),
+        result.get("trade_reason"),
     )
 
 
