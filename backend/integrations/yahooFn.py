@@ -246,7 +246,8 @@ def enrich_with_price(results):
             r["fifty_two_week_high"] = info.get("fiftyTwoWeekHigh", 0)
             r["fifty_two_week_low"] = info.get("fiftyTwoWeekLow", 0)
             r["analyst_target"] = info.get("targetMeanPrice", 0)
-            r["recommendation"] = info.get("recommendationKey", "none")
+            r["analyst_recommendation"] = info.get("recommendationKey", "none")
+            r["recommendation"] = None
             r["sector"] = info.get("sector", "Unknown")
             r["description"] = info.get("longBusinessSummary", "")
             r["name"] = info.get("longName", "")
@@ -306,7 +307,8 @@ def enrich_with_price(results):
             r["fifty_two_week_high"] = 0
             r["fifty_two_week_low"] = 0
             r["analyst_target"] = 0
-            r["recommendation"] = "none"
+            r["analyst_recommendation"] = "none"
+            r["recommendation"] = None
             r["sector"] = "Unknown"
             r["description"] = ""
             r["name"] = ""
