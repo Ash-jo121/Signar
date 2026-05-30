@@ -1,0 +1,86 @@
+=== ThreadRadar starting at Sat May 30 10:25:08 UTC 2026 ===
+Fetching NASDAQ tickers...
+  NASDAQ: added 4165 tickers (total: 4165)
+Fetching NYSE tickers...
+  NYSE: added 2327 tickers (total: 6492)
+Fetching AMEX tickers...
+  AMEX: added 277 tickers (total: 6769)
+
+Cached 6769 valid tickers to valid_tickers.json
+✓ Scraper loaded VALID_TICKERS: 6769 tickers
+✓ Proxy enabled: gate.decodo.com:10000
+Extractor loaded, VALID_TICKERS size: 6769
+AND in VALID_TICKERS: False
+=== ThreadRadar ===
+
+Database initialized successfully
+Market closed for 2026-05-30 (weekend). Skipping price updater and marking run as non-trading-day.
+Step 1: Fetching posts...
+
+Fetching r/VampireStocks (bearish signal source)...
+    Failed r/VampireStocks/new page 0: 403
+    Failed r/VampireStocks/hot: 403
+  Processing 0 VampireStocks posts...
+  VampireStocks: 0 bearish tickers flagged
+
+Fetching r/pennystocks...
+    Failed r/pennystocks/new page 0: 403
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 903, in _error_catcher
+    yield
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1049, in _raw_read
+    raise IncompleteRead(self._fp_bytes_read, self.length_remaining)
+urllib3.exceptions.IncompleteRead: IncompleteRead(178975 bytes read, 10933 more expected)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 820, in generate
+    yield from self.raw.stream(chunk_size, decode_content=True)
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1257, in stream
+    data = self.read(amt=amt, decode_content=decode_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1149, in read
+    data = self._raw_read(amt)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 1027, in _raw_read
+    with self._error_catcher():
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/response.py", line 927, in _error_catcher
+    raise ProtocolError(arg, e) from e
+urllib3.exceptions.ProtocolError: ('Connection broken: IncompleteRead(178975 bytes read, 10933 more expected)', IncompleteRead(178975 bytes read, 10933 more expected))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/ThreadRadar/ThreadRadar/backend/main.py", line 1886, in <module>
+    posts = fetch_all()
+            ^^^^^^^^^^^
+  File "/home/runner/work/ThreadRadar/ThreadRadar/backend/scraper.py", line 499, in fetch_all
+    hot_posts = fetch_hot(subreddit, limit=50)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ThreadRadar/ThreadRadar/backend/scraper.py", line 311, in fetch_hot
+    response = requests.get(url, headers=HEADERS, proxies=PROXIES, timeout=60)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 746, in send
+    r.content
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 902, in content
+    self._content = b"".join(self.iter_content(CONTENT_CHUNK_SIZE)) or b""
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/models.py", line 822, in generate
+    raise ChunkedEncodingError(e)
+requests.exceptions.ChunkedEncodingError: ('Connection broken: IncompleteRead(178975 bytes read, 10933 more expected)', IncompleteRead(178975 bytes read, 10933 more expected))
+=== Main pipeline done at Sat May 30 10:25:34 UTC 2026 ===
+=== Price updater starting at Sat May 30 10:25:34 UTC 2026 ===
+Market closed for 2026-05-30 (weekend). Skipping price updater and marking run as non-trading-day.
+=== Price updater done at Sat May 30 10:25:34 UTC 2026 ===
