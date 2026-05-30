@@ -1,3 +1,4 @@
+import argparse
 import json
 import math
 import re
@@ -8,15 +9,19 @@ from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
 from database import (
+    archive_old_posts,
     get_connection,
     init_db,
     record_flagged_stocks,
+    save_post,
     save_score_metadata,
+    update_post_after_refresh,
 )
 from database import save_daily_results
 from market_calendar import get_market_session
-from scraper import fetch_all
-from extractor import extract_from_post
+from runtime_paths import output_archive_dir, output_json_path, output_txt_path, raw_data_path
+from scraper import fetch_all, process_vampire_post
+from extractor import extract_from_post, extract_tickers
 from sentiment import (
     analyze_sentiment,
     assess_catalyst_quality,
@@ -1865,7 +1870,116 @@ def apply_repetition_decay(results):
     return results
 
 
-if __name__ == "__main__":
+def load_raw_data_payload(raw_data_file=None):
+    path = raw_data_file or raw_data_path()
+    with open(path, "r", encoding="utf-8") as file:
+        payload = json.load(file)
+    if isinstance(payload, list):
+        payload = {"posts": payload, "vampire_posts": [], "fetch_metadata": {}}
+    return payload
+
+
+def normalize_raw_comments_for_analysis(comments, parent_tickers=None, depth=0):
+    normalized = []
+    for comment in comments:
+        body = comment.get("body", "")
+        current_tickers = comment.get("tickers")
+        if current_tickers is None:
+            current_tickers = extract_tickers(body)
+
+        if current_tickers:
+            effective_tickers = current_tickers
+            inherited = False
+            mention_weight = 1.0
+        else:
+            effective_tickers = parent_tickers or []
+            inherited = True
+            mention_weight = max(0.1, 0.5 - (depth * 0.2))
+
+        normalized_comment = {
+            "body": body,
+            "score": comment.get("score", 0),
+            "author": comment.get("author", "unknown"),
+            "tickers": effective_tickers,
+            "inherited": comment.get("inherited", inherited),
+            "mention_weight": comment.get("mention_weight", mention_weight),
+            "author_account_age_days": comment.get("author_account_age_days"),
+            "author_link_karma": comment.get("author_link_karma"),
+            "author_comment_karma": comment.get("author_comment_karma"),
+        }
+        normalized.append(normalized_comment)
+
+        normalized.extend(
+            normalize_raw_comments_for_analysis(
+                comment.get("replies", []),
+                effective_tickers,
+                depth + 1,
+            )
+        )
+    return normalized
+
+
+def normalize_raw_posts_for_analysis(posts):
+    normalized_posts = []
+    for post in posts:
+        normalized = dict(post)
+        normalized["comments"] = normalize_raw_comments_for_analysis(
+            post.get("comments", [])
+        )
+        normalized_posts.append(normalized)
+    return normalized_posts
+
+
+def persist_raw_posts(posts):
+    for post in posts:
+        save_post(
+            {
+                "id": post["id"],
+                "subreddit": post["subreddit"],
+                "title": post["title"],
+                "selftext": post.get("body", ""),
+                "score": post.get("score", 0),
+                "num_comments": post.get("num_comments", len(post.get("comments", []))),
+                "created_utc": post.get("created_utc"),
+                "author": post.get("author", "unknown"),
+            }
+        )
+        update_post_after_refresh(
+            post["id"],
+            post.get("num_comments", len(post.get("comments", []))),
+        )
+
+
+def load_posts_from_raw_data(raw_data_file=None):
+    payload = load_raw_data_payload(raw_data_file)
+    posts = normalize_raw_posts_for_analysis(payload.get("posts", []))
+    vampire_posts = payload.get("vampire_posts", [])
+    metadata = payload.get("fetch_metadata", {})
+
+    print(
+        "Loaded raw Reddit snapshot: "
+        f"{len(posts)} posts, {len(vampire_posts)} VampireStocks posts"
+    )
+    if metadata:
+        print(
+            "  Fetch metadata: "
+            f"{metadata.get('requests', 0)} requests, "
+            f"{metadata.get('rate_limits', 0)} rate limits, "
+            f"{metadata.get('duration_seconds', 0)}s"
+        )
+
+    print("  Processing raw VampireStocks posts...")
+    total_flagged = 0
+    for vampire_post in vampire_posts:
+        total_flagged += len(process_vampire_post(vampire_post))
+    print(f"  VampireStocks: {total_flagged} bearish tickers flagged")
+
+    persist_raw_posts(posts)
+    archive_old_posts()
+    return posts
+
+
+def run_pipeline(raw_data_file=None):
     print("=== ThreadRadar ===\n")
 
     init_db()
@@ -1882,8 +1996,11 @@ if __name__ == "__main__":
             "Run is eligible for same-day / T+1 backtest."
         )
 
-    print("Step 1: Fetching posts...")
-    posts = fetch_all()
+    print("Step 1: Loading posts...")
+    if raw_data_file:
+        posts = load_posts_from_raw_data(raw_data_file)
+    else:
+        posts = fetch_all()
 
     print("\nStep 2: Analyzing tickers and sentiment...")
     results = analyze_ticker_sentiment(posts)
@@ -2100,14 +2217,14 @@ if __name__ == "__main__":
     print("\nStep 6: Writing output to files...\n")
 
     output_payload = {**run_metadata, "run_metadata": run_metadata, **output_lists}
-    with open("output.json", "w", encoding="utf-8") as file:
+    output_json = output_json_path()
+    output_json.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_json, "w", encoding="utf-8") as file:
         json.dump(output_payload, file, indent=2, ensure_ascii=False)
 
-    output_dir = "output"
-    os.makedirs(output_dir, exist_ok=True)
-    dated_file = os.path.join(
-        output_dir, f"output_{date.today().strftime('%Y-%m-%d')}.json"
-    )
+    output_dir = output_archive_dir()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    dated_file = output_dir / f"output_{date.today().strftime('%Y-%m-%d')}.json"
     with open(dated_file, "w", encoding="utf-8") as file:
         json.dump(output_payload, file, indent=2, ensure_ascii=False)
     print(f"Output written to {dated_file}")
@@ -2118,7 +2235,9 @@ if __name__ == "__main__":
         ("Avoid / High-Risk", output_lists["avoid_high_risk"]),
         ("Near-Miss Candidates", output_lists["near_miss_candidates"]),
     ]
-    with open("output.txt", "w", encoding="utf-8") as file:
+    output_txt = output_txt_path()
+    output_txt.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_txt, "w", encoding="utf-8") as file:
         for section_name, section_results in output_sections:
             file.write(f"{section_name}\n")
             file.write("=" * len(section_name) + "\n\n")
@@ -2146,3 +2265,31 @@ if __name__ == "__main__":
                 )
                 file.write("\n")
             file.write("\n")
+
+    return output_payload
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run ThreadRadar analysis pipeline")
+    parser.add_argument(
+        "--raw-data",
+        default=None,
+        help="Analyze a pre-fetched raw Reddit JSON snapshot instead of live fetching",
+    )
+    parser.add_argument(
+        "--require-raw-data",
+        action="store_true",
+        help="Fail if --raw-data is omitted or missing; used by Railway webhook jobs",
+    )
+    args = parser.parse_args()
+
+    selected_raw_data = args.raw_data
+    if selected_raw_data is None and os.getenv("THREADRADAR_USE_RAW_DATA") == "1":
+        selected_raw_data = str(raw_data_path())
+
+    if args.require_raw_data and not selected_raw_data:
+        raise SystemExit("--require-raw-data needs --raw-data or THREADRADAR_USE_RAW_DATA=1")
+    if args.require_raw_data and not os.path.exists(selected_raw_data):
+        raise SystemExit(f"Raw data file not found: {selected_raw_data}")
+
+    run_pipeline(raw_data_file=selected_raw_data)

@@ -1,0 +1,48 @@
+name: ThreadRadar Raw Reddit Fetch
+
+on:
+  schedule:
+    - cron: "30 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  fetch-raw-reddit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r backend/requirements-fetch.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Fetch raw Reddit data and trigger Railway analysis
+        working-directory: backend
+        env:
+          PROXY_USER: ${{ secrets.PROXY_USER }}
+          PROXY_PASS: ${{ secrets.PROXY_PASS }}
+          PROXY_HOST: ${{ secrets.PROXY_HOST }}
+          PROXY_PORT: ${{ secrets.PROXY_PORT }}
+          RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
+          UPLOAD_API_KEY: ${{ secrets.UPLOAD_API_KEY }}
+        run: |
+          python -u fetch_raw_reddit.py \
+            --output raw_data.json \
+            --upload \
+            --trigger-analysis
+
+      - name: Upload raw fetch artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-reddit-${{ github.run_number }}
+          path: backend/raw_data.json
+          retention-days: 7
