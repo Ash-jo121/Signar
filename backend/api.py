@@ -1,11 +1,22 @@
 from datetime import datetime, timezone
-from fastapi import BackgroundTasks, FastAPI, HTTPException, File, Header, Query, UploadFile
+from pathlib import Path
+from fastapi import (
+    BackgroundTasks,
+    FastAPI,
+    HTTPException,
+    File,
+    Header,
+    Query,
+    UploadFile,
+)
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import shutil
 import os
+import subprocess
+import sys
 from fastapi.responses import FileResponse
-from runtime_paths import output_json_path, raw_data_path, data_path
+from runtime_paths import analysis_lock_path, output_json_path, raw_data_path, data_path
 
 app = FastAPI()
 
@@ -21,7 +32,9 @@ app.add_middleware(
 DATA_PATH = output_json_path()
 RAW_DATA_PATH = raw_data_path()
 DB_PATH = data_path("threadradar.db")
-MIN_RAW_POSTS = int(os.getenv("THREADRADAR_MIN_RAW_POSTS", "25"))
+LOCK_PATH = analysis_lock_path()
+MIN_RAW_POSTS = int(os.getenv("THREADRADAR_MIN_RAW_POSTS", "200"))
+LOCK_STALE_SECONDS = int(os.getenv("THREADRADAR_ANALYSIS_LOCK_STALE_SECONDS", "21600"))
 analysis_state = {
     "running": False,
     "last_started_at": None,
@@ -105,7 +118,9 @@ def validate_raw_data_payload(payload):
     fetched_at = parse_iso_datetime(payload.get("fetched_at"))
     if fetched_at is None:
         errors.append("missing_or_invalid_fetched_at")
-    elif fetched_at.astimezone(timezone.utc).date() != datetime.now(timezone.utc).date():
+    elif (
+        fetched_at.astimezone(timezone.utc).date() != datetime.now(timezone.utc).date()
+    ):
         errors.append("stale_fetched_at")
 
     if len(posts) < MIN_RAW_POSTS:
@@ -145,25 +160,81 @@ def save_raw_data_payload(payload):
     os.replace(temp_path, RAW_DATA_PATH)
 
 
+def remove_stale_analysis_lock():
+    if not LOCK_PATH.exists():
+        return
+
+    age_seconds = datetime.now().timestamp() - LOCK_PATH.stat().st_mtime
+    if age_seconds <= LOCK_STALE_SECONDS:
+        return
+
+    print(f"Removing stale analysis lock: {LOCK_PATH}")
+    LOCK_PATH.unlink(missing_ok=True)
+
+
+def acquire_analysis_lock():
+    remove_stale_analysis_lock()
+    LOCK_PATH.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "pid": os.getpid(),
+        "status": "queued",
+    }
+
+    try:
+        fd = os.open(str(LOCK_PATH), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Analysis already locked at {LOCK_PATH}",
+        )
+
+    with os.fdopen(fd, "w", encoding="utf-8") as lock_file:
+        json.dump(payload, lock_file)
+
+
+def release_analysis_lock():
+    LOCK_PATH.unlink(missing_ok=True)
+
+
+def run_backend_command(args):
+    command = [sys.executable, *args]
+    print(f"Running backend subprocess: {' '.join(command)}")
+    completed = subprocess.run(
+        command,
+        cwd=str(Path(__file__).resolve().parent),
+        check=False,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(
+            f"Backend subprocess failed with exit code {completed.returncode}: "
+            f"{' '.join(command)}"
+        )
+
+
 def run_analysis_job(raw_path):
     analysis_state["running"] = True
     analysis_state["last_started_at"] = datetime.now().isoformat()
     analysis_state["last_status"] = "running"
     analysis_state["last_error"] = None
     try:
-        from main import run_pipeline
-
-        output_payload = run_pipeline(raw_data_file=str(raw_path))
+        run_backend_command(
+            [
+                "main.py",
+                "--raw-data",
+                str(raw_path),
+                "--require-raw-data",
+            ]
+        )
         # Keep performance-price maintenance outside run_pipeline so raw snapshots
         # can be replayed/debugged without mutating historical return tracking.
         # The Railway webhook still chains it after a successful trading-day run.
         if os.getenv("THREADRADAR_RUN_PRICE_UPDATER", "1") == "1":
+            output_payload = load_data()
             if output_payload.get("market_session") == "closed":
                 print("Price updater skipped after analysis: market is closed")
             else:
-                from price_updater import update_performance_prices
-
-                update_performance_prices()
+                run_backend_command(["price_updater.py"])
         analysis_state["last_status"] = "ok"
     except Exception as exc:
         analysis_state["last_status"] = "failed"
@@ -172,12 +243,21 @@ def run_analysis_job(raw_path):
     finally:
         analysis_state["running"] = False
         analysis_state["last_finished_at"] = datetime.now().isoformat()
+        release_analysis_lock()
 
 
-def enqueue_analysis(background_tasks, raw_path):
-    if analysis_state["running"]:
-        raise HTTPException(status_code=409, detail="Analysis already running")
-    load_raw_data_for_analysis(raw_path)
+def enqueue_analysis(background_tasks, raw_path, lock_acquired=False):
+    try:
+        if analysis_state["running"]:
+            raise HTTPException(status_code=409, detail="Analysis already running")
+        load_raw_data_for_analysis(raw_path)
+        if not lock_acquired:
+            acquire_analysis_lock()
+    except Exception:
+        if lock_acquired:
+            release_analysis_lock()
+        raise
+
     analysis_state["running"] = True
     analysis_state["last_status"] = "queued"
     analysis_state["last_error"] = None
@@ -245,7 +325,17 @@ async def upload_raw_data(
         print(f"Raw data upload rejected: {validation_errors}")
         raise HTTPException(status_code=422, detail=validation_errors)
 
-    save_raw_data_payload(payload)
+    lock_acquired = False
+    if trigger_analysis:
+        acquire_analysis_lock()
+        lock_acquired = True
+
+    try:
+        save_raw_data_payload(payload)
+    except Exception:
+        if lock_acquired:
+            release_analysis_lock()
+        raise
 
     response = {
         "status": "ok",
@@ -254,12 +344,20 @@ async def upload_raw_data(
         "updated_at": datetime.now().isoformat(),
     }
     if trigger_analysis:
-        response.update(enqueue_analysis(background_tasks, RAW_DATA_PATH))
+        response.update(
+            enqueue_analysis(
+                background_tasks,
+                RAW_DATA_PATH,
+                lock_acquired=lock_acquired,
+            )
+        )
     return response
 
 
 @app.post("/api/run-analysis")
-async def run_analysis(background_tasks: BackgroundTasks, x_api_key: str = Header(None)):
+async def run_analysis(
+    background_tasks: BackgroundTasks, x_api_key: str = Header(None)
+):
     authorize_upload_key(x_api_key)
     return enqueue_analysis(background_tasks, RAW_DATA_PATH)
 
@@ -267,4 +365,8 @@ async def run_analysis(background_tasks: BackgroundTasks, x_api_key: str = Heade
 @app.get("/api/analysis-status")
 def get_analysis_status(x_api_key: str = Header(None)):
     authorize_upload_key(x_api_key)
-    return analysis_state
+    return {
+        **analysis_state,
+        "lock_exists": LOCK_PATH.exists(),
+        "lock_path": str(LOCK_PATH),
+    }

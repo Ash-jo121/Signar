@@ -39,3 +39,7 @@ def output_txt_path():
 
 def output_archive_dir():
     return Path(os.getenv("THREADRADAR_OUTPUT_ARCHIVE_DIR", data_path("output")))
+
+
+def analysis_lock_path():
+    return Path(os.getenv("THREADRADAR_ANALYSIS_LOCK_PATH", data_path("analysis.lock")))

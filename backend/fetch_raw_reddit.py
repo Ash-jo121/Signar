@@ -26,6 +26,7 @@ AUTHOR_BACKOFFS = [10]
 
 MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "1.2"))
 MAX_GAP = float(os.getenv("REDDIT_FETCH_MAX_GAP", "2.8"))
+MIN_RAW_POSTS = int(os.getenv("THREADRADAR_MIN_RAW_POSTS", "200"))
 # 0 means unlimited. Keep defaults complete; use env caps only if Reddit 429s
 # become worse than the missing-comment/missing-author tradeoff.
 MAX_COMMENT_FETCHES = int(os.getenv("REDDIT_MAX_COMMENT_FETCHES", "0"))
@@ -33,6 +34,10 @@ MAX_AUTHOR_LOOKUPS = int(os.getenv("AUTHOR_PROFILE_LOOKUP_LIMIT", "0"))
 
 
 class OptionalFetchRateLimited(Exception):
+    pass
+
+
+class RawDataValidationError(Exception):
     pass
 
 
@@ -320,6 +325,29 @@ def dedupe_posts(posts):
     return deduped
 
 
+def validate_raw_payload(payload):
+    errors = []
+    posts = payload.get("posts")
+    if not isinstance(posts, list):
+        errors.append("missing_or_invalid_posts")
+        posts = []
+
+    fetched_at = payload.get("fetched_at")
+    if not fetched_at:
+        errors.append("missing_fetched_at")
+
+    if len(posts) < MIN_RAW_POSTS:
+        errors.append(f"too_few_posts:{len(posts)}<{MIN_RAW_POSTS}")
+
+    missing_subreddit = sum(
+        1 for post in posts if not isinstance(post, dict) or not post.get("subreddit")
+    )
+    if missing_subreddit:
+        errors.append(f"missing_subreddit:{missing_subreddit}")
+
+    return errors
+
+
 def fetch_raw_payload(headless=True):
     fetcher = StealthRedditFetcher(headless=headless)
     started = time.time()
@@ -368,6 +396,12 @@ def fetch_raw_payload(headless=True):
 
         normal_posts = dedupe_posts(normal_posts)
         vampire_posts = dedupe_posts(vampire_posts)
+        if len(normal_posts) < MIN_RAW_POSTS:
+            raise RawDataValidationError(
+                f"Only {len(normal_posts)} normal posts fetched; "
+                f"minimum is {MIN_RAW_POSTS}. Skipping comments/upload."
+            )
+
         comment_stats = fetch_comments_for_posts(fetcher, normal_posts)
 
         authors = authors_needing_profiles(normal_posts)
@@ -434,6 +468,10 @@ def main():
     args = parser.parse_args()
 
     payload = fetch_raw_payload(headless=not args.headed)
+    validation_errors = validate_raw_payload(payload)
+    if validation_errors:
+        raise SystemExit(f"Raw data validation failed: {validation_errors}")
+
     output = write_payload(payload, args.output)
     print(f"\nRaw Reddit data written to {output}")
     print(json.dumps(payload["fetch_metadata"], indent=2))
