@@ -287,7 +287,7 @@ def classify_vampire_post(title, body):
     Classify a VampireStocks post into flag type and confidence.
     Called only for r/VampireStocks posts during scraping.
     """
-    text = f"Title: {title}\nBody: {body[:300]}"
+    text = f"Title: {title}\nBody and comments: {body[:1500]}"
 
     wait_for_rate_limit()
 

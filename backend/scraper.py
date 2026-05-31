@@ -442,11 +442,50 @@ def fetch_vampire_posts():
     total_flagged = 0
 
     for post in all_posts:
+        post["comments"] = fetch_comments(post["id"], post["subreddit"])
         flagged = process_vampire_post(post)
         total_flagged += len(flagged)
         time.sleep(1)  # gentle on rate limits between Groq calls
 
     print(f"  VampireStocks: {total_flagged} bearish tickers flagged")
+
+
+def flatten_comment_texts(comments, limit=12):
+    """
+    Convert already-fetched comments into text snippets for VampireStocks analysis.
+
+    fetch_comments() already performs the Reddit comment fetch and returns a flat
+    list in the legacy scraper path. Raw Playwright snapshots keep replies nested,
+    so this also walks optional "replies" without making another network request.
+    """
+    texts = []
+
+    def visit(items):
+        for comment in items:
+            body = (comment.get("body") or "").strip()
+            if body:
+                texts.append(body)
+                if len(texts) >= limit:
+                    return
+            visit(comment.get("replies", []))
+            if len(texts) >= limit:
+                return
+
+    visit(comments or [])
+    return texts[:limit]
+
+
+def build_vampire_analysis_body(post):
+    comments = flatten_comment_texts(post.get("comments", []))
+    if not comments:
+        return post.get("body", "")
+
+    comment_context = "\n".join(f"- {text[:240]}" for text in comments)
+    return (
+        f"{post.get('body', '')}\n\n"
+        "Relevant comments from this VampireStocks thread:\n"
+        f"{comment_context}"
+    )
 
 
 def fetch_all():
@@ -547,7 +586,7 @@ def process_vampire_post(post):
     Returns list of (ticker, flag_type, confidence) tuples.
     """
     title = post["title"]
-    body = post.get("body", "")
+    body = build_vampire_analysis_body(post)
     today = datetime.now().strftime("%Y-%m-%d")
     conn = get_connection()
 

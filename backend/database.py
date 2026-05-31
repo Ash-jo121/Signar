@@ -3,7 +3,10 @@ import sqlite3
 import time
 from datetime import datetime
 
-DB_PATH = "threadradar.db"
+from runtime_paths import data_path
+
+# Uses Railway's persistent /data volume in production and backend/ locally.
+DB_PATH = str(data_path("threadradar.db"))
 
 # Wait for locks instead of failing immediately (SQLite default is short).
 _SQLITE_TIMEOUT_S = 30.0
