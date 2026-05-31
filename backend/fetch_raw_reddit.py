@@ -22,7 +22,7 @@ USER_AGENT = (
 BLOCK_MARKERS = ("network security", "theme-beta", "blocked", "/cdn-cgi/")
 LISTING_BACKOFFS = [30, 90, 180]
 COMMENT_BACKOFFS = [30, 60, 120]
-AUTHOR_BACKOFFS = [10]
+AUTHOR_BACKOFFS = [30, 60]
 
 MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "1.2"))
 MAX_GAP = float(os.getenv("REDDIT_FETCH_MAX_GAP", "2.8"))
@@ -129,8 +129,8 @@ class StealthRedditFetcher:
                 self.hard_block_count += 1
                 raise RuntimeError(f"HARD BLOCK status={status}: {url}")
 
-            self._consecutive_429s = 0
-            self._adaptive_gap_extra = max(0.0, self._adaptive_gap_extra - 2.0)
+            self._consecutive_429s = max(0, self._consecutive_429s - 1)
+            self._adaptive_gap_extra = max(0.0, self._adaptive_gap_extra - 1.0)
             return json.loads(body)
 
         raise OptionalFetchRateLimited(f"fetch exhausted retries: {url}")
