@@ -27,6 +27,7 @@ AUTHOR_BACKOFFS = [30, 60]
 MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "1.2"))
 MAX_GAP = float(os.getenv("REDDIT_FETCH_MAX_GAP", "2.8"))
 MIN_RAW_POSTS = int(os.getenv("THREADRADAR_MIN_RAW_POSTS", "200"))
+AUTHOR_LOOKUP_COOLDOWN_SECONDS = int(os.getenv("AUTHOR_LOOKUP_COOLDOWN_SECONDS", "180"))
 # 0 means unlimited. Keep defaults complete; use env caps only if Reddit 429s
 # become worse than the missing-comment/missing-author tradeoff.
 MAX_COMMENT_FETCHES = int(os.getenv("REDDIT_MAX_COMMENT_FETCHES", "0"))
@@ -354,7 +355,49 @@ def validate_raw_payload(payload):
     return errors
 
 
-def fetch_raw_payload(headless=True):
+def build_payload(
+    started,
+    normal_posts,
+    vampire_posts,
+    comment_stats,
+    vampire_comment_stats,
+    fetcher,
+    errors,
+    authors=None,
+    author_failures=0,
+    author_lookup_status="pending",
+):
+    authors = authors or []
+    return {
+        "schema_version": 1,
+        "fetched_at": utc_now_iso(),
+        "fetch_metadata": {
+            "duration_seconds": round(time.time() - started, 2),
+            "normal_post_count": len(normal_posts),
+            "vampire_post_count": len(vampire_posts),
+            "comment_stats": comment_stats,
+            "vampire_comment_stats": vampire_comment_stats,
+            "author_lookup_status": author_lookup_status,
+            "author_lookup_count": len(authors),
+            "author_lookup_failures": author_failures,
+            "requests": fetcher.request_count,
+            "rate_limits": fetcher.rate_limit_count,
+            "hard_blocks": fetcher.hard_block_count,
+            "comment_fetch_limit": (
+                MAX_COMMENT_FETCHES if MAX_COMMENT_FETCHES > 0 else None
+            ),
+            "author_lookup_limit": (
+                MAX_AUTHOR_LOOKUPS if MAX_AUTHOR_LOOKUPS > 0 else None
+            ),
+            "author_lookup_cooldown_seconds": AUTHOR_LOOKUP_COOLDOWN_SECONDS,
+            "errors": errors,
+        },
+        "posts": normal_posts,
+        "vampire_posts": vampire_posts,
+    }
+
+
+def fetch_raw_payload(headless=True, checkpoint_path=None):
     fetcher = StealthRedditFetcher(headless=headless)
     started = time.time()
     normal_posts = []
@@ -410,37 +453,44 @@ def fetch_raw_payload(headless=True):
 
         comment_stats = fetch_comments_for_posts(fetcher, normal_posts)
         vampire_comment_stats = fetch_comments_for_posts(fetcher, vampire_posts)
+        partial_payload = build_payload(
+            started,
+            normal_posts,
+            vampire_posts,
+            comment_stats,
+            vampire_comment_stats,
+            fetcher,
+            errors,
+            author_lookup_status="pending",
+        )
+        if checkpoint_path:
+            write_payload(partial_payload, checkpoint_path)
+            print(f"  Checkpoint raw_data.json written before author lookups: {checkpoint_path}")
 
         authors = authors_needing_profiles(normal_posts + vampire_posts)
+        if authors and AUTHOR_LOOKUP_COOLDOWN_SECONDS > 0:
+            print(
+                "  Cooling down "
+                f"{AUTHOR_LOOKUP_COOLDOWN_SECONDS}s before author lookups..."
+            )
+            time.sleep(AUTHOR_LOOKUP_COOLDOWN_SECONDS)
+
         profiles, author_failures = fetch_author_profiles(fetcher, authors)
         attach_profiles(normal_posts, profiles)
         attach_profiles(vampire_posts, profiles)
 
-        return {
-            "schema_version": 1,
-            "fetched_at": utc_now_iso(),
-            "fetch_metadata": {
-                "duration_seconds": round(time.time() - started, 2),
-                "normal_post_count": len(normal_posts),
-                "vampire_post_count": len(vampire_posts),
-                "comment_stats": comment_stats,
-                "vampire_comment_stats": vampire_comment_stats,
-                "author_lookup_count": len(authors),
-                "author_lookup_failures": author_failures,
-                "requests": fetcher.request_count,
-                "rate_limits": fetcher.rate_limit_count,
-                "hard_blocks": fetcher.hard_block_count,
-                "comment_fetch_limit": (
-                    MAX_COMMENT_FETCHES if MAX_COMMENT_FETCHES > 0 else None
-                ),
-                "author_lookup_limit": (
-                    MAX_AUTHOR_LOOKUPS if MAX_AUTHOR_LOOKUPS > 0 else None
-                ),
-                "errors": errors,
-            },
-            "posts": normal_posts,
-            "vampire_posts": vampire_posts,
-        }
+        return build_payload(
+            started,
+            normal_posts,
+            vampire_posts,
+            comment_stats,
+            vampire_comment_stats,
+            fetcher,
+            errors,
+            authors=authors,
+            author_failures=author_failures,
+            author_lookup_status="completed",
+        )
     finally:
         fetcher.close()
 
@@ -448,8 +498,10 @@ def fetch_raw_payload(headless=True):
 def write_payload(payload, output_path):
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as file:
+    temp_path = output_path.with_name(f"{output_path.name}.tmp")
+    with open(temp_path, "w", encoding="utf-8") as file:
         json.dump(payload, file, indent=2, ensure_ascii=False)
+    os.replace(temp_path, output_path)
     return output_path
 
 
@@ -477,7 +529,10 @@ def main():
     args = parser.parse_args()
 
     try:
-        payload = fetch_raw_payload(headless=not args.headed)
+        payload = fetch_raw_payload(
+            headless=not args.headed,
+            checkpoint_path=args.output,
+        )
     except RawDataValidationError as exc:
         print(f"Raw fetch skipped: {exc}")
         return

@@ -8,7 +8,7 @@ on:
 jobs:
   fetch-raw-reddit:
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
 
     steps:
       - name: Checkout code
@@ -33,6 +33,8 @@ jobs:
           PROXY_PORT: ${{ secrets.PROXY_PORT }}
           RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
           UPLOAD_API_KEY: ${{ secrets.UPLOAD_API_KEY }}
+          AUTHOR_PROFILE_LOOKUP_LIMIT: "75"
+          AUTHOR_LOOKUP_COOLDOWN_SECONDS: "180"
         run: |
           python -u fetch_raw_reddit.py \
             --output raw_data.json \
