@@ -21,7 +21,7 @@ USER_AGENT = (
 
 BLOCK_MARKERS = ("network security", "theme-beta", "blocked", "/cdn-cgi/")
 LISTING_BACKOFFS = [30, 90, 180]
-COMMENT_BACKOFFS = [20, 45]
+COMMENT_BACKOFFS = [30, 60, 120]
 AUTHOR_BACKOFFS = [10]
 
 MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "1.2"))
@@ -68,6 +68,8 @@ class StealthRedditFetcher:
         self.request_count = 0
         self.rate_limit_count = 0
         self.hard_block_count = 0
+        self._consecutive_429s = 0
+        self._adaptive_gap_extra = 0.0
         self._stealth = Stealth()
         self._pw_ctx = self._stealth.use_sync(sync_playwright())
         self._pw = self._pw_ctx.__enter__()
@@ -92,7 +94,7 @@ class StealthRedditFetcher:
         time.sleep(3)
 
     def pace(self):
-        time.sleep(random.uniform(MIN_GAP, MAX_GAP))
+        time.sleep(random.uniform(MIN_GAP, MAX_GAP) + self._adaptive_gap_extra)
 
     def get_json(self, url, backoffs):
         for attempt, backoff in enumerate([0] + backoffs):
@@ -116,6 +118,8 @@ class StealthRedditFetcher:
 
             if status == 429:
                 self.rate_limit_count += 1
+                self._consecutive_429s += 1
+                self._adaptive_gap_extra = min(self._consecutive_429s * 5.0, 30.0)
                 if attempt < len(backoffs):
                     continue
                 raise OptionalFetchRateLimited(f"429 persisted: {url}")
@@ -125,6 +129,8 @@ class StealthRedditFetcher:
                 self.hard_block_count += 1
                 raise RuntimeError(f"HARD BLOCK status={status}: {url}")
 
+            self._consecutive_429s = 0
+            self._adaptive_gap_extra = max(0.0, self._adaptive_gap_extra - 2.0)
             return json.loads(body)
 
         raise OptionalFetchRateLimited(f"fetch exhausted retries: {url}")
