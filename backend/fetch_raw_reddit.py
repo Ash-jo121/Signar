@@ -403,10 +403,12 @@ def fetch_raw_payload(headless=True):
             )
 
         comment_stats = fetch_comments_for_posts(fetcher, normal_posts)
+        vampire_comment_stats = fetch_comments_for_posts(fetcher, vampire_posts)
 
-        authors = authors_needing_profiles(normal_posts)
+        authors = authors_needing_profiles(normal_posts + vampire_posts)
         profiles, author_failures = fetch_author_profiles(fetcher, authors)
         attach_profiles(normal_posts, profiles)
+        attach_profiles(vampire_posts, profiles)
 
         return {
             "schema_version": 1,
@@ -416,6 +418,7 @@ def fetch_raw_payload(headless=True):
                 "normal_post_count": len(normal_posts),
                 "vampire_post_count": len(vampire_posts),
                 "comment_stats": comment_stats,
+                "vampire_comment_stats": vampire_comment_stats,
                 "author_lookup_count": len(authors),
                 "author_lookup_failures": author_failures,
                 "requests": fetcher.request_count,
