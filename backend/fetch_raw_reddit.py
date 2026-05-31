@@ -470,7 +470,12 @@ def main():
     parser.add_argument("--trigger-analysis", action="store_true")
     args = parser.parse_args()
 
-    payload = fetch_raw_payload(headless=not args.headed)
+    try:
+        payload = fetch_raw_payload(headless=not args.headed)
+    except RawDataValidationError as exc:
+        print(f"Raw fetch skipped: {exc}")
+        return
+
     validation_errors = validate_raw_payload(payload)
     if validation_errors:
         raise SystemExit(f"Raw data validation failed: {validation_errors}")
