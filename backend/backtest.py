@@ -19,7 +19,11 @@ import sys
 from statistics import median
 from datetime import datetime
 
-from database import RUN_METADATA_COLUMNS, SCORE_METADATA_COLUMNS
+from database import (
+    PERFORMANCE_TRACKING_COLUMNS,
+    RUN_METADATA_COLUMNS,
+    SCORE_METADATA_COLUMNS,
+)
 
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
 
@@ -41,6 +45,13 @@ START_DATE = None
 
 # Catalyst data is only reliable from this date onwards
 CLEAN_CATALYST_DATE = "2026-04-27"
+RETURN_HORIZONS = [
+    ("T+1", "return_1d", "updated_1d"),
+    ("T+3", "return_3d", "updated_3d"),
+    ("T+7", "return_7d", "updated_7d"),
+    ("T+14", "return_t14", "updated_t14"),
+    ("T+30", "return_t30", "updated_t30"),
+]
 
 
 def date_clause(column="flagged_date", prefix="WHERE"):
@@ -100,6 +111,12 @@ def ensure_run_metadata_table(conn):
         ensure_column(conn, "run_metadata", column, definition)
 
 
+def ensure_performance_tracking_columns(conn):
+    for column, definition in PERFORMANCE_TRACKING_COLUMNS:
+        ensure_column(conn, "performance_tracking", column, definition)
+    ensure_column(conn, "performance_tracking", "split_adjusted", "INTEGER DEFAULT 0")
+
+
 def catalyst_start_date():
     if START_DATE and START_DATE > CLEAN_CATALYST_DATE:
         return START_DATE
@@ -114,6 +131,7 @@ def get_conn():
     conn.row_factory = sqlite3.Row
     ensure_score_metadata_table(conn)
     ensure_run_metadata_table(conn)
+    ensure_performance_tracking_columns(conn)
     if START_DATE:
         conn.execute(
             "DELETE FROM performance_tracking WHERE flagged_date < ?",
@@ -127,6 +145,8 @@ def get_conn():
         WHERE return_1d <= -100
            OR return_3d <= -100
            OR return_7d <= -100
+           OR return_t14 <= -100
+           OR return_t30 <= -100
         """
     )
     conn.execute(
@@ -246,11 +266,7 @@ def print_robust_group_table(title, note, groups):
     )
     divider()
 
-    horizons = [
-        ("T+1", "return_1d", "updated_1d"),
-        ("T+3", "return_3d", "updated_3d"),
-        ("T+7", "return_7d", "updated_7d"),
-    ]
+    horizons = RETURN_HORIZONS
     for group_name in sorted(groups):
         rows = groups[group_name]
         for horizon, return_col, updated_col in horizons:
@@ -1165,11 +1181,7 @@ def top_n_portfolio_backtest(conn, score_col, label):
     divider()
 
     rng = random.Random(42)
-    horizons = [
-        ("T+1", "return_1d", "updated_1d"),
-        ("T+3", "return_3d", "updated_3d"),
-        ("T+7", "return_7d", "updated_7d"),
-    ]
+    horizons = RETURN_HORIZONS
 
     for basket_size in (3, 5, 10):
         for horizon, return_col, updated_col in horizons:
@@ -1235,11 +1247,7 @@ def model_ablation_comparison(conn):
         ("+ market confirmation", "ablation_market_confirmation"),
         ("full model", "ablation_full_model"),
     ]
-    horizons = [
-        ("T+1", "return_1d", "updated_1d"),
-        ("T+3", "return_3d", "updated_3d"),
-        ("T+7", "return_7d", "updated_7d"),
-    ]
+    horizons = RETURN_HORIZONS
 
     section(
         "MODEL ABLATION COMPARISON",
@@ -1284,11 +1292,7 @@ def random_baseline_comparison(
     rng = random.Random(42)
     basket_size = 5
     samples = 500
-    horizons = [
-        ("T+1", "return_1d", "updated_1d"),
-        ("T+3", "return_3d", "updated_3d"),
-        ("T+7", "return_7d", "updated_7d"),
-    ]
+    horizons = RETURN_HORIZONS
 
     section(
         f"RANDOM BASELINE COMPARISON - {label}",
@@ -1545,11 +1549,7 @@ def no_trade_day_analysis(conn):
     for row in rows:
         rows_by_date.setdefault(row["flagged_date"], []).append(row)
 
-    horizons = [
-        ("T+1", "return_1d", "updated_1d"),
-        ("T+3", "return_3d", "updated_3d"),
-        ("T+7", "return_7d", "updated_7d"),
-    ]
+    horizons = RETURN_HORIZONS
     groups = {
         "top_radar_no_trade_day": {horizon: [] for horizon, _, _ in horizons},
         "near_miss_no_trade_day": {horizon: [] for horizon, _, _ in horizons},
