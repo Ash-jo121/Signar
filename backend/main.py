@@ -15,6 +15,7 @@ from database import (
     record_flagged_stocks,
     save_post,
     save_score_metadata,
+    save_thesis_confirmations,
     update_post_after_refresh,
 )
 from database import save_daily_results
@@ -1174,6 +1175,190 @@ def build_ranking_reason(result):
     }
 
 
+def _to_float(value, default=0.0):
+    try:
+        if value is None:
+            return default
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _trend_label(values, rising_ratio=1.15, falling_ratio=0.7):
+    cleaned = [_to_float(value) for value in values if value is not None]
+    if len(cleaned) < 2:
+        return "unknown"
+
+    first = max(cleaned[0], 1.0)
+    latest = cleaned[-1]
+    if latest >= first * rising_ratio:
+        return "rising"
+    if latest <= first * falling_ratio:
+        return "falling"
+    return "stable"
+
+
+def _author_trend(rows):
+    values = [_to_float(row.get("unique_authors")) for row in rows]
+    if len(values) < 2:
+        return "unknown"
+    if values[-1] > values[0]:
+        return "widening"
+    if values[-1] < values[0]:
+        return "narrowing"
+    return "stable"
+
+
+def _price_status(latest):
+    setup_type = latest.get("setup_type")
+    market_status = latest.get("market_confirmation_status")
+    change_percent = _to_float(latest.get("change_percent"))
+
+    if setup_type == "anti_chase" or market_status == "confirmed_but_extended":
+        return "chased"
+    if change_percent >= 15:
+        return "chased"
+    if market_status in {"price_without_volume", "post_spike_reversal"}:
+        return "weak_confirmation"
+    return "not_chased"
+
+
+def classify_thesis_confirmation(ticker, rows, window_days=4):
+    rows = sorted(rows, key=lambda row: row["date"])
+    latest = rows[-1]
+    days_seen = len(rows)
+    days_clearing_gates = sum(
+        1
+        for row in rows
+        if row.get("trade_gate_passed")
+        or row.get("threadradar_trade_status") == "trade_candidate"
+    )
+    unique_authors = [_to_float(row.get("unique_authors")) for row in rows]
+    author_trend = _author_trend(rows)
+    mentions_trend = _trend_label([row.get("mentions") for row in rows])
+    price_status = _price_status(latest)
+    concrete_catalyst_seen = any(row.get("catalyst_has_concrete_event") for row in rows)
+    thesis_evolution = (
+        "concrete_catalyst"
+        if concrete_catalyst_seen
+        else "discussion_only"
+    )
+
+    if days_seen <= 1:
+        state = "flash"
+        reason = "Single-day signal; needs persistence before confirmation."
+    elif price_status == "chased":
+        state = "chased"
+        reason = "Social signal persisted, but price action is already extended."
+    elif mentions_trend == "falling" and days_seen >= 2:
+        state = "fading/decaying"
+        reason = "Mentions are declining across the rolling window."
+    elif days_clearing_gates >= 3 and author_trend == "widening":
+        state = "confirmed"
+        reason = "Signal is persisting across days and broadening across authors."
+    elif days_seen >= 2 and author_trend in {"widening", "stable"}:
+        state = "building"
+        reason = "Signal is persisting, but confirmation is still developing."
+    elif days_seen >= 3:
+        state = "stale"
+        reason = "Repeated signal without broadening or fresh confirmation."
+    else:
+        state = "flash"
+        reason = "Early signal with limited multi-day evidence."
+
+    score = 0.0
+    score += min(days_seen, window_days) / window_days * 0.25
+    score += min(days_clearing_gates, window_days) / window_days * 0.35
+    if author_trend == "widening":
+        score += 0.20
+    elif author_trend == "stable":
+        score += 0.08
+    if price_status == "not_chased":
+        score += 0.15
+    if concrete_catalyst_seen:
+        score += 0.05
+
+    return {
+        "ticker": ticker,
+        "confirmation_state": state,
+        "confirmation_score": round(min(score, 1.0), 3),
+        "window_days": window_days,
+        "days_seen": days_seen,
+        "days_clearing_gates": days_clearing_gates,
+        "unique_authors_latest": int(unique_authors[-1] if unique_authors else 0),
+        "unique_authors_max": int(max(unique_authors) if unique_authors else 0),
+        "author_trend": author_trend,
+        "mentions_trend": mentions_trend,
+        "price_status": price_status,
+        "thesis_evolution": thesis_evolution,
+        "state_reason": reason,
+    }
+
+
+def build_thesis_confirmation(results, run_date, window_days=4):
+    tickers = sorted({result["ticker"] for result in results})
+    if not tickers:
+        return []
+
+    placeholders = ", ".join("?" for _ in tickers)
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            f"""
+            SELECT
+                ds.date,
+                ds.ticker,
+                ds.mentions,
+                ds.avg_sentiment,
+                ds.final_score,
+                ds.price,
+                ds.change_percent,
+                sm.unique_authors,
+                sm.trade_gate_passed,
+                sm.threadradar_trade_status,
+                sm.setup_type,
+                sm.market_confirmation_status,
+                sm.risk_score,
+                sm.catalyst_has_concrete_event
+            FROM daily_sentiment ds
+            LEFT JOIN score_metadata sm
+                ON sm.date = ds.date AND sm.ticker = ds.ticker
+            WHERE ds.date >= date(?, ?)
+              AND ds.date <= ?
+              AND ds.ticker IN ({placeholders})
+            ORDER BY ds.ticker, ds.date
+            """,
+            (run_date, f"-{window_days - 1} days", run_date, *tickers),
+        ).fetchall()
+
+        by_ticker = {}
+        for row in rows:
+            by_ticker.setdefault(row["ticker"], []).append(dict(row))
+
+        confirmations = [
+            classify_thesis_confirmation(ticker, ticker_rows, window_days)
+            for ticker, ticker_rows in by_ticker.items()
+        ]
+        save_thesis_confirmations(conn, confirmations, run_date)
+        conn.commit()
+    finally:
+        conn.close()
+
+    confirmation_by_ticker = {item["ticker"]: item for item in confirmations}
+    for result in results:
+        confirmation = confirmation_by_ticker.get(result["ticker"])
+        if confirmation:
+            result["thesis_confirmation"] = confirmation
+            result["confirmation_state"] = confirmation["confirmation_state"]
+            result["confirmation_score"] = confirmation["confirmation_score"]
+
+    return sorted(
+        confirmations,
+        key=lambda item: (item["confirmation_score"], item["days_seen"]),
+        reverse=True,
+    )
+
+
 def build_output_lists(results, limit=10):
     for result in results:
         result["ranking_reason"] = build_ranking_reason(result)
@@ -2164,7 +2349,6 @@ def run_pipeline(raw_data_file=None):
     print(f"  Catalyst assessment: {catalyst_calls} Groq calls used")
     results.sort(key=lambda x: x.get("trade_score", x["final_score"]), reverse=True)
     attach_run_metadata(results, run_metadata)
-    output_lists = build_output_lists(results)
 
     print("\nStep 5.5: Updating catalyst data in database...")
     conn = get_connection()
@@ -2207,6 +2391,15 @@ def run_pipeline(raw_data_file=None):
     conn.close()
     print(f"  Updated catalyst data for {len(results)} stocks")
 
+    print("\nStep 5.75: Building multi-day thesis confirmation...")
+    multi_day_confirmation = build_thesis_confirmation(results, today)
+    confirmed_watchlist = [
+        item
+        for item in multi_day_confirmation
+        if item["confirmation_state"] in {"building", "confirmed"}
+    ][:10]
+    output_lists = build_output_lists(results)
+
     if overextended:
         print(f"\nMarked {len(overextended)} already-moved stocks as high-risk:")
         for r in overextended:
@@ -2216,7 +2409,13 @@ def run_pipeline(raw_data_file=None):
 
     print("\nStep 6: Writing output to files...\n")
 
-    output_payload = {**run_metadata, "run_metadata": run_metadata, **output_lists}
+    output_payload = {
+        **run_metadata,
+        "run_metadata": run_metadata,
+        **output_lists,
+        "multi_day_confirmation": multi_day_confirmation,
+        "confirmed_watchlist": confirmed_watchlist,
+    }
     output_json = output_json_path()
     output_json.parent.mkdir(parents=True, exist_ok=True)
     with open(output_json, "w", encoding="utf-8") as file:
@@ -2260,6 +2459,14 @@ def run_pipeline(raw_data_file=None):
                     f"| Trade: {r.get('trade_score', r['final_score']):+.3f} "
                     f"| Risk: {r.get('risk_score', 0):.1f} ({r.get('risk_level', 'n/a')})\n"
                 )
+                if r.get("thesis_confirmation"):
+                    confirmation = r["thesis_confirmation"]
+                    file.write(
+                        "  Confirmation: "
+                        f"{confirmation['confirmation_state']} "
+                        f"(score={confirmation['confirmation_score']:.3f}, "
+                        f"{confirmation['state_reason']})\n"
+                    )
                 file.write(
                     f"  Context: {r['top_contexts'][0]['text'][:100] if r['top_contexts'] else 'N/A'}\n"
                 )
