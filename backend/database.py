@@ -98,6 +98,47 @@ RUN_METADATA_COLUMNS = [
     ("next_trading_session_signal", "INTEGER DEFAULT 0"),
 ]
 
+PERFORMANCE_TRACKING_COLUMNS = [
+    ("price_t14", "REAL"),
+    ("price_t30", "REAL"),
+    ("return_t14", "REAL"),
+    ("return_t30", "REAL"),
+    ("updated_t14", "INTEGER DEFAULT 0"),
+    ("updated_t30", "INTEGER DEFAULT 0"),
+    ("benchmark_symbol", "TEXT DEFAULT 'IWM'"),
+    ("benchmark_price_t1", "REAL"),
+    ("benchmark_price_t3", "REAL"),
+    ("benchmark_price_t7", "REAL"),
+    ("benchmark_price_t14", "REAL"),
+    ("benchmark_price_t30", "REAL"),
+    ("benchmark_return_t1", "REAL"),
+    ("benchmark_return_t3", "REAL"),
+    ("benchmark_return_t7", "REAL"),
+    ("benchmark_return_t14", "REAL"),
+    ("benchmark_return_t30", "REAL"),
+    ("excess_return_t1", "REAL"),
+    ("excess_return_t3", "REAL"),
+    ("excess_return_t7", "REAL"),
+    ("excess_return_t14", "REAL"),
+    ("excess_return_t30", "REAL"),
+    ("resolution_status", "TEXT DEFAULT 'open'"),
+]
+
+THESIS_CONFIRMATION_COLUMNS = [
+    ("confirmation_state", "TEXT NOT NULL DEFAULT 'flash'"),
+    ("confirmation_score", "REAL DEFAULT 0.0"),
+    ("window_days", "INTEGER DEFAULT 4"),
+    ("days_seen", "INTEGER DEFAULT 0"),
+    ("days_clearing_gates", "INTEGER DEFAULT 0"),
+    ("unique_authors_latest", "INTEGER DEFAULT 0"),
+    ("unique_authors_max", "INTEGER DEFAULT 0"),
+    ("author_trend", "TEXT"),
+    ("mentions_trend", "TEXT"),
+    ("price_status", "TEXT"),
+    ("thesis_evolution", "TEXT"),
+    ("state_reason", "TEXT"),
+]
+
 
 def ensure_column(conn, table, column, definition):
     existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
@@ -225,6 +266,41 @@ def save_run_metadata(conn, metadata):
     )
 
 
+def save_thesis_confirmations(conn, confirmations, date):
+    if not confirmations:
+        return
+
+    columns = [column for column, _ in THESIS_CONFIRMATION_COLUMNS]
+    assignments = ", ".join(f"{column} = excluded.{column}" for column in columns)
+    placeholders = ", ".join("?" for _ in columns)
+
+    for item in confirmations:
+        conn.execute(
+            f"""
+            INSERT INTO thesis_confirmation
+            (date, ticker, {", ".join(columns)})
+            VALUES (?, ?, {placeholders})
+            ON CONFLICT(date, ticker) DO UPDATE SET {assignments}
+            """,
+            (
+                date,
+                item["ticker"],
+                item["confirmation_state"],
+                item.get("confirmation_score", 0),
+                item.get("window_days", 4),
+                item.get("days_seen", 0),
+                item.get("days_clearing_gates", 0),
+                item.get("unique_authors_latest", 0),
+                item.get("unique_authors_max", 0),
+                item.get("author_trend"),
+                item.get("mentions_trend"),
+                item.get("price_status"),
+                item.get("thesis_evolution"),
+                item.get("state_reason"),
+            ),
+        )
+
+
 def save_market_data_snapshot(conn, result):
     market_date = result.get("market_data_as_of")
     if not market_date:
@@ -274,6 +350,9 @@ def init_db():
     conn = get_connection()
     score_column_defs = ",\n            ".join(
         f"{column} {definition}" for column, definition in SCORE_METADATA_COLUMNS
+    )
+    thesis_column_defs = ",\n            ".join(
+        f"{column} {definition}" for column, definition in THESIS_CONFIRMATION_COLUMNS
     )
 
     conn.executescript("""-- Core table: one row per stock per day
@@ -405,10 +484,27 @@ def init_db():
         )
         """
     )
+    conn.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS thesis_confirmation (
+            date TEXT NOT NULL,
+            ticker TEXT NOT NULL,
+            {thesis_column_defs},
+            PRIMARY KEY(date, ticker),
+            FOREIGN KEY (date, ticker)
+                REFERENCES daily_sentiment(date, ticker)
+                ON DELETE CASCADE
+        )
+        """
+    )
     for column, definition in SCORE_METADATA_COLUMNS:
         ensure_column(conn, "score_metadata", column, definition)
+    for column, definition in THESIS_CONFIRMATION_COLUMNS:
+        ensure_column(conn, "thesis_confirmation", column, definition)
     for column, definition in RUN_METADATA_COLUMNS:
         ensure_column(conn, "run_metadata", column, definition)
+    for column, definition in PERFORMANCE_TRACKING_COLUMNS:
+        ensure_column(conn, "performance_tracking", column, definition)
     conn.commit()
     conn.close()
     print("Database initialized successfully")
