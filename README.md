@@ -1,8 +1,8 @@
-# 📡 ThreadRadar
+# 📡 Signar
 
 > Automated Reddit sentiment analysis for penny stock discovery
 
-ThreadRadar scrapes penny stock subreddits, extracts ticker mentions, and runs financial sentiment analysis using AI ( FinBERT + Groq ) — turning hours of manual Reddit browsing into a ranked daily dashboard.
+Signar scrapes penny stock subreddits, extracts ticker mentions, and runs financial sentiment analysis using AI ( FinBERT + Groq ) — turning hours of manual Reddit browsing into a ranked daily dashboard.
 
 ---
 
@@ -10,7 +10,7 @@ ThreadRadar scrapes penny stock subreddits, extracts ticker mentions, and runs f
 
 Finding promising penny stocks on Reddit means manually reading through hundreds of posts and comments across multiple subreddits like r/pennystocks, r/Pennystock, r/smallstreetbets etc. A single post can have 200+ comments, many of which contain counter-arguments, DD (due diligence), or warnings that completely change the picture. Doing this manually takes hours.
 
-ThreadRadar automates the entire pipeline and surfaces the top picks in seconds.
+Signar automates the entire pipeline and surfaces the top picks in seconds.
 
 ---
 
@@ -48,7 +48,7 @@ General sentiment models don't understand financial language. VADER scores "this
 ## Project Structure
 
 ```
-threadradar/
+signar/
   backend/
       constants/
             config.py
@@ -87,8 +87,8 @@ threadradar/
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/threadradar.git
-cd threadradar/backend
+git clone https://github.com/yourusername/signar.git
+cd signar/backend
 
 # Install dependencies
 pip install requests transformers torch yfinance
@@ -104,7 +104,7 @@ Output is written to `output.json` and `output.txt`.
 ### Frontend Setup
 
 ```bash
-cd threadradar/frontend
+cd signar/frontend
 
 npm install
 npm run dev
@@ -199,7 +199,7 @@ Tickers with fewer than 2 mentions are filtered out to reduce noise.
 
 ## Disclaimer
 
-> **ThreadRadar is not financial advice.** This tool is for informational and educational purposes only. Penny stocks are highly speculative investments. Never invest money you cannot afford to lose. Always conduct your own due diligence before making any investment decisions.
+> **Signar is not financial advice.** This tool is for informational and educational purposes only. Penny stocks are highly speculative investments. Never invest money you cannot afford to lose. Always conduct your own due diligence before making any investment decisions.
 
 ---
 
