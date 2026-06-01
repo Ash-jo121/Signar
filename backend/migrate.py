@@ -1,7 +1,12 @@
 import os
 import sqlite3
 
-from database import RUN_METADATA_COLUMNS, SCORE_METADATA_COLUMNS
+from database import (
+    PERFORMANCE_TRACKING_COLUMNS,
+    RUN_METADATA_COLUMNS,
+    SCORE_METADATA_COLUMNS,
+    THESIS_CONFIRMATION_COLUMNS,
+)
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "threadradar.db")
 
@@ -96,6 +101,33 @@ def ensure_market_data_table(conn):
         """)
 
 
+def ensure_performance_tracking_columns(conn):
+    print("Ensuring performance_tracking long-horizon columns exist...")
+    for column, definition in PERFORMANCE_TRACKING_COLUMNS:
+        ensure_column(conn, "performance_tracking", column, definition)
+
+
+def ensure_thesis_confirmation_table(conn):
+    thesis_column_defs = ",\n            ".join(
+        f"{column} {definition}" for column, definition in THESIS_CONFIRMATION_COLUMNS
+    )
+
+    print("Ensuring thesis_confirmation table exists...")
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS thesis_confirmation (
+            date TEXT NOT NULL,
+            ticker TEXT NOT NULL,
+            {thesis_column_defs},
+            PRIMARY KEY(date, ticker),
+            FOREIGN KEY (date, ticker)
+                REFERENCES daily_sentiment(date, ticker)
+                ON DELETE CASCADE
+        )
+        """)
+    for column, definition in THESIS_CONFIRMATION_COLUMNS:
+        ensure_column(conn, "thesis_confirmation", column, definition)
+
+
 def backfill_score_metadata_from_daily_sentiment(conn):
     """
     Move score metadata into the normalized table if a previous run stored it wide.
@@ -128,6 +160,8 @@ def migrate():
     ensure_score_metadata_table(conn)
     ensure_run_metadata_table(conn)
     ensure_market_data_table(conn)
+    ensure_performance_tracking_columns(conn)
+    ensure_thesis_confirmation_table(conn)
     backfill_score_metadata_from_daily_sentiment(conn)
     conn.commit()
 
