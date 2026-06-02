@@ -87,11 +87,16 @@ class StealthRedditFetcher:
         self._page = self._context.new_page()
 
     def warmup(self):
-        self._page.goto(
+        response = self._page.goto(
             "https://www.reddit.com/r/pennystocks/",
             wait_until="domcontentloaded",
             timeout=30000,
         )
+        body_preview = self._page.evaluate(
+            "() => document.body ? document.body.innerText.slice(0, 200) : 'NO BODY'"
+        )
+        print(f"Warmup status: {response.status if response else 'None'}")
+        print(f"Warmup body preview: {body_preview[:200]}")
         time.sleep(3)
 
     def pace(self):
@@ -421,6 +426,7 @@ def fetch_raw_payload(headless=True, checkpoint_path=None):
                 print(
                     f"  r/{subreddit}: {len(new_posts)} new + {len(hot_posts)} hot"
                 )
+
             except Exception as exc:
                 errors.append({"subreddit": subreddit, "stage": "listing", "error": str(exc)})
             fetcher.pace()
@@ -445,6 +451,9 @@ def fetch_raw_payload(headless=True, checkpoint_path=None):
 
         normal_posts = dedupe_posts(normal_posts)
         vampire_posts = dedupe_posts(vampire_posts)
+        print(f"\nFetch summary: {len(normal_posts)} normal posts, {len(vampire_posts)} vampire posts")
+        print(f"Errors during fetch: {json.dumps(errors, indent=2)}")
+        print(f"Fetcher stats: {fetcher.request_count} requests, {fetcher.rate_limit_count} rate limits, {fetcher.hard_block_count} hard blocks")
         if len(normal_posts) < MIN_RAW_POSTS:
             raise RawDataValidationError(
                 f"Only {len(normal_posts)} normal posts fetched; "
