@@ -124,6 +124,7 @@ def validate_raw_data_payload(payload):
         errors.append("stale_fetched_at")
 
     if len(posts) < MIN_RAW_POSTS:
+        print(f"Fetch errors: {json.dumps(errors, indent=2)}")
         errors.append(f"too_few_posts:{len(posts)}<{MIN_RAW_POSTS}")
 
     missing_subreddit = sum(
