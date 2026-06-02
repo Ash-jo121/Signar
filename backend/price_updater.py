@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pandas as pd
 import yfinance as yf
@@ -59,6 +59,7 @@ RETURN_WINDOWS = [
         "benchmark_price_t1",
         "benchmark_return_t1",
         "excess_return_t1",
+        "resolution_status_t1",
     ),
     (
         3,
@@ -68,6 +69,7 @@ RETURN_WINDOWS = [
         "benchmark_price_t3",
         "benchmark_return_t3",
         "excess_return_t3",
+        "resolution_status_t3",
     ),
     (
         7,
@@ -77,6 +79,7 @@ RETURN_WINDOWS = [
         "benchmark_price_t7",
         "benchmark_return_t7",
         "excess_return_t7",
+        "resolution_status_t7",
     ),
     (
         14,
@@ -86,6 +89,7 @@ RETURN_WINDOWS = [
         "benchmark_price_t14",
         "benchmark_return_t14",
         "excess_return_t14",
+        "resolution_status_t14",
     ),
     (
         30,
@@ -95,21 +99,10 @@ RETURN_WINDOWS = [
         "benchmark_price_t30",
         "benchmark_return_t30",
         "excess_return_t30",
+        "resolution_status_t30",
     ),
 ]
 BENCHMARK_RETURN_CACHE = {}
-
-
-def fetch_current_price(ticker):
-    """Fetch current price using yfinance."""
-    try:
-        stock = yf.Ticker(ticker)
-        price = stock.info.get("currentPrice") or stock.info.get("regularMarketPrice")
-        if price:
-            return round(float(price), 4)
-    except Exception as exc:
-        print(f"  Price fetch failed for {ticker}: {exc}")
-    return None
 
 
 def fetch_historical_close(ticker, target_date):
@@ -188,33 +181,48 @@ def calculate_return(flagged_price, current_price):
     return round(((current_price - flagged_price) / flagged_price) * 100, 2)
 
 
-def benchmark_return_since(flagged_date):
+def date_after(start_date, days):
+    return (
+        datetime.strptime(start_date, "%Y-%m-%d").date() + timedelta(days=days)
+    ).strftime("%Y-%m-%d")
+
+
+def days_since(start_date):
+    return (datetime.now().date() - datetime.strptime(start_date, "%Y-%m-%d").date()).days
+
+
+def benchmark_return_since(flagged_date, period_days):
     """Compare stock returns to IWM so backtests know if picks beat small caps."""
-    if flagged_date in BENCHMARK_RETURN_CACHE:
-        return BENCHMARK_RETURN_CACHE[flagged_date]
+    cache_key = (flagged_date, period_days)
+    if cache_key in BENCHMARK_RETURN_CACHE:
+        return BENCHMARK_RETURN_CACHE[cache_key]
 
     benchmark_start = fetch_historical_close(BENCHMARK_SYMBOL, flagged_date)
-    benchmark_price = fetch_current_price(BENCHMARK_SYMBOL)
+    benchmark_price = fetch_historical_close(
+        BENCHMARK_SYMBOL,
+        date_after(flagged_date, period_days),
+    )
     if not benchmark_start or not benchmark_price:
-        BENCHMARK_RETURN_CACHE[flagged_date] = (None, None)
-        return BENCHMARK_RETURN_CACHE[flagged_date]
+        BENCHMARK_RETURN_CACHE[cache_key] = (None, None)
+        return BENCHMARK_RETURN_CACHE[cache_key]
 
-    BENCHMARK_RETURN_CACHE[flagged_date] = (
+    BENCHMARK_RETURN_CACHE[cache_key] = (
         benchmark_price,
         calculate_return(benchmark_start, benchmark_price),
     )
-    return BENCHMARK_RETURN_CACHE[flagged_date]
+    return BENCHMARK_RETURN_CACHE[cache_key]
 
 
-def mark_resolution(conn, ticker, flagged_date, updated_col, status):
+def mark_resolution(conn, ticker, flagged_date, updated_col, resolution_col, status):
     conn.execute(
         f"""
         UPDATE performance_tracking
         SET {updated_col} = 1,
+            {resolution_col} = ?,
             resolution_status = ?
         WHERE ticker = ? AND flagged_date = ?
         """,
-        (status, ticker, flagged_date),
+        (status, status, ticker, flagged_date),
     )
 
 
@@ -228,6 +236,7 @@ def process_update(
     benchmark_price_col,
     benchmark_return_col,
     excess_return_col,
+    resolution_col,
 ):
     """
     Process one performance update.
@@ -240,13 +249,25 @@ def process_update(
 
     if ticker in EXCLUDED_TICKERS:
         print(f"  {ticker} | SKIPPING - excluded ticker")
-        mark_resolution(conn, ticker, flagged_date, updated_col, "excluded")
+        mark_resolution(conn, ticker, flagged_date, updated_col, resolution_col, "excluded")
         return False
 
-    price = fetch_current_price(ticker)
+    price = fetch_historical_close(ticker, date_after(flagged_date, period_days))
     if not price:
-        print(f"  {ticker} | unresolved price - marking unresolvable")
-        mark_resolution(conn, ticker, flagged_date, updated_col, "unresolvable")
+        if days_since(flagged_date) <= period_days + 2:
+            print(
+                f"  {ticker} | T+{period_days} close not available yet - retrying later"
+            )
+            return False
+        print(f"  {ticker} | unresolved T+{period_days} price - marking unresolvable")
+        mark_resolution(
+            conn,
+            ticker,
+            flagged_date,
+            updated_col,
+            resolution_col,
+            "unresolvable",
+        )
         return False
 
     had_split, split_ratio = had_split_since(ticker, flagged_date)
@@ -279,6 +300,7 @@ def process_update(
             SET {price_col} = ?,
                 {return_col} = ?,
                 {updated_col} = 1,
+                {resolution_col} = 'anomalous',
                 resolution_status = 'anomalous'
             WHERE ticker = ? AND flagged_date = ?
             """,
@@ -287,7 +309,7 @@ def process_update(
         return False
 
     ret = calculate_return(flagged_price, price)
-    benchmark_price, benchmark_ret = benchmark_return_since(flagged_date)
+    benchmark_price, benchmark_ret = benchmark_return_since(flagged_date, period_days)
     excess_ret = None if benchmark_ret is None or ret is None else round(ret - benchmark_ret, 2)
 
     conn.execute(
@@ -300,6 +322,7 @@ def process_update(
             {benchmark_return_col} = ?,
             {excess_return_col} = ?,
             benchmark_symbol = ?,
+            {resolution_col} = 'resolved',
             resolution_status = 'resolved'
         WHERE ticker = ? AND flagged_date = ?
         """,
@@ -362,6 +385,7 @@ def update_performance_prices():
         benchmark_price_col,
         benchmark_return_col,
         excess_return_col,
+        resolution_col,
     ) in RETURN_WINDOWS:
         pending = conn.execute(
             f"""
@@ -387,6 +411,7 @@ def update_performance_prices():
                     benchmark_price_col,
                     benchmark_return_col,
                     excess_return_col,
+                    resolution_col,
                 ):
                     updated_total += 1
                 time.sleep(0.5)

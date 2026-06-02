@@ -1,4 +1,3 @@
-import os
 import sqlite3
 
 from database import (
@@ -7,8 +6,9 @@ from database import (
     SCORE_METADATA_COLUMNS,
     THESIS_CONFIRMATION_COLUMNS,
 )
+from runtime_paths import data_path
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "threadradar.db")
+DB_PATH = str(data_path("threadradar.db"))
 
 # Keep derived scoring/explanation fields out of the core daily/performance tables.
 # The app can join score_metadata by (date, ticker), while backtests can join it

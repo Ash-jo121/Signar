@@ -139,16 +139,20 @@ def get_conn():
         )
         conn.execute("DELETE FROM daily_sentiment WHERE date < ?", (START_DATE,))
         conn.execute("DELETE FROM daily_contexts WHERE date < ?", (START_DATE,))
-    conn.execute(
-        """
-        DELETE FROM performance_tracking
-        WHERE return_1d <= -100
-           OR return_3d <= -100
-           OR return_7d <= -100
-           OR return_t14 <= -100
-           OR return_t30 <= -100
-        """
-    )
+    for return_col in (
+        "return_1d",
+        "return_3d",
+        "return_7d",
+        "return_t14",
+        "return_t30",
+    ):
+        conn.execute(
+            f"""
+            UPDATE performance_tracking
+            SET {return_col} = NULL
+            WHERE {return_col} <= -100
+            """
+        )
     conn.execute(
         """
         DELETE FROM performance_tracking

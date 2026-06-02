@@ -1,4 +1,5 @@
 import argparse
+import hashlib
 import json
 import math
 import re
@@ -400,6 +401,7 @@ def calculate_author_concentration(contexts):
             "top_author_mentions": 0,
             "top_author_share": 0.0,
             "author_concentration_multiplier": 1.0,
+            "author_set_hashes": [],
         }
 
     count_by_author = {}
@@ -424,7 +426,36 @@ def calculate_author_concentration(contexts):
         "top_author_mentions": top_author_mentions,
         "top_author_share": top_author_share,
         "author_concentration_multiplier": multiplier,
+        "author_set_hashes": hash_author_set(count_by_author),
     }
+
+
+def hash_author(author):
+    normalized = (author or "").strip().lower()
+    if normalized in {"", "unknown", "[deleted]", "automoderator"}:
+        return None
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+
+
+def hash_author_set(authors):
+    hashes = {hash_author(author) for author in authors}
+    return sorted(author_hash for author_hash in hashes if author_hash)
+
+
+def catalyst_signature(result):
+    if not result.get("catalyst_has_concrete_event"):
+        return None
+    text = " ".join(
+        [
+            str(result.get("catalyst_type") or ""),
+            str(result.get("catalyst_reasoning") or ""),
+            str(result.get("catalyst_gate_reason") or ""),
+        ]
+    )
+    normalized = re.sub(r"\s+", " ", text.lower()).strip()
+    if not normalized:
+        return None
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
 
 def calculate_promotion_risk(contexts):
@@ -525,6 +556,7 @@ def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
         "unique_authors": author_concentration["unique_authors"],
         "top_author_mentions": author_concentration["top_author_mentions"],
         "top_author_share": author_concentration["top_author_share"],
+        "author_set_hashes": author_concentration["author_set_hashes"],
         "post_quality_multiplier": post_quality_multiplier,
         "subreddits_mentioning_ticker": subreddit_count,
     }
@@ -1198,8 +1230,68 @@ def _trend_label(values, rising_ratio=1.15, falling_ratio=0.7):
     return "stable"
 
 
-def _author_trend(rows):
-    values = [_to_float(row.get("unique_authors")) for row in rows]
+def _load_author_hashes(value):
+    if not value:
+        return set()
+    if isinstance(value, list):
+        return set(value)
+    try:
+        loaded = json.loads(value)
+    except (TypeError, ValueError):
+        return set()
+    if not isinstance(loaded, list):
+        return set()
+    return {item for item in loaded if item}
+
+
+def _author_set_metrics(rows):
+    daily_sets = [_load_author_hashes(row.get("author_set_hashes")) for row in rows]
+    non_empty_sets = [author_set for author_set in daily_sets if author_set]
+    if not non_empty_sets:
+        values = [_to_float(row.get("unique_authors")) for row in rows]
+        return {
+            "author_trend": _count_author_trend(values),
+            "author_union_count": int(max(values) if values else 0),
+            "new_author_count": 0,
+            "repeat_author_ratio": 0.0,
+            "unique_authors_latest": int(values[-1] if values else 0),
+            "unique_authors_max": int(max(values) if values else 0),
+        }
+
+    union = set().union(*non_empty_sets)
+    latest = non_empty_sets[-1]
+    prior_union = set().union(*non_empty_sets[:-1]) if len(non_empty_sets) > 1 else set()
+    new_latest_authors = latest - prior_union
+    repeated_latest_authors = latest & prior_union
+    repeat_ratio = (
+        len(repeated_latest_authors) / len(latest)
+        if latest
+        else 0.0
+    )
+
+    first = non_empty_sets[0]
+    if len(non_empty_sets) < 2:
+        trend = "unknown"
+    elif len(new_latest_authors) >= 2 or len(union) >= len(first) + 2:
+        trend = "widening"
+    elif repeat_ratio >= 0.8 and len(union) <= max(len(first), len(latest)) + 1:
+        trend = "repeating"
+    elif len(latest) < len(first):
+        trend = "narrowing"
+    else:
+        trend = "stable"
+
+    return {
+        "author_trend": trend,
+        "author_union_count": len(union),
+        "new_author_count": len(new_latest_authors),
+        "repeat_author_ratio": round(repeat_ratio, 3),
+        "unique_authors_latest": len(latest),
+        "unique_authors_max": max(len(author_set) for author_set in non_empty_sets),
+    }
+
+
+def _count_author_trend(values):
     if len(values) < 2:
         return "unknown"
     if values[-1] > values[0]:
@@ -1207,6 +1299,21 @@ def _author_trend(rows):
     if values[-1] < values[0]:
         return "narrowing"
     return "stable"
+
+
+def _thesis_evolution(rows):
+    signatures = [
+        row.get("catalyst_signature")
+        for row in rows
+        if row.get("catalyst_has_concrete_event") and row.get("catalyst_signature")
+    ]
+    if not signatures:
+        return "discussion_only"
+    if len(set(signatures)) >= 2:
+        return "evolving_catalyst"
+    if len(signatures) >= 2:
+        return "recycled_catalyst"
+    return "concrete_catalyst"
 
 
 def _price_status(latest):
@@ -1233,16 +1340,12 @@ def classify_thesis_confirmation(ticker, rows, window_days=4):
         if row.get("trade_gate_passed")
         or row.get("threadradar_trade_status") == "trade_candidate"
     )
-    unique_authors = [_to_float(row.get("unique_authors")) for row in rows]
-    author_trend = _author_trend(rows)
+    author_metrics = _author_set_metrics(rows)
+    author_trend = author_metrics["author_trend"]
     mentions_trend = _trend_label([row.get("mentions") for row in rows])
     price_status = _price_status(latest)
     concrete_catalyst_seen = any(row.get("catalyst_has_concrete_event") for row in rows)
-    thesis_evolution = (
-        "concrete_catalyst"
-        if concrete_catalyst_seen
-        else "discussion_only"
-    )
+    thesis_evolution = _thesis_evolution(rows)
 
     if days_seen <= 1:
         state = "flash"
@@ -1259,6 +1362,9 @@ def classify_thesis_confirmation(ticker, rows, window_days=4):
     elif days_seen >= 2 and author_trend in {"widening", "stable"}:
         state = "building"
         reason = "Signal is persisting, but confirmation is still developing."
+    elif days_seen >= 2 and author_trend == "repeating":
+        state = "stale"
+        reason = "Signal is persisting but mostly from repeat authors."
     elif days_seen >= 3:
         state = "stale"
         reason = "Repeated signal without broadening or fresh confirmation."
@@ -1285,9 +1391,12 @@ def classify_thesis_confirmation(ticker, rows, window_days=4):
         "window_days": window_days,
         "days_seen": days_seen,
         "days_clearing_gates": days_clearing_gates,
-        "unique_authors_latest": int(unique_authors[-1] if unique_authors else 0),
-        "unique_authors_max": int(max(unique_authors) if unique_authors else 0),
+        "unique_authors_latest": author_metrics["unique_authors_latest"],
+        "unique_authors_max": author_metrics["unique_authors_max"],
         "author_trend": author_trend,
+        "author_union_count": author_metrics["author_union_count"],
+        "new_author_count": author_metrics["new_author_count"],
+        "repeat_author_ratio": author_metrics["repeat_author_ratio"],
         "mentions_trend": mentions_trend,
         "price_status": price_status,
         "thesis_evolution": thesis_evolution,
@@ -1314,12 +1423,14 @@ def build_thesis_confirmation(results, run_date, window_days=4):
                 ds.price,
                 ds.change_percent,
                 sm.unique_authors,
+                sm.author_set_hashes,
                 sm.trade_gate_passed,
                 sm.threadradar_trade_status,
                 sm.setup_type,
                 sm.market_confirmation_status,
                 sm.risk_score,
-                sm.catalyst_has_concrete_event
+                sm.catalyst_has_concrete_event,
+                sm.catalyst_signature
             FROM daily_sentiment ds
             LEFT JOIN score_metadata sm
                 ON sm.date = ds.date AND sm.ticker = ds.ticker
@@ -1826,6 +1937,7 @@ def analyze_ticker_sentiment(all_posts):
                 "unique_authors": signal_multipliers["unique_authors"],
                 "top_author_mentions": signal_multipliers["top_author_mentions"],
                 "top_author_share": round(signal_multipliers["top_author_share"], 3),
+                "author_set_hashes": signal_multipliers.get("author_set_hashes", []),
                 "promotion_risk_score": round(
                     promotion_risk["promotion_risk_score"], 3
                 ),
@@ -2336,6 +2448,7 @@ def run_pipeline(raw_data_file=None):
         ]
         result["catalyst_has_concrete_event"] = catalyst["catalyst_has_concrete_event"]
         result["catalyst_gate_reason"] = catalyst["catalyst_gate_reason"]
+        result["catalyst_signature"] = catalyst_signature(result)
         apply_catalyst_multiplier(result)
         catalyst_calls += 1
         print(
@@ -2386,6 +2499,8 @@ def run_pipeline(raw_data_file=None):
                 result["ticker"],
             ),
         )
+    output_lists = build_output_lists(results)
+    for result in results:
         save_score_metadata(conn, result, today)
     conn.commit()
     conn.close()
@@ -2398,7 +2513,6 @@ def run_pipeline(raw_data_file=None):
         for item in multi_day_confirmation
         if item["confirmation_state"] in {"building", "confirmed"}
     ][:10]
-    output_lists = build_output_lists(results)
 
     if overextended:
         print(f"\nMarked {len(overextended)} already-moved stocks as high-risk:")
