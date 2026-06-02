@@ -87,17 +87,32 @@ class StealthRedditFetcher:
         self._page = self._context.new_page()
 
     def warmup(self):
-        response = self._page.goto(
-            "https://www.reddit.com/r/pennystocks/",
-            wait_until="domcontentloaded",
-            timeout=30000,
-        )
-        body_preview = self._page.evaluate(
-            "() => document.body ? document.body.innerText.slice(0, 200) : 'NO BODY'"
-        )
-        print(f"Warmup status: {response.status if response else 'None'}")
-        print(f"Warmup body preview: {body_preview[:200]}")
-        time.sleep(3)
+        try:
+            response = self._page.goto(
+                "https://www.reddit.com/r/pennystocks/",
+                wait_until="networkidle",  # wait until no network activity for 500ms
+                timeout=60000,
+            )
+            # Extra wait for any JS-driven redirects to complete
+            time.sleep(5)
+            
+            status = response.status if response else "None"
+            current_url = self._page.url
+            print(f"Warmup status: {status}, final URL: {current_url}")
+            
+            try:
+                body_preview = self._page.evaluate(
+                    "() => document.body ? document.body.innerText.slice(0, 300) : 'NO BODY'"
+                )
+                print(f"Warmup body preview: {body_preview[:300]}")
+            except Exception as eval_err:
+                print(f"Warmup eval failed (redirect likely): {eval_err}")
+                # Check where we ended up
+                print(f"Current URL after redirect: {self._page.url}")
+                
+        except Exception as e:
+            print(f"Warmup failed entirely: {e}")
+            raise
 
     def pace(self):
         time.sleep(random.uniform(MIN_GAP, MAX_GAP) + self._adaptive_gap_extra)
