@@ -47,7 +47,7 @@ def utc_now_iso():
 
 
 def reddit_url(path):
-    return f"https://www.reddit.com{path}"
+    return f"https://old.reddit.com{path}"
 
 
 def proxy_config():
@@ -89,7 +89,7 @@ class StealthRedditFetcher:
     def warmup(self):
         try:
             response = self._page.goto(
-                "https://www.reddit.com/r/pennystocks/",
+                "https://old.reddit.com/r/pennystocks/",
                 wait_until="networkidle",  # wait until no network activity for 500ms
                 timeout=60000,
             )
