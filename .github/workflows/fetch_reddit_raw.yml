@@ -5,6 +5,10 @@ on:
     - cron: "30 6 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: threadradar-raw-reddit-fetch-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   fetch-raw-reddit:
     runs-on: ubuntu-latest
@@ -24,6 +28,24 @@ jobs:
           pip install -r backend/requirements-fetch.txt
           python -m playwright install --with-deps chromium
 
+      - name: Check for recent run
+        id: check_recent
+        run: |
+          # Skip if a successful run happened in the last 90 minutes.
+          last_run=$(gh run list --workflow=fetch_reddit_raw.yml \
+            --branch "${GITHUB_REF_NAME}" \
+            --status=success --limit=1 \
+            --json updatedAt --jq '.[0].updatedAt')
+          if [ -n "$last_run" ]; then
+            age_minutes=$(( ($(date +%s) - $(date -d "$last_run" +%s)) / 60 ))
+            if [ "$age_minutes" -lt 90 ]; then
+              echo "skip=true" >> $GITHUB_OUTPUT
+              echo "Last successful run was ${age_minutes}m ago - skipping"
+            fi
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Fetch raw Reddit data and trigger Railway analysis
         working-directory: backend
         env:
@@ -35,6 +57,7 @@ jobs:
           UPLOAD_API_KEY: ${{ secrets.UPLOAD_API_KEY }}
           AUTHOR_PROFILE_LOOKUP_LIMIT: "75"
           AUTHOR_LOOKUP_COOLDOWN_SECONDS: "180"
+        if: steps.check_recent.outputs.skip != 'true'
         run: |
           python -u fetch_raw_reddit.py \
             --output raw_data.json \
