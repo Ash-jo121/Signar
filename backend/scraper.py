@@ -45,7 +45,7 @@ def get_proxies():
 PROXIES = get_proxies()
 AUTHOR_PROFILE_CACHE = {}
 AUTHOR_PROFILE_LOOKUPS = 0
-AUTHOR_PROFILE_LOOKUP_LIMIT = int(os.getenv("AUTHOR_PROFILE_LOOKUP_LIMIT", "75"))
+AUTHOR_PROFILE_LOOKUP_LIMIT = int(os.getenv("AUTHOR_PROFILE_LOOKUP_LIMIT", "180"))
 
 
 def fetch_author_profile(author):

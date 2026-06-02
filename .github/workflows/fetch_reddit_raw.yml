@@ -55,7 +55,7 @@ jobs:
           PROXY_PORT: ${{ secrets.PROXY_PORT }}
           RAILWAY_URL: ${{ secrets.RAILWAY_URL }}
           UPLOAD_API_KEY: ${{ secrets.UPLOAD_API_KEY }}
-          AUTHOR_PROFILE_LOOKUP_LIMIT: "75"
+          AUTHOR_PROFILE_LOOKUP_LIMIT: "180"
           AUTHOR_LOOKUP_COOLDOWN_SECONDS: "180"
         if: steps.check_recent.outputs.skip != 'true'
         run: |
