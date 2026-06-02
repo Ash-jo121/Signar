@@ -95,11 +95,11 @@ class StealthRedditFetcher:
             )
             # Extra wait for any JS-driven redirects to complete
             time.sleep(5)
-            
+
             status = response.status if response else "None"
             current_url = self._page.url
             print(f"Warmup status: {status}, final URL: {current_url}")
-            
+
             try:
                 body_preview = self._page.evaluate(
                     "() => document.body ? document.body.innerText.slice(0, 300) : 'NO BODY'"
@@ -109,7 +109,7 @@ class StealthRedditFetcher:
                 print(f"Warmup eval failed (redirect likely): {eval_err}")
                 # Check where we ended up
                 print(f"Current URL after redirect: {self._page.url}")
-                
+
         except Exception as e:
             print(f"Warmup failed entirely: {e}")
             raise
@@ -438,12 +438,12 @@ def fetch_raw_payload(headless=True, checkpoint_path=None):
                 )
                 hot_posts = fetch_listing_posts(fetcher, subreddit, "hot", 0, limit=50)
                 normal_posts.extend(new_posts + hot_posts)
-                print(
-                    f"  r/{subreddit}: {len(new_posts)} new + {len(hot_posts)} hot"
-                )
+                print(f"  r/{subreddit}: {len(new_posts)} new + {len(hot_posts)} hot")
 
             except Exception as exc:
-                errors.append({"subreddit": subreddit, "stage": "listing", "error": str(exc)})
+                errors.append(
+                    {"subreddit": subreddit, "stage": "listing", "error": str(exc)}
+                )
             fetcher.pace()
 
         for subreddit in BEARISH_SUBREDDITS:
@@ -457,18 +457,22 @@ def fetch_raw_payload(headless=True, checkpoint_path=None):
                 )
                 hot_posts = fetch_listing_posts(fetcher, subreddit, "hot", 0, limit=50)
                 vampire_posts.extend(new_posts + hot_posts)
-                print(
-                    f"  r/{subreddit}: {len(new_posts)} new + {len(hot_posts)} hot"
-                )
+                print(f"  r/{subreddit}: {len(new_posts)} new + {len(hot_posts)} hot")
             except Exception as exc:
-                errors.append({"subreddit": subreddit, "stage": "listing", "error": str(exc)})
+                errors.append(
+                    {"subreddit": subreddit, "stage": "listing", "error": str(exc)}
+                )
             fetcher.pace()
 
         normal_posts = dedupe_posts(normal_posts)
         vampire_posts = dedupe_posts(vampire_posts)
-        print(f"\nFetch summary: {len(normal_posts)} normal posts, {len(vampire_posts)} vampire posts")
+        print(
+            f"\nFetch summary: {len(normal_posts)} normal posts, {len(vampire_posts)} vampire posts"
+        )
         print(f"Errors during fetch: {json.dumps(errors, indent=2)}")
-        print(f"Fetcher stats: {fetcher.request_count} requests, {fetcher.rate_limit_count} rate limits, {fetcher.hard_block_count} hard blocks")
+        print(
+            f"Fetcher stats: {fetcher.request_count} requests, {fetcher.rate_limit_count} rate limits, {fetcher.hard_block_count} hard blocks"
+        )
         if len(normal_posts) < MIN_RAW_POSTS:
             raise RawDataValidationError(
                 f"Only {len(normal_posts)} normal posts fetched; "
@@ -489,7 +493,9 @@ def fetch_raw_payload(headless=True, checkpoint_path=None):
         )
         if checkpoint_path:
             write_payload(partial_payload, checkpoint_path)
-            print(f"  Checkpoint raw_data.json written before author lookups: {checkpoint_path}")
+            print(
+                f"  Checkpoint raw_data.json written before author lookups: {checkpoint_path}"
+            )
 
         authors = authors_needing_profiles(normal_posts + vampire_posts)
         if authors and AUTHOR_LOOKUP_COOLDOWN_SECONDS > 0:
@@ -532,20 +538,39 @@ def write_payload(payload, output_path):
 def upload_payload(path, railway_url, api_key, trigger_analysis=False):
     endpoint = f"{railway_url.rstrip('/')}/api/upload-raw-data"
     params = {"trigger_analysis": "true" if trigger_analysis else "false"}
-    with open(path, "rb") as file:
-        response = requests.post(
-            endpoint,
-            params=params,
-            headers={"x-api-key": api_key},
-            files={"file": (Path(path).name, file, "application/json")},
-            timeout=120,
-        )
-    response.raise_for_status()
-    return response.json()
+
+    last_exc = None
+    for attempt in range(1, 4):  # 3 attempts
+        try:
+            with open(path, "rb") as file:
+                response = requests.post(
+                    endpoint,
+                    params=params,
+                    headers={"x-api-key": api_key},
+                    files={"file": (Path(path).name, file, "application/json")},
+                    timeout=120,
+                )
+            response.raise_for_status()
+            return response.json()
+        except (
+            requests.exceptions.SSLError,
+            requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout,
+        ) as exc:
+            last_exc = exc
+            wait = attempt * 30  # 30s, 60s, 90s
+            print(f"Upload attempt {attempt}/3 failed: {exc}")
+            if attempt < 3:
+                print(f"Retrying in {wait}s...")
+                time.sleep(wait)
+
+    raise RuntimeError(f"Upload failed after 3 attempts: {last_exc}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Fetch Reddit raw data with Playwright")
+    parser = argparse.ArgumentParser(
+        description="Fetch Reddit raw data with Playwright"
+    )
     parser.add_argument("--output", default=str(raw_data_path()))
     parser.add_argument("--headed", action="store_true")
     parser.add_argument("--upload", action="store_true")
