@@ -2,7 +2,7 @@ name: ThreadRadar Raw Reddit Fetch
 
 on:
   schedule:
-    - cron: "53 7 * * *"
+    - cron: "13 7 * * *"
   workflow_dispatch:
 
 concurrency:
