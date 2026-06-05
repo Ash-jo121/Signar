@@ -1,47 +1,103 @@
-# 📡 Signar
+# Signar
 
-> Automated Reddit sentiment analysis for penny stock discovery
+**Automated Reddit sentiment analysis for penny stock discovery**
 
-Signar scrapes penny stock subreddits, extracts ticker mentions, and runs financial sentiment analysis using AI ( FinBERT + Groq ) — turning hours of manual Reddit browsing into a ranked daily dashboard.
-
----
-
-## The Problem
-
-Finding promising penny stocks on Reddit means manually reading through hundreds of posts and comments across multiple subreddits like r/pennystocks, r/Pennystock, r/smallstreetbets etc. A single post can have 200+ comments, many of which contain counter-arguments, DD (due diligence), or warnings that completely change the picture. Doing this manually takes hours.
-
-Signar automates the entire pipeline and surfaces the top picks in seconds.
+Signar monitors penny stock communities across Reddit, extracts ticker mentions, and runs multi-factor financial sentiment analysis — turning hours of manual research into a ranked daily signal feed. Built as both a genuine investment research tool and an end-to-end ML engineering project.
 
 ---
 
-## How It Works
+## What It Does
 
-<!-- <img width="1819" height="795" alt="image" src="https://github.com/user-attachments/assets/baead758-a788-442a-a4e4-7d444a222d60" /> -->
+Reddit is one of the fastest sources of retail sentiment on speculative stocks, but extracting signal from noise requires reading hundreds of posts and comment threads across multiple communities. A single bullish post surrounded by bearish comments tells a completely different story than the post alone. Doing this manually takes hours and misses most of the information.
 
-
-The sentiment score reflects the **full conversation** — not just the original post. A bullish post with bearish comments will score lower than a bullish post with supporting comments. This is the key insight: Reddit counters matter along with the upvote score for the comment. We take the aggregate sentiment of the reddit comment tree to get the full score for a stock pick. Context inheritance is also considered, whenever a comment is taken it need not mention a ticker or stock. 
+Signar automates the full pipeline: scrape → extract → score → rank → track outcomes. The result is a daily ranked list of tickers with verified catalysts, multi-day persistence signals, risk classifications, and T+1/T+3/T+7/T+14/T+30 outcome tracking against the IWM benchmark.
 
 ---
 
-## Demo
+## Architecture
 
-> Screenshot coming soon — UI in progress
+```
+GitHub Actions (fetch)  →  Railway (analysis + SQLite)  →  Vercel (React frontend)
+```
+
+The pipeline runs as two decoupled services. GitHub Actions handles Reddit scraping daily using Playwright with residential proxies and stealth fingerprinting to bypass bot detection. The raw payload is POSTed to Railway, which runs the analysis pipeline, writes structured results to a persistent SQLite database, and triggers price updates for outcome tracking.
+
+### Scoring Pipeline
+
+Each ticker passes through a multi-stage scoring system before appearing in the output:
+
+**1. Mention aggregation** — Weighted mention counts across posts and comment trees, with context inheritance (a comment referencing a previously mentioned ticker inherits that context). Repetition decay penalises coordinated shill patterns where the same thesis is copy-pasted across multiple posts.
+
+**2. Sentiment scoring** — FinBERT scores each mention in financial context. The aggregate reflects the full conversation: a bullish post with bearish comments scores lower than a bullish post with supporting engagement. VADER was rejected because it scores "going to the moon" as neutral.
+
+**3. Signal multipliers** — Over a dozen multiplicative factors applied to the base score including cross-subreddit presence, author credibility, account age, karma, engagement ratio, post quality, catalyst type, timing, mention velocity, and promotion risk detection.
+
+**4. Risk classification** — Tickers are classified as `low`, `medium`, or `high` risk based on a composite of price action, market cap, dilution indicators, author concentration, and vampire/shill detection. High-risk setups are surfaced in a separate `avoid_high_risk` bucket.
+
+**5. Trade gates** — Even well-scored tickers must pass a set of market confirmation gates before appearing as actionable: minimum dollar volume, no `anti_chase` (already moved significantly), no `stale_squeeze_too_old`, sufficient market confirmation. Gate failures are logged with explicit reasons.
+
+**6. Thesis confirmation** — A rolling 4-day persistence layer tracks whether each signal is `flash` (single day), `building`, `confirmed`, `stale`, or `fading/decaying`. Only tickers with sustained, broadening interest across multiple days and authors appear in the confirmed watchlist.
+
+**7. Outcome tracking** — Price updater runs T+1, T+3, T+7, T+14, T+30 checks against each flagged date, with IWM benchmark comparison for excess return measurement, split detection, and anomaly flagging.
+
+---
+
+## Output Structure
+
+Each daily run produces a structured JSON with the following sections:
+
+| Section | Description |
+|---|---|
+| `best_trade_candidates` | Tickers that passed all risk gates — actionable signals |
+| `radar_watchlist` | Signals present but failing one or more trade gates |
+| `near_miss_candidates` | Ranked near-misses with explicit failure reasons |
+| `avoid_high_risk` | High-risk setups: anti-chase, promotion risk, dilution risk, vampire-flagged |
+| `multi_day_confirmation` | Full 4-day rolling persistence ledger for all tracked tickers |
+| `confirmed_watchlist` | Tickers that have reached `building` or `confirmed` thesis state |
 
 ---
 
 ## Tech Stack
 
-| Layer              | Technology                                                                            |
-| ------------------ | ------------------------------------------------------------------------------------- |
-| Reddit Data        | Reddit Public JSON API (no auth required)                                             |
-| Ticker Extraction  | Regex + NASDAQ/NYSE ticker blacklist + Common words                                   |
-| Sentiment Analysis | [FinBERT](https://huggingface.co/ProsusAI/finbert) (financial domain BERT) + Groq API |
-| Backend            | Python — `requests`, `transformers`, `torch`                                          |
-| Frontend           | React + Tailwind CSS                                                                  |
-| Scheduling         | Runs every 24 hours ( github actions )                                                |
+| Layer | Technology |
+|---|---|
+| Reddit scraping | Playwright + playwright-stealth 2.0.3 + Decodo residential proxies |
+| Ticker extraction | Regex + NASDAQ/NYSE/AMEX ticker whitelist + common word blacklist |
+| Sentiment analysis | FinBERT (ProsusAI/finbert) + Groq API |
+| Price data | yfinance |
+| Database | SQLite (Railway persistent volume) |
+| Pipeline orchestration | GitHub Actions (fetch) → Railway (analysis) |
+| Scheduling | cron-job.org external trigger → GitHub Actions `workflow_dispatch` |
+| Frontend | React + Tailwind CSS, deployed on Vercel |
+| Backend | Python — FastAPI, `transformers`, `torch`, `playwright` |
 
-**Why FinBERT over VADER?**
-General sentiment models don't understand financial language. VADER scores "this stock is going to the moon" as neutral. FinBERT was trained on financial news and analyst reports — it correctly understands terms like "bullish", "FDA approval", "short squeeze", and "dilution".
+---
+
+## Subreddits Monitored
+
+| Subreddit | Focus |
+|---|---|
+| r/pennystocks | Primary — most active penny stock community |
+| r/Pennystock | Secondary — active with distinct author base |
+| r/smallstreetbets | Tertiary — broader retail sentiment |
+| r/RobinHoodPennyStocks | Emerging picks, lower quality filter required |
+| r/10xPennyStocks | Higher conviction DD posts |
+| r/Shortsqueeze | Short squeeze thesis tracking |
+| r/SqueezePlays | Squeeze-specific setups |
+| r/wallstreetbets | Filtered to penny stock mentions only |
+
+---
+
+## Database Schema
+
+```
+daily_sentiment       — per-ticker daily scores and all multipliers
+score_metadata        — raw scoring components and gate results
+daily_contexts        — top mention contexts per ticker per day
+posts                 — raw scraped posts
+performance_tracking  — T+1/3/7/14/30 outcomes with IWM benchmark
+thesis_confirmation   — rolling 4-day confirmation state per ticker
+```
 
 ---
 
@@ -50,26 +106,31 @@ General sentiment models don't understand financial language. VADER scores "this
 ```
 signar/
   backend/
-      constants/
-            config.py
-            exclusion.py
-      integrations/
-            yahooFn.py
-            google_sheets_integration.py
-            
-     scraper.py        # Fetches posts and nested comments from Reddit
-     extractor.py      # Extracts and filters ticker symbols from text
-     sentiment.py      # FinBERT sentiment scoring
-     main.py           # Pipeline orchestration + ranking + output
-     output.json       # Generated output consumed by frontend
-     output.txt        # Human-readable version of output
+    constants/
+      config.py           # Environment and pipeline configuration
+      exclusion.py        # Ticker blacklist (common words, ETFs, etc.)
+    scraper/
+      fetch_raw_reddit.py # Playwright fetch pipeline with stealth + proxies
+    pipeline/
+      main.py             # Analysis orchestration
+      sentiment.py        # FinBERT + Groq scoring
+      extractor.py        # Ticker extraction and filtering
+      price_updater.py    # T+N outcome tracking with IWM benchmark
+      backtest.py         # Signal quality analysis
+    integrations/
+      yahooFn.py          # yfinance price data
+    database.py           # SQLite schema and migrations
+    migrate.py            # Idempotent column migrations
   frontend/
     src/
       App.jsx
       components/
-        <!-- Dashboard.jsx
+        Dashboard.jsx
         TickerCard.jsx
-        DetailPage.jsx -->
+        DetailPage.jsx
+  .github/
+    workflows/
+      fetch_raw_reddit.yml  # GitHub Actions fetch pipeline
   README.md
 ```
 
@@ -79,134 +140,104 @@ signar/
 
 ### Prerequisites
 
-- Python 3.9+
+- Python 3.10+
 - Node.js 18+
 - ~500MB disk space for FinBERT model (downloaded automatically on first run)
 
 ### Backend Setup
 
 ```bash
-# Clone the repo
-git clone https://github.com/yourusername/signar.git
+git clone https://github.com/Ash-jo121/Signar.git
 cd signar/backend
 
-# Install dependencies
-pip install requests transformers torch yfinance
+pip install -r requirements.txt
+
+# Install Playwright browsers
+playwright install chromium
 
 # Run the analysis pipeline
 python main.py
 ```
 
-The first run will download the FinBERT model (~500MB). Subsequent runs use the cached model and take 15–30 minutes depending on Reddit rate limits.
-
-Output is written to `output.json` and `output.txt`.
+The first run downloads the FinBERT model (~500MB). Subsequent runs use the cached model.
 
 ### Frontend Setup
 
 ```bash
 cd signar/frontend
-
 npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
+Open `http://localhost:5173`.
 
-### Running on a Schedule
-
-**Linux/Mac (cron):**
-
-```bash
-# Run every day at 3 PM
-```
-
-**Windows (Task Scheduler):**
-Create a basic task that runs `python main.py` from the backend directory daily.
-
----
-
-## Subreddits Monitored
-
-| Subreddit              | Focus                                       |
-| ---------------------- | ------------------------------------------- |
-| r/pennystocks          | Primary — most active penny stock community |
-| r/Pennystock           | Secondary — additional coverage             |
-| r/smallstreetbets      | Tertiary — broader retail sentiment         |
-| r/RobinHoodPennyStocks |                                             |
-| r/10xPennyStocks       |                                             | 
-| r/Shortsqueeze         |                                             |
-| r/SqueezePlays         |                                             |
-| r/wallstreetbets       | Only penny stocks                           |
-
----
-
-<!-- ## Scoring Algorithm
-
-Each ticker's final score is calculated as:
+### Environment Variables
 
 ```
-final_score = avg_sentiment × (1 + log(1 + mentions) * 0.3) × engagement_multiplier | This formula is development in progress |
-``` -->
-
-<!-- Where:
-
-- `avg_sentiment` — weighted average FinBERT score across all mentions (-1 to +1)
-- `mentions` — total number of times the ticker appeared across posts and comments
-- `engagement_multiplier` — indicator for engagement weighting
-
-Tickers with fewer than 2 mentions are filtered out to reduce noise.
-
---- -->
-
-## Known Limitations
-
-- **Pump-and-dump risk** — Reddit penny stock communities are susceptible to coordinated pumping. High sentiment scores do not guarantee legitimate picks. Always do your own research.
-- **OTC stock data gaps** — Some penny stocks trade OTC and may not have full price data available via Yahoo Finance.
-- **Float data are not obtainable through yahoo finance, we are bypassing the stocks with a warning.
-  <!-- - **Rate limiting** — Reddit's unauthenticated API limits requests. The pipeline includes automatic retry logic but the `top` category is sometimes unavailable. -->
-  <!-- - **FinBERT and Reddit slang** — FinBERT was trained on formal financial text. Reddit slang like "to the moon 🚀" scores as neutral rather than positive. This is intentional conservatism — we prefer false negatives over false positives. -->
+GROQ_API_KEY          # Groq API key for LLM-assisted catalyst classification
+DECODO_PROXY_USER     # Residential proxy credentials
+DECODO_PROXY_PASS
+RAILWAY_UPLOAD_URL    # Railway endpoint for raw payload upload
+GITHUB_PAT            # For external cron trigger via workflow_dispatch
+```
 
 ---
 
 ## Roadmap
 
-### V1 (Completed)
+### V1 — Completed
 
-- [x] Reddit scraper with recursive comment fetching
-- [x] Ticker extraction with blacklist filtering
+- [x] Reddit scraper with recursive comment tree fetching
+- [x] Ticker extraction with blacklist and density filtering
 - [x] FinBERT sentiment analysis
-- [x] Ranked output (JSON + TXT)
-- [x] React dashboard UI
+- [x] Groq API catalyst classification
+- [x] Multi-factor scoring with signal multipliers
+- [x] Ranked output (JSON)
+- [x] React dashboard
 - [x] Yahoo Finance price integration
-- [x] Groq API integration
-- [x] React ticker page
-- [x] Google Sheets API integration
+- [x] Playwright + residential proxy Reddit access (Cloudflare bypass)
+- [x] Two-pipeline architecture: GitHub Actions fetch → Railway analysis
+- [x] SQLite persistent storage
+- [x] Repetition decay for coordinated shill detection
+- [x] Vampire / pump-and-dump detection
+- [x] Author credibility scoring
+- [x] `change_percent` filter to exclude already-moved stocks
+- [x] T+1/T+3/T+7 outcome tracking
 
-### V2 (Current)
+### V2 — In Progress
 
-- [x] Historical data storage (sqlite)
-- [x] Scheduler
-- [x] Performance tracking — did the picks actually move?
-- [x] Pump-and-dump detection (sudden mention spikes)
-- [x] Reddit OAuth for higher rate limits
-- [x] Integrate diverse multipliers for final_score
-- [ ] Integrate SEC, News sentiments
-- [ ] Search functionality for past picks
-- [ ] Subreddit weighting (r/pennystocks > r/smallstreetbets)
-- [ ] Stock specific subreddit to be analyzed for more data
+- [x] T+14/T+30 long-horizon outcome tracking
+- [x] IWM benchmark comparison and excess return calculation
+- [x] Split detection and anomaly flagging
+- [x] Thesis confirmation layer (flash → building → confirmed → stale → fading)
+- [x] `confirmed_watchlist` and `near_miss_candidates` output sections
+- [x] `raw_final_score` preservation for backtesting integrity
+- [ ] FinBERT fine-tuning on accumulated domain data (planned after 4–6 weeks of data)
+- [ ] Backtesting analysis with quantified signal quality metrics
+- [ ] Ablation studies comparing scoring versions
+- [ ] Frontend deployment on Vercel
+- [ ] Multi-source expansion: StockTwits, SEC filings, news
+- [ ] Level 2 sentiment analysis
+- [ ] Subreddit expansion to 8 communities
+
+---
+
+## Known Limitations
+
+**Pump-and-dump risk** — Reddit penny stock communities are susceptible to coordinated promotion. High signal scores do not guarantee legitimate picks. The pipeline includes promotion risk scoring, author concentration penalties, and vampire detection, but no automated system is a substitute for your own due diligence.
+
+**Author identity persistence** — The thesis confirmation layer currently cannot distinguish new authors discovering a stock from existing authors reposting. Cross-day author set tracking is a known gap on the roadmap.
+
+**Catalyst classification** — LLM-based catalyst extraction can be overly generous on speculative framing. "Reportedly exploring" and "selected for evaluation" are not the same as a signed contract, but both can trigger high `catalyst_confidence` scores. Manual review of catalyst reasoning is recommended for any confirmed watchlist name.
+
+**OTC data gaps** — Some penny stocks trade OTC and may have incomplete or delayed price data via yfinance.
 
 ---
 
 ## Disclaimer
 
-> **Signar is not financial advice.** This tool is for informational and educational purposes only. Penny stocks are highly speculative investments. Never invest money you cannot afford to lose. Always conduct your own due diligence before making any investment decisions.
+Signar is not financial advice. This tool is for informational and research purposes only. Penny stocks are highly speculative. Never invest money you cannot afford to lose. Always conduct your own due diligence before making any investment decision.
 
 ---
 
-## Author
-
-Built by Ashish — a project to automate a manual workflow for discovering penny stock opportunities from social media sentiment.
-
----
-
-_If this helped you, consider starring the repo ⭐_
+*Built by Ashish — automating a manual workflow for discovering penny stock opportunities from Reddit sentiment, and building an ML portfolio project around measurable signal quality.*
