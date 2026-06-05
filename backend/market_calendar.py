@@ -1,4 +1,9 @@
-from datetime import date, timedelta
+from datetime import date, datetime, time, timedelta
+from zoneinfo import ZoneInfo
+
+EASTERN = ZoneInfo("America/New_York")
+REGULAR_OPEN = time(9, 30)
+REGULAR_CLOSE = time(16, 0)
 
 
 def observed_date(month, day, year):
@@ -77,20 +82,46 @@ def get_market_session(run_date=None):
         return {
             "run_date": run_date.isoformat(),
             "market_session": "closed",
+            "market_session_phase": "closed",
             "market_closed_reason": reason,
             "price_update_status": "skipped_market_closed",
             "eligible_for_backtest": False,
             "next_trading_session_signal": True,
         }
 
+    phase = get_market_session_phase(run_date)
     return {
         "run_date": run_date.isoformat(),
         "market_session": "open",
+        "market_session_phase": phase,
         "market_closed_reason": None,
         "price_update_status": "eligible",
         "eligible_for_backtest": True,
         "next_trading_session_signal": False,
     }
+
+
+def get_market_session_phase(run_date=None, now=None):
+    if run_date is None:
+        run_date = date.today()
+    if isinstance(run_date, str):
+        run_date = date.fromisoformat(run_date)
+
+    now_et = now or datetime.now(EASTERN)
+    if now_et.tzinfo is None:
+        now_et = now_et.replace(tzinfo=EASTERN)
+    else:
+        now_et = now_et.astimezone(EASTERN)
+
+    if now_et.date() < run_date:
+        return "pre_market"
+    if now_et.date() > run_date:
+        return "after_hours"
+    if now_et.time() < REGULAR_OPEN:
+        return "pre_market"
+    if now_et.time() < REGULAR_CLOSE:
+        return "regular"
+    return "after_hours"
 
 
 def is_market_open(run_date=None):

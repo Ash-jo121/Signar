@@ -94,6 +94,7 @@ SCORE_METADATA_COLUMNS = [
 
 RUN_METADATA_COLUMNS = [
     ("market_session", "TEXT NOT NULL DEFAULT 'open'"),
+    ("market_session_phase", "TEXT DEFAULT 'regular'"),
     ("market_closed_reason", "TEXT"),
     ("price_update_status", "TEXT NOT NULL DEFAULT 'eligible'"),
     ("eligible_for_backtest", "INTEGER DEFAULT 1"),
@@ -257,11 +258,12 @@ def save_run_metadata(conn, metadata):
     conn.execute(
         """
         INSERT INTO run_metadata
-        (run_date, market_session, market_closed_reason, price_update_status,
+        (run_date, market_session, market_session_phase, market_closed_reason, price_update_status,
          eligible_for_backtest, next_trading_session_signal)
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(run_date) DO UPDATE SET
             market_session = excluded.market_session,
+            market_session_phase = excluded.market_session_phase,
             market_closed_reason = excluded.market_closed_reason,
             price_update_status = excluded.price_update_status,
             eligible_for_backtest = excluded.eligible_for_backtest,
@@ -270,6 +272,7 @@ def save_run_metadata(conn, metadata):
         (
             metadata["run_date"],
             metadata["market_session"],
+            metadata.get("market_session_phase", "regular"),
             metadata.get("market_closed_reason"),
             metadata["price_update_status"],
             1 if metadata["eligible_for_backtest"] else 0,
@@ -466,6 +469,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS run_metadata (
             run_date TEXT PRIMARY KEY,
             market_session TEXT NOT NULL,
+            market_session_phase TEXT,
             market_closed_reason TEXT,
             price_update_status TEXT NOT NULL,
             eligible_for_backtest INTEGER DEFAULT 1,

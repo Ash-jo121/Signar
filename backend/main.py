@@ -828,7 +828,35 @@ def calculate_anti_chase_multiplier(change_1d, change_3d=None, change_7d=None):
     return max(penalty, 0.25)
 
 
-def calculate_volume_confirmation_multiplier(relative_volume, price_change_1d):
+def is_pre_market_phase(market_session_phase):
+    return market_session_phase == "pre_market"
+
+
+def market_data_is_stale_for_run(result, run_metadata=None):
+    market_data_as_of = result.get("market_data_as_of")
+    run_date = (run_metadata or {}).get("run_date") or result.get("run_date")
+    return (
+        market_data_as_of is not None
+        and run_date is not None
+        and str(market_data_as_of) < str(run_date)
+    )
+
+
+def effective_market_session_phase(result, run_metadata=None):
+    if market_data_is_stale_for_run(result, run_metadata):
+        return "pre_market"
+    return (run_metadata or {}).get("market_session_phase") or result.get(
+        "market_session_phase"
+    )
+
+
+def calculate_volume_confirmation_multiplier(
+    relative_volume,
+    price_change_1d,
+    market_session_phase=None,
+):
+    if is_pre_market_phase(market_session_phase):
+        return 1.0
     if relative_volume is None:
         return 1.0
     if relative_volume < 0.8:
@@ -853,9 +881,14 @@ def classify_market_confirmation(
     change_1d,
     change_3d=None,
     dollar_volume=None,
+    market_session_phase=None,
 ):
     if dollar_volume is not None and dollar_volume < 500_000:
         return "illiquid"
+    if is_pre_market_phase(market_session_phase):
+        if change_1d is not None and change_1d > 15:
+            return "pre_market_prior_move"
+        return "pre_market_pending"
     if relative_volume is None or change_1d is None:
         return "unknown"
     if change_1d < -20 and relative_volume >= 3:
@@ -1524,6 +1557,7 @@ def attach_run_metadata(results, metadata):
     for result in results:
         result["run_date"] = metadata["run_date"]
         result["market_session"] = metadata["market_session"]
+        result["market_session_phase"] = metadata.get("market_session_phase")
         result["price_update_status"] = metadata["price_update_status"]
         result["eligible_for_backtest"] = metadata["eligible_for_backtest"]
         result["next_trading_session_signal"] = metadata["next_trading_session_signal"]
@@ -1531,6 +1565,9 @@ def attach_run_metadata(results, metadata):
             result["market_closed_reason"] = metadata["market_closed_reason"]
         if isinstance(result.get("market_data"), dict):
             result["market_data"]["market_session"] = metadata["market_session"]
+            result["market_data"]["market_session_phase"] = metadata.get(
+                "market_session_phase"
+            )
             result["market_data"]["signal_date"] = metadata["run_date"]
             result["market_data"]["market_data_as_of"] = result.get("market_data_as_of")
 
@@ -1640,12 +1677,14 @@ def apply_anti_chase_penalty(result):
         )
 
 
-def apply_price_volume_confirmation(result):
+def apply_price_volume_confirmation(result, run_metadata=None):
+    market_session_phase = effective_market_session_phase(result, run_metadata)
     price_change_1d = result.get("price_change_1d", result.get("change_percent"))
     result["price_change_1d"] = price_change_1d
     volume_multiplier = calculate_volume_confirmation_multiplier(
         result.get("relative_volume"),
         price_change_1d,
+        market_session_phase,
     )
     liquidity_multiplier = calculate_liquidity_multiplier(result.get("dollar_volume"))
     result["volume_confirmation_multiplier"] = round(volume_multiplier, 3)
@@ -1655,6 +1694,7 @@ def apply_price_volume_confirmation(result):
         price_change_1d,
         result.get("price_change_3d"),
         result.get("dollar_volume"),
+        market_session_phase,
     )
 
 
@@ -1963,7 +2003,7 @@ def analyze_ticker_sentiment(all_posts):
     return results
 
 
-def apply_repetition_decay(results):
+def apply_repetition_decay(results, run_metadata=None):
     """
     Reward early persistence and penalize stale repetition.
 
@@ -1974,6 +2014,7 @@ def apply_repetition_decay(results):
     today_date = date.today()
     today_iso = today_date.strftime("%Y-%m-%d")
     for result in results:
+        market_session_phase = effective_market_session_phase(result, run_metadata)
         ticker = result["ticker"]
         mentions_today = result.get("mentions", 0) or 0
 
@@ -2053,6 +2094,7 @@ def apply_repetition_decay(results):
         volume_confirmation_multiplier = calculate_volume_confirmation_multiplier(
             result.get("relative_volume"),
             price_change_1d,
+            market_session_phase,
         )
         anti_chase_multiplier = calculate_anti_chase_multiplier(
             price_change_1d,
@@ -2067,6 +2109,7 @@ def apply_repetition_decay(results):
             price_change_1d,
             price_change_3d,
             result.get("dollar_volume"),
+            market_session_phase,
         )
 
         result["first_seen_date"] = first_seen_date
@@ -2290,6 +2333,7 @@ def run_pipeline(raw_data_file=None):
     else:
         print(
             f"Market open for {run_metadata['run_date']}. "
+            f"Session phase: {run_metadata.get('market_session_phase')}. "
             "Run is eligible for same-day / T+1 backtest."
         )
 
@@ -2308,7 +2352,7 @@ def run_pipeline(raw_data_file=None):
     print("\nStep 3.25: Applying anti-chase price action penalties...")
     for result in results:
         apply_anti_chase_penalty(result)
-        apply_price_volume_confirmation(result)
+        apply_price_volume_confirmation(result, run_metadata)
 
     print("\nStep 3.5: Checking bearish stock flags...")
     conn = get_connection()
@@ -2371,7 +2415,7 @@ def run_pipeline(raw_data_file=None):
     for r in results:
         r["raw_final_score"] = r["final_score"]
 
-    results = apply_repetition_decay(results)
+    results = apply_repetition_decay(results, run_metadata)
     for result in results:
         apply_rank_scores(result)
 

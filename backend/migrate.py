@@ -72,6 +72,7 @@ def ensure_run_metadata_table(conn):
         CREATE TABLE IF NOT EXISTS run_metadata (
             run_date TEXT PRIMARY KEY,
             market_session TEXT NOT NULL,
+            market_session_phase TEXT,
             market_closed_reason TEXT,
             price_update_status TEXT NOT NULL,
             eligible_for_backtest INTEGER DEFAULT 1,
