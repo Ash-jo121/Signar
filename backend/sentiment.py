@@ -171,14 +171,14 @@ Contexts:
 {contexts_text}
 
 Based on ALL the above comments together, return a SINGLE JSON object (not an array):
-{{"has_catalyst": true/false, "catalyst_type": "FDA/earnings/contract/partnership/clinical/regulatory/patent/merger/capital raise/production/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
+{{"has_catalyst": true/false, "catalyst_type": "FDA/earnings/contract/partnership/clinical/regulatory/patent/merger/capital raise/production/sec filing/none", "confidence": 0.0-1.0, "reasoning": "one sentence"}}
 
 REAL catalysts (has_catalyst = true):
 - FDA approval, trial results, PDUFA date
 - Government contract, DoD/DHS award
 - Revenue/earnings news with specific numbers
 - Named partnership or commercial agreement with a named counterparty
-- SEC filing, specific regulatory event
+- Material SEC filing such as an 8-K or activist Schedule 13D
 - Clinical trial data or milestone
 - Court ruling or patent decision
 - Confirmed merger or acquisition announcement
@@ -205,6 +205,7 @@ NOT catalysts (has_catalyst = false):
 - Delisting notice or compliance warning (this is a risk event, not a catalyst)
 - Reverse stock split announcement
 - Share dilution or offering announcement
+- Passive ownership filing such as Schedule 13G
 - Insider ownership percentage without named event
 - Rumors, speculation, "could announce", "might partner", or unsourced Reddit claims
 
