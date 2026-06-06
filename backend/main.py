@@ -906,6 +906,25 @@ def classify_market_confirmation(
     return "neutral"
 
 
+def has_severe_downtrend(result):
+    """Identify declines that are more consistent with a dump than momentum."""
+    change_1d = result.get("price_change_1d")
+    if change_1d is None:
+        change_1d = result.get("change_percent")
+    changes = (
+        change_1d,
+        result.get("price_change_3d"),
+        result.get("price_change_7d"),
+    )
+    for change in changes:
+        try:
+            if change is not None and float(change) <= -20:
+                return True
+        except (TypeError, ValueError):
+            continue
+    return False
+
+
 def classify_setup(result):
     risk = result.get("risk_score", 0) or 0
     promotion_risk = result.get("promotion_risk_score", 0) or 0
@@ -930,6 +949,8 @@ def classify_setup(result):
         return "low_quality_hype"
     if change_percent > 15 or result.get("anti_chase_multiplier", 1.0) < 1.0:
         return "anti_chase"
+    if has_severe_downtrend(result):
+        return "post_spike_pullback"
     if mention_velocity == "emerging" and risk < 45:
         return "early_discovery"
     if change_percent < -5 and days_since_first_seen <= 3 and mentions >= 5:
@@ -1047,6 +1068,8 @@ def trade_gate_failure_reasons(result):
         reasons.append("insufficient_dollar_volume")
     if result.get("risk_score", 0) > 35:
         reasons.append("risk_score_too_high")
+    if has_severe_downtrend(result):
+        reasons.append("severe_downtrend")
     if setup_type in {
         "promotion_risk",
         "anti_chase",
@@ -1188,6 +1211,9 @@ def build_ranking_reason(result):
         negative.append("euphoric sentiment")
     elif avg_sentiment < 0:
         negative.append("negative sentiment")
+
+    if has_severe_downtrend(result):
+        negative.append("severe price downtrend")
 
     if risk_level_value == "low":
         positive.append("low risk")
