@@ -33,6 +33,11 @@ from sentiment import (
 from tqdm import tqdm
 import traceback
 
+SCORING_VERSION = os.getenv(
+    "THREADRADAR_SCORING_VERSION",
+    "2026-06-07-confirmation-aware-v1",
+)
+
 CATALYST_MULTIPLIERS = {
     "none": 1.05,
     "merger": 1.08,
@@ -139,6 +144,28 @@ CONCRETE_CATALYST_PATTERNS = [
     r"\bschedule 13d\b",
 ]
 
+DILUTIVE_FILING_PATTERNS = [
+    r"\bs-1\b",
+    r"\bs-3\b",
+    r"\bshelf registration\b",
+    r"\bshelf offering\b",
+    r"\bregistered direct\b",
+    r"\bpublic offering\b",
+    r"\bprivate placement\b",
+    r"\bat-the-market\b",
+    r"\batm offering\b",
+    r"\bshare dilution\b",
+    r"\bdilutive\b",
+    r"\bresale registration\b",
+    r"\bprospectus supplement\b",
+]
+
+PASSIVE_OWNERSHIP_FILING_PATTERNS = [
+    r"\b13g\b",
+    r"\bsc 13g\b",
+    r"\bschedule 13g\b",
+]
+
 
 def clamp(value, minimum, maximum):
     return min(max(value, minimum), maximum)
@@ -167,14 +194,43 @@ def has_concrete_catalyst_evidence(reasoning, contexts):
     )
 
 
+def catalyst_evidence_text(catalyst, contexts):
+    return " ".join([catalyst.get("reasoning", "") or "", *contexts[:5]]).lower()
+
+
+def has_catalyst_pattern(evidence_text, patterns):
+    return any(re.search(pattern, evidence_text, re.IGNORECASE) for pattern in patterns)
+
+
 def validate_catalyst_signal(catalyst, contexts):
     confidence = catalyst.get("confidence", 0.0) or 0.0
     has_catalyst = bool(catalyst.get("has_catalyst"))
     catalyst_type = normalize_catalyst_type(catalyst.get("catalyst_type", "none"))
-    has_concrete_event = has_concrete_catalyst_evidence(
+    evidence_text = catalyst_evidence_text(catalyst, contexts)
+    has_dilutive_filing = has_catalyst_pattern(
+        evidence_text,
+        DILUTIVE_FILING_PATTERNS,
+    )
+    has_passive_ownership_filing = has_catalyst_pattern(
+        evidence_text,
+        PASSIVE_OWNERSHIP_FILING_PATTERNS,
+    )
+    if has_dilutive_filing:
+        # Preserve a concrete negative event so setup classification can route
+        # it through capital_raise -> dilution_risk even if the LLM said SEC filing.
+        has_catalyst = True
+        catalyst_type = "capital raise"
+    elif catalyst_type == "sec filing" and has_passive_ownership_filing:
+        # Schedule 13G reports passive ownership and is not inherently bullish.
+        has_catalyst = False
+        catalyst_type = "none"
+
+    has_concrete_event = has_dilutive_filing or has_concrete_catalyst_evidence(
         catalyst.get("reasoning", ""),
         contexts,
     )
+    if catalyst_type == "none" and has_passive_ownership_filing:
+        has_concrete_event = False
     multiplier_eligible = (
         has_catalyst
         and catalyst_type != "none"
@@ -458,6 +514,46 @@ def catalyst_signature(result):
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
 
+VERIFIED_POSITIVE_CATALYST_TYPES = {
+    "merger",
+    "regulatory",
+    "clinical",
+    "contract",
+    "production",
+    "earnings",
+    "partnership",
+    "patent",
+    "sec filing",
+    "government contract",
+}
+
+
+def has_verified_positive_catalyst(result):
+    catalyst_type = normalize_catalyst_type(result.get("catalyst_type", "none"))
+    return (
+        bool(result.get("catalyst_multiplier_eligible"))
+        and catalyst_type in VERIFIED_POSITIVE_CATALYST_TYPES
+    )
+
+
+def has_acceptable_author_quality(result):
+    top_author_share = result.get("top_author_share")
+    return (
+        (result.get("unique_authors", 0) or 0) >= 3
+        and top_author_share is not None
+        and top_author_share <= 0.4
+        and (result.get("promotion_risk_score", 0) or 0) < 0.25
+    )
+
+
+def is_recurrent_unverified_chatter(result):
+    return (
+        (result.get("days_trending", 1) or 1) >= 10
+        and (result.get("mentions", 0) or 0) < 10
+        and not has_verified_positive_catalyst(result)
+    )
+
+
 def calculate_promotion_risk(contexts):
     total_contexts = len(contexts)
     if total_contexts == 0:
@@ -729,7 +825,7 @@ def calculate_promotion_trade_multiplier(promotion_risk_score):
     return 1.0
 
 
-def apply_threadradar_trade_decision(result):
+def apply_threadradar_trade_decision(result, include_confirmation=True):
     """
     Keep Yahoo analyst opinion as metadata and publish ThreadRadar's own action.
 
@@ -740,7 +836,10 @@ def apply_threadradar_trade_decision(result):
     result.setdefault("analyst_recommendation", result.get("recommendation") or "none")
     result["recommendation"] = None
 
-    failed_gates = trade_gate_failure_reasons(result)
+    failed_gates = trade_gate_failure_reasons(
+        result,
+        include_confirmation=include_confirmation,
+    )
     high_risk = is_high_risk_candidate(result)
     radar_score = result.get("radar_score", result.get("final_score", 0)) or 0
 
@@ -951,6 +1050,8 @@ def classify_setup(result):
         return "anti_chase"
     if has_severe_downtrend(result):
         return "post_spike_pullback"
+    if is_recurrent_unverified_chatter(result):
+        return "stale_squeeze"
     if mention_velocity == "emerging" and risk < 45:
         return "early_discovery"
     if change_percent < -5 and days_since_first_seen <= 3 and mentions >= 5:
@@ -1054,9 +1155,10 @@ def apply_catalyst_multiplier(result):
         )
 
 
-def trade_gate_failure_reasons(result):
+def trade_gate_failure_reasons(result, include_confirmation=True):
     setup_type = result.get("setup_type")
     market_status = result.get("market_confirmation_status")
+    confirmation_state = result.get("confirmation_state")
     days_trending = result.get("days_trending", 1) or 1
     reasons = []
 
@@ -1080,6 +1182,16 @@ def trade_gate_failure_reasons(result):
         reasons.append(f"blocked_setup_type:{setup_type}")
     if setup_type == "stale_squeeze" and days_trending > 5:
         reasons.append("stale_squeeze_too_old")
+    if include_confirmation:
+        if confirmation_state in {"stale", "fading/decaying", "chased"}:
+            reasons.append(f"weak_thesis_confirmation:{confirmation_state}")
+        if market_status == "pre_market_pending":
+            pending_is_supported = confirmation_state in {"building", "confirmed"} or (
+                has_verified_positive_catalyst(result)
+                and has_acceptable_author_quality(result)
+            )
+            if not pending_is_supported:
+                reasons.append("pre_market_pending_without_support")
     if (
         result.get("promotion_risk_score", 0) >= 0.20
         and result.get("avg_sentiment", 0) > 0.55
@@ -1097,8 +1209,11 @@ def trade_gate_failure_reasons(result):
     return reasons
 
 
-def is_best_trade_candidate(result):
-    return not trade_gate_failure_reasons(result)
+def is_best_trade_candidate(result, include_confirmation=True):
+    return not trade_gate_failure_reasons(
+        result,
+        include_confirmation=include_confirmation,
+    )
 
 
 def is_high_risk_candidate(result):
@@ -1133,6 +1248,7 @@ def annotate_output_cohorts(
     radar_watchlist,
     avoid_high_risk,
     near_miss_candidates,
+    include_confirmation=True,
 ):
     best_ids = {id(result) for result in best_trade_candidates}
     radar_ids = {id(result) for result in radar_watchlist}
@@ -1144,7 +1260,10 @@ def annotate_output_cohorts(
 
     for result in results:
         result_id = id(result)
-        failed_reasons = trade_gate_failure_reasons(result)
+        failed_reasons = trade_gate_failure_reasons(
+            result,
+            include_confirmation=include_confirmation,
+        )
         memberships = []
 
         if result_id in best_ids:
@@ -1227,8 +1346,10 @@ def build_ranking_reason(result):
     else:
         negative.append("vampire flagged")
 
-    if result.get("catalyst_multiplier_eligible"):
+    if has_verified_positive_catalyst(result):
         positive.append(f"verified {result.get('catalyst_type', 'catalyst')} catalyst")
+    elif normalize_catalyst_type(result.get("catalyst_type")) == "short squeeze":
+        negative.append("speculative short squeeze setup")
     elif result.get("catalyst_gate_reason"):
         negative.append("no verified catalyst")
 
@@ -1249,6 +1370,14 @@ def build_ranking_reason(result):
         negative.append("author concentration risk")
     elif result.get("unique_authors", 0) >= 4:
         positive.append("multiple authors discussing")
+
+    confirmation_state = result.get("confirmation_state")
+    if confirmation_state in {"building", "confirmed"}:
+        positive.append(f"{confirmation_state} multi-day thesis")
+    elif confirmation_state == "flash":
+        negative.append("single-day flash signal")
+    elif confirmation_state:
+        negative.append(f"{confirmation_state} multi-day thesis")
 
     if market_status == "confirmed_early":
         positive.append("volume confirmed early")
@@ -1396,8 +1525,14 @@ def classify_thesis_confirmation(ticker, rows, window_days=4):
     days_clearing_gates = sum(
         1
         for row in rows
-        if row.get("trade_gate_passed")
-        or row.get("threadradar_trade_status") == "trade_candidate"
+        if (
+            row.get("independent_trade_gate_passed")
+            if row.get("independent_trade_gate_passed") is not None
+            else (
+                row.get("trade_gate_passed")
+                or row.get("threadradar_trade_status") == "trade_candidate"
+            )
+        )
     )
     author_metrics = _author_set_metrics(rows)
     author_trend = author_metrics["author_trend"]
@@ -1484,6 +1619,7 @@ def build_thesis_confirmation(results, run_date, window_days=4):
                 sm.unique_authors,
                 sm.author_set_hashes,
                 sm.trade_gate_passed,
+                sm.independent_trade_gate_passed,
                 sm.threadradar_trade_status,
                 sm.setup_type,
                 sm.market_confirmation_status,
@@ -1529,12 +1665,19 @@ def build_thesis_confirmation(results, run_date, window_days=4):
     )
 
 
-def build_output_lists(results, limit=10):
+def build_output_lists(results, limit=10, include_confirmation=True):
     for result in results:
         result["ranking_reason"] = build_ranking_reason(result)
 
     best_trade_candidates = sorted(
-        [result for result in results if is_best_trade_candidate(result)],
+        [
+            result
+            for result in results
+            if is_best_trade_candidate(
+                result,
+                include_confirmation=include_confirmation,
+            )
+        ],
         key=lambda result: result.get("trade_score", result.get("final_score", 0)),
         reverse=True,
     )[:limit]
@@ -1553,7 +1696,11 @@ def build_output_lists(results, limit=10):
         [
             result
             for result in results
-            if id(result) not in best_ids and trade_gate_failure_reasons(result)
+            if id(result) not in best_ids
+            and trade_gate_failure_reasons(
+                result,
+                include_confirmation=include_confirmation,
+            )
         ],
         key=lambda result: (
             result.get("trade_score", result.get("final_score", 0)),
@@ -1569,6 +1716,7 @@ def build_output_lists(results, limit=10):
         radar_watchlist,
         avoid_high_risk,
         near_miss_candidates,
+        include_confirmation=include_confirmation,
     )
 
     return {
@@ -1582,6 +1730,7 @@ def build_output_lists(results, limit=10):
 def attach_run_metadata(results, metadata):
     for result in results:
         result["run_date"] = metadata["run_date"]
+        result["scoring_version"] = metadata.get("scoring_version")
         result["market_session"] = metadata["market_session"]
         result["market_session_phase"] = metadata.get("market_session_phase")
         result["price_update_status"] = metadata["price_update_status"]
@@ -2350,6 +2499,7 @@ def run_pipeline(raw_data_file=None):
 
     init_db()
     run_metadata = get_market_session()
+    run_metadata["scoring_version"] = SCORING_VERSION
     if run_metadata["market_session"] == "closed":
         print(
             f"Market closed for {run_metadata['run_date']} "
@@ -2455,6 +2605,12 @@ def run_pipeline(raw_data_file=None):
     ]
 
     print("\nStep 4: Saving results to database...")
+    for result in trackable:
+        # This is the score at initial flag time, before Step 5 catalyst assessment.
+        result["pre_catalyst_trade_score"] = result.get(
+            "trade_score",
+            result.get("final_score", 0),
+        )
     attach_run_metadata(trackable, run_metadata)
     save_daily_results(trackable, run_metadata=run_metadata)
     if run_metadata["eligible_for_backtest"]:
@@ -2569,7 +2725,14 @@ def run_pipeline(raw_data_file=None):
                 result["ticker"],
             ),
         )
-    output_lists = build_output_lists(results)
+    # Persist the independent quality-gate result first so rolling confirmation
+    # can measure how often the ticker cleared those gates without depending on
+    # its own confirmation state.
+    for result in results:
+        apply_threadradar_trade_decision(result, include_confirmation=False)
+    build_output_lists(results, include_confirmation=False)
+    for result in results:
+        result["independent_trade_gate_passed"] = result["trade_gate_passed"]
     for result in results:
         save_score_metadata(conn, result, today)
     conn.commit()
@@ -2583,6 +2746,19 @@ def run_pipeline(raw_data_file=None):
         for item in multi_day_confirmation
         if item["confirmation_state"] in {"building", "confirmed"}
     ][:10]
+
+    # Rebuild final cohorts after confirmation is attached, then replace the
+    # preliminary metadata with the confirmation-aware trade decision.
+    for result in results:
+        apply_threadradar_trade_decision(result)
+    output_lists = build_output_lists(results)
+    conn = get_connection()
+    try:
+        for result in results:
+            save_score_metadata(conn, result, today)
+        conn.commit()
+    finally:
+        conn.close()
 
     if overextended:
         print(f"\nMarked {len(overextended)} already-moved stocks as high-risk:")
