@@ -15,6 +15,7 @@ _BUSY_TIMEOUT_MS = 30_000
 SCORE_METADATA_COLUMNS = [
     ("radar_score", "REAL DEFAULT 0.0"),
     ("trade_score", "REAL DEFAULT 0.0"),
+    ("pre_catalyst_trade_score", "REAL"),
     ("risk_score", "REAL DEFAULT 0.0"),
     ("signal_score", "REAL DEFAULT 0.0"),
     ("risk_level", "TEXT"),
@@ -84,6 +85,7 @@ SCORE_METADATA_COLUMNS = [
     ("trade_reason", "TEXT"),
     ("cohort", "TEXT"),
     ("trade_gate_passed", "INTEGER DEFAULT 0"),
+    ("independent_trade_gate_passed", "INTEGER"),
     ("ranking_bucket", "TEXT"),
     ("failed_reasons", "TEXT"),
     ("is_near_miss", "INTEGER DEFAULT 0"),
@@ -93,6 +95,7 @@ SCORE_METADATA_COLUMNS = [
 ]
 
 RUN_METADATA_COLUMNS = [
+    ("scoring_version", "TEXT"),
     ("market_session", "TEXT NOT NULL DEFAULT 'open'"),
     ("market_session_phase", "TEXT DEFAULT 'regular'"),
     ("market_closed_reason", "TEXT"),
@@ -161,6 +164,7 @@ def score_metadata_values(result):
     return (
         result.get("radar_score", 0),
         result.get("trade_score", result.get("final_score", 0)),
+        result.get("pre_catalyst_trade_score"),
         result.get("risk_score", 0),
         result.get("signal_score", result.get("final_score", 0)),
         result.get("risk_level"),
@@ -230,6 +234,7 @@ def score_metadata_values(result):
         result.get("trade_reason"),
         result.get("cohort"),
         1 if result.get("trade_gate_passed") else 0,
+        1 if result.get("independent_trade_gate_passed") else 0,
         result.get("ranking_bucket"),
         json.dumps(result.get("failed_reasons", [])),
         1 if result.get("is_near_miss") else 0,
@@ -258,10 +263,11 @@ def save_run_metadata(conn, metadata):
     conn.execute(
         """
         INSERT INTO run_metadata
-        (run_date, market_session, market_session_phase, market_closed_reason, price_update_status,
+        (run_date, scoring_version, market_session, market_session_phase, market_closed_reason, price_update_status,
          eligible_for_backtest, next_trading_session_signal)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(run_date) DO UPDATE SET
+            scoring_version = excluded.scoring_version,
             market_session = excluded.market_session,
             market_session_phase = excluded.market_session_phase,
             market_closed_reason = excluded.market_closed_reason,
@@ -271,6 +277,7 @@ def save_run_metadata(conn, metadata):
         """,
         (
             metadata["run_date"],
+            metadata.get("scoring_version"),
             metadata["market_session"],
             metadata.get("market_session_phase", "regular"),
             metadata.get("market_closed_reason"),
@@ -759,7 +766,7 @@ def archive_old_posts():
 
 
 def record_flagged_stocks(results, date=None):
-    """Record today's flagged stocks with their price at time of flagging"""
+    """Record the initial pre-catalyst flag snapshot for performance tracking."""
     if date is None:
         date = datetime.now().strftime("%Y-%m-%d")
 
@@ -781,7 +788,10 @@ def record_flagged_stocks(results, date=None):
                     result["ticker"],
                     date,
                     result.get("price", 0),
-                    result.get("final_score", 0),
+                    result.get(
+                        "pre_catalyst_trade_score",
+                        result.get("final_score", 0),
+                    ),
                     result.get("avg_sentiment", 0),
                     result.get("mentions", 0),
                     result.get("float_shares", 0),
