@@ -1170,8 +1170,6 @@ def trade_gate_failure_reasons(result, include_confirmation=True):
         reasons.append("insufficient_dollar_volume")
     if result.get("risk_score", 0) > 35:
         reasons.append("risk_score_too_high")
-    if has_severe_downtrend(result):
-        reasons.append("severe_downtrend")
     if setup_type in {
         "promotion_risk",
         "anti_chase",
