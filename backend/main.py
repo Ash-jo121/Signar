@@ -21,7 +21,12 @@ from database import (
 )
 from database import save_daily_results
 from market_calendar import get_market_session
-from runtime_paths import output_archive_dir, output_json_path, output_txt_path, raw_data_path
+from runtime_paths import (
+    output_archive_dir,
+    output_json_path,
+    output_txt_path,
+    raw_data_path,
+)
 from scraper import fetch_all, process_vampire_post
 from extractor import extract_from_post, extract_tickers
 from sentiment import (
@@ -35,7 +40,7 @@ import traceback
 
 SCORING_VERSION = os.getenv(
     "THREADRADAR_SCORING_VERSION",
-    "2026-06-07-confirmation-aware-v1",
+    "2026-06-09-downtrend-soft-v2",
 )
 
 CATALYST_MULTIPLIERS = {
@@ -1446,14 +1451,12 @@ def _author_set_metrics(rows):
 
     union = set().union(*non_empty_sets)
     latest = non_empty_sets[-1]
-    prior_union = set().union(*non_empty_sets[:-1]) if len(non_empty_sets) > 1 else set()
+    prior_union = (
+        set().union(*non_empty_sets[:-1]) if len(non_empty_sets) > 1 else set()
+    )
     new_latest_authors = latest - prior_union
     repeated_latest_authors = latest & prior_union
-    repeat_ratio = (
-        len(repeated_latest_authors) / len(latest)
-        if latest
-        else 0.0
-    )
+    repeat_ratio = len(repeated_latest_authors) / len(latest) if latest else 0.0
 
     first = non_empty_sets[0]
     if len(non_empty_sets) < 2:
@@ -2853,7 +2856,9 @@ if __name__ == "__main__":
         selected_raw_data = str(raw_data_path())
 
     if args.require_raw_data and not selected_raw_data:
-        raise SystemExit("--require-raw-data needs --raw-data or THREADRADAR_USE_RAW_DATA=1")
+        raise SystemExit(
+            "--require-raw-data needs --raw-data or THREADRADAR_USE_RAW_DATA=1"
+        )
     if args.require_raw_data and not os.path.exists(selected_raw_data):
         raise SystemExit(f"Raw data file not found: {selected_raw_data}")
 
