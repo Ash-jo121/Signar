@@ -76,6 +76,15 @@ SCORE_METADATA_COLUMNS = [
     ("liquidity_multiplier", "REAL DEFAULT 1.0"),
     ("volume_confirmation_multiplier", "REAL DEFAULT 1.0"),
     ("anti_chase_multiplier", "REAL DEFAULT 1.0"),
+    ("float_shares", "REAL"),
+    ("float_shares_estimate", "REAL"),
+    ("effective_float_shares", "REAL"),
+    ("float_shares_source", "TEXT"),
+    ("float_data_quality", "TEXT"),
+    ("float_filter_status", "TEXT"),
+    ("shares_outstanding", "REAL"),
+    ("insider_ownership_pct", "REAL"),
+    ("float_data_timestamp", "TEXT"),
     ("market_confirmation_status", "TEXT"),
     ("threadradar_signal", "TEXT"),
     ("threadradar_recommendation", "TEXT"),
@@ -105,6 +114,8 @@ RUN_METADATA_COLUMNS = [
 ]
 
 PERFORMANCE_TRACKING_COLUMNS = [
+    ("float_shares_source", "TEXT"),
+    ("float_data_quality", "TEXT"),
     ("price_t14", "REAL"),
     ("price_t30", "REAL"),
     ("return_t14", "REAL"),
@@ -225,6 +236,15 @@ def score_metadata_values(result):
         result.get("liquidity_multiplier", 1.0),
         result.get("volume_confirmation_multiplier", 1.0),
         result.get("anti_chase_multiplier", 1.0),
+        result.get("float_shares"),
+        result.get("float_shares_estimate"),
+        result.get("effective_float_shares"),
+        result.get("float_shares_source"),
+        result.get("float_data_quality"),
+        result.get("float_filter_status"),
+        result.get("shares_outstanding"),
+        result.get("insider_ownership_pct"),
+        result.get("float_data_timestamp"),
         result.get("market_confirmation_status"),
         result.get("threadradar_signal"),
         result.get("threadradar_recommendation"),
@@ -781,8 +801,8 @@ def record_flagged_stocks(results, date=None):
                 (ticker, flagged_date, flagged_price, flagged_score,
                  flagged_sentiment, flagged_mentions, float_shares,
                  has_catalyst, catalyst_type, mod_flagged, vampire_flagged,
-                 final_score, engagement_ratio)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 final_score, engagement_ratio, float_shares_source, float_data_quality)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     result["ticker"],
@@ -794,13 +814,15 @@ def record_flagged_stocks(results, date=None):
                     ),
                     result.get("avg_sentiment", 0),
                     result.get("mentions", 0),
-                    result.get("float_shares", 0),
+                    result.get("effective_float_shares") or result.get("float_shares", 0),
                     1 if result.get("has_catalyst") else 0,
                     result.get("catalyst_type", "none"),
                     1 if result.get("mod_flagged") else 0,
                     1 if result.get("vampire_flagged") else 0,
                     result.get("final_score", 0),
                     result.get("engagement_ratio", 0),
+                    result.get("float_shares_source"),
+                    result.get("float_data_quality"),
                 ),
             )
             saved += 1

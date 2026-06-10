@@ -40,8 +40,9 @@ import traceback
 
 SCORING_VERSION = os.getenv(
     "THREADRADAR_SCORING_VERSION",
-    "2026-06-09-downtrend-soft-v2",
+    "2026-06-10-float-aware-v1",
 )
+MAX_REPORTED_FLOAT_SHARES = 50_000_000
 
 CATALYST_MULTIPLIERS = {
     "none": 1.05,
@@ -672,6 +673,8 @@ def calculate_risk_score(result):
     avg_sentiment = result.get("avg_sentiment", 0) or 0
     catalyst_type = normalize_catalyst_type(result.get("catalyst_type", "none"))
     days_seen = result.get("persistence_days_seen", 1) or 1
+    effective_float = result.get("effective_float_shares")
+    float_data_quality = result.get("float_data_quality", "missing")
 
     if change_percent > 30:
         chase_risk = 1.0
@@ -764,6 +767,21 @@ def calculate_risk_score(result):
     ):
         concentration_risk = 0.45
 
+    if effective_float is None or effective_float <= 0:
+        float_risk = 0.45
+    elif effective_float <= 5_000_000:
+        float_risk = 0.8
+    elif effective_float <= 15_000_000:
+        float_risk = 0.55
+    elif effective_float <= 50_000_000:
+        float_risk = 0.25
+    else:
+        float_risk = 0.1
+    if float_data_quality == "estimated":
+        float_risk = min(1.0, float_risk + 0.15)
+    elif float_data_quality == "upper_bound":
+        float_risk = min(1.0, float_risk + 0.3)
+
     risk = (
         chase_risk * 30
         + mention_risk * 15
@@ -775,8 +793,31 @@ def calculate_risk_score(result):
         + velocity_risk * 10
         + volume_risk * 10
         + concentration_risk * 15
+        + float_risk * 15
     )
     return round(clamp(risk, 0, 100), 1)
+
+
+def annotate_float_filter_status(result):
+    reported_float = result.get("float_shares")
+    quality = result.get("float_data_quality", "missing")
+    if reported_float is not None:
+        result["float_filter_status"] = (
+            "reported_pass"
+            if reported_float <= MAX_REPORTED_FLOAT_SHARES
+            else "reported_exceeds_limit"
+        )
+    elif quality == "estimated":
+        result["float_filter_status"] = "estimated_not_hard_filtered"
+    elif quality == "upper_bound":
+        result["float_filter_status"] = "upper_bound_not_hard_filtered"
+    else:
+        result["float_filter_status"] = "missing_not_hard_filtered"
+    return result["float_filter_status"]
+
+
+def passes_float_universe_filter(result):
+    return annotate_float_filter_status(result) != "reported_exceeds_limit"
 
 
 def risk_level(risk_score):
@@ -1336,6 +1377,15 @@ def build_ranking_reason(result):
 
     if has_severe_downtrend(result):
         negative.append("severe price downtrend")
+
+    effective_float = result.get("effective_float_shares")
+    float_quality = result.get("float_data_quality")
+    if effective_float is not None and effective_float <= 5_000_000:
+        negative.append("very low float")
+    elif float_quality == "estimated":
+        negative.append("estimated float data")
+    elif float_quality in {"missing", "upper_bound"}:
+        negative.append("missing float data")
 
     if risk_level_value == "low":
         positive.append("low risk")
@@ -2594,6 +2644,7 @@ def run_pipeline(raw_data_file=None):
 
     results = apply_repetition_decay(results, run_metadata)
     for result in results:
+        annotate_float_filter_status(result)
         apply_rank_scores(result)
 
     trackable = [
@@ -2623,7 +2674,7 @@ def run_pipeline(raw_data_file=None):
         )
 
     for r in results:
-        if r.get("float_shares") is None:
+        if r.get("float_data_quality") in {"missing", "upper_bound"}:
             print(
                 f"  Warning: {r['ticker']} has no float data — including with caution!"
             )
@@ -2642,7 +2693,7 @@ def run_pipeline(raw_data_file=None):
         if r.get("price", 0) > 0.05
         and r.get("price", 0) <= 15
         and 0 < r.get("market_cap", 0) <= 500000000
-        and (r.get("float_shares") is None or r.get("float_shares", 0) <= 50000000)
+        and passes_float_universe_filter(r)
         and r["mentions"] >= 5
         and len(r["top_contexts"]) >= 3
     ]

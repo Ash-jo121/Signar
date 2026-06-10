@@ -9,7 +9,7 @@ def safe_float(value):
         if value is None:
             return None
         parsed = float(value)
-        if math.isnan(parsed):
+        if not math.isfinite(parsed):
             return None
         return parsed
     except (TypeError, ValueError):
@@ -52,6 +52,89 @@ def market_date_from_index(index_value):
 def average(values):
     values = [safe_float(value) for value in values if safe_float(value) is not None]
     return sum(values) / len(values) if values else None
+
+
+def build_float_snapshot(info, price=None):
+    """
+    Prefer Yahoo's reported float and keep estimates explicitly labeled.
+
+    Yahoo coverage is uneven for microcaps. When floatShares is missing, shares
+    outstanding less insider-held shares is a useful estimate, but it must not
+    be presented as verified float.
+    """
+    reported_float = safe_float(info.get("floatShares"))
+    if reported_float is not None and reported_float <= 0:
+        reported_float = None
+    shares_outstanding = safe_float(
+        info.get("sharesOutstanding") or info.get("impliedSharesOutstanding")
+    )
+    if shares_outstanding is not None and shares_outstanding <= 0:
+        shares_outstanding = None
+    if (
+        reported_float is not None
+        and shares_outstanding is not None
+        and reported_float > shares_outstanding * 1.05
+    ):
+        reported_float = None
+    market_cap = safe_float(info.get("marketCap"))
+    if shares_outstanding is None and market_cap and price and price > 0:
+        shares_outstanding = market_cap / price
+
+    insider_ownership = safe_float(info.get("heldPercentInsiders"))
+    estimated_float = None
+    if shares_outstanding is not None and insider_ownership is not None:
+        insider_ownership = min(max(insider_ownership, 0.0), 1.0)
+        estimated_float = shares_outstanding * (1 - insider_ownership)
+
+    effective_float = reported_float or estimated_float or shares_outstanding
+    if reported_float is not None:
+        source = "yahoo_float_shares"
+        quality = "reported"
+    elif estimated_float is not None:
+        source = "estimated_outstanding_minus_insiders"
+        quality = "estimated"
+    elif shares_outstanding is not None:
+        source = "shares_outstanding_upper_bound"
+        quality = "upper_bound"
+    else:
+        source = "unavailable"
+        quality = "missing"
+
+    return {
+        "float_shares": reported_float,
+        "float_shares_estimate": estimated_float,
+        "effective_float_shares": effective_float,
+        "float_shares_source": source,
+        "float_data_quality": quality,
+        "shares_outstanding": shares_outstanding,
+        "insider_ownership_pct": (
+            insider_ownership * 100 if insider_ownership is not None else None
+        ),
+        "float_data_timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def attach_float_snapshot(result, float_snapshot):
+    result["float_shares"] = round_or_none(float_snapshot.get("float_shares"), 0)
+    result["float_shares_estimate"] = round_or_none(
+        float_snapshot.get("float_shares_estimate"),
+        0,
+    )
+    result["effective_float_shares"] = round_or_none(
+        float_snapshot.get("effective_float_shares"),
+        0,
+    )
+    result["float_shares_source"] = float_snapshot.get("float_shares_source")
+    result["float_data_quality"] = float_snapshot.get("float_data_quality")
+    result["shares_outstanding"] = round_or_none(
+        float_snapshot.get("shares_outstanding"),
+        0,
+    )
+    result["insider_ownership_pct"] = round_or_none(
+        float_snapshot.get("insider_ownership_pct"),
+        2,
+    )
+    result["float_data_timestamp"] = float_snapshot.get("float_data_timestamp")
 
 
 def build_market_snapshot(stock, info, ticker):
@@ -242,6 +325,7 @@ def enrich_with_price(results):
             stock = yf.Ticker(r["ticker"])
             info = stock.info
             attach_market_snapshot(r, build_market_snapshot(stock, info, r["ticker"]))
+            attach_float_snapshot(r, build_float_snapshot(info, r.get("price")))
             r["market_cap"] = info.get("marketCap", 0)
             r["fifty_two_week_high"] = info.get("fiftyTwoWeekHigh", 0)
             r["fifty_two_week_low"] = info.get("fiftyTwoWeekLow", 0)
@@ -303,6 +387,7 @@ def enrich_with_price(results):
         except Exception as e:
             print(f"Could not fetch price for {r['ticker']}: {e}")
             attach_empty_market_fields(r)
+            attach_float_snapshot(r, build_float_snapshot({}, None))
             r["market_cap"] = 0
             r["fifty_two_week_high"] = 0
             r["fifty_two_week_low"] = 0
