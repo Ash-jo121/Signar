@@ -58,6 +58,13 @@
   }
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-  background-color: rgb(239, 241, 241);
+  margin: 0;
+  background-color: #edf5ff;
 }

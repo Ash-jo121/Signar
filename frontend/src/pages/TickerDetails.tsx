@@ -10,6 +10,7 @@ import {
   TabsTrigger,
 } from "../components/ui/tabs";
 import StatCard from "../components/StatCard";
+import CompanyLogo from "../components/CompanyLogo";
 
 export default function TickerDetails() {
   const { state } = useLocation();
@@ -25,19 +26,12 @@ export default function TickerDetails() {
       <div className="ticker-details-container">
         <div className="ticker-main-details-container">
           <div className="ticker-main-details">
-            <img
-              src={ticker.logoUrl}
-              alt={ticker.logoFallback}
-              onError={(e) => {
-                if (ticker.logoFallback) {
-                  e.currentTarget.src = ticker.logoFallback;
-                } else {
-                  e.currentTarget.style.display = "none";
-                }
-              }}
-              width={100}
-              height={100}
-              className="ticker-logo"
+            <CompanyLogo
+              ticker={ticker.stockName}
+              companyName={ticker.name}
+              logoUrl={ticker.logoUrl}
+              fallbackUrl={ticker.logoFallback}
+              size="large"
             />
           </div>
           <div className="ticker-heading">

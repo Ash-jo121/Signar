@@ -1,0 +1,53 @@
+.company-logo {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #078fc9;
+  background: #fff;
+  border: 1px solid #dce8f2;
+  overflow: hidden;
+}
+
+.company-logo-small {
+  width: 27px;
+  height: 27px;
+  border-radius: 7px;
+}
+
+.company-logo-large {
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.company-logo-default {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: #0a9edb;
+  background: #e9f7ff;
+}
+
+.company-logo-default svg {
+  width: 58%;
+  height: 58%;
+  opacity: 0.22;
+}
+
+.company-logo-default strong {
+  position: absolute;
+  font-size: 8px;
+  letter-spacing: -0.03em;
+}
+
+.company-logo-large .company-logo-default strong {
+  font-size: 16px;
+}

@@ -10,16 +10,6 @@
   margin: 20px;
 }
 
-.ticker-logo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: contain;
-  background-color: #c6d1d8;
-  margin: 4px;
-  border: 1px solid #e2e8f0;
-}
-
 .ticker-main-details-container {
   display: inline-flex;
   flex-direction: row;
