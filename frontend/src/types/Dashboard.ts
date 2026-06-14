@@ -6,7 +6,12 @@ export type PriceUpdateStatus = "eligible" | "skipped_market_closed";
 export type Sentiment = "positive" | "neutral" | "negative";
 export type Source = "post" | "comment";
 export type RiskLevel = "low" | "medium" | "high" | "extreme";
-export type FloatDataQuality = "reported" | "estimated" | "upper_bound" | "missing";
+export type FloatDataQuality =
+  | "reported"
+  | "estimated"
+  | "upper_bound"
+  | "missing";
+export type MarketState = "open" | "closed";
 
 export interface RunMetadata {
   runDate: string;

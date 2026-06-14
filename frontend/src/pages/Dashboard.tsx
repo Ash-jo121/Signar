@@ -20,9 +20,12 @@ import { mapDashboardData } from "../helpers/DashboardMapper";
 import { PATHS } from "../routes/paths";
 import type { DashboardData, TickerData } from "../types/Dashboard";
 import "../styles/Dashboard.css";
+import Header from "@/components/Header";
+import { EMPTY_DASHBOARD } from "@/constants/Header";
 
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "https://signar-production.up.railway.app"
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://signar-production.up.railway.app"
 ).replace(/\/$/, "");
 const API_URL = `${API_BASE_URL}/api/tickers`;
 
@@ -43,31 +46,6 @@ const PAPER_PORTFOLIO = {
   ],
 };
 
-const EMPTY_DASHBOARD: DashboardData = {
-  runDate: "",
-  marketSession: "closed",
-  marketSessionPhase: null,
-  marketClosedReason: null,
-  priceUpdateStatus: "skipped_market_closed",
-  eligibleForBacktest: false,
-  nextTradingSessionSignal: false,
-  runMetadata: {
-    runDate: "",
-    marketSession: "closed",
-    marketSessionPhase: null,
-    marketClosedReason: null,
-    priceUpdateStatus: "skipped_market_closed",
-    eligibleForBacktest: false,
-    nextTradingSessionSignal: false,
-  },
-  bestTradeCandidates: [],
-  radarWatchlist: [],
-  avoidHighRisk: [],
-  nearMissCandidates: [],
-  multiDayConfirmation: [],
-  confirmedWatchlist: [],
-};
-
 const money = (value: number) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -81,17 +59,11 @@ const compactNumber = (value: number) =>
     maximumFractionDigits: 1,
   }).format(value);
 
-const formatDate = (value: string) => {
-  if (!value) return "Latest signal run";
-  const date = new Date(`${value}T12:00:00`);
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-};
-
-const getEasternMarketState = (now: Date, runDate: string, runSession: string) => {
+const getEasternMarketState = (
+  now: Date,
+  runDate: string,
+  runSession: string,
+) => {
   const parts = Object.fromEntries(
     new Intl.DateTimeFormat("en-US", {
       timeZone: "America/New_York",
@@ -111,7 +83,10 @@ const getEasternMarketState = (now: Date, runDate: string, runSession: string) =
   const isWeekday = !["Sat", "Sun"].includes(parts.weekday);
   const isCurrentTradingDay = runSession === "open" && runDate === easternDate;
 
-  return isCurrentTradingDay && isWeekday && minutes >= 9 * 60 + 30 && minutes < 16 * 60
+  return isCurrentTradingDay &&
+    isWeekday &&
+    minutes >= 9 * 60 + 30 &&
+    minutes < 16 * 60
     ? "open"
     : "closed";
 };
@@ -126,9 +101,14 @@ const uniqueTickers = (...groups: TickerData[][]) => {
 };
 
 const signalLabel = (ticker: TickerData) => {
-  if (ticker.tradeGatePassed || ticker.tradeAction === "candidate") return "Candidate";
-  if (ticker.riskLevel === "high" || ticker.riskLevel === "extreme") return "High risk";
-  if (ticker.threadradarTradeStatus === "avoid" || ticker.tradeAction === "avoid") {
+  if (ticker.tradeGatePassed || ticker.tradeAction === "candidate")
+    return "Candidate";
+  if (ticker.riskLevel === "high" || ticker.riskLevel === "extreme")
+    return "High risk";
+  if (
+    ticker.threadradarTradeStatus === "avoid" ||
+    ticker.tradeAction === "avoid"
+  ) {
     return "Avoid";
   }
   return "Watch";
@@ -170,19 +150,29 @@ export default function Dashboard() {
 
     fetch(API_URL, { signal: controller.signal })
       .then((response) => {
-        if (!response.ok) throw new Error(`Dashboard API returned ${response.status}`);
+        if (!response.ok)
+          throw new Error(`Dashboard API returned ${response.status}`);
         return response.json();
       })
       .then((payload: unknown) => {
         const mapped = mapDashboardData(payload);
         setDashboard(mapped);
         const firstTicker =
-          mapped.bestTradeCandidates[0]?.stockName ?? mapped.radarWatchlist[0]?.stockName;
+          mapped.bestTradeCandidates[0]?.stockName ??
+          mapped.radarWatchlist[0]?.stockName;
         if (firstTicker) setExpanded(new Set([firstTicker]));
       })
       .catch((fetchError: unknown) => {
-        if (fetchError instanceof DOMException && fetchError.name === "AbortError") return;
-        setError(fetchError instanceof Error ? fetchError.message : "Unable to load signals");
+        if (
+          fetchError instanceof DOMException &&
+          fetchError.name === "AbortError"
+        )
+          return;
+        setError(
+          fetchError instanceof Error
+            ? fetchError.message
+            : "Unable to load signals",
+        );
       })
       .finally(() => setLoading(false));
 
@@ -213,9 +203,21 @@ export default function Dashboard() {
 
   const tabs = useMemo(
     () => [
-      { id: "trade" as const, label: "Trade Candidates", count: dashboard.bestTradeCandidates.length },
-      { id: "radar" as const, label: "Radar", count: dashboard.radarWatchlist.length },
-      { id: "risk" as const, label: "High Risk", count: dashboard.avoidHighRisk.length },
+      {
+        id: "trade" as const,
+        label: "Trade Candidates",
+        count: dashboard.bestTradeCandidates.length,
+      },
+      {
+        id: "radar" as const,
+        label: "Radar",
+        count: dashboard.radarWatchlist.length,
+      },
+      {
+        id: "risk" as const,
+        label: "High Risk",
+        count: dashboard.avoidHighRisk.length,
+      },
       { id: "all" as const, label: "All", count: allTickers.length },
     ],
     [allTickers.length, dashboard],
@@ -248,7 +250,8 @@ export default function Dashboard() {
 
     const direction = sortDirection === "asc" ? 1 : -1;
     return [...filtered].sort((a, b) => {
-      if (sortKey === "ticker") return a.stockName.localeCompare(b.stockName) * direction;
+      if (sortKey === "ticker")
+        return a.stockName.localeCompare(b.stockName) * direction;
       const values = {
         price: [a.price, b.price],
         mentions: [a.mentions, b.mentions],
@@ -260,15 +263,23 @@ export default function Dashboard() {
     });
   }, [activeTab, allTickers, dashboard, search, sortDirection, sortKey]);
 
-  const topRadar = [...allTickers].sort((a, b) => b.radarScore - a.radarScore)[0];
-  const mostMentioned = [...allTickers].sort((a, b) => b.mentions - a.mentions)[0];
+  const topRadar = [...allTickers].sort(
+    (a, b) => b.radarScore - a.radarScore,
+  )[0];
+  const mostMentioned = [...allTickers].sort(
+    (a, b) => b.mentions - a.mentions,
+  )[0];
   const avgSentiment =
     allTickers.length > 0
       ? allTickers.reduce((sum, ticker) => sum + ticker.averageSentiment, 0) /
         allTickers.length
       : 0;
-  const bullishCount = allTickers.filter((ticker) => ticker.averageSentiment >= 0.2).length;
-  const bearishCount = allTickers.filter((ticker) => ticker.averageSentiment <= -0.2).length;
+  const bullishCount = allTickers.filter(
+    (ticker) => ticker.averageSentiment >= 0.2,
+  ).length;
+  const bearishCount = allTickers.filter(
+    (ticker) => ticker.averageSentiment <= -0.2,
+  ).length;
 
   const changeSort = (key: SortKey) => {
     if (key === sortKey) {
@@ -290,44 +301,17 @@ export default function Dashboard() {
 
   return (
     <main className="signar-dashboard">
-      <header className="signar-header">
-        <div className="brand-lockup" aria-label="Signar">
-          <div className="brand-mark">
-            <Radar size={25} strokeWidth={2.1} />
-            <span className="brand-pulse" />
-          </div>
-          <div>
-            <strong>Signar</strong>
-            <span>ThreadRadar intelligence</span>
-          </div>
-        </div>
-
-        <label className="ticker-search">
-          <Search size={19} />
-          <input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search tickers, companies, sectors, or setups"
-          />
-          {search && <kbd>{displayedTickers.length} found</kbd>}
-        </label>
-
-        <div className="run-status">
-          <span>
-            {formatDate(dashboard.runDate)} · {allTickers.length} tracked
-          </span>
-          <strong
-            className={`market-pill ${liveMarketState}`}
-            title="Live U.S. regular market hours, 9:30 AM–4:00 PM ET"
-          >
-            <span />
-            Market {liveMarketState}
-          </strong>
-        </div>
-      </header>
+      <Header
+        dashboard={dashboard}
+        allTickers={allTickers}
+        liveMarketState={liveMarketState}
+      />
 
       <div className="dashboard-canvas">
-        <section className="paper-strip" aria-label="Demo paper trading portfolio">
+        <section
+          className="paper-strip"
+          aria-label="Demo paper trading portfolio"
+        >
           <div className="paper-title">
             <span className="paper-accent" />
             <WalletCards size={20} />
@@ -336,7 +320,10 @@ export default function Dashboard() {
               <strong>Portfolio</strong>
             </div>
           </div>
-          <PaperMetric label="Total capital" value={money(PAPER_PORTFOLIO.totalCapital)} />
+          <PaperMetric
+            label="Total capital"
+            value={money(PAPER_PORTFOLIO.totalCapital)}
+          />
           <PaperMetric
             label="Cash available"
             value={money(PAPER_PORTFOLIO.cashAvailable)}
@@ -383,14 +370,20 @@ export default function Dashboard() {
             icon={<BarChart3 size={18} />}
             label="Top radar score"
             value={topRadar ? topRadar.radarScore.toFixed(3) : "—"}
-            detail={topRadar ? `${topRadar.stockName} · best signal today` : "No active signal"}
+            detail={
+              topRadar
+                ? `${topRadar.stockName} · best signal today`
+                : "No active signal"
+            }
           />
           <SummaryCard
             icon={<Users size={18} />}
             label="Most mentioned"
             value={mostMentioned?.stockName ?? "—"}
             detail={
-              mostMentioned ? `${mostMentioned.mentions.toFixed(1)} weighted mentions` : "No mentions"
+              mostMentioned
+                ? `${mostMentioned.mentions.toFixed(1)} weighted mentions`
+                : "No mentions"
             }
           />
           <SummaryCard
@@ -403,7 +396,11 @@ export default function Dashboard() {
 
         <section className="signal-section">
           <div className="signal-toolbar">
-            <div className="signal-tabs" role="tablist" aria-label="Signal cohorts">
+            <div
+              className="signal-tabs"
+              role="tablist"
+              aria-label="Signal cohorts"
+            >
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
@@ -417,15 +414,27 @@ export default function Dashboard() {
                 </button>
               ))}
             </div>
-            <span className="table-hint">Select a row to inspect the signal</span>
+            <span className="table-hint">
+              Select a row to inspect the signal
+            </span>
           </div>
 
           <div className="signal-table-shell">
             <div className="signal-table-header">
               <span>#</span>
-              <SortButton label="Ticker" sortKey="ticker" activeKey={sortKey} onSort={changeSort} />
+              <SortButton
+                label="Ticker"
+                sortKey="ticker"
+                activeKey={sortKey}
+                onSort={changeSort}
+              />
               <span>Company</span>
-              <SortButton label="Price" sortKey="price" activeKey={sortKey} onSort={changeSort} />
+              <SortButton
+                label="Price"
+                sortKey="price"
+                activeKey={sortKey}
+                onSort={changeSort}
+              />
               <SortButton
                 label="Mentions"
                 sortKey="mentions"
@@ -576,7 +585,9 @@ function SignalRow({
   const tone = signalTone(ticker);
   const positiveReasons = ticker.rankingReason.positive;
   const negativeReasons =
-    ticker.rankingReason.negative.length > 0 ? ticker.rankingReason.negative : ticker.failedReasons;
+    ticker.rankingReason.negative.length > 0
+      ? ticker.rankingReason.negative
+      : ticker.failedReasons;
   const primaryContext = ticker.topContexts[0];
   const scoreWidth = `${Math.min(100, Math.max(4, ticker.radarScore * 100))}%`;
 
@@ -599,20 +610,31 @@ function SignalRow({
           <strong>{ticker.stockName}</strong>
         </span>
         <span className="company-cell">
-          <strong>{ticker.name || ticker.shortName || "Unknown company"}</strong>
-          <small>{[ticker.sector, ticker.industry].filter(Boolean).join(" · ") || ticker.setupType}</small>
+          <strong>
+            {ticker.name || ticker.shortName || "Unknown company"}
+          </strong>
+          <small>
+            {[ticker.sector, ticker.industry].filter(Boolean).join(" · ") ||
+              ticker.setupType}
+          </small>
         </span>
         <span className="price-cell">
           <strong>{money(ticker.price)}</strong>
           <small className={ticker.changePercent >= 0 ? "gain" : "loss"}>
-            {ticker.changePercent >= 0 ? <ArrowUp size={12} /> : <ArrowDown size={12} />}
+            {ticker.changePercent >= 0 ? (
+              <ArrowUp size={12} />
+            ) : (
+              <ArrowDown size={12} />
+            )}
             {Math.abs(ticker.changePercent).toFixed(1)}%
           </small>
         </span>
         <span className="mentions-cell">
           <strong>{ticker.mentions.toFixed(1)}</strong>
           <small>
-            <span style={{ width: `${Math.min(100, ticker.mentions * 2.5)}%` }} />
+            <span
+              style={{ width: `${Math.min(100, ticker.mentions * 2.5)}%` }}
+            />
           </small>
         </span>
         <span className={`sentiment-pill ${sentiment}`}>
@@ -637,7 +659,11 @@ function SignalRow({
               Top Reddit signal
             </div>
             <blockquote>
-              “{primaryContext?.text || ticker.catalystReasoning || ticker.tradeReason}”
+              “
+              {primaryContext?.text ||
+                ticker.catalystReasoning ||
+                ticker.tradeReason}
+              ”
             </blockquote>
             <div className="subreddit-list">
               {Object.keys(ticker.subredditMentions).map((subreddit) => (
@@ -652,16 +678,28 @@ function SignalRow({
               Signal analysis
             </div>
             <div className="reason-columns">
-              <ReasonList title="Positives" tone="positive" reasons={positiveReasons} />
-              <ReasonList title="Concerns" tone="negative" reasons={negativeReasons} />
+              <ReasonList
+                title="Positives"
+                tone="positive"
+                reasons={positiveReasons}
+              />
+              <ReasonList
+                title="Concerns"
+                tone="negative"
+                reasons={negativeReasons}
+              />
             </div>
             <div className="signal-facts">
               <span>
-                Risk: <strong className={`risk-${ticker.riskLevel}`}>{ticker.riskLevel}</strong>{" "}
+                Risk:{" "}
+                <strong className={`risk-${ticker.riskLevel}`}>
+                  {ticker.riskLevel}
+                </strong>{" "}
                 ({ticker.riskScore.toFixed(1)})
               </span>
               <span>
-                Velocity: <strong>{ticker.mentionVelocityLabel || "unknown"}</strong>
+                Velocity:{" "}
+                <strong>{ticker.mentionVelocityLabel || "unknown"}</strong>
               </span>
               <span>
                 Authors: <strong>{ticker.uniqueAuthors}</strong>
@@ -691,7 +729,9 @@ function ReasonList({
 }) {
   return (
     <div className={`reason-list ${tone}`}>
-      <strong>{tone === "positive" ? "✓" : "×"} {title}</strong>
+      <strong>
+        {tone === "positive" ? "✓" : "×"} {title}
+      </strong>
       {reasons.slice(0, 4).map((reason) => (
         <span key={reason}>· {reason.replaceAll("_", " ")}</span>
       ))}
