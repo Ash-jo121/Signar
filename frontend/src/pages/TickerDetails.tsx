@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { TickerData } from "../types/Dashboard";
 import { PATHS } from "../routes/paths";
 import "../styles/TickerDetails.css";
@@ -171,10 +171,10 @@ const FinancialsTab = ({ ticker }: { ticker: TickerData }) => {
       {ticker.analystTarget > 0 && (
         <StatCard label="Analyst Target" value={`$${ticker.analystTarget}`} />
       )}
-      {ticker.recommendation !== "none" && (
+      {ticker.analystRecommendation !== "none" && (
         <StatCard
-          label="Recommendation"
-          value={ticker.recommendation.toUpperCase()}
+          label="Analyst Recommendation"
+          value={ticker.analystRecommendation.toUpperCase()}
         />
       )}
       <StatCard label="Exchange" value={ticker.exchange} />
