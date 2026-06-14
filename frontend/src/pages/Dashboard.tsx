@@ -21,7 +21,10 @@ import { PATHS } from "../routes/paths";
 import type { DashboardData, TickerData } from "../types/Dashboard";
 import "../styles/Dashboard.css";
 
-const API_URL = "http://localhost:8000/api/tickers";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || "https://signar-production.up.railway.app"
+).replace(/\/$/, "");
+const API_URL = `${API_BASE_URL}/api/tickers`;
 
 type DashboardTab = "trade" | "radar" | "risk" | "all";
 type SortKey = "ticker" | "price" | "mentions" | "sentiment" | "radar";
@@ -88,6 +91,31 @@ const formatDate = (value: string) => {
   }).format(date);
 };
 
+const getEasternMarketState = (now: Date, runDate: string, runSession: string) => {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York",
+      weekday: "short",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    })
+      .formatToParts(now)
+      .map((part) => [part.type, part.value]),
+  );
+  const easternDate = `${parts.year}-${parts.month}-${parts.day}`;
+  const minutes = Number(parts.hour) * 60 + Number(parts.minute);
+  const isWeekday = !["Sat", "Sun"].includes(parts.weekday);
+  const isCurrentTradingDay = runSession === "open" && runDate === easternDate;
+
+  return isCurrentTradingDay && isWeekday && minutes >= 9 * 60 + 30 && minutes < 16 * 60
+    ? "open"
+    : "closed";
+};
+
 const uniqueTickers = (...groups: TickerData[][]) => {
   const seen = new Set<string>();
   return groups.flat().filter((ticker) => {
@@ -135,6 +163,7 @@ export default function Dashboard() {
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentTime, setCurrentTime] = useState(() => new Date());
 
   useEffect(() => {
     const controller = new AbortController();
@@ -159,6 +188,17 @@ export default function Dashboard() {
 
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setCurrentTime(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const liveMarketState = getEasternMarketState(
+    currentTime,
+    dashboard.runDate,
+    dashboard.marketSession,
+  );
 
   const allTickers = useMemo(
     () =>
@@ -276,9 +316,12 @@ export default function Dashboard() {
           <span>
             {formatDate(dashboard.runDate)} · {allTickers.length} tracked
           </span>
-          <strong className={`market-pill ${dashboard.marketSession}`}>
+          <strong
+            className={`market-pill ${liveMarketState}`}
+            title="Live U.S. regular market hours, 9:30 AM–4:00 PM ET"
+          >
             <span />
-            Market {dashboard.marketSession}
+            Market {liveMarketState}
           </strong>
         </div>
       </header>
