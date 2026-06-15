@@ -33,6 +33,12 @@
 
 .brand-lockup {
   gap: 12px;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 }
 
 .brand-mark {
@@ -66,7 +72,7 @@
   letter-spacing: -0.02em;
 }
 
-.brand-lockup div:last-child span {
+.brand-lockup > span:last-child small {
   display: block;
   margin-top: 5px;
   color: #72819a;
@@ -827,7 +833,7 @@
     width: 100%;
   }
 
-  .brand-lockup div:last-child span {
+  .brand-lockup > span:last-child small {
     display: none;
   }
 

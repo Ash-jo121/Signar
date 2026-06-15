@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Activity,
   ArrowDown,
@@ -16,18 +16,10 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CompanyLogo from "../components/CompanyLogo";
-import { mapDashboardData } from "../helpers/DashboardMapper";
 import { PATHS } from "../routes/paths";
-import type { DashboardData, TickerData } from "../types/Dashboard";
+import type { TickerData } from "../types/Dashboard";
 import "../styles/Dashboard.css";
-import Header from "@/components/Header";
-import { EMPTY_DASHBOARD } from "@/constants/Header";
-
-const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://signar-production.up.railway.app"
-).replace(/\/$/, "");
-const API_URL = `${API_BASE_URL}/api/tickers`;
+import { useDashboardContext } from "@/contexts/useDashboardContext";
 
 type DashboardTab = "trade" | "radar" | "risk" | "all";
 type SortKey = "ticker" | "price" | "mentions" | "sentiment" | "radar";
@@ -58,47 +50,6 @@ const compactNumber = (value: number) =>
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value);
-
-const getEasternMarketState = (
-  now: Date,
-  runDate: string,
-  runSession: string,
-) => {
-  const parts = Object.fromEntries(
-    new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/New_York",
-      weekday: "short",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hourCycle: "h23",
-    })
-      .formatToParts(now)
-      .map((part) => [part.type, part.value]),
-  );
-  const easternDate = `${parts.year}-${parts.month}-${parts.day}`;
-  const minutes = Number(parts.hour) * 60 + Number(parts.minute);
-  const isWeekday = !["Sat", "Sun"].includes(parts.weekday);
-  const isCurrentTradingDay = runSession === "open" && runDate === easternDate;
-
-  return isCurrentTradingDay &&
-    isWeekday &&
-    minutes >= 9 * 60 + 30 &&
-    minutes < 16 * 60
-    ? "open"
-    : "closed";
-};
-
-const uniqueTickers = (...groups: TickerData[][]) => {
-  const seen = new Set<string>();
-  return groups.flat().filter((ticker) => {
-    if (seen.has(ticker.stockName)) return false;
-    seen.add(ticker.stockName);
-    return true;
-  });
-};
 
 const signalLabel = (ticker: TickerData) => {
   if (ticker.tradeGatePassed || ticker.tradeAction === "candidate")
@@ -135,71 +86,12 @@ const signalTone = (ticker: TickerData) => {
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [dashboard, setDashboard] = useState<DashboardData>(EMPTY_DASHBOARD);
+  const { dashboard, allTickers, search, loading, error } =
+    useDashboardContext();
   const [activeTab, setActiveTab] = useState<DashboardTab>("all");
-  const [search, setSearch] = useState("");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [sortKey, setSortKey] = useState<SortKey>("radar");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [currentTime, setCurrentTime] = useState(() => new Date());
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch(API_URL, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok)
-          throw new Error(`Dashboard API returned ${response.status}`);
-        return response.json();
-      })
-      .then((payload: unknown) => {
-        const mapped = mapDashboardData(payload);
-        setDashboard(mapped);
-        const firstTicker =
-          mapped.bestTradeCandidates[0]?.stockName ??
-          mapped.radarWatchlist[0]?.stockName;
-        if (firstTicker) setExpanded(new Set([firstTicker]));
-      })
-      .catch((fetchError: unknown) => {
-        if (
-          fetchError instanceof DOMException &&
-          fetchError.name === "AbortError"
-        )
-          return;
-        setError(
-          fetchError instanceof Error
-            ? fetchError.message
-            : "Unable to load signals",
-        );
-      })
-      .finally(() => setLoading(false));
-
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setCurrentTime(new Date()), 60_000);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const liveMarketState = getEasternMarketState(
-    currentTime,
-    dashboard.runDate,
-    dashboard.marketSession,
-  );
-
-  const allTickers = useMemo(
-    () =>
-      uniqueTickers(
-        dashboard.bestTradeCandidates,
-        dashboard.radarWatchlist,
-        dashboard.avoidHighRisk,
-        dashboard.nearMissCandidates,
-      ),
-    [dashboard],
-  );
 
   const tabs = useMemo(
     () => [
@@ -301,12 +193,6 @@ export default function Dashboard() {
 
   return (
     <main className="signar-dashboard">
-      <Header
-        dashboard={dashboard}
-        allTickers={allTickers}
-        liveMarketState={liveMarketState}
-      />
-
       <div className="dashboard-canvas">
         <section
           className="paper-strip"

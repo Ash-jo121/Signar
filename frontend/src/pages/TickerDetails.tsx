@@ -1,4 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { TickerData } from "../types/Dashboard";
 import { PATHS } from "../routes/paths";
 import "../styles/TickerDetails.css";
@@ -11,15 +12,22 @@ import {
 } from "../components/ui/tabs";
 import StatCard from "../components/StatCard";
 import CompanyLogo from "../components/CompanyLogo";
+import { useDashboardContext } from "@/contexts/useDashboardContext";
 
 export default function TickerDetails() {
   const { state } = useLocation();
-  const ticker: TickerData = state?.ticker;
+  const { symbol } = useParams();
+  const { allTickers, loading } = useDashboardContext();
+  const ticker: TickerData | undefined =
+    state?.ticker ??
+    allTickers.find((item) => item.stockName === symbol?.toUpperCase());
   const navigate = useNavigate();
 
-  if (!ticker) {
-    navigate(PATHS.dashboard);
-  }
+  useEffect(() => {
+    if (!loading && !ticker) navigate(PATHS.dashboard, { replace: true });
+  }, [loading, navigate, ticker]);
+
+  if (!ticker) return null;
 
   return (
     <>
