@@ -52,6 +52,27 @@ export interface DashboardApiResponse {
   confirmed_watchlist?: Record<string, unknown>[];
 }
 
+export interface TickerHistoryPoint {
+  date: string;
+  price: Nullable<number>;
+  mentions: Nullable<number>;
+  averageSentiment: Nullable<number>;
+  finalScore: Nullable<number>;
+  rawFinalScore: Nullable<number>;
+  signalScore: Nullable<number>;
+  radarScore: Nullable<number>;
+  tradeScore: Nullable<number>;
+  riskScore: Nullable<number>;
+  mentionVelocityLabel: Nullable<string>;
+}
+
+export interface TickerHistoryResponse {
+  ticker: string;
+  days: number;
+  startDate: string;
+  history: TickerHistoryPoint[];
+}
+
 export interface Context {
   text: string;
   sentiment: Sentiment;

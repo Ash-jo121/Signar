@@ -11,6 +11,7 @@ DB_PATH = str(data_path("threadradar.db"))
 # Wait for locks instead of failing immediately (SQLite default is short).
 _SQLITE_TIMEOUT_S = 30.0
 _BUSY_TIMEOUT_MS = 30_000
+BACKTEST_COLLECTION_START_DATE = "2026-06-10"
 
 SCORE_METADATA_COLUMNS = [
     ("radar_score", "REAL DEFAULT 0.0"),
@@ -663,17 +664,69 @@ def save_post(post):
 
 
 def get_ticker_history(ticker, days=30):
-    """Get historical data for a specific ticker"""
+    """Get daily analysis snapshots within a window anchored to the latest run."""
     conn = get_connection()
-    rows = conn.execute(
+    has_score_metadata = conn.execute(
         """
-        SELECT date, mentions, avg_sentiment, final_score, price
-        FROM daily_sentiment
-        WHERE ticker = ?
-        ORDER BY date DESC
-        LIMIT ?
-    """,
-        (ticker, days),
+        SELECT 1
+        FROM sqlite_master
+        WHERE type = 'table'
+          AND name = 'score_metadata'
+        """
+    ).fetchone()
+    daily_columns = {
+        row["name"] for row in conn.execute("PRAGMA table_info(daily_sentiment)")
+    }
+    raw_final_score_column = (
+        "ds.raw_final_score" if "raw_final_score" in daily_columns else "NULL"
+    )
+    score_columns = (
+        """
+            sm.signal_score,
+            sm.radar_score,
+            sm.trade_score,
+            sm.risk_score,
+            sm.mention_velocity_label
+        """
+        if has_score_metadata
+        else """
+            NULL AS signal_score,
+            NULL AS radar_score,
+            NULL AS trade_score,
+            NULL AS risk_score,
+            NULL AS mention_velocity_label
+        """
+    )
+    score_join = (
+        """
+        LEFT JOIN score_metadata sm
+          ON sm.date = ds.date
+         AND sm.ticker = ds.ticker
+        """
+        if has_score_metadata
+        else ""
+    )
+    rows = conn.execute(
+        f"""
+        SELECT
+            ds.date,
+            ds.price,
+            ds.mentions,
+            ds.avg_sentiment,
+            ds.final_score,
+            {raw_final_score_column} AS raw_final_score,
+            {score_columns}
+        FROM daily_sentiment ds
+        {score_join}
+        WHERE ds.ticker = ?
+          AND ds.date >= ?
+          AND ds.date >= date(
+                (SELECT MAX(date) FROM daily_sentiment),
+                ?
+              )
+        ORDER BY ds.date ASC
+        """,
+        (ticker.upper(), BACKTEST_COLLECTION_START_DATE, f"-{days - 1} days"),
     ).fetchall()
     conn.close()
     return [dict(row) for row in rows]

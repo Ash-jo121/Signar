@@ -1,13 +1,9 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { TICKERS_API_URL } from "@/constants/Api";
 import { EMPTY_DASHBOARD } from "@/constants/Header";
 import { DashboardContext } from "@/contexts/useDashboardContext";
 import { mapDashboardData } from "@/helpers/DashboardMapper";
 import type { DashboardData, MarketState, TickerData } from "@/types/Dashboard";
-
-const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "https://signar-production.up.railway.app"
-).replace(/\/$/, "");
-const API_URL = `${API_BASE_URL}/api/tickers`;
 
 const uniqueTickers = (...groups: TickerData[][]) => {
   const seen = new Set<string>();
@@ -57,7 +53,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch(API_URL, { signal: controller.signal })
+    fetch(TICKERS_API_URL, { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error(`Dashboard API returned ${response.status}`);
         return response.json();

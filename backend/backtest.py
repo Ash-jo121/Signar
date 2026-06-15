@@ -41,7 +41,7 @@ def latest_backup_db():
 
 
 DB_PATH = latest_backup_db()
-START_DATE = None
+START_DATE = "2026-06-10"
 
 # Catalyst data is only reliable from this date onwards
 CLEAN_CATALYST_DATE = "2026-04-27"
@@ -1642,8 +1642,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--start-date",
-        default=None,
-        help="Only include rows on or after this YYYY-MM-DD date",
+        default=START_DATE,
+        help="Only include rows on or after this YYYY-MM-DD date (default: 2026-06-10)",
     )
     args = parser.parse_args()
     DB_PATH = args.db

@@ -13,6 +13,8 @@ import type {
   Source,
   ThesisConfirmation,
   TickerData,
+  TickerHistoryPoint,
+  TickerHistoryResponse,
 } from "../types/Dashboard";
 
 type RawObject = Record<string, unknown>;
@@ -344,6 +346,33 @@ export const mapDashboardData = (value: unknown): DashboardData => {
     nearMissCandidates: arrayValue(data.near_miss_candidates).map(mapTicker),
     multiDayConfirmation: arrayValue(data.multi_day_confirmation).map(mapThesisConfirmation),
     confirmedWatchlist: arrayValue(data.confirmed_watchlist).map(mapThesisConfirmation),
+  };
+};
+
+const mapTickerHistoryPoint = (value: unknown): TickerHistoryPoint => {
+  const point = objectValue(value);
+  return {
+    date: stringValue(point.date),
+    price: nullableNumber(point.price),
+    mentions: nullableNumber(point.mentions),
+    averageSentiment: nullableNumber(point.avg_sentiment),
+    finalScore: nullableNumber(point.final_score),
+    rawFinalScore: nullableNumber(point.raw_final_score),
+    signalScore: nullableNumber(point.signal_score),
+    radarScore: nullableNumber(point.radar_score),
+    tradeScore: nullableNumber(point.trade_score),
+    riskScore: nullableNumber(point.risk_score),
+    mentionVelocityLabel: nullableString(point.mention_velocity_label),
+  };
+};
+
+export const mapTickerHistory = (value: unknown): TickerHistoryResponse => {
+  const data = objectValue(value);
+  return {
+    ticker: stringValue(data.ticker),
+    days: numberValue(data.days, 30),
+    startDate: stringValue(data.start_date, "2026-06-10"),
+    history: arrayValue(data.history).map(mapTickerHistoryPoint),
   };
 };
 

@@ -16,6 +16,7 @@ import os
 import subprocess
 import sys
 from fastapi.responses import FileResponse
+from database import BACKTEST_COLLECTION_START_DATE, get_ticker_history
 from runtime_paths import analysis_lock_path, output_json_path, raw_data_path, data_path
 
 app = FastAPI()
@@ -70,6 +71,21 @@ def iter_tickers(data):
 @app.get("/api/tickers")
 def get_tickers():
     return load_data()
+
+
+@app.get("/api/tickers/{symbol}/history")
+def get_ticker_analysis_history(
+    symbol: str,
+    days: int = Query(30, ge=2, le=365),
+):
+    """Return daily pipeline snapshots for a ticker in chronological order."""
+    ticker = symbol.upper()
+    return {
+        "ticker": ticker,
+        "days": days,
+        "start_date": BACKTEST_COLLECTION_START_DATE,
+        "history": get_ticker_history(ticker, days),
+    }
 
 
 @app.get("/api/tickers/{symbol}")  # pyright: ignore[reportUndefinedVariable]
