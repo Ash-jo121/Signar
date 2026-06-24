@@ -7,8 +7,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
-from playwright.sync_api import sync_playwright
-from playwright_stealth import Stealth
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# Web Unblocker terminates TLS itself, so requests must skip cert verification.
+# Suppress the resulting noise once, here.
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 from constants.config import LOOKBACK_SECONDS, VAMPIRE_LOOKBACK_SECONDS
 from constants.subreddits import BEARISH_SUBREDDITS, SUBREDDITS
@@ -24,14 +27,20 @@ LISTING_BACKOFFS = [30, 90, 180]
 COMMENT_BACKOFFS = [30, 60, 120]
 AUTHOR_BACKOFFS = [30, 60]
 
-MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "1.2"))
-MAX_GAP = float(os.getenv("REDDIT_FETCH_MAX_GAP", "2.8"))
+# Oxylabs handles IP rotation + retries itself, so heavy pacing is no longer
+# needed for block-avoidance. Defaults kept modest; set both to 0 to run flat-out.
+MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "0.3"))
+MAX_GAP = float(os.getenv("REDDIT_FETCH_MAX_GAP", "0.8"))
 MIN_RAW_POSTS = int(os.getenv("THREADRADAR_MIN_RAW_POSTS", "200"))
-AUTHOR_LOOKUP_COOLDOWN_SECONDS = int(os.getenv("AUTHOR_LOOKUP_COOLDOWN_SECONDS", "180"))
-# 0 means unlimited. Keep defaults complete; use env caps only if Reddit 429s
-# become worse than the missing-comment/missing-author tradeoff.
+# Through the unblocker the per-IP author-endpoint pressure is gone, so the long
+# cooldown is optional. Keep a small default; override via env if you ever need it.
+AUTHOR_LOOKUP_COOLDOWN_SECONDS = int(os.getenv("AUTHOR_LOOKUP_COOLDOWN_SECONDS", "0"))
+# 0 means unlimited. Keep defaults complete; use env caps only if cost/time of
+# comment/author fetches becomes worse than the missing-data tradeoff.
 MAX_COMMENT_FETCHES = int(os.getenv("REDDIT_MAX_COMMENT_FETCHES", "0"))
 MAX_AUTHOR_LOOKUPS = int(os.getenv("AUTHOR_PROFILE_LOOKUP_LIMIT", "0"))
+
+OXY_TIMEOUT_SECONDS = int(os.getenv("OXY_TIMEOUT_SECONDS", "120"))
 
 
 class OptionalFetchRateLimited(Exception):
@@ -50,66 +59,63 @@ def reddit_url(path):
     return f"https://old.reddit.com{path}"
 
 
-def proxy_config():
-    user = os.getenv("PROXY_USER")
-    password = os.getenv("PROXY_PASS")
+def oxylabs_proxies():
+    """
+    Build the Web Unblocker proxy dict from env.
+
+    Raises if credentials are missing — a direct (un-proxied) connection would
+    be blocked instantly by Reddit and would also expose the host IP, so we fail
+    loudly instead of silently fetching without the unblocker.
+    """
+    user = os.getenv("OXY_USER")
+    password = os.getenv("OXY_PASS")
     if not user or not password:
-        return None
-    host = os.getenv("PROXY_HOST", "gate.decodo.com")
-    port = os.getenv("PROXY_PORT", "10000")
-    return {
-        "server": f"http://{host}:{port}",
-        "username": user,
-        "password": password,
-    }
+        raise RuntimeError(
+            "OXY_USER / OXY_PASS are not set. Refusing to fetch without the "
+            "Web Unblocker proxy."
+        )
+    host = os.getenv("OXY_HOST", "unblock.oxylabs.io")
+    port = os.getenv("OXY_PORT", "60000")
+    endpoint = f"http://{user}:{password}@{host}:{port}"
+    return {"http": endpoint, "https": endpoint}
 
 
-class StealthRedditFetcher:
-    def __init__(self, headless=True):
+class UnblockerRedditFetcher:
+    """
+    Drop-in replacement for the old Playwright fetcher.
+
+    Same public surface used by the rest of the module:
+      - warmup()
+      - get_json(url, backoffs) -> parsed JSON (identical return contract)
+      - pace()
+      - close()
+      - request_count / rate_limit_count / hard_block_count counters
+
+    The browser is gone; Oxylabs Web Unblocker supplies the fingerprinting and
+    clean IPs, so a plain requests Session is all that's needed.
+    """
+
+    def __init__(self, headless=True):  # `headless` kept for call-site compatibility
         self.request_count = 0
         self.rate_limit_count = 0
         self.hard_block_count = 0
         self._consecutive_429s = 0
         self._adaptive_gap_extra = 0.0
-        self._stealth = Stealth()
-        self._pw_ctx = self._stealth.use_sync(sync_playwright())
-        self._pw = self._pw_ctx.__enter__()
-        launch_kwargs = {"headless": headless}
-        proxy = proxy_config()
-        if proxy:
-            launch_kwargs["proxy"] = proxy
-        self._browser = self._pw.chromium.launch(**launch_kwargs)
-        self._context = self._browser.new_context(
-            user_agent=USER_AGENT,
-            viewport={"width": 1280, "height": 800},
-            locale="en-US",
-        )
-        self._page = self._context.new_page()
+        self._proxies = oxylabs_proxies()
+        self._session = requests.Session()
+        self._session.headers.update({"User-Agent": USER_AGENT})
+        self._session.verify = False  # Web Unblocker TLS interception
+        # Render stays OFF (we never set X-Oxylabs-Render) so we get raw JSON.
 
     def warmup(self):
+        """Light reachability check so a misconfigured proxy fails fast/loud."""
         try:
-            response = self._page.goto(
-                "https://old.reddit.com/r/pennystocks/",
-                wait_until="networkidle",  # wait until no network activity for 500ms
-                timeout=60000,
+            resp = self._session.get(
+                "https://ip.oxylabs.io/location",
+                proxies=self._proxies,
+                timeout=OXY_TIMEOUT_SECONDS,
             )
-            # Extra wait for any JS-driven redirects to complete
-            time.sleep(5)
-
-            status = response.status if response else "None"
-            current_url = self._page.url
-            print(f"Warmup status: {status}, final URL: {current_url}")
-
-            try:
-                body_preview = self._page.evaluate(
-                    "() => document.body ? document.body.innerText.slice(0, 300) : 'NO BODY'"
-                )
-                print(f"Warmup body preview: {body_preview[:300]}")
-            except Exception as eval_err:
-                print(f"Warmup eval failed (redirect likely): {eval_err}")
-                # Check where we ended up
-                print(f"Current URL after redirect: {self._page.url}")
-
+            print(f"Warmup (unblocker reachability): status={resp.status_code}")
         except Exception as e:
             print(f"Warmup failed entirely: {e}")
             raise
@@ -121,21 +127,26 @@ class StealthRedditFetcher:
         for attempt, backoff in enumerate([0] + backoffs):
             if backoff:
                 print(
-                    f"      [429 backoff] sleeping {backoff}s before retry "
+                    f"      [retry backoff] sleeping {backoff}s before retry "
                     f"{attempt}/{len(backoffs)} for {url.split('reddit.com')[-1]}"
                 )
                 time.sleep(backoff)
 
             self.request_count += 1
-            response = self._page.goto(
-                url,
-                wait_until="domcontentloaded",
-                timeout=45000,
-            )
-            status = response.status if response else 0
-            body = self._page.evaluate(
-                "() => document.body ? document.body.innerText : ''"
-            )
+            try:
+                response = self._session.get(
+                    url,
+                    proxies=self._proxies,
+                    timeout=OXY_TIMEOUT_SECONDS,
+                )
+            except requests.RequestException as exc:
+                # Network/proxy-level hiccup: retry if budget remains.
+                if attempt < len(backoffs):
+                    continue
+                raise OptionalFetchRateLimited(f"request failed: {url}: {exc}")
+
+            status = response.status_code
+            body = response.text
 
             if status == 429:
                 self.rate_limit_count += 1
@@ -152,15 +163,21 @@ class StealthRedditFetcher:
 
             self._consecutive_429s = max(0, self._consecutive_429s - 1)
             self._adaptive_gap_extra = max(0.0, self._adaptive_gap_extra - 1.0)
-            return json.loads(body)
+
+            try:
+                return json.loads(body)
+            except json.JSONDecodeError as exc:
+                # A 200 that isn't JSON is a soft block / unexpected page.
+                # Treat it like a hard block so callers handle it consistently.
+                self.hard_block_count += 1
+                raise RuntimeError(
+                    f"NON_JSON_200 len={len(body)}: {url}: {body[:120]!r}"
+                ) from exc
 
         raise OptionalFetchRateLimited(f"fetch exhausted retries: {url}")
 
     def close(self):
-        try:
-            self._browser.close()
-        finally:
-            self._pw_ctx.__exit__(None, None, None)
+        self._session.close()
 
 
 def parse_post_child(child):
@@ -243,7 +260,7 @@ def comment_priority(post):
 def fetch_comments_for_posts(fetcher, posts):
     prioritized = sorted(posts, key=comment_priority, reverse=True)
     # By default we fetch every comment thread. The priority list only matters
-    # when REDDIT_MAX_COMMENT_FETCHES is set as a safety valve for 429-heavy runs.
+    # when REDDIT_MAX_COMMENT_FETCHES is set as a safety valve.
     if MAX_COMMENT_FETCHES > 0:
         selected_ids = {post["id"] for post in prioritized[:MAX_COMMENT_FETCHES]}
     else:
@@ -418,7 +435,7 @@ def build_payload(
 
 
 def fetch_raw_payload(headless=True, checkpoint_path=None):
-    fetcher = StealthRedditFetcher(headless=headless)
+    fetcher = UnblockerRedditFetcher(headless=headless)
     started = time.time()
     normal_posts = []
     vampire_posts = []
@@ -569,10 +586,10 @@ def upload_payload(path, railway_url, api_key, trigger_analysis=False):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Fetch Reddit raw data with Playwright"
+        description="Fetch Reddit raw data via Oxylabs Web Unblocker"
     )
     parser.add_argument("--output", default=str(raw_data_path()))
-    parser.add_argument("--headed", action="store_true")
+    parser.add_argument("--headed", action="store_true")  # no-op, kept for compat
     parser.add_argument("--upload", action="store_true")
     parser.add_argument("--trigger-analysis", action="store_true")
     args = parser.parse_args()
