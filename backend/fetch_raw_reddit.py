@@ -27,6 +27,15 @@ LISTING_BACKOFFS = [30, 90, 180]
 COMMENT_BACKOFFS = [30, 60, 120]
 AUTHOR_BACKOFFS = [30, 60]
 
+# Hard blocks (403 / block page) get a SHORT, fast retry that is separate from
+# the long 429 rate-limit backoffs above. Each retry re-requests through the
+# unblocker, which draws a fresh exit IP, so a transient block usually clears on
+# the next attempt — no need for 30-180s sleeps. Kept short so a genuinely dead
+# endpoint costs ~17s total instead of 5 minutes.
+HARD_BLOCK_BACKOFFS = [
+    float(x) for x in os.getenv("OXY_HARD_BLOCK_BACKOFFS", "2,5,10").split(",") if x
+]
+
 # Oxylabs handles IP rotation + retries itself, so heavy pacing is no longer
 # needed for block-avoidance. Defaults kept modest; set both to 0 to run flat-out.
 MIN_GAP = float(os.getenv("REDDIT_FETCH_MIN_GAP", "0.3"))
@@ -124,14 +133,30 @@ class UnblockerRedditFetcher:
         time.sleep(random.uniform(MIN_GAP, MAX_GAP) + self._adaptive_gap_extra)
 
     def get_json(self, url, backoffs):
-        for attempt, backoff in enumerate([0] + backoffs):
-            if backoff:
-                print(
-                    f"      [retry backoff] sleeping {backoff}s before retry "
-                    f"{attempt}/{len(backoffs)} for {url.split('reddit.com')[-1]}"
-                )
-                time.sleep(backoff)
+        # `backoffs` is the 429 rate-limit schedule (long sleeps). Hard blocks get
+        # their own short HARD_BLOCK_BACKOFFS schedule because each retry through
+        # the unblocker draws a fresh exit IP. Both budgets are bounded, so the
+        # loop always terminates.
+        short_path = url.split("reddit.com")[-1]
+        rate_limit_attempts = 0
+        hard_block_attempts = 0
+        max_rate_limit = len(backoffs)
+        max_hard_block = len(HARD_BLOCK_BACKOFFS)
 
+        def retry_hard_block(label, status):
+            nonlocal hard_block_attempts
+            if hard_block_attempts < max_hard_block:
+                sleep = HARD_BLOCK_BACKOFFS[hard_block_attempts]
+                hard_block_attempts += 1
+                print(
+                    f"      [{label} retry {hard_block_attempts}/{max_hard_block}] "
+                    f"status={status} sleeping {sleep}s -> fresh IP for {short_path}"
+                )
+                time.sleep(sleep)
+                return True
+            return False
+
+        while True:
             self.request_count += 1
             try:
                 response = self._session.get(
@@ -140,8 +165,7 @@ class UnblockerRedditFetcher:
                     timeout=OXY_TIMEOUT_SECONDS,
                 )
             except requests.RequestException as exc:
-                # Network/proxy-level hiccup: retry if budget remains.
-                if attempt < len(backoffs):
+                if retry_hard_block("request-error", "ERR"):
                     continue
                 raise OptionalFetchRateLimited(f"request failed: {url}: {exc}")
 
@@ -152,14 +176,26 @@ class UnblockerRedditFetcher:
                 self.rate_limit_count += 1
                 self._consecutive_429s += 1
                 self._adaptive_gap_extra = min(self._consecutive_429s * 5.0, 30.0)
-                if attempt < len(backoffs):
+                if rate_limit_attempts < max_rate_limit:
+                    sleep = backoffs[rate_limit_attempts]
+                    rate_limit_attempts += 1
+                    print(
+                        f"      [429 backoff {rate_limit_attempts}/{max_rate_limit}] "
+                        f"sleeping {sleep}s for {short_path}"
+                    )
+                    time.sleep(sleep)
                     continue
                 raise OptionalFetchRateLimited(f"429 persisted: {url}")
 
             low = body[:300].lower()
             if status != 200 or any(marker in low for marker in BLOCK_MARKERS):
                 self.hard_block_count += 1
-                raise RuntimeError(f"HARD BLOCK status={status}: {url}")
+                if retry_hard_block("hard-block", status):
+                    continue
+                raise RuntimeError(
+                    f"HARD BLOCK status={status} after {hard_block_attempts} "
+                    f"retries: {url}"
+                )
 
             self._consecutive_429s = max(0, self._consecutive_429s - 1)
             self._adaptive_gap_extra = max(0.0, self._adaptive_gap_extra - 1.0)
@@ -167,14 +203,15 @@ class UnblockerRedditFetcher:
             try:
                 return json.loads(body)
             except json.JSONDecodeError as exc:
-                # A 200 that isn't JSON is a soft block / unexpected page.
-                # Treat it like a hard block so callers handle it consistently.
+                # A 200 that isn't JSON is a soft block / unexpected page. Retry on
+                # a fresh IP like any other block; only give up after the budget.
                 self.hard_block_count += 1
+                if retry_hard_block("non-json", 200):
+                    continue
                 raise RuntimeError(
-                    f"NON_JSON_200 len={len(body)}: {url}: {body[:120]!r}"
+                    f"NON_JSON_200 len={len(body)} after retries: "
+                    f"{url}: {body[:120]!r}"
                 ) from exc
-
-        raise OptionalFetchRateLimited(f"fetch exhausted retries: {url}")
 
     def close(self):
         self._session.close()
