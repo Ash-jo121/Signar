@@ -18,7 +18,6 @@ from database import (
     save_score_metadata,
     save_thesis_confirmations,
     update_post_after_refresh,
-    verify_pipeline_db_write,
 )
 from database import save_daily_results
 from market_calendar import get_market_session
@@ -2665,19 +2664,14 @@ def run_pipeline(raw_data_file=None):
             result.get("final_score", 0),
         )
     attach_run_metadata(trackable, run_metadata)
-    run_date = run_metadata["run_date"]
-    save_daily_results(trackable, date=run_date, run_metadata=run_metadata)
+    save_daily_results(trackable, run_metadata=run_metadata)
     if run_metadata["eligible_for_backtest"]:
-        record_flagged_stocks(trackable, date=run_date)
+        record_flagged_stocks(trackable)
     else:
         print(
             "Performance tracking skipped: non-trading-day run "
             f"({run_metadata['market_closed_reason']})"
         )
-    verify_pipeline_db_write(
-        run_date,
-        require_performance=run_metadata["eligible_for_backtest"],
-    )
 
     for r in results:
         if r.get("float_data_quality") in {"missing", "upper_bound"}:
@@ -2749,7 +2743,7 @@ def run_pipeline(raw_data_file=None):
 
     print("\nStep 5.5: Updating catalyst data in database...")
     conn = get_connection()
-    today = run_date
+    today = date.today().strftime("%Y-%m-%d")
     for result in results:
         conn.execute(
             """
@@ -2817,10 +2811,6 @@ def run_pipeline(raw_data_file=None):
         conn.commit()
     finally:
         conn.close()
-    verify_pipeline_db_write(
-        run_metadata["run_date"],
-        require_performance=run_metadata["eligible_for_backtest"],
-    )
 
     if overextended:
         print(f"\nMarked {len(overextended)} already-moved stocks as high-risk:")
