@@ -17,7 +17,13 @@ import subprocess
 import sys
 from fastapi.responses import FileResponse
 from database import BACKTEST_COLLECTION_START_DATE, get_ticker_history
-from runtime_paths import analysis_lock_path, output_json_path, raw_data_path, data_path
+from runtime_paths import (
+    analysis_lock_path,
+    data_dir,
+    output_json_path,
+    raw_data_path,
+    data_path,
+)
 
 app = FastAPI()
 
@@ -34,6 +40,7 @@ DATA_PATH = output_json_path()
 RAW_DATA_PATH = raw_data_path()
 DB_PATH = data_path("threadradar.db")
 LOCK_PATH = analysis_lock_path()
+DATA_ROOT = data_dir()
 MIN_RAW_POSTS = int(os.getenv("THREADRADAR_MIN_RAW_POSTS", "200"))
 LOCK_STALE_SECONDS = int(os.getenv("THREADRADAR_ANALYSIS_LOCK_STALE_SECONDS", "21600"))
 analysis_state = {
@@ -109,6 +116,27 @@ def authorize_upload_key(x_api_key):
     expected = os.getenv("UPLOAD_API_KEY")
     if not expected or x_api_key != expected:
         raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+def resolve_data_file(requested_path=""):
+    data_root = DATA_ROOT.resolve()
+    candidate = (data_root / requested_path).resolve()
+    try:
+        candidate.relative_to(data_root)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Path escapes data directory") from exc
+    return candidate
+
+
+def data_file_metadata(path):
+    stat = path.stat()
+    return {
+        "name": path.name,
+        "path": str(path.relative_to(DATA_ROOT.resolve())).replace("\\", "/"),
+        "type": "directory" if path.is_dir() else "file",
+        "size_bytes": stat.st_size if path.is_file() else None,
+        "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+    }
 
 
 def parse_iso_datetime(value):
@@ -318,6 +346,98 @@ async def download_database(x_api_key: str = Header(None)):
 
     return FileResponse(
         DB_PATH, media_type="application/octet-stream", filename="threadradar.db"
+    )
+
+
+@app.get("/api/data-files")
+def list_data_files(
+    path: str = Query("", description="Directory path relative to the data volume"),
+    recursive: bool = Query(False),
+    x_api_key: str = Header(None),
+):
+    authorize_upload_key(x_api_key)
+
+    target = resolve_data_file(path)
+    if not target.exists():
+        raise HTTPException(status_code=404, detail="Path not found")
+    if target.is_file():
+        return {
+            "data_root": str(DATA_ROOT),
+            "path": data_file_metadata(target)["path"],
+            "entries": [data_file_metadata(target)],
+        }
+    if not target.is_dir():
+        raise HTTPException(status_code=400, detail="Path is not listable")
+
+    children = target.rglob("*") if recursive else target.iterdir()
+    entries = sorted(
+        (data_file_metadata(child) for child in children),
+        key=lambda item: (item["type"] != "directory", item["path"]),
+    )
+    return {
+        "data_root": str(DATA_ROOT),
+        "path": str(target.relative_to(DATA_ROOT.resolve())).replace("\\", "/"),
+        "recursive": recursive,
+        "entries": entries,
+    }
+
+
+@app.get("/api/data-files/preview")
+def preview_data_file(
+    path: str = Query(..., description="File path relative to the data volume"),
+    max_bytes: int = Query(200_000, ge=1, le=2_000_000),
+    x_api_key: str = Header(None),
+):
+    authorize_upload_key(x_api_key)
+
+    target = resolve_data_file(path)
+    if not target.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    if not target.is_file():
+        raise HTTPException(status_code=400, detail="Path is not a file")
+
+    with open(target, "rb") as file:
+        content = file.read(max_bytes + 1)
+    truncated = len(content) > max_bytes
+    content = content[:max_bytes]
+    try:
+        text = content.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise HTTPException(
+            status_code=415,
+            detail="File is not UTF-8 text; use /api/data-files/download",
+        ) from exc
+
+    payload = {
+        **data_file_metadata(target),
+        "truncated": truncated,
+        "content": text,
+    }
+    if target.suffix.lower() == ".json" and not truncated:
+        try:
+            payload["json"] = json.loads(text)
+        except json.JSONDecodeError:
+            pass
+    return payload
+
+
+@app.get("/api/data-files/download")
+def download_data_file(
+    path: str = Query(..., description="File path relative to the data volume"),
+    x_api_key: str = Header(None),
+):
+    authorize_upload_key(x_api_key)
+
+    target = resolve_data_file(path)
+    if not target.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    if not target.is_file():
+        raise HTTPException(status_code=400, detail="Path is not a file")
+
+    return FileResponse(
+        target,
+        media_type="application/octet-stream",
+        filename=target.name,
     )
 
 
