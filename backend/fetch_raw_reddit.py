@@ -189,12 +189,13 @@ class UnblockerRedditFetcher:
 
             low = body[:300].lower()
             if status != 200 or any(marker in low for marker in BLOCK_MARKERS):
+                matched = [m for m in BLOCK_MARKERS if m in low]
                 self.hard_block_count += 1
                 if retry_hard_block("hard-block", status):
                     continue
                 raise RuntimeError(
-                    f"HARD BLOCK status={status} after {hard_block_attempts} "
-                    f"retries: {url}"
+                    f"HARD BLOCK status={status} markers={matched} "
+                    f"after {hard_block_attempts} retries: {url} :: {body[:200]!r}"
                 )
 
             self._consecutive_429s = max(0, self._consecutive_429s - 1)
