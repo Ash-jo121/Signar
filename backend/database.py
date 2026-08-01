@@ -117,6 +117,9 @@ RUN_METADATA_COLUMNS = [
 PERFORMANCE_TRACKING_COLUMNS = [
     ("float_shares_source", "TEXT"),
     ("float_data_quality", "TEXT"),
+    ("mention_velocity_num", "REAL"),
+    ("author_overlap", "REAL"),
+    ("flag_sequence", "INTEGER"),
     ("price_t14", "REAL"),
     ("price_t30", "REAL"),
     ("return_t14", "REAL"),
@@ -848,17 +851,72 @@ def record_flagged_stocks(results, date=None):
 
     for result in results:
         try:
-            conn.execute(
+            ticker = result["ticker"]
+            current_mentions = result.get("mentions", 0) or 0
+            yesterday = conn.execute(
+                """
+                SELECT mentions
+                FROM daily_sentiment
+                WHERE ticker = ?
+                  AND date = date(?, '-1 day')
+                """,
+                (ticker, date),
+            ).fetchone()
+            previous_flag = conn.execute(
+                """
+                SELECT pt.flagged_date, sm.author_set_hashes
+                FROM performance_tracking pt
+                LEFT JOIN score_metadata sm
+                  ON sm.ticker = pt.ticker
+                 AND sm.date = pt.flagged_date
+                WHERE pt.ticker = ?
+                  AND pt.flagged_date < ?
+                ORDER BY pt.flagged_date DESC
+                LIMIT 1
+                """,
+                (ticker, date),
+            ).fetchone()
+            prior_flags = conn.execute(
+                """
+                SELECT COUNT(*)
+                FROM performance_tracking
+                WHERE ticker = ?
+                  AND flagged_date < ?
+                """,
+                (ticker, date),
+            ).fetchone()[0]
+
+            mention_velocity_num = None
+            if yesterday and (yesterday["mentions"] or 0) > 0:
+                mention_velocity_num = current_mentions / yesterday["mentions"]
+
+            author_overlap = None
+            if previous_flag:
+                try:
+                    previous_authors = set(
+                        json.loads(previous_flag["author_set_hashes"] or "[]")
+                    )
+                except (TypeError, ValueError, json.JSONDecodeError):
+                    previous_authors = set()
+                current_authors = set(result.get("author_set_hashes") or [])
+                author_union = current_authors | previous_authors
+                if author_union:
+                    author_overlap = len(current_authors & previous_authors) / len(
+                        author_union
+                    )
+
+            cursor = conn.execute(
                 """
                 INSERT OR IGNORE INTO performance_tracking
                 (ticker, flagged_date, flagged_price, flagged_score,
                  flagged_sentiment, flagged_mentions, float_shares,
                  has_catalyst, catalyst_type, mod_flagged, vampire_flagged,
-                 final_score, engagement_ratio, float_shares_source, float_data_quality)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 final_score, engagement_ratio, float_shares_source, float_data_quality,
+                 mention_velocity_num, author_overlap, flag_sequence)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    result["ticker"],
+                    ticker,
                     date,
                     result.get("price", 0),
                     result.get(
@@ -876,9 +934,12 @@ def record_flagged_stocks(results, date=None):
                     result.get("engagement_ratio", 0),
                     result.get("float_shares_source"),
                     result.get("float_data_quality"),
+                    mention_velocity_num,
+                    author_overlap,
+                    prior_flags + 1,
                 ),
             )
-            saved += 1
+            saved += cursor.rowcount
         except sqlite3.IntegrityError:
             continue
 

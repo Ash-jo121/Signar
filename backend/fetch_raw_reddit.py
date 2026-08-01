@@ -35,6 +35,14 @@ AUTHOR_BACKOFFS = [30, 60]
 HARD_BLOCK_BACKOFFS = [
     float(x) for x in os.getenv("OXY_HARD_BLOCK_BACKOFFS", "2,5,10").split(",") if x
 ]
+LISTING_HARD_BLOCK_BACKOFFS = [
+    float(x)
+    for x in os.getenv(
+        "OXY_LISTING_HARD_BLOCK_BACKOFFS",
+        "2,5,10,15,20,30",
+    ).split(",")
+    if x
+]
 
 # Oxylabs handles IP rotation + retries itself, so heavy pacing is no longer
 # needed for block-avoidance. Defaults kept modest; set both to 0 to run flat-out.
@@ -132,7 +140,7 @@ class UnblockerRedditFetcher:
     def pace(self):
         time.sleep(random.uniform(MIN_GAP, MAX_GAP) + self._adaptive_gap_extra)
 
-    def get_json(self, url, backoffs):
+    def get_json(self, url, backoffs, hard_block_backoffs=None):
         # `backoffs` is the 429 rate-limit schedule (long sleeps). Hard blocks get
         # their own short HARD_BLOCK_BACKOFFS schedule because each retry through
         # the unblocker draws a fresh exit IP. Both budgets are bounded, so the
@@ -141,12 +149,13 @@ class UnblockerRedditFetcher:
         rate_limit_attempts = 0
         hard_block_attempts = 0
         max_rate_limit = len(backoffs)
-        max_hard_block = len(HARD_BLOCK_BACKOFFS)
+        hard_block_backoffs = hard_block_backoffs or HARD_BLOCK_BACKOFFS
+        max_hard_block = len(hard_block_backoffs)
 
         def retry_hard_block(label, status):
             nonlocal hard_block_attempts
             if hard_block_attempts < max_hard_block:
-                sleep = HARD_BLOCK_BACKOFFS[hard_block_attempts]
+                sleep = hard_block_backoffs[hard_block_attempts]
                 hard_block_attempts += 1
                 print(
                     f"      [{label} retry {hard_block_attempts}/{max_hard_block}] "
@@ -270,7 +279,11 @@ def fetch_listing_posts(fetcher, subreddit, sort, lookback_seconds, limit=100):
         if after:
             path += f"&after={after}"
 
-        data = fetcher.get_json(reddit_url(path), LISTING_BACKOFFS)["data"]
+        data = fetcher.get_json(
+            reddit_url(path),
+            LISTING_BACKOFFS,
+            hard_block_backoffs=LISTING_HARD_BLOCK_BACKOFFS,
+        )["data"]
         children = data.get("children", [])
         after = data.get("after")
         reached_cutoff = False
@@ -638,8 +651,7 @@ def main():
             checkpoint_path=args.output,
         )
     except RawDataValidationError as exc:
-        print(f"Raw fetch skipped: {exc}")
-        return
+        raise SystemExit(f"Raw fetch failed validation: {exc}") from exc
 
     validation_errors = validate_raw_payload(payload)
     if validation_errors:

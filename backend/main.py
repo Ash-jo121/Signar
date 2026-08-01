@@ -5,7 +5,7 @@ import math
 import re
 import time
 import os
-from datetime import date
+from datetime import date, datetime, timezone
 from constants.exclusion import LOW_QUALITY_PATTERNS
 from integrations.google_sheets_integration import update_spreadsheet
 from integrations.yahooFn import enrich_with_price
@@ -26,6 +26,7 @@ from runtime_paths import (
     output_json_path,
     output_txt_path,
     raw_data_path,
+    run_summaries_path,
 )
 from scraper import fetch_all, process_vampire_post
 from extractor import extract_from_post, extract_tickers
@@ -40,7 +41,7 @@ import traceback
 
 SCORING_VERSION = os.getenv(
     "THREADRADAR_SCORING_VERSION",
-    "2026-06-10-float-aware-v1",
+    "2026-08-02-simplified-v2",
 )
 MAX_REPORTED_FLOAT_SHARES = 50_000_000
 
@@ -312,34 +313,13 @@ def calculate_mention_density_multiplier(mentions, context_count):
 
 
 def calculate_mention_sweet_spot_multiplier(mentions):
-    """
-    Favor sustained interest over viral spikes.
-
-    Backtests showed 10-20 mentions behaved better than very high mention counts,
-    which often reflect Reddit arriving after the price move.
-    """
-    if mentions < 5:
-        return 0.85
-    if mentions < 10:
-        return 1.0
-    if mentions <= 20:
-        return 1.18
-    if mentions <= 35:
-        return 0.95
-    return 0.8
+    """Retained as flat metadata for comparisons with the frozen v1 scorer."""
+    return 1.0
 
 
 def calculate_sentiment_timing_multiplier(avg_sentiment):
-    """Reward calm curiosity and penalize euphoric late-cycle excitement."""
-    if avg_sentiment < -0.2:
-        return 0.75
-    if avg_sentiment < 0:
-        return 0.95
-    if avg_sentiment <= 0.2:
-        return 1.15
-    if avg_sentiment <= 0.4:
-        return 1.0
-    return 0.85
+    """Retained as flat metadata for comparisons with the frozen v1 scorer."""
+    return 1.0
 
 
 def calculate_engagement_multiplier(engagement_ratio):
@@ -616,13 +596,12 @@ def calculate_signal_multipliers(data, engagement_ratio, avg_sentiment):
     social_conviction_multiplier = clamp(
         cross_subreddit_multiplier
         * mention_density_multiplier
-        * mention_sweet_spot_multiplier
         * engagement_multiplier,
         0.8,
         1.45,
     )
     evidence_quality_multiplier = post_quality_multiplier
-    timing_multiplier = sentiment_timing_multiplier
+    timing_multiplier = 1.0
     pre_catalyst_signal_multiplier = clamp(
         social_conviction_multiplier
         * timing_multiplier
@@ -2545,8 +2524,22 @@ def load_posts_from_raw_data(raw_data_file=None):
     return posts
 
 
+def persist_run_summary(summary):
+    """Append one durable JSONL run record to Railway's mounted data volume."""
+    summaries_file = run_summaries_path()
+    try:
+        summaries_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(summaries_file, "a", encoding="utf-8") as file:
+            file.write(json.dumps(summary, ensure_ascii=False) + "\n")
+        print(f"Run summary appended to {summaries_file}")
+    except OSError as exc:
+        print(f"Warning: could not persist run summary to {summaries_file}: {exc}")
+
+
 def run_pipeline(raw_data_file=None):
     print("=== ThreadRadar ===\n")
+
+    pipeline_started_at = datetime.now(timezone.utc)
 
     init_db()
     run_metadata = get_market_session()
@@ -2575,6 +2568,13 @@ def run_pipeline(raw_data_file=None):
 
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(results)
+    analyzed_ticker_count = len(results)
+    price_enrichment_successes = sum(
+        1 for result in results if result.get("price_enrichment_status") == "ok"
+    )
+    price_enrichment_failures = sum(
+        1 for result in results if result.get("price_enrichment_status") == "failed"
+    )
 
     print("\nStep 3.25: Applying anti-chase price action penalties...")
     for result in results:
@@ -2885,6 +2885,27 @@ def run_pipeline(raw_data_file=None):
                 file.write("\n")
             file.write("\n")
 
+    run_summary = {
+        "run_date": run_metadata["run_date"],
+        "started_at": pipeline_started_at.isoformat(),
+        "finished_at": datetime.now(timezone.utc).isoformat(),
+        "status": "ok",
+        "scoring_version": SCORING_VERSION,
+        "market_session": run_metadata["market_session"],
+        "market_session_phase": run_metadata.get("market_session_phase"),
+        "analyzed_tickers": analyzed_ticker_count,
+        "ranked_tickers": len(results),
+        "performance_rows_considered": len(trackable),
+        "price_enrichment_successes": price_enrichment_successes,
+        "price_enrichment_failures": price_enrichment_failures,
+        "cohort_counts": {
+            key: len(value)
+            for key, value in output_lists.items()
+            if isinstance(value, list)
+        },
+    }
+    persist_run_summary(run_summary)
+
     return output_payload
 
 
@@ -2913,4 +2934,17 @@ if __name__ == "__main__":
     if args.require_raw_data and not os.path.exists(selected_raw_data):
         raise SystemExit(f"Raw data file not found: {selected_raw_data}")
 
-    run_pipeline(raw_data_file=selected_raw_data)
+    try:
+        run_pipeline(raw_data_file=selected_raw_data)
+    except Exception as exc:
+        persist_run_summary(
+            {
+                "run_date": date.today().isoformat(),
+                "finished_at": datetime.now(timezone.utc).isoformat(),
+                "status": "failed",
+                "scoring_version": SCORING_VERSION,
+                "error_type": type(exc).__name__,
+                "error": str(exc)[:1000],
+            }
+        )
+        raise

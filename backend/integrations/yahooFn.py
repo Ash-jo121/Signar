@@ -1,7 +1,16 @@
 from datetime import datetime, timezone
 import math
+import os
+import time
 
 import yfinance as yf
+
+
+YFINANCE_BACKOFFS = [
+    float(value)
+    for value in os.getenv("YFINANCE_RETRY_BACKOFFS", "5,15").split(",")
+    if value
+]
 
 
 def safe_float(value):
@@ -322,10 +331,32 @@ def attach_empty_market_fields(result):
 def enrich_with_price(results):
     for r in results:
         try:
-            stock = yf.Ticker(r["ticker"])
-            info = stock.info
-            attach_market_snapshot(r, build_market_snapshot(stock, info, r["ticker"]))
+            for attempt in range(len(YFINANCE_BACKOFFS) + 1):
+                try:
+                    stock = yf.Ticker(r["ticker"])
+                    info = stock.info
+                    if not isinstance(info, dict):
+                        raise RuntimeError("Yahoo returned invalid ticker metadata")
+                    market_snapshot = build_market_snapshot(
+                        stock, info, r["ticker"]
+                    )
+                    if not market_snapshot.get("price"):
+                        raise RuntimeError("Yahoo returned no usable price")
+                    break
+                except Exception as exc:
+                    if attempt >= len(YFINANCE_BACKOFFS):
+                        raise
+                    wait = YFINANCE_BACKOFFS[attempt]
+                    print(
+                        f"Yahoo attempt {attempt + 1}/{len(YFINANCE_BACKOFFS) + 1} "
+                        f"failed for {r['ticker']}: {exc}; retrying in {wait}s"
+                    )
+                    time.sleep(wait)
+
+            attach_market_snapshot(r, market_snapshot)
             attach_float_snapshot(r, build_float_snapshot(info, r.get("price")))
+            r["price_enrichment_status"] = "ok"
+            r["price_enrichment_attempts"] = attempt + 1
             r["market_cap"] = info.get("marketCap", 0)
             r["fifty_two_week_high"] = info.get("fiftyTwoWeekHigh", 0)
             r["fifty_two_week_low"] = info.get("fiftyTwoWeekLow", 0)
@@ -386,6 +417,8 @@ def enrich_with_price(results):
 
         except Exception as e:
             print(f"Could not fetch price for {r['ticker']}: {e}")
+            r["price_enrichment_status"] = "failed"
+            r["price_enrichment_attempts"] = len(YFINANCE_BACKOFFS) + 1
             attach_empty_market_fields(r)
             attach_float_snapshot(r, build_float_snapshot({}, None))
             r["market_cap"] = 0

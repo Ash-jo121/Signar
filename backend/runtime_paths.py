@@ -41,5 +41,14 @@ def output_archive_dir():
     return Path(os.getenv("THREADRADAR_OUTPUT_ARCHIVE_DIR", data_path("output")))
 
 
+def run_summaries_path():
+    return Path(
+        os.getenv(
+            "THREADRADAR_RUN_SUMMARIES_PATH",
+            data_path("run_summaries.jsonl"),
+        )
+    )
+
+
 def analysis_lock_path():
     return Path(os.getenv("THREADRADAR_ANALYSIS_LOCK_PATH", data_path("analysis.lock")))
