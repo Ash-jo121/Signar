@@ -1,10 +1,16 @@
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pandas as pd
 import yfinance as yf
 
-from database import PERFORMANCE_TRACKING_COLUMNS, ensure_column, get_connection
+from database import (
+    PERFORMANCE_TRACKING_COLUMNS,
+    ensure_author_tracking_tables,
+    ensure_column,
+    get_connection,
+    refresh_author_track_records,
+)
 from market_calendar import get_market_session
 
 BENCHMARK_SYMBOL = "IWM"
@@ -103,6 +109,10 @@ RETURN_WINDOWS = [
     ),
 ]
 BENCHMARK_RETURN_CACHE = {}
+RESOLUTION_COMPLETED_COLUMNS = {
+    7: "resolved_at_t7",
+    14: "resolved_at_t14",
+}
 
 
 def fetch_historical_close(ticker, target_date):
@@ -311,6 +321,13 @@ def process_update(
     ret = calculate_return(flagged_price, price)
     benchmark_price, benchmark_ret = benchmark_return_since(flagged_date, period_days)
     excess_ret = None if benchmark_ret is None or ret is None else round(ret - benchmark_ret, 2)
+    completed_column = RESOLUTION_COMPLETED_COLUMNS.get(period_days)
+    completed_assignment = (
+        f",\n            {completed_column} = ?" if completed_column else ""
+    )
+    completed_values = (
+        [datetime.now(timezone.utc).isoformat()] if completed_column else []
+    )
 
     conn.execute(
         f"""
@@ -324,18 +341,20 @@ def process_update(
             benchmark_symbol = ?,
             {resolution_col} = 'resolved',
             resolution_status = 'resolved'
+            {completed_assignment}
         WHERE ticker = ? AND flagged_date = ?
         """,
-        (
+        [
             price,
             ret,
             benchmark_price,
             benchmark_ret,
             excess_ret,
             BENCHMARK_SYMBOL,
+            *completed_values,
             ticker,
             flagged_date,
-        ),
+        ],
     )
 
     split_note = " [split-adjusted]" if had_split else ""
@@ -364,6 +383,7 @@ def ensure_price_updater_columns(conn):
 
     for column, definition in PERFORMANCE_TRACKING_COLUMNS:
         ensure_column(conn, "performance_tracking", column, definition)
+    ensure_author_tracking_tables(conn)
 
     conn.commit()
 
@@ -419,6 +439,10 @@ def update_performance_prices():
             print(f"No T+{period_days} updates needed")
 
         conn.commit()
+
+    refresh_author_track_records(conn)
+    conn.commit()
+    print("\nAuthor track records refreshed")
 
     conn.close()
     print(f"\nPrice updater complete - {updated_total} records updated")

@@ -8,6 +8,8 @@ tables = [
     "posts",
     "bearish_stocks",
     "performance_tracking",
+    "author_mentions",
+    "author_track_record",
 ]
 
 for t in tables:
@@ -19,9 +21,17 @@ for t in tables:
 
 today = os.environ.get("TODAY", "")
 if today:
-    for t in ["daily_sentiment", "daily_contexts", "performance_tracking"]:
+    for t in [
+        "daily_sentiment",
+        "daily_contexts",
+        "performance_tracking",
+        "author_mentions",
+    ]:
         try:
-            col = "date" if t != "performance_tracking" else "flagged_date"
+            col = {
+                "performance_tracking": "flagged_date",
+                "author_mentions": "mention_date",
+            }.get(t, "date")
             count = conn.execute(
                 f"SELECT COUNT(*) FROM {t} WHERE {col} = ?", (today,)
             ).fetchone()[0]

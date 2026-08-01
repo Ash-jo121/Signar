@@ -13,6 +13,7 @@ from database import (
     archive_old_posts,
     get_connection,
     init_db,
+    record_author_mentions,
     record_flagged_stocks,
     save_post,
     save_score_metadata,
@@ -2182,7 +2183,12 @@ def analyze_ticker_sentiment(all_posts):
                 "unique_authors": signal_multipliers["unique_authors"],
                 "top_author_mentions": signal_multipliers["top_author_mentions"],
                 "top_author_share": round(signal_multipliers["top_author_share"], 3),
-                "author_set_hashes": signal_multipliers.get("author_set_hashes", []),
+                # Use every ticker-attributed post/comment author for the ledger.
+                # Stable hashes preserve cross-day identity without exposing names.
+                "author_set_hashes": hash_author_set(
+                    item.get("author")
+                    for item in data.get("author_scores", [])
+                ),
                 "promotion_risk_score": round(
                     promotion_risk["promotion_risk_score"], 3
                 ),
@@ -2565,6 +2571,7 @@ def run_pipeline(raw_data_file=None):
 
     print("\nStep 2: Analyzing tickers and sentiment...")
     results = analyze_ticker_sentiment(posts)
+    record_author_mentions(results, date=run_metadata["run_date"])
 
     print("\nStep 3: Adding Stock prices from yahoo finance...")
     results = enrich_with_price(results)
@@ -2664,9 +2671,13 @@ def run_pipeline(raw_data_file=None):
             result.get("final_score", 0),
         )
     attach_run_metadata(trackable, run_metadata)
-    save_daily_results(trackable, run_metadata=run_metadata)
+    save_daily_results(
+        trackable,
+        date=run_metadata["run_date"],
+        run_metadata=run_metadata,
+    )
     if run_metadata["eligible_for_backtest"]:
-        record_flagged_stocks(trackable)
+        record_flagged_stocks(trackable, date=run_metadata["run_date"])
     else:
         print(
             "Performance tracking skipped: non-trading-day run "

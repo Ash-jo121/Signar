@@ -59,6 +59,8 @@ def latest_backup_db():
 
 DB_PATH = latest_backup_db()
 START_DATE = "2026-06-10"
+V2_FREEZE_DATE = "2026-08-02"
+V2_SCORING_VERSION = "2026-08-02-simplified-v2"
 
 # Catalyst data is only reliable from this date onwards
 CLEAN_CATALYST_DATE = "2026-04-27"
@@ -1576,6 +1578,87 @@ def cohort_performance(conn):
     )
 
 
+def avoid_side_test(conn):
+    """Compare avoid/vampire warnings with the rest of each same-day universe."""
+    rows_by_date = {}
+    rows = [
+        row
+        for row in fetch_backtest_rows(conn)
+        if row["flagged_date"] >= V2_FREEZE_DATE
+        and row.get("scoring_version") == V2_SCORING_VERSION
+    ]
+    for row in rows:
+        rows_by_date.setdefault(row["flagged_date"], []).append(row)
+
+    section(
+        "AVOID-SIDE TEST (MEASUREMENT ONLY — NOT A SHORT STRATEGY)",
+        "V2-only daily avoid/vampire mean return minus all other same-day flags",
+    )
+    print(
+        f"  {'Date':<12} {'Hor':<5} {'AvoidN':>6} {'AvoidAvg':>10}"
+        f" {'RestN':>6} {'RestAvg':>10} {'Spread':>10}"
+    )
+    divider()
+
+    spreads_by_horizon = {"T+7": [], "T+14": []}
+    horizons = (
+        ("T+7", "return_7d", "updated_7d"),
+        ("T+14", "return_t14", "updated_t14"),
+    )
+    for flagged_date in sorted(rows_by_date):
+        day_rows = rows_by_date[flagged_date]
+        for horizon, return_col, updated_col in horizons:
+            resolved = [
+                row
+                for row in day_rows
+                if row.get(updated_col) == 1 and row.get(return_col) is not None
+            ]
+            avoid_rows = [
+                row
+                for row in resolved
+                if normalized_cohort(row) == "avoid_high_risk"
+                or row.get("vampire_flagged") == 1
+            ]
+            rest_rows = [
+                row
+                for row in resolved
+                if not (
+                    normalized_cohort(row) == "avoid_high_risk"
+                    or row.get("vampire_flagged") == 1
+                )
+            ]
+            if not avoid_rows or not rest_rows:
+                continue
+
+            avoid_avg = safe_avg([row[return_col] for row in avoid_rows])
+            rest_avg = safe_avg([row[return_col] for row in rest_rows])
+            spread = avoid_avg - rest_avg
+            spreads_by_horizon[horizon].append(spread)
+            print(
+                f"  {flagged_date:<12} {horizon:<5} {len(avoid_rows):>6}"
+                f" {fmt(avoid_avg):>10} {len(rest_rows):>6}"
+                f" {fmt(rest_avg):>10} {fmt(spread):>10}"
+            )
+
+    print()
+    print(
+        f"  {'Horizon':<8} {'Days':>5} {'Median spread':>15}"
+        f" {'Avoid underperformed':>21}"
+    )
+    divider()
+    for horizon in ("T+7", "T+14"):
+        spreads = spreads_by_horizon[horizon]
+        underperformed = (
+            100.0 * sum(1 for spread in spreads if spread < 0) / len(spreads)
+            if spreads
+            else None
+        )
+        print(
+            f"  {horizon:<8} {len(spreads):>5} {fmt(safe_median(spreads)):>15}"
+            f" {pct(underperformed):>21}"
+        )
+
+
 def gate_outcome_performance(conn):
     rows = fetch_backtest_rows(conn)
     print_robust_group_table(
@@ -1822,6 +1905,7 @@ if __name__ == "__main__":
     hit_rate(conn)
     robust_bucket_analysis(conn)
     cohort_performance(conn)
+    avoid_side_test(conn)
     gate_outcome_performance(conn)
     no_trade_day_analysis(conn)
     near_miss_performance(conn)

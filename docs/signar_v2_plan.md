@@ -76,6 +76,17 @@ Evaluate ONLY on data collected after the v2 freeze; never on cycle-one data:
    rate (~10–15%)?
 3. Do the simplified-v2 cohorts beat random same-day baskets (percentile
    > 60) at T+7?
+4. Does the combined `avoid_high_risk` + `vampire_flagged=1` cohort
+   underperform the rest of the same-day flagged universe by at least 3
+   percentage points in median daily T+14 spread?
+5. Do flags with `author_hist_avg_t7 > 0` and
+   `author_hist_coverage >= 0.5` outperform flags with
+   `author_hist_avg_t7 <= 0` at T+7?
+
+Hypotheses 4 and 5 are measurement-only. Avoid/vampire names remain warnings,
+not trade recommendations. Even if hypothesis 4 passes, only a separately
+logged Alpaca paper-short cohort may be considered; real short trades and UI
+short recommendations are out of scope.
 
 ### 2.4 Infra hardening (fetch pipeline)
 - Remove the 90-minute duplicate-run guard in the GitHub Actions workflow;

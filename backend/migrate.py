@@ -5,6 +5,7 @@ from database import (
     RUN_METADATA_COLUMNS,
     SCORE_METADATA_COLUMNS,
     THESIS_CONFIRMATION_COLUMNS,
+    ensure_author_tracking_tables,
 )
 from runtime_paths import data_path
 
@@ -162,6 +163,7 @@ def migrate():
     ensure_run_metadata_table(conn)
     ensure_market_data_table(conn)
     ensure_performance_tracking_columns(conn)
+    ensure_author_tracking_tables(conn)
     ensure_thesis_confirmation_table(conn)
     backfill_score_metadata_from_daily_sentiment(conn)
     conn.commit()

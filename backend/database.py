@@ -1,7 +1,7 @@
 import json
 import sqlite3
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 from runtime_paths import data_path
 
@@ -120,6 +120,10 @@ PERFORMANCE_TRACKING_COLUMNS = [
     ("mention_velocity_num", "REAL"),
     ("author_overlap", "REAL"),
     ("flag_sequence", "INTEGER"),
+    ("author_hist_avg_t7", "REAL"),
+    ("author_hist_coverage", "REAL"),
+    ("resolved_at_t7", "TEXT"),
+    ("resolved_at_t14", "TEXT"),
     ("price_t14", "REAL"),
     ("price_t30", "REAL"),
     ("return_t14", "REAL"),
@@ -173,6 +177,147 @@ def ensure_column(conn, table, column, definition):
     existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
     if column not in existing:
         conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+
+
+def ensure_author_tracking_tables(conn):
+    """Create the raw author ledger and its rebuildable aggregate table."""
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS author_mentions (
+            author TEXT NOT NULL,
+            ticker TEXT NOT NULL,
+            mention_date TEXT NOT NULL,
+            UNIQUE(author, ticker, mention_date)
+        );
+
+        CREATE TABLE IF NOT EXISTS author_track_record (
+            author TEXT PRIMARY KEY,
+            tickers_mentioned INTEGER NOT NULL DEFAULT 0,
+            resolved_mentions INTEGER NOT NULL DEFAULT 0,
+            avg_return_t7 REAL,
+            avg_return_t14 REAL,
+            win_rate_t7 REAL,
+            last_updated TEXT
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_author_mentions_ticker_date
+        ON author_mentions(ticker, mention_date);
+        """
+    )
+
+
+def record_author_mentions(results, date=None):
+    """Append privacy-safe author/ticker/day observations from an analysis run."""
+    if date is None:
+        date = datetime.now().strftime("%Y-%m-%d")
+
+    conn = get_connection()
+    saved = 0
+    for result in results:
+        ticker = result["ticker"]
+        for author in set(result.get("author_set_hashes") or []):
+            cursor = conn.execute(
+                """
+                INSERT OR IGNORE INTO author_mentions (author, ticker, mention_date)
+                VALUES (?, ?, ?)
+                """,
+                (author, ticker, date),
+            )
+            saved += cursor.rowcount
+    conn.commit()
+    conn.close()
+    print(f"Author ledger: recorded {saved} author/ticker mentions for {date}")
+
+
+def refresh_author_track_records(conn, updated_at=None):
+    """Rebuild author aggregates from clean, resolved performance rows."""
+    updated_at = updated_at or datetime.now(timezone.utc).isoformat()
+    conn.execute(
+        """
+        INSERT INTO author_track_record
+        (author, tickers_mentioned, resolved_mentions, avg_return_t7,
+         avg_return_t14, win_rate_t7, last_updated)
+        SELECT
+            am.author,
+            COUNT(DISTINCT am.ticker),
+            SUM(
+                CASE WHEN pt.resolution_status_t7 = 'resolved'
+                           AND pt.return_7d IS NOT NULL
+                           AND pt.return_7d > -100
+                           AND pt.price_7d >= 0.01
+                     THEN 1 ELSE 0 END
+            ),
+            AVG(
+                CASE WHEN pt.resolution_status_t7 = 'resolved'
+                           AND pt.return_7d IS NOT NULL
+                           AND pt.return_7d > -100
+                           AND pt.price_7d >= 0.01
+                     THEN pt.return_7d END
+            ),
+            AVG(
+                CASE WHEN pt.resolution_status_t14 = 'resolved'
+                           AND pt.return_t14 IS NOT NULL
+                           AND pt.return_t14 > -100
+                           AND pt.price_t14 >= 0.01
+                     THEN pt.return_t14 END
+            ),
+            AVG(
+                CASE WHEN pt.resolution_status_t7 = 'resolved'
+                           AND pt.return_7d IS NOT NULL
+                           AND pt.return_7d > -100
+                           AND pt.price_7d >= 0.01
+                     THEN CASE WHEN pt.return_7d > 0 THEN 1.0 ELSE 0.0 END END
+            ),
+            ?
+        FROM author_mentions am
+        LEFT JOIN performance_tracking pt
+          ON pt.ticker = am.ticker
+         AND pt.flagged_date = am.mention_date
+        GROUP BY am.author
+        ON CONFLICT(author) DO UPDATE SET
+            tickers_mentioned = excluded.tickers_mentioned,
+            resolved_mentions = excluded.resolved_mentions,
+            avg_return_t7 = excluded.avg_return_t7,
+            avg_return_t14 = excluded.avg_return_t14,
+            win_rate_t7 = excluded.win_rate_t7,
+            last_updated = excluded.last_updated
+        """,
+        (updated_at,),
+    )
+
+
+def historical_author_snapshot(conn, authors, flag_date):
+    """Return a no-lookahead T+7 author snapshot as it existed before flag_date."""
+    authors = sorted(set(authors or []))
+    if not authors:
+        return None, None
+
+    placeholders = ", ".join("?" for _ in authors)
+    rows = conn.execute(
+        f"""
+        SELECT am.author, AVG(pt.return_7d) AS author_avg_t7
+        FROM author_mentions am
+        JOIN performance_tracking pt
+          ON pt.ticker = am.ticker
+         AND pt.flagged_date = am.mention_date
+        WHERE am.author IN ({placeholders})
+          AND am.mention_date < ?
+          AND pt.resolution_status_t7 = 'resolved'
+          AND pt.resolved_at_t7 IS NOT NULL
+          AND pt.resolved_at_t7 < ?
+          AND pt.return_7d IS NOT NULL
+          AND pt.return_7d > -100
+          AND pt.price_7d >= 0.01
+        GROUP BY am.author
+        """,
+        (*authors, flag_date, flag_date),
+    ).fetchall()
+    if not rows:
+        return None, 0.0
+
+    author_hist_avg_t7 = sum(row["author_avg_t7"] for row in rows) / len(rows)
+    author_hist_coverage = len(rows) / len(authors)
+    return author_hist_avg_t7, author_hist_coverage
 
 
 def score_metadata_values(result):
@@ -555,6 +700,7 @@ def init_db():
         ensure_column(conn, "run_metadata", column, definition)
     for column, definition in PERFORMANCE_TRACKING_COLUMNS:
         ensure_column(conn, "performance_tracking", column, definition)
+    ensure_author_tracking_tables(conn)
     conn.commit()
     conn.close()
     print("Database initialized successfully")
@@ -905,6 +1051,12 @@ def record_flagged_stocks(results, date=None):
                         author_union
                     )
 
+            author_hist_avg_t7, author_hist_coverage = historical_author_snapshot(
+                conn,
+                result.get("author_set_hashes"),
+                date,
+            )
+
             cursor = conn.execute(
                 """
                 INSERT OR IGNORE INTO performance_tracking
@@ -912,8 +1064,9 @@ def record_flagged_stocks(results, date=None):
                  flagged_sentiment, flagged_mentions, float_shares,
                  has_catalyst, catalyst_type, mod_flagged, vampire_flagged,
                  final_score, engagement_ratio, float_shares_source, float_data_quality,
-                 mention_velocity_num, author_overlap, flag_sequence)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 mention_velocity_num, author_overlap, flag_sequence,
+                 author_hist_avg_t7, author_hist_coverage)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     ticker,
@@ -937,6 +1090,8 @@ def record_flagged_stocks(results, date=None):
                     mention_velocity_num,
                     author_overlap,
                     prior_flags + 1,
+                    author_hist_avg_t7,
+                    author_hist_coverage,
                 ),
             )
             saved += cursor.rowcount
