@@ -25,18 +25,35 @@ from database import (
     SCORE_METADATA_COLUMNS,
 )
 
-BACKUP_DIR = os.path.join(os.path.dirname(__file__), "db-backup")
+BACKUP_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "db-backup",
+)
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
+import os
+
+
 def latest_backup_db():
+    if not os.path.isdir(BACKUP_DIR):
+        return None
+
     backups = [
         os.path.join(BACKUP_DIR, name)
         for name in os.listdir(BACKUP_DIR)
-        if name.startswith("threadradar_") and name.endswith(".db")
+        if (
+            name.startswith("threadradar")
+            and name.endswith(".db")
+            and os.path.isfile(os.path.join(BACKUP_DIR, name))
+        )
     ]
+
+    if not backups:
+        return None
+
     return max(backups, key=os.path.getmtime)
 
 
@@ -151,6 +168,23 @@ def get_conn():
             UPDATE performance_tracking
             SET {return_col} = NULL
             WHERE {return_col} <= -100
+            """
+        )
+    # Sub-penny resolved prices are structural events (reverse splits, delistings,
+    # dilution death spirals), not tradeable returns. Null them so GDC/SNBR-type
+    # collapses cannot dominate cohort averages.
+    for price_col, return_col in (
+        ("price_1d", "return_1d"),
+        ("price_3d", "return_3d"),
+        ("price_7d", "return_7d"),
+        ("price_t14", "return_t14"),
+        ("price_t30", "return_t30"),
+    ):
+        conn.execute(
+            f"""
+            UPDATE performance_tracking
+            SET {return_col} = NULL
+            WHERE {price_col} IS NOT NULL AND {price_col} < 0.01
             """
         )
     conn.execute(
@@ -292,6 +326,7 @@ def fetch_backtest_rows(conn):
         f"""
         SELECT
             pt.*,
+            rm.scoring_version,
             ds.change_percent,
             ds.avg_sentiment AS daily_avg_sentiment,
             ds.mentions AS daily_mentions,
@@ -305,6 +340,8 @@ def fetch_backtest_rows(conn):
         LEFT JOIN score_metadata sm
           ON sm.ticker = pt.ticker
          AND sm.date = pt.flagged_date
+        LEFT JOIN run_metadata rm
+          ON rm.run_date = pt.flagged_date
         {date_clause("pt.flagged_date")}
         ORDER BY pt.flagged_date, pt.ticker
     """,
@@ -451,6 +488,21 @@ def calculate_liquidity_multiplier(dollar_volume):
     return 1.05
 
 
+MARKET_CONFIRMATION_MULTIPLIERS = {
+    "confirmed_early": 1.10,
+    "neutral": 1.0,
+    "pre_market_pending": 1.0,
+    "unknown": 0.95,
+    "volume_without_price": 0.95,
+    "pre_market_prior_move": 0.90,
+    "no_confirmation": 0.85,
+    "price_without_volume": 0.75,
+    "confirmed_but_extended": 0.75,
+    "illiquid": 0.60,
+    "post_spike_reversal": 0.60,
+}
+
+
 def calculate_backtest_catalyst_multiplier(catalyst_type):
     multipliers = {
         "none": 1.05,
@@ -516,11 +568,24 @@ def add_shadow_scores(rows):
         )
         vampire_multiplier = 0.15 if row.get("vampire_flagged") == 1 else 1.0
 
+        # Decompose so pre-specified alternative curves score the SAME rows.
+        log_mentions = math.log1p(max(mentions, 0))
+        engagement_part = 0.9 + clamp(engagement_ratio, 0, 1) * 0.15
+        sweet_multiplier = calculate_mention_sweet_spot_multiplier(mentions)
+        sentiment_multiplier = calculate_sentiment_timing_multiplier(sentiment)
+        chase_persist = calculate_anti_chase_multiplier(
+            row.get("price_change_1d") or row.get("change_percent"),
+            row.get("price_change_3d"),
+            row.get("price_change_7d"),
+        ) * calculate_persistence_multiplier(seen_counts[ticker])
+        base = log_mentions * engagement_part * chase_persist * catalyst_score * vampire_multiplier
+
         enriched = dict(row)
         enriched["shadow_days_seen"] = seen_counts[ticker]
-        enriched["shadow_score"] = (
-            social_score * timing_score * catalyst_score * vampire_multiplier
-        )
+        enriched["shadow_score"] = base * sweet_multiplier * sentiment_multiplier
+        enriched["shadow_flat_mentions"] = base * 1.0 * sentiment_multiplier
+        enriched["shadow_flat_sentiment"] = base * sweet_multiplier * 1.0
+        enriched["shadow_flat_both"] = base
         scored_rows.append(enriched)
 
     return scored_rows
@@ -574,6 +639,12 @@ def add_ablation_scores(rows):
         liquidity_adjusted = volume_adjusted * calculate_liquidity_multiplier(
             row.get("dollar_volume")
         )
+        market_confirmation_adjusted = (
+            liquidity_adjusted
+            * MARKET_CONFIRMATION_MULTIPLIERS.get(
+                (row.get("market_confirmation_status") or "unknown"), 1.0
+            )
+        )
 
         enriched = dict(row)
         enriched["ablation_baseline"] = baseline
@@ -585,7 +656,7 @@ def add_ablation_scores(rows):
         enriched["ablation_anti_chase"] = anti_chase_adjusted
         enriched["ablation_rvol"] = volume_adjusted
         enriched["ablation_liquidity"] = liquidity_adjusted
-        enriched["ablation_market_confirmation"] = liquidity_adjusted
+        enriched["ablation_market_confirmation"] = market_confirmation_adjusted
         enriched["ablation_full_model"] = row.get("trade_score")
         if enriched["ablation_full_model"] is None:
             enriched["ablation_full_model"] = row.get("final_score")
@@ -1384,6 +1455,77 @@ def shadow_score_bucket_analysis(conn):
     )
 
 
+def resolution_quality(conn):
+    """Delisting/unresolvable/anomalous rates as first-class output, per horizon."""
+    section(
+        "RESOLUTION QUALITY / DELISTING RATE",
+        "Unresolvable + anomalous + sub-penny rows are excluded from return stats above",
+    )
+    horizons = [
+        ("T+1", "resolution_status_t1"),
+        ("T+3", "resolution_status_t3"),
+        ("T+7", "resolution_status_t7"),
+        ("T+14", "resolution_status_t14"),
+        ("T+30", "resolution_status_t30"),
+    ]
+    print(f"  {'Hor':<5} {'resolved':>9} {'unresolv.':>9} {'anomalous':>9} {'excluded':>9} {'open':>7} {'unres%':>7}")
+    divider()
+    for label, col in horizons:
+        rows = conn.execute(
+            f"""
+            SELECT COALESCE({col}, 'open') AS status, COUNT(*) AS n
+            FROM performance_tracking
+            {date_clause()}
+            GROUP BY status
+            """,
+            params(),
+        ).fetchall()
+        counts = {row["status"]: row["n"] for row in rows}
+        resolved = counts.get("resolved", 0)
+        unresolvable = counts.get("unresolvable", 0)
+        anomalous = counts.get("anomalous", 0)
+        excluded = counts.get("excluded", 0)
+        open_rows = counts.get("open", 0)
+        closed = resolved + unresolvable + anomalous
+        unres_pct = (100.0 * unresolvable / closed) if closed else 0.0
+        print(
+            f"  {label:<5} {resolved:>9} {unresolvable:>9} {anomalous:>9}"
+            f" {excluded:>9} {open_rows:>7} {unres_pct:>6.1f}%"
+        )
+
+
+def continuation_vs_exhaustion(conn):
+    """
+    The mid-move entry question: among names that had ALREADY moved >=20% over 3d
+    at flag time, do quality signals separate continuers from reversers?
+    """
+    rows = fetch_backtest_rows(conn)
+
+    def moved_amount(row):
+        change_3d = row.get("price_change_3d")
+        if change_3d is None:
+            change_3d = row.get("change_percent")
+        return change_3d or 0
+
+    moved = [row for row in rows if moved_amount(row) >= 20]
+
+    def bucket(row):
+        has_catalyst = row.get("catalyst_multiplier_eligible") == 1
+        broad = (
+            (row.get("unique_authors") or 0) >= 5
+            and (row.get("top_author_share") if row.get("top_author_share") is not None else 1.0) <= 0.4
+        )
+        cat = "1.catalyst" if has_catalyst else "2.no_catalyst"
+        breadth = "broad" if broad else "narrow"
+        return f"{cat}+{breadth}"
+
+    print_robust_group_table(
+        "CONTINUATION vs EXHAUSTION (flagged after >=20% 3-day move)",
+        "Tests whether catalyst + author breadth separate continuation from reversal at mid-move entries",
+        bucketize(moved, bucket),
+    )
+
+
 # ── Cohort backtesting ────────────────────────────────────────────────────────
 def parse_failed_reasons(row):
     raw_reasons = row.get("failed_reasons")
@@ -1649,6 +1791,19 @@ if __name__ == "__main__":
     DB_PATH = args.db
     START_DATE = args.start_date
 
+    VERSION_CUTOFF = "2026-06-10"  # float-aware-v1 freeze date
+    if not START_DATE or START_DATE < VERSION_CUTOFF:
+        print()
+        print("  " + "!" * 66)
+        print("  !  START_DATE precedes the 2026-06-10 scoring freeze.")
+        print("  !  Rows are scored under MIXED formula versions in this run:")
+        print("  !    VALID   : return/feature sections (hit rate, anti-chase,")
+        print("  !              mention/sentiment buckets, continuation, random baseline)")
+        print("  !    INVALID : cohort, gate, near-miss, failed-reason, no-trade-day,")
+        print("  !              and score-bucket sections (labels from replaced formulas)")
+        print("  !  Run again with --start-date 2026-06-10 for cohort/gate reads.")
+        print("  " + "!" * 66)
+
     print()
     print("  ╔══════════════════════════════════════════════════════════════════╗")
     print("  ║           ThreadRadar — Backtesting Analysis  v1.0              ║")
@@ -1663,6 +1818,7 @@ if __name__ == "__main__":
     conn = get_conn()
 
     summary(conn)
+    resolution_quality(conn)
     hit_rate(conn)
     robust_bucket_analysis(conn)
     cohort_performance(conn)
@@ -1672,6 +1828,7 @@ if __name__ == "__main__":
     avoid_reason_performance(conn)
     failed_reason_performance(conn)
     anti_chase_validation(conn)
+    continuation_vs_exhaustion(conn)
     mention_velocity_validation(conn)
     volume_confirmation_validation(conn)
     top_n_portfolio_backtest(conn, "final_score", "Stored final_score")
@@ -1679,6 +1836,9 @@ if __name__ == "__main__":
     random_baseline_comparison(conn, "ablation_full_model", "Full model")
     shadow_score_bucket_analysis(conn)
     top_n_portfolio_backtest(conn, "shadow_score", "Shadow attention score")
+    top_n_portfolio_backtest(conn, "shadow_flat_mentions", "Shadow variant: FLAT mention curve")
+    top_n_portfolio_backtest(conn, "shadow_flat_sentiment", "Shadow variant: FLAT sentiment curve")
+    top_n_portfolio_backtest(conn, "shadow_flat_both", "Shadow variant: FLAT both curves")
     mod_impact(conn)
     vampire_impact(conn)
     catalyst_split(conn)
