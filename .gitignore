@@ -27,3 +27,7 @@ backend/run_price_updater.ps1
 backend/migrations/
 backend/db-backup/threadradar_2026-04-07.db-shm
 backend/db-backup/threadradar_2026-04-07.db-wal
+backend/t30_2026-08-01.txt
+backend/cohort.txt
+backend/cohort_t14.txt
+backend/backtest_01-08-2026.txt
